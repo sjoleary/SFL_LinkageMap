@@ -1,0 +1,6 @@
+.Rproj.user
+.Rhistory
+.RData
+.RDataTmp
+data/VCF/FamA.vcf
+data/VCF/FamB.vcf
