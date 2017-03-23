@@ -25,20 +25,12 @@ library(ggthemes)
 # library(DiagrammeR)
 # library(akima)
 
-# libraries for mapping
-# library(ggmap)
-# library(rgdal)
-# library(maps)
-# library(mapdata)
-# library(mapproj)
-# library(marmap)
-
 # libraries for pop gen analysis
-library(adegenet)
-library(hierfstat)
-library(pegas)
-library(poppr)
-library(strataG)
+# library(adegenet)
+# library(hierfstat)
+# library(pegas)
+# library(poppr)
+# library(strataG)
 # library(readGenalex)
 
 # libraries for linkage mapping
@@ -48,10 +40,3 @@ library(onemap)
 # libraries for downloading sequences
 library(ape)
 library(rentrez)
-
-# libraries for reproducible report writing
-# install_github("ramnathv/slidify ")
-# install_github("ramnathv/slidifyLibraries")
-# library(slidify)
-# library(knitr)
-# library(markdown)

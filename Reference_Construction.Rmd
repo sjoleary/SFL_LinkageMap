@@ -1,0 +1,674 @@
+---
+title: "Comparative Genomics Southern Flounder"
+output:
+  html_notebook:
+    code_folding: hide
+    df_print: paged
+    highlight: kate
+    theme: flatly
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+```{r load libraries, message=FALSE, warning=FALSE}
+
+source("lib/libraries.R")
+source("lib/ggplot.R")
+source("lib/HaplotypR.R")
+source("lib/Synteny_mapR.R")
+
+```
+
+# Receiving and demultiplexing libraries
+
+**Demultiplex SFL-1 (HiSeq data for Mapping Familiy A):**
+
+    # create demultiplexed sequence folder
+    mkdir /home/soleary/FLOUNDER/SEQUENCES/SFL-1
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-1
+
+    # demultiplex files
+    demultiplex.pl -i Demultiplex_SFL-1.txt -o Extract_SFL1.sh -p /home/soleary/FLOUNDER/SEQUENCES/SFL-1 -d /home/DATA/FLOUNDER/SFL-1
+    chmod 755 Extract_SFL1.sh
+    ./Extract_SFL1.sh
+
+    # delete unnecessary files generated during demultiplexing
+    rm sample*
+
+**Demultiplex SFL-3 (MiSeq data for reference construction):**
+
+    # create demultiplexed sequence folder
+    mkdir /home/soleary/FLOUNDER/SEQUENCES/SFL-3
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-3
+
+    # demultiplex files
+    demultiplex.pl -i Demultiplex_SFL-3.txt -o Extract_SFL3.sh -p /home/soleary/FLOUNDER/SEQUENCES/SFL-3 -d /home/DATA/FLOUNDER/SFL-3
+    chmod 755 Extract_SFL3.sh
+    ./Extract_SFL3.sh
+
+    # delete unnecessary files generated during demultiplexing
+    rm sample*
+    
+**Demultiplex SFL-FamB (HiSeq data for Mapping Family B)**
+
+    # create demultiplexed sequence folder
+    mkdir /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
+
+    # demultiplex files
+    demultiplex.pl -i Demultiplex_SFL-FamB.txt -o Extract_SFL-FamB.sh -p /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB -d /home/DATA/FLOUNDER/FamB
+    chmod 755 Extract_SFL-FamB.sh
+    ./Extract_SFL-FamB.sh
+
+    # delete unnecessary files generated during demultiplexing
+    rm sample*
+    
+    # rename all files to include library code
+    for file in * ; do mv "$file" "FamB_$file" ; done
+
+Sequences of MiSeq and HiSeq libraries only need be quality trimmed once, this can be done in the `dDocent` pipeline before mapping.
+
+# De novo reference creation
+
+## Trimming & initial reference assembly in dDocent pipeline
+
+Execute `dDocent` from within MiSeq Library folder (`SFL-#`) containing demultiplexed files and run initial assembly (no mapping or SNP variant calling necessary).
+
+    # initial reference assembly in dDocent
+    number of processors: 30
+    amount of memory: 100G
+    Quality trim: yes
+    assembly: yes
+    Type: OL
+    c = 0.88
+    K1 = 2
+    K2 = 2
+
+The number of reads (contigs) contained in the reference depends on the data-cutoffs:
+  - minimum within individual coverage K1
+  - minimum number of individuals a read must occur in to be included K2
+  - % similarity for two stacks to be collapsed into one locus c
+
+During reference assembly dDocent creates a file `uniqseq.data` containing the number of unique reads with 2X, 3X... coverage. dDocent will plot the distribution to aid in choosing a cut-off value.
+
+```{r plot uniqseq.data}
+
+uniqseq_loci <- read.csv("data/REF/uniqseq.data", sep="", header = FALSE,
+                         col.names = c("COVERAGE", "N_READS"))
+
+ggplot(uniqseq_loci, aes(x = COVERAGE, y = N_READS)) +
+  geom_bar(stat="identity", color = "black", fill = "grey85") +
+  scale_x_continuous(expand=c(0,0)) +
+  scale_y_continuous(expand=c(0,0)) +
+  labs(x = "coverage", y = "# unique sequences") +
+  theme_standard
+
+```
+
+In addition, dDocent creates the file `uniqseq.peri.data` which contains the number of unique sequences that occur in more than X individuals. By choosing a cut-off value the user determines in how many individuals a unique sequence must occur in order for it to be included in the reference. Approximately 10% of the number of individuals used to generate the reference is usually a good place to start.
+
+```{r plot unique seq per ind}
+
+uniqseq_ind <- read.csv("data/REF/uniqseq.peri.data", sep="", header = FALSE,
+                        col.names = c("N_IND", "N_READS"))
+
+ggplot(uniqseq_ind, aes(x = N_IND, y = N_READS)) +
+  geom_bar(stat="identity", color = "black", fill = "grey85") +
+  scale_x_continuous(expand=c(0,0)) +
+  scale_y_continuous(expand=c(0,0)) +
+  labs(x = "number of unique sequences present in more than X individuals",
+       y = "number of unique sequences") +
+  theme_standard
+
+```
+
+dDocent will generate a `fasta`-file containing all the loci included in the reference based on the chosen parameters. It is recommended to generate references for combinations of c, K1 and K2 and to compare them in terms of the number of loci and their usefulness for mapping reads from individuals to be included in the data analysis.
+
+## Determine effect of parameters for set of values for c, K1 & K2
+
+### Choose c parameter
+
+#### Run `RefOpt`-Script
+
+`RefOpt` used to create separate references at each similarity value (c = 0.8 - 0.98) for a given range of K1 = 1-10 (cut-off for within individual coverage) and K2 = 1-10 (minimum no. of individual read must occur in).
+
+Before running dDocent ensure that `uniq.seq`-files (generated during intial dDocent run to create reference) are in same directory as reference optimizing script being executed from. Specificy `minK1`, `maxK1`, `minK2`, `maxK2`, `Assenmbly type` and `number of processors.
+
+    RefOpt 1 10 1 10 OL 35
+
+Output file `kopt.data` contains the number of reads in reference for each c, K1, K2 combination. `kopt.data` imported into R.
+
+#### Analyze `kopt`-output file
+
+```{r import kopt}
+
+# import output from RefOpt2.sh script
+kopt <- read.csv("data/REF/kopt.data", sep="", header = FALSE)
+temp <- c("K1", "K2", "c", "N_CONTIGS")
+colnames(kopt) <- temp
+
+```
+
+The number of reads in the reference vary depending on the minimum within individual coverage (K1) for each K2 for c = 0.8 - 0.98. The number of reads in the reference decrease as the cut-off for minimum within individual coverage for loci to be included increase. For each value of K1 the number of reads in the reference decreases as the minimum number of individuals a locus must be recovered in to be included increases. The number of loci included in a reference increases with c - for lower values of K1 and K2 there is a sudden increase in loci around c = 0.9 indicating that loci are being oversplit.
+
+```{r kopt overview}
+
+# plot number of reads for each value of c for each K1 and K2 combination
+ggplot(kopt, aes(x = c, y = N_CONTIGS)) +
+  geom_point() +
+  geom_line() +
+  facet_grid(K1 ~ K2, labeller=label_both) +
+  labs(x = "% similarity c", y = "no. of contigs in reference") +
+  theme_facet
+
+```
+
+For K2 = 2, reads must occur in at least ~10% of individuals used to create the reference to be included.
+
+```{r c vs Contigs}
+
+# plot no. of reads vs. c for K2 = 2 K1 = 2-10
+ggplot(kopt, aes(x = c, y = N_CONTIGS, fill = K1)) +
+  geom_line(data = subset(kopt, K2 %in% 2), aes(group = K1), color = "black") +
+  geom_point(data = subset(kopt, K2 %in% 2),
+             shape = 21, size = 4, color = "black") +
+  labs(x = "%-Similarity c for K2 = 2 and K1 = 2-10",
+       y = "Number of Contigs in Reference") +
+  theme_standard
+
+```
+
+The lower the cut-off values from K1 and K2, the more likely loci will be included that are due to individual variability and are not informative on a population level (which can unnecessarily increase computational time).
+
+If the cut-off values are too high loci that are informative might be excluded, which could lead to ascertainment bias. The optimum values for K1 and K2 are best determined by analyzing the mapping statistics of individuals mapped to references created for a combination of K1 and K2 values after an optimum c-value has been determined. The user will be able to compare the number of reads mapped in general, the number of reads mapped in pairs, the number of unmapped reads and the distribution of coverage to determine the best combinations of K.
+
+In general, for a value c < 0.88 - 0.9 the variance in the number of reads obtained is negligible, while there is an observable jump in the number of reads in the reference for values of c > 0.95. This is due to over-splitting of loci at higher values. The higher c the more similar stacks of reads have to be in order to be combined into one locus. It's better to "under split" and then filter out loci later (e.g. as paralogs).
+
+```{r c vs contigs combinations of K}
+
+# plot no. of reads vs. c for specific combinations of K1&K2
+ggplot(kopt, aes(x = c, y = N_CONTIGS)) +
+  geom_line(data = subset(kopt, K1 == 2 & K2 == 2), aes(group = K2), color = "blue") +
+  geom_point(data = subset(kopt, K1 == 2 & K2 == 2),
+             shape = 21, size = 3.5, color = "black", fill = "white") +
+  geom_text(aes(0.93, 45000, label = "K1=2; K2=2")) +
+    geom_line(data = subset(kopt, K1 == 4 & K2 == 2), aes(group = K2), color = "forestgreen") +
+  geom_point(data = subset(kopt, K1 == 4 & K2 == 2),
+             shape = 21, size = 3.5, color = "black", fill = "white") +
+  geom_text(aes(0.93, 30000, label = "K1=4; K2=2")) +
+  geom_line(data = subset(kopt, K1 == 4 & K2 == 4), aes(group = K2), color = "black") +
+  geom_point(data = subset(kopt, K1 == 4 & K2 == 4),
+             shape = 21, size = 3.5, color = "black", fill = "white") +
+  geom_text(aes(0.96, 25000, label = "K1=4; K2=4")) +
+  geom_line(data = subset(kopt, K1 == 10 & K2 == 2), aes(group = K2), color = "red") +
+  geom_point(data = subset(kopt, K1 == 10 & K2 == 2),
+             shape = 21, size = 3.5, color = "black", fill = "white") +
+  geom_text(aes(0.95, 20000, label = "K1=10; K2=2")) +
+  geom_line(data = subset(kopt, K1 == 2 & K2 == 10), aes(group = K2), color = "orange") +
+  geom_point(data = subset(kopt, K1 == 2 & K2 == 10),
+               shape = 21, size = 3.5, color = "black", fill = "white") +
+  geom_text(aes(0.95, 17000, label = "K1=2; K2=10")) +
+  geom_vline(xintercept = 0.88, linetype = "dashed", color = "red", size = 1) +
+  geom_vline(xintercept = 0.96, linetype = "dashed", color = "red", size = 1) +
+  labs(x = "%-Similarity c", y = "No. of Contigs in Reference") +
+  theme_standard
+
+```
+
+c-parameter chosen based on `SFL-kopt.data` results:
+
+**c = 0.88**
+
+### Choose K1 and K2 cut-off values
+
+#### Assemble references for K1/K2 combinations
+
+Create a new directory for each reference to be generated, here for K1 = 1-4 and K2 = 1-4:
+
+    mkdir /home/soleary/FLOUNDER/REF/REF11
+    mkdir /home/soleary/FLOUNDER/REF/REF12
+    mkdir /home/soleary/FLOUNDER/REF/REF13
+    mkdir /home/soleary/FLOUNDER/REF/REF14
+    mkdir /home/soleary/FLOUNDER/REF/REF21
+    mkdir /home/soleary/FLOUNDER/REF/REF22
+    mkdir /home/soleary/FLOUNDER/REF/REF23
+    mkdir /home/soleary/FLOUNDER/REF/REF24
+    mkdir /home/soleary/FLOUNDER/REF/REF31
+    mkdir /home/soleary/FLOUNDER/REF/REF32
+    mkdir /home/soleary/FLOUNDER/REF/REF33
+    mkdir /home/soleary/FLOUNDER/REF/REF34
+    mkdir /home/soleary/FLOUNDER/REF/REF41
+    mkdir /home/soleary/FLOUNDER/REF/REF42
+    mkdir /home/soleary/FLOUNDER/REF/REF43
+    mkdir /home/soleary/FLOUNDER/REF/REF44
+
+In each Reference directory create soft links to the demultiplexed (and quality trimmed) fastq files from the REF library (possible to cut and paste all commands at once or create a bash script to execute).
+
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF12/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF13/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF14/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF21/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF22/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF23/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF24/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF31/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF32/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF33/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF34/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF41/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF42/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF43/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-3/*.fq.gz /home/soleary/FLOUNDER/REF/REF44/
+
+Within each `REF*`-directory, execute `dDocent` to initiate a run which will create a reference for the chosen c-value and K1/K2 data cut-offs.
+
+    $ dDocent
+
+    # follow text prompts
+    Number of Processors: ##
+    Trimming? no
+    Assembly? yes
+    Type_of_Assembly? OL
+    Clustering_Similarity%: 0.88
+    Map reads? no
+    Email?
+
+Remove the softlinks to the MiSeq data used for mapping and other files generated during `dDocent`-run in each folder, so that only `reference.fasta` and associated files and stats files remain:
+
+    rm /home/soleary/FLOUNDER/REF/REF11/*.fq.gz
+    rm /home/soleary/FLOUNDER/REF/REF11/*.seqs
+    rm /home/soleary/FLOUNDER/REF/REF11/*.fastq
+    rm /home/soleary/FLOUNDER/REF/REF11/*.gz
+    rm /home/soleary/FLOUNDER/REF/REF11/namelist
+    rm /home/soleary/FLOUNDER/REF/REF11/uniqCperindv
+    rm /home/soleary/FLOUNDER/REF/REF11/dDocent.runs
+
+K1 and K2 are chosen based on mapping statistics of mapping HiSeq data to MiSeq data, i.e. HiSeq data needs to be demultiplexed and quality trimmed before it can be mapped. In each Reference directory create links to the demultiplexed (and quality trimmed) fastq files for approx. 20 individuals. The set of individuals should include individuals from as many locations as possible (use find replace to create set of commands to copy to each reference folder).
+
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamA-F.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamA-M.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-077.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-090.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-097.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-109.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-129.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-153.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-163.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-2/HatchA_FL-FamB-177.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-020.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-M1.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-F1.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-215.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-213.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-173.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-153.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-112.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-66.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+    ln -s /home/soleary/FLOUNDER/SEQUENCES/SFL-1/SFL-1_SFL-A-039.*.fq.gz /home/soleary/FLOUNDER/REF/REF11/
+
+Execute `dDocent` from within each reference folder to initiate a run to map those individuals to the generated references.
+
+    # follow text prompts
+    Number of Processors: ##
+    Trimming? no
+    Assembly? no
+    Map reads? yes
+    Mapping_Match_Value: 1
+    Mapping_Mismatch_Value: 3
+    Mapping_GapOpen_Penalty: 5
+    Calling_SNPs? no
+    Email? name@provider
+
+Remove softlinks to fasta-files
+
+    rm /home/soleary/FLOUNDER/REF/REF11/*.fq.gz
+
+#### Query mapping statistics
+
+During the mapping stage, `dDocent` calls `BWA` to map reads from the individuals in the folder to the generated MiSeqReference and create a `-RG.bam`-file for each individual. The second column of a BAM (or SAM) file contains FLAGs with binary encoded information on mapping, pairedness etc. that can be used to compare the mapping efficiency of the generated MiSeq references.
+
+Count number of reads and mapped reads using `samtools idxstats <aln-RG.bam>` which will retrieve and print stats in the bam-file. The output is TAB-delimited with each line consisting of reference sequence name, sequence length, # mapped reads and # unmapped (empty) reads. `Samtools` can also be be used to query `samtools flagstat file.bam` which returns an output containing the number of reads for which each flag is true.
+
+    # mapping statistics per loc per individual for REF21
+    cd /home/soleary/FLOUNDER/REF/REF12
+
+    for i in *.bam
+    do
+    samtools idxstats *.bam >> REF12.idxstats
+    samtools flagstat *.bam >> REF12.flagstats
+    done
+
+    samtools flagstat HatchA_FL-FamA-F-RG.bam > REF44.flagstats
+    samtools flagstat HatchA_FL-FamA-M-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-077-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-090-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-097-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-109-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-129-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-153-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-163-RG.bam >> REF44.flagstats
+    samtools flagstat HatchA_FL-FamB-177-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-020-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-039-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-66-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-112-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-153-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-173-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-213-RG.bam REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-215-RG.bam >> REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-F1-RG.bam REF44.flagstats
+    samtools flagstat SFL-1_SFL-A-M1-RG.bam >> REF44.flagstats
+
+
+Generate `*.idxstats` and `*.flagstats` output files for each reference and copy into `data/REF`-folder on Windows machine. Appending the file results in the information per individual being printed in a new set of row being appended to the file, i.e. there will be as many rows for a given locus as individuals were mapped. The file can be re-formatted and summary statistics calculated using dplyr and tidyr.
+
+```{r format idxstats}
+
+# create vectors of files to be imported, reference codes, K1 and K2, dataframe names
+filenames <- list.files(path = "data/REF", pattern = "*.idxstats")
+ref_code <- substr(filenames, 4, 5)
+k1_list <- substr(filenames, 4, 4)
+k2_list <- substr(filenames, 5, 5)
+names <- substr(filenames, 1, 9)
+
+# import data
+for (i in names){
+  filepath <- file.path("data/REF", paste(i, 'stats', sep =""))
+  assign(i, read.csv(filepath, sep = "", header = FALSE,
+                     col.names = c("Locus", "Length", "Reads_Mapped", 'blank')) %>%
+           select(1:3))
+  }
+
+# Create list of one dataframe per idxstats file and group by locus
+dflist_idx <- lapply(ls(pattern = "*.idx"), get)
+dflist_idx <- dflist_idx[-1]
+dflist_idx <- dflist_idx[-17]
+
+for (df in 1:length(dflist_idx)){
+  x <- dflist_idx[[df]]
+  x[['Locus']] <- as.character(x[['Locus']])
+  x = x %>% group_by(Locus)
+  dflist_idx[[df]] <- x
+}
+
+# Create new dataframes with summary stats per REF bind into final output/dataframe
+RefMapStats.idx <- data.frame()
+
+for (df in 1:length(dflist_idx)){
+  x = summarize(dflist_idx[[df]],
+                Length = mean(Length),
+                Mean_Mapped = mean(Reads_Mapped),
+                Sum_Mapped = sum(Reads_Mapped),
+                Min_Mapped = min(Reads_Mapped),
+                Max_Mapped = max(Reads_Mapped),
+                SD_Mapped = sd(Reads_Mapped))
+  x[x == 0] <- NA
+
+  temp <- summarize(x, Mean_Mapped_Non0 = mean(Mean_Mapped, na.rm = TRUE)) %>%
+    mutate(K1 = k1_list[df],
+           K2 = k2_list[df],
+           REF = ref_code[df],
+           Not_Mapped = nrow(filter(x, is.na(Sum_Mapped))),
+           N_Loci_Ref = nrow(x)) %>%
+    select(K1, K2, REF, N_Loci_Ref, Not_Mapped, Mean_Mapped_Non0)
+
+  RefMapStats.idx <- bind_rows(RefMapStats.idx, temp)
+}
+
+```
+
+
+```{r format flagstats}
+
+# Files to be imported
+filenames <- list.files(path='data/REF', pattern = '*.flagstats')
+
+# create vectors of files to be imported
+names <- substr(filenames, 1, 10)
+
+# import data
+for (i in names){
+  filepath <- file.path('data/REF', paste(i, 'stats', sep =""))
+  assign(i, read.csv(filepath, sep = "+", header = FALSE,
+                     col.names = c("N_Reads", "CAT"),
+                     stringsAsFactors = FALSE) %>%
+           select(1:2))
+}
+
+# Create list of one dataframe per flagstats file and create tidy data set
+# should be 16 elements/references
+dflist_flag <- lapply(ls(pattern = "*flag"), get)
+dflist_flag <- dflist_flag[-1]
+dflist_flag <- dflist_flag[-17]
+
+
+# Change N_Reads to numeric
+for (df in 1:length(dflist_flag)){
+  x <- dflist_flag[[df]]
+  x[['N_Reads']] <- as.numeric(x[['N_Reads']])
+  dflist_flag[[df]] <- x
+}
+
+for (df in 1:length(dflist_flag)){
+  x <- dflist_flag[[df]]
+
+  x <- x %>%
+    filter(grepl("0 mapped|properly paired|mapQ>=5", CAT)) %>%
+    mutate(MAPSTAT = ifelse(grepl("mapQ>=5", CAT), "Mismatch",
+                   ifelse(grepl("properly", CAT), "Prop_Paired", "Mapped"))) %>%
+    mutate(Ind = c(rep(1:18, each = 3))) %>% # set 1:x to number of individuals mapped
+    # not sure if extra individual in there somehow
+    select(4, 3, 1) %>%
+    spread(MAPSTAT, N_Reads)
+
+  dflist_flag[[df]] <- x
+}
+
+temp <- dflist_flag[[df]]
+
+# Create new dataframes with summary stats and add to main final data frame
+RefMapStats.flag <- data.frame()
+for (df in 1:length(dflist_flag)){
+  x = summarize(dflist_flag[[df]], Sum_Mapped = sum(Mapped),
+                             Reads_Mapped = mean(Mapped),
+                             Sum_Paired = sum(Prop_Paired),
+                             Mean_Paired = mean(Prop_Paired),
+                             Sum_Mismatch = sum(Mismatch),
+                             Mean_Mismatch = mean(Mismatch)) %>%
+  mutate(K1 = k1_list[df], K2 = k2_list[df], REF = ref_code[df]) %>%
+  select(7:9, 1:6)
+  RefMapStats.flag <- bind_rows(RefMapStats.flag, x)
+}
+
+```
+
+With increasing values for K1 and K2 less contigs have sufficient coverage to be included in the generated reference. Further, each reference will contain a certain portion of loci that no reads are mapped to and the mean number of reads mapped to each locus will increase for increasingly high cut-off values.
+
+```{r plot idxstats}
+
+# plot no of loci vs "empty" loci
+ggplot(RefMapStats.idx, aes(x = N_Loci_Ref, y = Not_Mapped, fill = K2, group = K1)) +
+  geom_line(color = "black") +
+  geom_point(shape = 21, size = 4, color = "black") +
+  facet_grid(K1 ~ ., labeller = label_both) +
+  labs(x = "Number of Loci in Reference", y = "Number of Loci with No Reads Mapped") +
+  theme_facet
+
+# plot no of loci vs coverage
+ggplot(RefMapStats.idx, aes(x = N_Loci_Ref, y = Mean_Mapped_Non0, fill = K2, group = K1)) +
+  geom_line(color = "black") +
+  geom_point(shape = 21, size = 4, color = "black") +
+  facet_grid(K1 ~ ., labeller = label_both) +
+  labs(x = "Number of Loci in Reference", y = "Mean number of mapped reads per locus") +
+  theme_facet
+
+```
+
+#### Evaluate & compare mapping results
+
+Number of loci in the reference and the mean number of reads mapped per individual decrease for increasingly high cut-off values.
+
+```{r Comp mean mapped reads}
+
+# create combined data set
+RefMapStats <- left_join(RefMapStats.idx, RefMapStats.flag) %>%
+  filter(REF != "11") # remove K1 = 1/K2 = 1 - distorts figure because all read included
+
+# write summary stats file
+write.table(RefMapStats, file = "data/REF/RefMapStats.txt", quote = FALSE, sep = " ")
+
+RefMapStats <- read.csv("data/REF/RefMapStats.txt", 
+                        header = TRUE, stringsAsFactors = FALSE, sep = " ")
+
+RefMapStats$REF <- as.character(RefMapStats$REF)
+
+# calculate 95th quantile
+mapped <- unname(quantile(RefMapStats$Sum_Mapped, c(0.5)))
+lociref <- unname(quantile(RefMapStats$N_Loci_Ref, c(0.5)))
+
+# plot no of contigs in ref vs sum mapped reads
+ggplot(RefMapStats, aes(x = N_Loci_Ref, y = Sum_Mapped)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black", fill = "grey85") +
+  geom_vline(aes(xintercept = lociref),
+               color = "red", linetype = "dashed", size = 1) +
+  geom_hline(aes(yintercept = mapped),
+               color = "red", linetype = "dashed", size = 1) +
+  facet_grid(K2 ~ K1, labeller=label_both) +
+  labs(x = "Number of Contigs in Reference",
+       y = "Total Number of Mapped Reads") +
+  theme_facet
+
+```
+
+The number of reads that are mapped as a pair to the same locus varies with different combinations of K1 and K2.
+
+```{r mean mapped as proper pair}
+
+# plot mean paired mapped reads
+ggplot(RefMapStats, aes(x = K1, y = Mean_Paired, group = K2, fill = K2)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black") +
+  labs(x = "Minimum Within Individual Coverage K1",
+       y = "Mean Number of Reads Mapped as Pair per Individual") +
+  theme_standard
+
+ggplot(RefMapStats, aes(x = K2, y = Mean_Paired, group = K1, fill = K1)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black") +
+  labs(x = "Minimum Number of Individuals Locus is Observed in (K2)",
+       y = "Mean Number of Reads Mapped as Pair per Individual") +
+  theme_standard
+
+```
+
+The number of reads where one mate of the pair is mapped to one reference contig and its mate mapped to another strongly depends on the combination of K1 and K2 values.
+
+```{r Comp mismatched}
+
+# plot mean paired mapped reads
+ggplot(RefMapStats, aes(x = K1, y = Mean_Mismatch, group = K2, fill = K2)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black") +
+  labs(x = "Minimum Within Individual Coverage K1",
+       y = "Mean Number of Reads not Mapped as Pair per Individual") +
+  theme_facet
+
+ggplot(RefMapStats, aes(x = K2, y = MEAN_MISMATCH, group = K1, fill = K1)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black") +
+  labs(x = "Minimum Number of Individuals Observed K2",
+       y = "Mean Number of Reads not Mapped as Pair per Individual") +
+  theme_facet
+
+```
+
+Cut-off values for K1 and K2 should be chosen to maximize the number of reads mapped to the reference and minimize the the number of reads not mapped as a proper pair.
+
+```{r Reads mapped vs mismatched}
+
+# plot mean mapped reads
+ggplot(RefMapStats, aes(x = Reads_Mapped, y = Mean_Mismatch, fill = K2, group = 1)) +
+  geom_line() +
+  geom_point(shape = 21, size = 4, color = "black") +
+  facet_grid(K1 ~ ., labeller=label_both) +
+  labs(x = "Mean Number of Reads Mapped per Individual",
+       y = "Mean Number of Reads with Mate Mapped to Different Contig") +
+  theme_facet
+
+ggplot(RefMapStats, aes(x = Reads_Mapped, y = Mean_Mismatch, fill = K1, group = 1)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black") +
+  facet_grid(K2 ~ ., labeller=label_both) +
+  labs(x = "Mean Number of Reads Mapped per Individual",
+       y = "Mean Number of Reads with Mate Mapped to Different Contig") +
+  theme_facet
+
+# calculate 25% and 75% percentile for mismatched and total mapped reads
+MismatchDist <- unname(quantile(RefMapStats$Mean_Mismatch, 0.5))
+MappedDist <- unname(quantile(RefMapStats$Reads_Mapped, 0.5))
+
+# find point bottom right
+ggplot(RefMapStats, aes(x = Reads_Mapped, y = Mean_Mismatch, group = 1)) +
+  geom_line(size = 0.5) +
+  geom_point(shape = 21, size = 4, color = "black", fill = "grey85") +
+  geom_hline(aes(yintercept = c(MismatchDist)),
+             color = "red", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = c(MappedDist)),
+             color = "red", linetype = "dashed", size = 1) +
+  facet_grid(K2 ~ K1, labeller=label_both) +
+  labs(x = "Mean Number of Reads Mapped per Individual",
+       y = "Mean Number of Reads with Mate Mapped to Different Contig") +
+  theme_facet
+
+```
+
+Choosing cut-off values for K1 and K2 are a trade-off between maximizing the number of reads in the reference and the number of reads mapped while minimizing the number of reads that are not mapped as a pair.
+
+```{r choose K1 K2}
+
+# create tidy data set for plotting
+RefMapStats_tidy <- RefMapStats %>%
+  select(K1, K2, REF, N_Loci_Ref, Mean_Mismatch, Reads_Mapped) %>%
+  gather("MAP_STAT", "READS", Mean_Mismatch:Reads_Mapped)
+
+# calculate 25% and 75% percentile for mismatched and total mapped reads
+MEAN_MISMATCH25 <- unname(quantile(RefMapStats$Mean_Mismatch, 0.25))
+READSMAPPED75 <- unname(quantile(RefMapStats$Reads_Mapped, 0.75))
+LOCI50 <- unname(quantile(RefMapStats$N_Loci_Ref, c(0.5, .75)))
+
+Percentile <- data.frame(MAP_STAT = c('Mean_Mismatch','Reads_Mapped'),
+                      yint = with(RefMapStats_tidy,
+                                  c(MEAN_MISMATCH25, READSMAPPED75)))
+
+# plot indicating lowest & highest 25%
+ggplot(RefMapStats_tidy, aes(x = REF, y = READS)) +
+  geom_point(shape = 21, size = 4, color = "black", fill = "grey85") +
+  geom_hline(data = Percentile, aes(yintercept = yint),
+             color = "red", linetype = "dashed", size = 1) +
+  facet_grid(MAP_STAT ~ ., scales = "free") +
+  labs(x = "K1/K2 combination",
+       y = "Mean Number of Reads Per Individual") +
+  theme_facet
+
+# plot indicating 50 and 75% for number of loci in reference
+RefMapStats_tidy$K1 <- as.character(RefMapStats_tidy$K1)
+RefMapStats_tidy$K2 <- as.character(RefMapStats_tidy$K2)
+
+ggplot(RefMapStats_tidy, aes(x = N_Loci_Ref, y = READS, color = K1, shape = K2)) +
+  geom_point(size = 4) +
+  geom_hline(data = Percentile, aes(yintercept = yint),
+             color = "red", linetype = "dashed", size = 1) +
+  scale_shape_manual(values = c(15, 16, 17, 18, 19, 8)) +
+  facet_grid(MAP_STAT ~ ., scales = "free") +
+  labs(x = "Number of Loci in Reference",
+       y = "Mean Number of Reads Per Individual") +
+  theme_facet
+
+```
+
+Values chosen for MiSeq Reference
+**K1 = 2**
+**K2 = 1**
