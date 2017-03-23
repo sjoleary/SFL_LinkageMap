@@ -71,9 +71,9 @@ Sequences of MiSeq and HiSeq libraries only need be quality trimmed once, this c
 
 # De novo reference creation
 
-## Trimming & initial reference assembly in dDocent pipeline
+## Quality trimming & initial reference assembly in dDocent pipeline
 
-Execute `dDocent` from within MiSeq Library folder (`SFL-#`) containing demultiplexed files and run initial assembly (no mapping or SNP variant calling necessary).
+Execute `dDocent` from within MiSeq Library folder (`SFL-3`) containing demultiplexed files and run initial assembly (no mapping or SNP variant calling necessary).
 
     # initial reference assembly in dDocent
     number of processors: 30
@@ -86,9 +86,10 @@ Execute `dDocent` from within MiSeq Library folder (`SFL-#`) containing demultip
     K2 = 2
 
 The number of reads (contigs) contained in the reference depends on the data-cutoffs:
-  - minimum within individual coverage K1
-  - minimum number of individuals a read must occur in to be included K2
-  - % similarity for two stacks to be collapsed into one locus c
+
+* minimum within individual coverage **K1**
+* minimum number of individuals a read must occur in to be included **K2**
+* % similarity for two stacks to be collapsed into one locus **c**
 
 During reference assembly dDocent creates a file `uniqseq.data` containing the number of unique reads with 2X, 3X... coverage. dDocent will plot the distribution to aid in choosing a cut-off value.
 
@@ -106,7 +107,7 @@ ggplot(uniqseq_loci, aes(x = COVERAGE, y = N_READS)) +
 
 ```
 
-In addition, dDocent creates the file `uniqseq.peri.data` which contains the number of unique sequences that occur in more than X individuals. By choosing a cut-off value the user determines in how many individuals a unique sequence must occur in order for it to be included in the reference. Approximately 10% of the number of individuals used to generate the reference is usually a good place to start.
+In addition, dDocent creates the file `uniqseq.peri.data` which contains the number of unique sequences that occur in more than X individuals. By choosing a cut-off value the user determines in how many individuals a unique sequence must occur in order for it to be included in the reference. In initial value of approx. 10% of individuals is sufficient for intial reference construction.
 
 ```{r plot unique seq per ind}
 
@@ -123,9 +124,9 @@ ggplot(uniqseq_ind, aes(x = N_IND, y = N_READS)) +
 
 ```
 
-dDocent will generate a `fasta`-file containing all the loci included in the reference based on the chosen parameters. It is recommended to generate references for combinations of c, K1 and K2 and to compare them in terms of the number of loci and their usefulness for mapping reads from individuals to be included in the data analysis.
+dDocent will generate a `fasta`-file containing all the loci included in the reference based on the chosen parameters. After initial reference construction, references for combinations of c, K1 and K2 should be generated and compared in terms of the number of loci and the quality of read mapping for individuals to be included in the data analysis.
 
-## Determine effect of parameters for set of values for c, K1 & K2
+## Identify values for c, K1 & K2
 
 ### Choose c parameter
 
@@ -137,16 +138,15 @@ Before running dDocent ensure that `uniq.seq`-files (generated during intial dDo
 
     RefOpt 1 10 1 10 OL 35
 
-Output file `kopt.data` contains the number of reads in reference for each c, K1, K2 combination. `kopt.data` imported into R.
+Output file `kopt.data` contains the number of reads in reference for each c, K1, K2 combination.
 
 #### Analyze `kopt`-output file
 
 ```{r import kopt}
 
 # import output from RefOpt2.sh script
-kopt <- read.csv("data/REF/kopt.data", sep="", header = FALSE)
-temp <- c("K1", "K2", "c", "N_CONTIGS")
-colnames(kopt) <- temp
+kopt <- read.table("data/REF/kopt.data", sep="", header = FALSE,
+                   col.names = c("K1", "K2", "c", "N_CONTIGS"))
 
 ```
 
@@ -172,7 +172,7 @@ For K2 = 2, reads must occur in at least ~10% of individuals used to create the 
 ggplot(kopt, aes(x = c, y = N_CONTIGS, fill = K1)) +
   geom_line(data = subset(kopt, K2 %in% 2), aes(group = K1), color = "black") +
   geom_point(data = subset(kopt, K2 %in% 2),
-             shape = 21, size = 4, color = "black") +
+             shape = 21, size = 2, color = "black") +
   labs(x = "%-Similarity c for K2 = 2 and K1 = 2-10",
        y = "Number of Contigs in Reference") +
   theme_standard
@@ -183,7 +183,7 @@ The lower the cut-off values from K1 and K2, the more likely loci will be includ
 
 If the cut-off values are too high loci that are informative might be excluded, which could lead to ascertainment bias. The optimum values for K1 and K2 are best determined by analyzing the mapping statistics of individuals mapped to references created for a combination of K1 and K2 values after an optimum c-value has been determined. The user will be able to compare the number of reads mapped in general, the number of reads mapped in pairs, the number of unmapped reads and the distribution of coverage to determine the best combinations of K.
 
-In general, for a value c < 0.88 - 0.9 the variance in the number of reads obtained is negligible, while there is an observable jump in the number of reads in the reference for values of c > 0.95. This is due to over-splitting of loci at higher values. The higher c the more similar stacks of reads have to be in order to be combined into one locus. It's better to "under split" and then filter out loci later (e.g. as paralogs).
+In general, for a value c < 0.88 - 0.9 the variance in the number of reads obtained is negligible, while there is an observable jump in the number of reads in the reference for values of c > 0.95. This is due to over-splitting of loci at higher values. The higher c the more similar stacks of reads have to be in order to be combined into one locus. It's better to "undersplit" and then filter out loci later (e.g. as paralogs).
 
 ```{r c vs contigs combinations of K}
 
