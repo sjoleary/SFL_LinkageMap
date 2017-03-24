@@ -329,7 +329,7 @@ Remove softlinks to fasta-files
 
 During the mapping stage, `dDocent` calls `BWA` to map reads from the individuals in the folder to the generated MiSeqReference and create a `-RG.bam`-file for each individual. The second column of a BAM (or SAM) file contains FLAGs with binary encoded information on mapping, pairedness etc. that can be used to compare the mapping efficiency of the generated MiSeq references.
 
-Count number of reads and mapped reads using `samtools idxstats <aln-RG.bam>` which will retrieve and print stats in the bam-file. The output is TAB-delimited with each line consisting of reference sequence name, sequence length, # mapped reads and # unmapped (empty) reads. `Samtools` can also be be used to query `samtools flagstat file.bam` which returns an output containing the number of reads for which each flag is true.
+Count number of reads and mapped reads using `samtools idxstats <aln-RG.bam>` which will retrieve and print stats in the bam-file. The output is TAB-delimited with each line consisting of reference sequence name, sequence length, # mapped reads and # unmapped (empty) reads. `samtools` can also be be used to query `samtools flagstat file.bam` which returns an output containing the number of reads for which each flag is true.
 
     # mapping statistics per loc per individual for REF21
     cd /home/soleary/FLOUNDER/REF/REF12
@@ -376,7 +376,7 @@ names <- substr(filenames, 1, 9)
 # import data
 for (i in names){
   filepath <- file.path("data/REF", paste(i, 'stats', sep =""))
-  assign(i, read.csv(filepath, sep = "", header = FALSE,
+  assign(i, read.table(filepath, sep = "", header = FALSE,
                      col.names = c("Locus", "Length", "Reads_Mapped", 'blank')) %>%
            select(1:3))
   }
@@ -486,22 +486,25 @@ for (df in 1:length(dflist_flag)){
 
 With increasing values for K1 and K2 less contigs have sufficient coverage to be included in the generated reference. Further, each reference will contain a certain portion of loci that no reads are mapped to and the mean number of reads mapped to each locus will increase for increasingly high cut-off values.
 
-```{r plot idxstats}
+```{r plot idxstats I}
 
 # plot no of loci vs "empty" loci
 ggplot(RefMapStats.idx, aes(x = N_Loci_Ref, y = Not_Mapped, fill = K2, group = K1)) +
   geom_line(color = "black") +
   geom_point(shape = 21, size = 4, color = "black") +
   facet_grid(K1 ~ ., labeller = label_both) +
-  labs(x = "Number of Loci in Reference", y = "Number of Loci with No Reads Mapped") +
+  labs(x = "No. Loci in Reference", y = "No. Loci with no Reads Mapped") +
   theme_facet
+```
+
+```{r plot idxstats II}
 
 # plot no of loci vs coverage
 ggplot(RefMapStats.idx, aes(x = N_Loci_Ref, y = Mean_Mapped_Non0, fill = K2, group = K1)) +
   geom_line(color = "black") +
   geom_point(shape = 21, size = 4, color = "black") +
   facet_grid(K1 ~ ., labeller = label_both) +
-  labs(x = "Number of Loci in Reference", y = "Mean number of mapped reads per locus") +
+  labs(x = "No. Loci in Reference", y = "Mean no. mapped reads per locus") +
   theme_facet
 
 ```
@@ -510,7 +513,7 @@ ggplot(RefMapStats.idx, aes(x = N_Loci_Ref, y = Mean_Mapped_Non0, fill = K2, gro
 
 Number of loci in the reference and the mean number of reads mapped per individual decrease for increasingly high cut-off values.
 
-```{r Comp mean mapped reads}
+```{r Comp mean mapped reads, message=FALSE, warning=FALSE}
 
 # create combined data set
 RefMapStats <- left_join(RefMapStats.idx, RefMapStats.flag) %>%
@@ -545,7 +548,7 @@ ggplot(RefMapStats, aes(x = N_Loci_Ref, y = Sum_Mapped)) +
 
 The number of reads that are mapped as a pair to the same locus varies with different combinations of K1 and K2.
 
-```{r mean mapped as proper pair}
+```{r mean mapped as proper pair I}
 
 # plot mean paired mapped reads
 ggplot(RefMapStats, aes(x = K1, y = Mean_Paired, group = K2, fill = K2)) +
@@ -554,7 +557,9 @@ ggplot(RefMapStats, aes(x = K1, y = Mean_Paired, group = K2, fill = K2)) +
   labs(x = "Minimum Within Individual Coverage K1",
        y = "Mean Number of Reads Mapped as Pair per Individual") +
   theme_standard
+```
 
+```{r mean mapped as proper pair II}
 ggplot(RefMapStats, aes(x = K2, y = Mean_Paired, group = K1, fill = K1)) +
   geom_line(size = 0.5) +
   geom_point(shape = 21, size = 4, color = "black") +
@@ -566,7 +571,7 @@ ggplot(RefMapStats, aes(x = K2, y = Mean_Paired, group = K1, fill = K1)) +
 
 The number of reads where one mate of the pair is mapped to one reference contig and its mate mapped to another strongly depends on the combination of K1 and K2 values.
 
-```{r Comp mismatched}
+```{r Comp mismatched I}
 
 # plot mean paired mapped reads
 ggplot(RefMapStats, aes(x = K1, y = Mean_Mismatch, group = K2, fill = K2)) +
@@ -575,8 +580,10 @@ ggplot(RefMapStats, aes(x = K1, y = Mean_Mismatch, group = K2, fill = K2)) +
   labs(x = "Minimum Within Individual Coverage K1",
        y = "Mean Number of Reads not Mapped as Pair per Individual") +
   theme_facet
+```
 
-ggplot(RefMapStats, aes(x = K2, y = MEAN_MISMATCH, group = K1, fill = K1)) +
+```{r Comp mismatched II}
+ggplot(RefMapStats, aes(x = K2, y = Mean_Mismatch, group = K1, fill = K1)) +
   geom_line(size = 0.5) +
   geom_point(shape = 21, size = 4, color = "black") +
   labs(x = "Minimum Number of Individuals Observed K2",
@@ -587,24 +594,7 @@ ggplot(RefMapStats, aes(x = K2, y = MEAN_MISMATCH, group = K1, fill = K1)) +
 
 Cut-off values for K1 and K2 should be chosen to maximize the number of reads mapped to the reference and minimize the the number of reads not mapped as a proper pair.
 
-```{r Reads mapped vs mismatched}
-
-# plot mean mapped reads
-ggplot(RefMapStats, aes(x = Reads_Mapped, y = Mean_Mismatch, fill = K2, group = 1)) +
-  geom_line() +
-  geom_point(shape = 21, size = 4, color = "black") +
-  facet_grid(K1 ~ ., labeller=label_both) +
-  labs(x = "Mean Number of Reads Mapped per Individual",
-       y = "Mean Number of Reads with Mate Mapped to Different Contig") +
-  theme_facet
-
-ggplot(RefMapStats, aes(x = Reads_Mapped, y = Mean_Mismatch, fill = K1, group = 1)) +
-  geom_line(size = 0.5) +
-  geom_point(shape = 21, size = 4, color = "black") +
-  facet_grid(K2 ~ ., labeller=label_both) +
-  labs(x = "Mean Number of Reads Mapped per Individual",
-       y = "Mean Number of Reads with Mate Mapped to Different Contig") +
-  theme_facet
+```{r Reads mapped vs mismatched, message=FALSE, warning=FALSE}
 
 # calculate 25% and 75% percentile for mismatched and total mapped reads
 MismatchDist <- unname(quantile(RefMapStats$Mean_Mismatch, 0.5))
@@ -627,7 +617,7 @@ ggplot(RefMapStats, aes(x = Reads_Mapped, y = Mean_Mismatch, group = 1)) +
 
 Choosing cut-off values for K1 and K2 are a trade-off between maximizing the number of reads in the reference and the number of reads mapped while minimizing the number of reads that are not mapped as a pair.
 
-```{r choose K1 K2}
+```{r choose K1 K2 I}
 
 # create tidy data set for plotting
 RefMapStats_tidy <- RefMapStats %>%
@@ -652,13 +642,18 @@ ggplot(RefMapStats_tidy, aes(x = REF, y = READS)) +
   labs(x = "K1/K2 combination",
        y = "Mean Number of Reads Per Individual") +
   theme_facet
+```
+
+Reference below the dashed line (25th percentile) for mean number of mismatched paired reads and above the red dashed line (75th percentile) of mean number of reads mapped.
+
+```{r choose K1 K2 II}
 
 # plot indicating 50 and 75% for number of loci in reference
 RefMapStats_tidy$K1 <- as.character(RefMapStats_tidy$K1)
 RefMapStats_tidy$K2 <- as.character(RefMapStats_tidy$K2)
 
 ggplot(RefMapStats_tidy, aes(x = N_Loci_Ref, y = READS, color = K1, shape = K2)) +
-  geom_point(size = 4) +
+  geom_point(size = 3) +
   geom_hline(data = Percentile, aes(yintercept = yint),
              color = "red", linetype = "dashed", size = 1) +
   scale_shape_manual(values = c(15, 16, 17, 18, 19, 8)) +
@@ -669,6 +664,10 @@ ggplot(RefMapStats_tidy, aes(x = N_Loci_Ref, y = READS, color = K1, shape = K2))
 
 ```
 
-Values chosen for MiSeq Reference
-**K1 = 2**
-**K2 = 1**
+#### Finalize *de nov* reference cut-offs
+
+Values chosen for MiSeq Reference:
+
+* **c** = 0.88
+* **K1** = 2
+* **K2** = 1
