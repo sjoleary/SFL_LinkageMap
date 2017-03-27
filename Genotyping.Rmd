@@ -1,0 +1,98 @@
+---
+title: "Comparative Genomics Southern Flounder"
+output:
+  html_notebook:
+    code_folding: hide
+    df_print: paged
+    highlight: kate
+    theme: flatly
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+```{r load libraries, message=FALSE, warning=FALSE}
+
+source("lib/libraries.R")
+source("lib/ggplot.R")
+source("lib/HaplotypR.R")
+
+```
+
+# Read Mapping
+
+Map each library to optimized *de novo* reference by transfering copy of `reference.fasta` and associated files for K1 = 2 and K2 = 1 into each directory containing demultiplexed and quality trimmed `fastq`-files.
+
+    cd /home/soleary/FLOUNDER/REF/REF21
+    cp reference.fasta* /home/soleary/FLOUNDER/SEQUENCES/SFL-1
+    cp reference.fasta* /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
+
+Run `dDocent` from within each library directory to map reads to `reference.fasta`. Change mapping parameters for BWA to:
+
+* Mapping Match_Value: 1
+* Mapping Mismatch_Value: 3
+* Mapping GapOpen_Penalty: 5
+
+Run dDocent separately for each mapping family:
+
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-1
+    dDocent
+
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
+    dDocent
+
+# SNP Calling
+
+Call SNPs for each mapping family separately.
+
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-1
+    dDocent
+    
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-2
+    dDocent
+
+File `TotalRawSNPs.vcf` contains all raw SNP/INDEL calls.
+
+# SNP Filtering
+
+Filter and haplotyping resulting SNP data sets separately for Fam-A and Fam-B.
+
+Bash script `scr/other/VCF_Filtering.sh` contains commands to use `vcftools` to run through a variety of options and combinations of threshold values for quality, allowed missing data, minor alleles etc. The number of SNPs and individuals retained at each step is recorded in the spreadsheet `data/VCF/FilterStats.xls` to help select appropriate filtering steps and final threshold values.
+
+## Family A
+
+For *Family-A* HiSeq data mapped to MiSeq reference generated using all individuals in library. 
+
+option B.1.3.3.2.3.2.1.2 was used. 
+
+
+
+Final thresholds values for filtered data set:
+
+* minimum sequence quality (minQ): 
+* minimum genotype call rate per locus (geno): %
+* minimum minor allele count (mac): 
+* minimum depth (minD): 
+* maximum missing data per individual (missInd): %
+* minimum minor allele frequence (maf): 0.
+* mean minimum depth (m-minD): 
+* dDocent filters run for allelic balance, Forward/Reverse and paired status, depth/quality ratio and maximum mean depth
+* Indels removed from data set
+
+
+## Family B
+
+
+# Haplotyping
+
+## Family A
+
+
+## Family B
+
+# Prepare final data set for mapping
+
+## Family A
+
+## Family B
+
