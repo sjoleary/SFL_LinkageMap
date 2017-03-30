@@ -15,4 +15,4 @@ library(onemap)
 
 # libraries for downloading sequences
 library(ape)
-library(rentrez)
+# library(rentrez)

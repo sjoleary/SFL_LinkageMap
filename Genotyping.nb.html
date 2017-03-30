@@ -27,6 +27,51 @@
 <script src="data:application/x-javascript;base64,Cgp3aW5kb3cuaW5pdGlhbGl6ZVNvdXJjZUVtYmVkID0gZnVuY3Rpb24oZmlsZW5hbWUpIHsKICAkKCIjcm1kLWRvd25sb2FkLXNvdXJjZSIpLmNsaWNrKGZ1bmN0aW9uKCkgewogICAgdmFyIHNyYyA9IHdpbmRvdy5hdG9iKCQoIiNybWQtc291cmNlLWNvZGUiKS5odG1sKCkpOwogICAgdmFyIGJsb2IgPSBuZXcgQmxvYihbc3JjXSwge3R5cGU6ICJ0ZXh0L3gtci1tYXJrZG93biJ9KTsKICAgIHNhdmVBcyhibG9iLCBmaWxlbmFtZSk7CiAgfSk7Cn07Cg=="></script>
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; background-color: #dddddd; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { font-weight: bold; } /* Keyword */
+code > span.dt { color: #800000; } /* DataType */
+code > span.dv { color: #0000ff; } /* DecVal */
+code > span.bn { color: #0000ff; } /* BaseN */
+code > span.fl { color: #800080; } /* Float */
+code > span.ch { color: #ff00ff; } /* Char */
+code > span.st { color: #dd0000; } /* String */
+code > span.co { color: #808080; font-style: italic; } /* Comment */
+code > span.al { color: #00ff00; font-weight: bold; } /* Alert */
+code > span.fu { color: #000080; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #ff0000; font-weight: bold; } /* Warning */
+code > span.cn { color: #000000; } /* Constant */
+code > span.sc { color: #ff00ff; } /* SpecialChar */
+code > span.vs { color: #dd0000; } /* VerbatimString */
+code > span.ss { color: #dd0000; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { } /* Variable */
+code > span.cf { } /* ControlFlow */
+code > span.op { } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { font-weight: bold; } /* Preprocessor */
+code > span.at { } /* Attribute */
+code > span.do { color: #808080; font-style: italic; } /* Documentation */
+code > span.an { color: #808080; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #808080; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #808080; font-weight: bold; font-style: italic; } /* Information */
+div.sourceCode {
+  overflow-x: visible;
+}
+</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
 
 
 <style type="text/css">
@@ -158,10 +203,14 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#read-mapping">Read Mapping</a></li>
-<li><a href="#snp-calling">SNP Calling</a></li>
+<li><a href="#variant-calling">Variant Calling</a></li>
 <li><a href="#snp-filtering">SNP Filtering</a><ul>
 <li><a href="#family-a">Family A</a></li>
-<li><a href="#family-b">Family B</a></li>
+<li><a href="#family-b">Family B</a><ul>
+<li><a href="#prepare-snp-data-set-for-filtering">Prepare SNP data set for filtering</a></li>
+<li><a href="#choose-threshold-values-for-quality-score-coverage-missing-data-minor-alleles">Choose threshold values for quality score, coverage, missing data, minor alleles</a></li>
+<li><a href="#final-thresholds-values-for-filtered-data-set-fama">Final thresholds values for filtered data set FamA:</a></li>
+</ul></li>
 </ul></li>
 <li><a href="#haplotyping">Haplotyping</a><ul>
 <li><a href="#family-a-1">Family A</a></li>
@@ -177,6 +226,13 @@ $(document).ready(function () {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zb3VyY2UoXCJsaWIvbGlicmFyaWVzLlJcIilcbnNvdXJjZShcImxpYi9nZ3Bsb3QuUlwiKVxuc291cmNlKFwibGliL1ZDRmZpbHRlcnN0YXRzLlJcIilcbnNvdXJjZShcImxpYi9IYXBsb3R5cFIuUlwiKVxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">source</span>(<span class="st">&quot;lib/libraries.R&quot;</span>)
+<span class="kw">source</span>(<span class="st">&quot;lib/ggplot.R&quot;</span>)
+<span class="kw">source</span>(<span class="st">&quot;lib/VCFfilterstats.R&quot;</span>)
+<span class="kw">source</span>(<span class="st">&quot;lib/HaplotypR.R&quot;</span>)</code></pre></div>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <div id="read-mapping" class="section level1">
@@ -198,8 +254,8 @@ dDocent
 cd /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
 dDocent</code></pre>
 </div>
-<div id="snp-calling" class="section level1">
-<h1>SNP Calling</h1>
+<div id="variant-calling" class="section level1">
+<h1>Variant Calling</h1>
 <p>Call SNPs for each mapping family separately.</p>
 <pre><code>cd /home/soleary/FLOUNDER/SEQUENCES/SFL-1
 dDocent
@@ -214,9 +270,618 @@ dDocent</code></pre>
 <p>Bash script <code>scr/other/VCF_Filtering.sh</code> contains commands to use <code>vcftools</code> to run through a variety of options and combinations of threshold values for quality, allowed missing data, minor alleles etc. The number of SNPs and individuals retained at each step is recorded in the spreadsheet <code>data/VCF/FilterStats.xls</code> to help select appropriate filtering steps and final threshold values.</p>
 <div id="family-a" class="section level2">
 <h2>Family A</h2>
-<p>For <em>Family-A</em> HiSeq data mapped to MiSeq reference generated using all individuals in library.</p>
-<p>option B.1.3.3.2.3.2.1.2 was used.</p>
-<p>Final thresholds values for filtered data set:</p>
+</div>
+<div id="family-b" class="section level2">
+<h2>Family B</h2>
+<p>For <em>Family-B</em> HiSeq data mapped to MiSeq reference generated using all individuals in library.</p>
+<div id="prepare-snp-data-set-for-filtering" class="section level3">
+<h3>Prepare SNP data set for filtering</h3>
+<p>dDocent uses FreeBayes to call SNPs and write a VCF-file <code>TotalRawSNPs.vcf</code>. This data set was filtered to remove low quality and artefactual SNP sites, paralogs and low quality individuals based on levels of missing data, minimum/maximum read depth, genotype call rate, and minor allele frequencies. Contigs may contain more than one SNP; the script <code>rad_haplotyper.pl</code> was used to create haplotypes for each locus.</p>
+<p>Generate a list of all individuals included in the SNP data set called by FreeBayes in the dDocent pipeline.</p>
+<pre><code>cd /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
+vcfsamplenames TotalRawSNPs.vcf &gt; Ind_RAW</code></pre>
+<p>Use <code>VCFtools</code> to create stats files for depth, missing data, heterozygosity and site quality for the raw data.</p>
+<pre><code>vcftools --vcf TotalRawSNPs.vcf --out FamB_raw --depth 
+vcftools --vcf TotalRawSNPs.vcf --out FamB_raw --site-mean-depth 
+vcftools --vcf TotalRawSNPs.vcf --out FamB_raw --site-quality 
+vcftools --vcf TotalRawSNPs.vcf --out FamB_raw --missing-indv 
+vcftools --vcf TotalRawSNPs.vcf --out FamB_raw --missing-site 
+vcftools --vcf TotalRawSNPs.vcf --out FamB_raw --het</code></pre>
+<p>Identify low quality individuals by comparing levels of missing data and read depth.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbmRfc3RhdHNfcmF3IDwtIHJlYWQuaW5kLnN0YXRzKGRpciA9IFwiZGF0YS9WQ0ZcIiwgdmNmID0gXCJGYW1CX1JBV1wiKSAlPiVcbiAgc2VwYXJhdGUoSU5EViwgaW50byA9IGMoXCJTUFwiLCBcIkxJQlwiLCBcIlNBTVBMRV9JRFwiKSwgc2VwID0gXCJfXCIsIHJlbW92ZSA9IEZBTFNFKVxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+ind_stats_raw &lt;-<span class="st"> </span><span class="kw">read.ind.stats</span>(<span class="dt">dir =</span> <span class="st">&quot;data/VCF&quot;</span>, <span class="dt">vcf =</span> <span class="st">&quot;FamB_RAW&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">separate</span>(INDV, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;SP&quot;</span>, <span class="st">&quot;LIB&quot;</span>, <span class="st">&quot;SAMPLE_ID&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is 17.7704659, the 5th % quantile is 4.644428:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHBsb3QgZGVwdGggZGlzdHJpYnV0aW9uXG5nZ3Bsb3QoaW5kX3N0YXRzX3JhdywgYWVzKHggPSBNRUFOX0RFUFRIX0ZhbUJfUkFXKSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNRUFOX0RFUFRIX0ZhbUJfUkFXLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUVBTl9ERVBUSF9GYW1CX1JBVywgLjA1KSksXG4gICAgICAgICAgICAgICAgIGNvbG9yID0gXCJkYXJrYmx1ZVwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGxhYnMoeCA9IFwibWVhbiByZWFkIGRlcHRoIGluZGl2aWR1YWxcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># plot depth distribution</span>
+<span class="kw">ggplot</span>(ind_stats_raw, <span class="kw">aes</span>(<span class="dt">x =</span> MEAN_DEPTH_FamB_RAW)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MEAN_DEPTH_FamB_RAW, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MEAN_DEPTH_FamB_RAW, .<span class="dv">05</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean read depth individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is 0.2742126, the 95th % quantile is 0.6402519:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHBsb3QgZGlzdHJpYnV0aW9uIG9mIG1pc3NpbmcgZGF0YVxuZ2dwbG90KGluZF9zdGF0c19yYXcsIGFlcyh4ID0gTUlTU19GYW1CX1JBVykpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUJfUkFXLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUlTU19GYW1CX1JBVywgLjk1KSksXG4gICAgICAgICAgICAgICAgIGNvbG9yID0gXCJkYXJrYmx1ZVwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGxhYnMoeCA9IFwibWlzc2luZyBkYXRhIHBlciBpbmRpdmlkdWFsXCIpICtcbiAgdGhlbWVfc3RhbmRhcmRcblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># plot distribution of missing data</span>
+<span class="kw">ggplot</span>(ind_stats_raw, <span class="kw">aes</span>(<span class="dt">x =</span> MISS_FamB_RAW)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MISS_FamB_RAW, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MISS_FamB_RAW, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Heterozygosity per individual across all SNP sites; the mean values for Fis is 0.1992137, the 95th % quantile is 0.342944 and the 5th % quantile is 0.004105:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHBsb3QgRmlzXG5nZ3Bsb3QoaW5kX3N0YXRzX3JhdywgYWVzKHggPSBGaXNfRmFtQl9SQVcpKSArXG4gIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9IFwiYmxhY2tcIiwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRmlzX0ZhbUJfUkFXLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUJfUkFXLCAuOTUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJGaXNcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># plot Fis</span>
+<span class="kw">ggplot</span>(ind_stats_raw, <span class="kw">aes</span>(<span class="dt">x =</span> Fis_FamB_RAW)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(Fis_FamB_RAW, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(Fis_FamB_RAW, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Fis&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="choose-threshold-values-for-quality-score-coverage-missing-data-minor-alleles" class="section level3">
+<h3>Choose threshold values for quality score, coverage, missing data, minor alleles</h3>
+<div id="filter-0-sequence-quality" class="section level4">
+<h4>Filter 0: Sequence quality</h4>
+<p>The QUAL column of a VCF file is a phred based score indicating the probability that the variant shown in the ALT column is wrong. Given the Phred quality score (Q), and the probability that a base is incorrectly called (P), Q = -10(Log10P).</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5zaXRlX3F1YWwgPC0gcmVhZC50YWJsZShcImRhdGEvVkNGL0ZhbUJfcmF3LmxxdWFsXCIsIFxuICAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyID0gVFJVRSwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKSAlPiVcbiAgbXV0YXRlKFBST0IgPSAxMF4oLVFVQUwvMTApKVxuXG4jIHBsb3QgZGlzdHJpYnV0aW9uIG9mIHByb2JhYmlsaXR5IHRoYXQgd3JvbmcgY2FsbFxuZ2dwbG90KHNpdGVfcXVhbCwgYWVzKHggPSBQUk9CKSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IDAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihQUk9CLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IDAuMDEpLCBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGxhYnMoeCA9IFwicHJvYmFiaWxpdHkgb2YgaW5jb3JyZWN0IGNhbGxcIiwgeSA9IFwibnVtYmVyIG9mIGxvY2lcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+site_qual &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/VCF/FamB_raw.lqual&quot;</span>, 
+                        <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>) %&gt;%
+<span class="st">  </span><span class="kw">mutate</span>(<span class="dt">PROB =</span> <span class="dv">10</span>^(-QUAL/<span class="dv">10</span>))
+
+<span class="co"># plot distribution of probability that wrong call</span>
+<span class="kw">ggplot</span>(site_qual, <span class="kw">aes</span>(<span class="dt">x =</span> PROB)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(PROB, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="fl">0.01</span>), <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;probability of incorrect call&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;number of loci&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>A quality score of 20 indicates, a 1 in 100 chance that the SNP site has been called incorrectly (i.e. 99% probability that correct call). Filter loci below minimum quality of 20:</p>
+<pre><code>vcftools --vcf TotalRawSNPs.vcf --out FamB.F0 --minQ 20 --recode --recode-INFO-all</code></pre>
+</div>
+<div id="filter-1-genotype-call-rate-minimum-minor-allele-count" class="section level4">
+<h4>Filter 1: genotype call rate &amp; minimum minor allele count</h4>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5sb2Nfc3RhdHNfcmF3IDwtIHJlYWQubG9jLnN0YXRzKGRpciA9IFwiZGF0YS9WQ0YvXCIsIHZjZiA9IFwiRmFtQl9yYXdcIilcblxuIyBwbG90IGRpc3RyaWJ1dGlvbiByZWFkIGRlcHRoXG5nZ3Bsb3QobG9jX3N0YXRzX3JhdywgYWVzKHggPSBNSVNTX0ZhbUJfcmF3KSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IDAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUJfcmF3LCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCIlIG1pc3NpbmcgZGF0YSBwZXIgbG9jdXNcIiwgeSA9IFwibnVtYmVyIG9mIGxvY2lcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+loc_stats_raw &lt;-<span class="st"> </span><span class="kw">read.loc.stats</span>(<span class="dt">dir =</span> <span class="st">&quot;data/VCF/&quot;</span>, <span class="dt">vcf =</span> <span class="st">&quot;FamB_raw&quot;</span>)
+
+<span class="co"># plot distribution read depth</span>
+<span class="kw">ggplot</span>(loc_stats_raw, <span class="kw">aes</span>(<span class="dt">x =</span> MISS_FamB_raw)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="fl">0.01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MISS_FamB_raw, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;% missing data per locus&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;number of loci&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Filter loci with minor allele count &lt; 3 and genotype call rate &lt; 0.5</p>
+<pre><code>vcftools --vcf FamB.F0.recode.vcf --out FamB.F1 --max-missing 0.5 --mac 3 --recode --recode-INFO-all</code></pre>
+</div>
+<div id="filter-2-minimum-depth-per-genotype" class="section level4">
+<h4>Filter 2: minimum depth per genotype</h4>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHBsb3QgZGlzdHJpYnV0aW9uIG1pc3NpbmcgZGF0YVxuZ2dwbG90KGxvY19zdGF0c19yYXcsIGFlcyh4ID0gTUVBTl9ERVBUSF9GYW1CX3JhdykpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAxMCwgY29sb3IgPSBcImJsYWNrXCIsIGZpbGwgPSBcImdyZXk5NVwiKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKE1FQU5fREVQVEhfRmFtQl9yYXcsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1lYW4gcmVhZCBkZXB0aCBwZXIgbG9jdXNcIiwgeSA9IFwibnVtYmVyIG9mIGxvY2lcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># plot distribution missing data</span>
+<span class="kw">ggplot</span>(loc_stats_raw, <span class="kw">aes</span>(<span class="dt">x =</span> MEAN_DEPTH_FamB_raw)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">10</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MEAN_DEPTH_FamB_raw, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean read depth per locus&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;number of loci&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Code loci with less than 3 reads per locus per individual as missing.</p>
+<pre><code>vcftools --vcf FamB.F1.recode.vcf --out FamB.F2a --minDP 3 --recode --recode-INFO-all</code></pre>
+<p>Remove flagged loci.</p>
+<pre><code>vcftools --vcf FamB.F2a.recode.vcf --out FamB.F2  --max-missing 0.5 --recode --recode-INFO-all</code></pre>
+<p>Query individual and site stats:</p>
+<pre><code>vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --depth 
+vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --site-mean-depth 
+vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --site-quality 
+vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --missing-site 
+vcftools --vcf FamB.F2.recode.vcf --out FamB.F2--missing-indv
+vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --het </code></pre>
+<p>Assess individual quality by comparing levels of missing data and read depth.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbmRfc3RhdHNfRjIgPC0gcmVhZC5pbmQuc3RhdHMoZGlyID0gXCJkYXRhL1ZDRlwiLCB2Y2YgPSBcIkZhbUIuRjJcIikgJT4lXG4gIHNlcGFyYXRlKElORFYsIGludG8gPSBjKFwiU1BcIiwgXCJMSUJcIiwgXCJTQU1QTEVfSURcIiksIHNlcCA9IFwiX1wiLCByZW1vdmUgPSBGQUxTRSlcblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+ind_stats_F2 &lt;-<span class="st"> </span><span class="kw">read.ind.stats</span>(<span class="dt">dir =</span> <span class="st">&quot;data/VCF&quot;</span>, <span class="dt">vcf =</span> <span class="st">&quot;FamB.F2&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">separate</span>(INDV, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;SP&quot;</span>, <span class="st">&quot;LIB&quot;</span>, <span class="st">&quot;SAMPLE_ID&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is 36.9665026, the 5th % quantile is 6.635576:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0YyLCBhZXMoeCA9IE1FQU5fREVQVEhfRmFtQi5GMikpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAxLCBjb2xvciA9IFwiYmxhY2tcIiwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CLkYyLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUVBTl9ERVBUSF9GYW1CLkYyLCAuMDUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJtZWFuIHJlYWQgZGVwdGggaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F2, <span class="kw">aes</span>(<span class="dt">x =</span> MEAN_DEPTH_FamB.F2)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MEAN_DEPTH_FamB.F2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MEAN_DEPTH_FamB.F2, .<span class="dv">05</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean read depth individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is NA, the 95th % quantile is NA:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0YyLCBhZXMoeCA9IE1JU1NfRmFtQi5GMikpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUIuRjIsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNSVNTX0ZhbUIuRjIsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F2, <span class="kw">aes</span>(<span class="dt">x =</span> MISS_FamB.F2)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MISS_FamB.F2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MISS_FamB.F2, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Heterozygosity per individual across all SNP sites; the mean values for Fis is -0.1765041, the 95th % quantile is -0.04477 and the 5th % quantile is -0.59199:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0YyLCBhZXMoeCA9IEZpc19GYW1CLkYyKSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSBcImJsYWNrXCIsIGZpbGwgPSBcImdyZXk5NVwiKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKEZpc19GYW1CLkYyLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUIuRjIsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIkZpc1wiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F2, <span class="kw">aes</span>(<span class="dt">x =</span> Fis_FamB.F2)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(Fis_FamB.F2, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(Fis_FamB.F2, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Fis&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="filter-3-missing-data-locusindv-i" class="section level4">
+<h4>Filter 3: missing data (locus/indv) I</h4>
+<p>Filter loci with genotype call rate &lt; 0.6</p>
+<pre><code>vcftools --vcf FamB.F2.recode.vcf --out FamB.F3a --max-missing 0.6 --recode --recode-INFO-all
+vcftools --vcf FamB.F3a.recode.vcf --out FamB.F3a --missing</code></pre>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbWlzc19GMyA8LSByZWFkLnRhYmxlKFwiZGF0YS9WQ0YvRmFtQi5GM2EuaW1pc3NcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgIGhlYWRlciA9IFRSVUUsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSlcblxuZ2dwbG90KGltaXNzX0YzLCBhZXMoeCA9IEZfTUlTUykpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihGX01JU1MsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+imiss_F3 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/VCF/FamB.F3a.imiss&quot;</span>, 
+                       <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">ggplot</span>(imiss_F3, <span class="kw">aes</span>(<span class="dt">x =</span> F_MISS)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(F_MISS, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(F_MISS, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Remove individuals with more than 90% missing data</p>
+<pre><code>mawk -v x=0.9 '$5 &gt; x' FamB.F3a.imiss | cut -f1 &gt; lowDP.indv
+vcftools --vcf FamB.F3a.recode.vcf --remove lowDP.indv --out FamB.F3b --recode --recode-INFO-all</code></pre>
+</div>
+<div id="filter-4-minor-allele-frequency-mean-minimum-depth-i" class="section level4">
+<h4>Filter 4: minor allele frequency, mean minimum depth I</h4>
+<p>Remove loci with minor allele frequency &lt; 0.01 and mean minimum depth (across all individuals) &lt; 5</p>
+<pre><code>vcftools --vcf FamB.F3b.recode.vcf --out FamB.F4 --maf 0.01 --min-meanDP 5 --recode --recode-INFO-all
+vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --missing-indv
+vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --missing-site
+vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --depth 
+vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --het </code></pre>
+<p>Assess individual quality by comparing levels of missing data and read depth.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbmRfc3RhdHNfRjQgPC0gcmVhZC5pbmQuc3RhdHMoZGlyID0gXCJkYXRhL1ZDRlwiLCB2Y2YgPSBcIkZhbUIuRjRcIikgJT4lXG4gIHNlcGFyYXRlKElORFYsIGludG8gPSBjKFwiU1BcIiwgXCJMSUJcIiwgXCJTQU1QTEVfSURcIiksIHNlcCA9IFwiX1wiLCByZW1vdmUgPSBGQUxTRSlcblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+ind_stats_F4 &lt;-<span class="st"> </span><span class="kw">read.ind.stats</span>(<span class="dt">dir =</span> <span class="st">&quot;data/VCF&quot;</span>, <span class="dt">vcf =</span> <span class="st">&quot;FamB.F4&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">separate</span>(INDV, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;SP&quot;</span>, <span class="st">&quot;LIB&quot;</span>, <span class="st">&quot;SAMPLE_ID&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is 53.9199101, the 5th % quantile is 8.304825:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0Y0LCBhZXMoeCA9IE1FQU5fREVQVEhfRmFtQi5GNCkpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSA1LCBjb2xvciA9IFwiYmxhY2tcIiwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CLkY0LCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUVBTl9ERVBUSF9GYW1CLkY0LCAuMDUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJtZWFuIHJlYWQgZGVwdGggaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F4, <span class="kw">aes</span>(<span class="dt">x =</span> MEAN_DEPTH_FamB.F4)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MEAN_DEPTH_FamB.F4, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MEAN_DEPTH_FamB.F4, .<span class="dv">05</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean read depth individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is NA, the 95th % quantile is NA:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0Y0LCBhZXMoeCA9IE1JU1NfRmFtQi5GNCkpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUIuRjQsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNSVNTX0ZhbUIuRjQsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F4, <span class="kw">aes</span>(<span class="dt">x =</span> MISS_FamB.F4)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MISS_FamB.F4, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MISS_FamB.F4, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Heterozygosity per individual across all SNP sites; the mean values for Fis is -0.1897826, the 95th % quantile is -0.0763435 and the 5th % quantile is -0.5941435:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0Y0LCBhZXMoeCA9IEZpc19GYW1CLkY0KSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSBcImJsYWNrXCIsIGZpbGwgPSBcImdyZXk5NVwiKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKEZpc19GYW1CLkY0LCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUIuRjQsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIkZpc1wiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F4, <span class="kw">aes</span>(<span class="dt">x =</span> Fis_FamB.F4)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(Fis_FamB.F4, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(Fis_FamB.F4, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Fis&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="filter-5-missing-data-locusindv-ii" class="section level4">
+<h4>Filter 5: missing data (locus/indv) II</h4>
+<p>Remove loci with genotype call rate &lt; 0.8</p>
+<pre><code>vcftools --vcf FamB.F4.recode.vcf --out FamB.F5a --max-missing 0.8  --recode --recode-INFO-all
+vcftools --vcf FamB.F5a.recode.vcf --out FamB.F5a --missing</code></pre>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbWlzc19GNSA8LSByZWFkLnRhYmxlKFwiZGF0YS9WQ0YvRmFtQi5GNWEuaW1pc3NcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgIGhlYWRlciA9IFRSVUUsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSlcblxuZ2dwbG90KGltaXNzX0Y1LCBhZXMoeCA9IEZfTUlTUykpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihGX01JU1MsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+imiss_F5 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/VCF/FamB.F5a.imiss&quot;</span>, 
+                       <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">ggplot</span>(imiss_F5, <span class="kw">aes</span>(<span class="dt">x =</span> F_MISS)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(F_MISS, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(F_MISS, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Remove individuals with &gt; 75% missing data</p>
+<pre><code>mawk -v x=0.75 '$5 &gt; x' FamB.F5a.imiss | cut -f1 &gt; lowDP.indv
+vcftools --vcf FamB.F5a.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out FamB.F5b</code></pre>
+</div>
+<div id="filter-6-minor-allele-frequency-mean-minimum-depth-ii" class="section level4">
+<h4>Filter 6: minor allele frequency, mean minimum depth II</h4>
+<p>Filter loci with minor allele frequency &lt; 0.03 and mean minimum depth (across all individuals) &lt; 10</p>
+<pre><code>vcftools --vcf FamB.F5b.recode.vcf --out FamB.F6 --maf 0.03 --recode --recode-INFO-all
+vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --min-meanDP 10 
+vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing 
+vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --depth 
+vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --het
+vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing-indv
+vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing-site</code></pre>
+<p>Assess individual quality by comparing levels of missing data and read depth.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbmRfc3RhdHNfRjYgPC0gcmVhZC5pbmQuc3RhdHMoZGlyID0gXCJkYXRhL1ZDRlwiLCB2Y2YgPSBcIkZhbUIuRjZcIikgJT4lXG4gIHNlcGFyYXRlKElORFYsIGludG8gPSBjKFwiU1BcIiwgXCJMSUJcIiwgXCJTQU1QTEVfSURcIiksIHNlcCA9IFwiX1wiLCByZW1vdmUgPSBGQUxTRSlcblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+ind_stats_F6 &lt;-<span class="st"> </span><span class="kw">read.ind.stats</span>(<span class="dt">dir =</span> <span class="st">&quot;data/VCF&quot;</span>, <span class="dt">vcf =</span> <span class="st">&quot;FamB.F6&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">separate</span>(INDV, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;SP&quot;</span>, <span class="st">&quot;LIB&quot;</span>, <span class="st">&quot;SAMPLE_ID&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is 70.4745768, the 5th % quantile is 10.88328:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIHBsb3QgbWVhbiByZWFkIGRlcHRoIHBlciBpbmR2XG5nZ3Bsb3QoaW5kX3N0YXRzX0Y2LCBhZXMoeCA9IE1FQU5fREVQVEhfRmFtQi5GNikpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSA1LCBjb2xvciA9IFwiYmxhY2tcIiwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CLkY2LCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUVBTl9ERVBUSF9GYW1CLkY2LCAuMDUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJtZWFuIHJlYWQgZGVwdGggaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># plot mean read depth per indv</span>
+<span class="kw">ggplot</span>(ind_stats_F6, <span class="kw">aes</span>(<span class="dt">x =</span> MEAN_DEPTH_FamB.F6)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MEAN_DEPTH_FamB.F6, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MEAN_DEPTH_FamB.F6, .<span class="dv">05</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean read depth individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is NA, the 95th % quantile is NA:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0Y2LCBhZXMoeCA9IE1JU1NfRmFtQi5GNikpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUIuRjYsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNSVNTX0ZhbUIuRjYsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F6, <span class="kw">aes</span>(<span class="dt">x =</span> MISS_FamB.F6)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MISS_FamB.F6, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MISS_FamB.F6, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Heterozygosity per individual across all SNP sites; the mean values for Fis is -0.2061564, the 95th % quantile is -0.109558 and the 5th % quantile is -0.631418:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0Y2LCBhZXMoeCA9IEZpc19GYW1CLkY2KSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSBcImJsYWNrXCIsIGZpbGwgPSBcImdyZXk5NVwiKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKEZpc19GYW1CLkY2LCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUIuRjYsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIkZpc1wiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cbmBgYCJ9 -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F6, <span class="kw">aes</span>(<span class="dt">x =</span> Fis_FamB.F6)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(Fis_FamB.F6, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(Fis_FamB.F6, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Fis&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="filter-7-missing-data-locusindv-iii" class="section level4">
+<h4>Filter 7: missing data (locus/indv) III</h4>
+<pre><code>vcftools --vcf FamB.F6.recode.vcf --out FamB.F7a --max-missing 0.85 --recode --recode-INFO-all
+vcftools --vcf FamB.F7a.recode.vcf --out FamB.F7a --missing</code></pre>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbWlzc19GNyA8LSByZWFkLnRhYmxlKFwiZGF0YS9WQ0YvRmFtQi5GN2EuaW1pc3NcIiwgXG4gICAgICAgICAgICAgICAgICAgICAgIGhlYWRlciA9IFRSVUUsIHN0cmluZ3NBc0ZhY3RvcnMgPSBGQUxTRSlcblxuZ2dwbG90KGltaXNzX0Y3LCBhZXMoeCA9IEZfTUlTUykpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihGX01JU1MsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBsYWJzKHggPSBcIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbFwiKSArXG4gIHRoZW1lX3N0YW5kYXJkXG5cblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+imiss_F7 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/VCF/FamB.F7a.imiss&quot;</span>, 
+                       <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
+
+<span class="kw">ggplot</span>(imiss_F7, <span class="kw">aes</span>(<span class="dt">x =</span> F_MISS)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(F_MISS, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(F_MISS, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Remove individuals with &gt; 65% missing data.</p>
+<pre><code>mawk -v x=0.65 '$5 &gt; x' FamB.F7a.imiss | cut -f1 &gt; lowDP.indv
+vcftools --vcf FamB.F7a.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out FamB.F7b</code></pre>
+</div>
+<div id="filter-8-ratios-of-referencealternate-alleles-qualitydepth-and-mapping-quality" class="section level4">
+<h4>Filter 8: Ratios of reference/alternate alleles, quality/depth, and mapping quality</h4>
+<p>Allele balance is the ratio of reads for reference allele to all reads, considering only reads from individuals called as heterozygous. Values range from 0 - 1; allele balance (for real loci) should be approx. 0.5. Filter contigs SNPs for which the with allele balance &lt; 0.25 and &gt; 0.75.</p>
+<pre><code>vcffilter -s -f &quot;AB &gt; 0.2 &amp; AB &lt; 0.8 | AB &lt; 0.01 | AB &gt; 0.99&quot; -s -g &quot;QR &gt; 0 | QA &gt; 0&quot; FamB.F7b.recode.vcf &gt; FamB.F8a.vcf </code></pre>
+<p>Remove loci with quality/depth ratio &lt; 0.2</p>
+<pre><code>vcffilter -s -f &quot;QUAL / DP &gt; 0.2&quot; FamB.F8a.vcf &gt; FamB.F8b.vcf  </code></pre>
+<p>Remove loci based on ratio of mapping quality for reference and alternate allele, i.e. sites that have a high discrepancy between the mapping qualities of two alleles.</p>
+<pre><code>vcffilter -s -f &quot;MQM / MQMR &gt; 0.25 &amp; MQM / MQMR &lt; 1.75&quot; FamB.F8b.vcf &gt; FamB.F8c.vcf</code></pre>
+<p>Compare number of loci pre/post-filtering</p>
+<pre><code>mawk '!/#/' FamB.F7b.recode.vcf | wc -l
+mawk '!/#/' FamB.F8a.vcf | wc -l
+mawk '!/#/' FamB.F8b.vcf | wc -l
+mawk '!/#/' FamB.F8c.vcf | wc -l</code></pre>
+</div>
+<div id="filter-9-loci-with-reads-from-both-strands" class="section level4">
+<h4>Filter 9: Loci with reads from both strands</h4>
+<p>Paired end reads should not overlap, and a SNP site should only be covered by either the forward or reverse read (strand). Remove SNP sites that have &gt; 100x more forward alternate reads than reverse alternate reads and &gt; 100x more forward reverse reads than reverse alternate reads.</p>
+<pre><code>vcffilter -f &quot;SAF / SAR &gt; 100 &amp; SRF / SRR &gt; 100 | SAR / SAF &gt; 100 &amp; SRR / SRF &gt; 50&quot; -s FamB.F8c.vcf &gt; FamB.F9.vcf</code></pre>
+<p>Compare number of loci pre/post-filtering</p>
+<pre><code>mawk '!/#/' FamB.F9.vcf | wc -l</code></pre>
+</div>
+<div id="filter-10-properly-paired-status" class="section level4">
+<h4>Filter 10: Properly paired status</h4>
+<p>Identify loci that only unpaired reads mapping to them - an artifact introduced due de novo reference assembly. Compare number of paired reads mapping the reference and the alternate alleles to identify discrepancy in the paired status for reads supporting reference and alternate alleles.</p>
+<pre><code>vcffilter -f &quot;PAIRED &gt; 0.05 &amp; PAIREDR &gt; 0.05 &amp; PAIREDR / PAIRED &lt; 1.75 &amp; PAIREDR / PAIRED &gt; 0.25 | PAIRED &lt; 0.05 &amp; PAIREDR &lt; 0.05&quot; -s FamB.F9.vcf &gt; FamB.F10.vcf</code></pre>
+<p>Compare number of loci rep/post-filtering</p>
+<pre><code>mawk '!/#/' FamB.F10.vcf | wc -l</code></pre>
+</div>
+<div id="filter-11-maximum-depth" class="section level4">
+<h4>Filter 11: Maximum depth</h4>
+<p>Estimate the original number of individuals in the VCF file (INFO flags in filtered data set are are based on original number of individuals in data set):</p>
+<pre><code>grep -o -e 'NS=[0-9]*' FamB.F10.vcf | sed s/NS=//g | sort | tail -1</code></pre>
+<p>Create file with the original site depth and quality score for each site:</p>
+<pre><code>cut -f8 FamB.F10.vcf | grep -oe &quot;DP=[0-9]*&quot; | sed -s 's/DP=//g' &gt; FamB.F10.DEPTH
+mawk '!/#/'  FamB.F10.vcf | cut -f1,2,6 &gt; FamB.F10.loci.qual</code></pre>
+<p>Calculate average depth and standard deviation:</p>
+<pre><code>mawk '{ sum += $1; n++ } END { if (n &gt; 0) print sum / n; }' FamB.F10.DEPTH
+
+mawk '{delta = $1 - avg; avg += delta / NR; mean2 += delta * ($1 - avg); } END { print sqrt(mean2 / NR); }' FamB.F10.DEPTH</code></pre>
+<p>Mean depth per locus (across all indivuals) is 14345.1 and the standard deviation is 10304.4. Filter SNP site with depth &gt; mean depth + 1 standard deviation = 2.4649510^{4} and that have quality scores &lt; 2x the depth at that site.</p>
+<pre><code>paste FamB.F10.loci.qual FamB.F10.DEPTH | mawk -v x=24649.5 '$4 &gt; x'| mawk '$3 &lt; 2 * $4' &gt; FamB.F10.lowQDloci</code></pre>
+<p>Recalculate site depth for the remaining sites and calculate the average depth per individual; 887 individuals remaining in data set at this point.</p>
+<pre><code>vcftools --vcf FamB.F10.vcf --remove-filtered NP --exclude-positions FamB.F10.lowQDloci --site-depth --out FamB.F10
+cut -f3 FamB.F10.ldepth &gt; FamB.F10.site.depth
+mawk '!/D/' FamB.F10.site.depth | mawk -v x=887 '{print $1/x}' &gt; meandepthpersite</code></pre>
+<p>Compare the distribution of mean depth per site averaged across individuals to determine cut-off value of sites with excessively high depth indicative of paralogs/multicopy loci.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIGltcG9ydCBtZWFuIGRlcHRoIHBlciBzaXRlXG5tZWFuZGVwdGhwZXJzaXRlIDwtIHJlYWQudGFibGUoXCJkYXRhL1ZDRi9tZWFuZGVwdGhwZXJzaXRlXCIsIGhlYWRlciA9IEZBTFNFKVxuXG4jIGxvb2sgYXQgZGlzdHJpYnV0aW9uXG5nZ3Bsb3QobWVhbmRlcHRocGVyc2l0ZSwgYWVzKHggPSBWMSkpICtcbiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSA1LCBjb2xvciA9IFwiYmxhY2tcIiwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oVjEsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya2JsdWVcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUobWVhbmRlcHRocGVyc2l0ZSRWMSwgLjk1KSksXG4gICAgICAgICAgICAgICAgIGNvbG9yID0gXCJkYXJrYmx1ZVwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShtZWFuZGVwdGhwZXJzaXRlJFYxLCAuOTkpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJtZWFuIGRlcHRoIHBlciBzaXRlXCIpICtcbiAgdGhlbWVfc3RhbmRhcmRcblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="co"># import mean depth per site</span>
+meandepthpersite &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/VCF/meandepthpersite&quot;</span>, <span class="dt">header =</span> <span class="ot">FALSE</span>)
+
+<span class="co"># look at distribution</span>
+<span class="kw">ggplot</span>(meandepthpersite, <span class="kw">aes</span>(<span class="dt">x =</span> V1)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">5</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(V1, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(meandepthpersite$V1, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(meandepthpersite$V1, .<span class="dv">99</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean depth per site&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Choose cut-off value = 65. Combine both depth filters to produce filtered data set.</p>
+<pre><code>vcftools --vcf  FamB.F10.vcf --max-meanDP 80 --exclude-positions FamB.F10.lowQDloci --recode --recode-INFO-all --out FamB.F11  </code></pre>
+</div>
+<div id="filter-12-remove-indels" class="section level4">
+<h4>Filter 12: Remove Indels</h4>
+<p>Remove Indels from data set.</p>
+<pre><code>vcfallelicprimitives FamB.F11.recode.vcf --keep-info --keep-geno &gt; FamB.prim.vcf
+vcftools --vcf FamB.prim.vcf --out FamB.F12 --remove-indels --recode --recode-INFO-all</code></pre>
+</div>
+<div id="filter-13-minor-allele-frequency" class="section level4">
+<h4>Filter 13: Minor allele frequency</h4>
+<p>Set final cut-off for minor allele frequncy at 0.025</p>
+<pre><code>vcftools --vcf FamB.F12.recode.vcf --out FamB.F13 --maf 0.05 --recode --recode-INFO-all
+vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --het 
+vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --missing-indv
+vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --missing-site
+vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --depth </code></pre>
+<p><strong>Assess individual quality</strong></p>
+<p>Identify low quality individuals by comparing levels of missing data and read depth.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbmRfc3RhdHNfRjEzIDwtIHJlYWQuaW5kLnN0YXRzKGRpciA9IFwiZGF0YS9WQ0ZcIiwgdmNmID0gXCJGYW1CLkYxM1wiKSAlPiVcbiAgc2VwYXJhdGUoSU5EViwgaW50byA9IGMoXCJTUFwiLCBcIkxJQlwiLCBcIlNBTVBMRV9JRFwiKSwgc2VwID0gXCJfXCIsIHJlbW92ZSA9IEZBTFNFKVxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+ind_stats_F13 &lt;-<span class="st"> </span><span class="kw">read.ind.stats</span>(<span class="dt">dir =</span> <span class="st">&quot;data/VCF&quot;</span>, <span class="dt">vcf =</span> <span class="st">&quot;FamB.F13&quot;</span>) %&gt;%
+<span class="st">  </span><span class="kw">separate</span>(INDV, <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;SP&quot;</span>, <span class="st">&quot;LIB&quot;</span>, <span class="st">&quot;SAMPLE_ID&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;_&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is 36.3007265, the 5th % quantile is 5.654238:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0YxMywgYWVzKHggPSBNRUFOX0RFUFRIX0ZhbUIuRjEzKSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IDEsIGNvbG9yID0gXCJibGFja1wiLCBmaWxsID0gXCJncmV5OTVcIikgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNRUFOX0RFUFRIX0ZhbUIuRjEzLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUVBTl9ERVBUSF9GYW1CLkYxMywgLjA1KSksXG4gICAgICAgICAgICAgICAgIGNvbG9yID0gXCJkYXJrYmx1ZVwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGxhYnMoeCA9IFwibWVhbiByZWFkIGRlcHRoIGluZGl2aWR1YWxcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F13, <span class="kw">aes</span>(<span class="dt">x =</span> MEAN_DEPTH_FamB.F13)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MEAN_DEPTH_FamB.F13, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MEAN_DEPTH_FamB.F13, .<span class="dv">05</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;mean read depth individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is NA, the 95th % quantile is NA:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0YxMywgYWVzKHggPSBNSVNTX0ZhbUIuRjEzKSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSBcImJsYWNrXCIsIGZpbGwgPSBcImdyZXk5NVwiKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKE1JU1NfRmFtQi5GMTMsIG5hLnJtID0gVFJVRSkpLFxuICAgICAgICAgICAgICAgICBjb2xvciA9IFwiZGFya3JlZFwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNSVNTX0ZhbUIuRjEzLCAuOTUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWxcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F13, <span class="kw">aes</span>(<span class="dt">x =</span> MISS_FamB.F13)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(MISS_FamB.F13, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(MISS_FamB.F13, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Heterozygosity per individual across all SNP sites; the mean values for Fis is -0.1877523, the 95th % quantile is -0.077268 and the 5th % quantile is -0.46926:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5nZ3Bsb3QoaW5kX3N0YXRzX0YxMywgYWVzKHggPSBGaXNfRmFtQi5GMTMpKSArXG4gIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9IFwiYmxhY2tcIiwgZmlsbCA9IFwiZ3JleTk1XCIpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRmlzX0ZhbUIuRjEzLCBuYS5ybSA9IFRSVUUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtyZWRcIiwgbGluZXR5cGUgPSBcImRhc2hlZFwiLCBzaXplID0gMSkgK1xuICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUIuRjEzLCAuOTUpKSxcbiAgICAgICAgICAgICAgICAgY29sb3IgPSBcImRhcmtibHVlXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgbGFicyh4ID0gXCJGaXNcIikgK1xuICB0aGVtZV9zdGFuZGFyZFxuXG5gYGAifQ== -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">ggplot</span>(ind_stats_F13, <span class="kw">aes</span>(<span class="dt">x =</span> Fis_FamB.F13)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(Fis_FamB.F13, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(Fis_FamB.F13, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Fis&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+</div>
+<div id="filter-15-missing-data" class="section level4">
+<h4>Filter 15: Missing data</h4>
+<p>Set final cut-off for genotype call rate to &gt; 90%.</p>
+<pre><code>vcftools --vcf FamB.F13.recode.vcf --out FamB.F15a --max-missing 0.9 --recode --recode-INFO-all
+vcftools --vcf FamB.F15a.recode.vcf --out FamB.F15a --missing-indv</code></pre>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5pbWlzc19GMTUgPC0gcmVhZC50YWJsZShcImRhdGEvVkNGL0ZhbUIuRjE1YS5pbWlzc1wiLCBcbiAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyID0gVFJVRSwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFLCBxdW90ZSA9IE5VTEwpXG5cbmdncGxvdChpbWlzc19GMTUsIGFlcyh4ID0gRl9NSVNTKSkgK1xuICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSBcImJsYWNrXCIsIGZpbGwgPSBcImdyZXk5NVwiKSArXG4gIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKEZfTUlTUywgbmEucm0gPSBUUlVFKSksXG4gICAgICAgICAgICAgICAgIGNvbG9yID0gXCJkYXJrcmVkXCIsIGxpbmV0eXBlID0gXCJkYXNoZWRcIiwgc2l6ZSA9IDEpICtcbiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKEZfTUlTUywgLjk1KSksXG4gICAgICAgICAgICAgICAgIGNvbG9yID0gXCJkYXJrYmx1ZVwiLCBsaW5ldHlwZSA9IFwiZGFzaGVkXCIsIHNpemUgPSAxKSArXG4gIGxhYnMoeCA9IFwibWlzc2luZyBkYXRhIHBlciBpbmRpdmlkdWFsXCIpICtcbiAgdGhlbWVfc3RhbmRhcmRcblxuYGBgIn0= -->
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+imiss_F15 &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;data/VCF/FamB.F15a.imiss&quot;</span>, 
+                       <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>, <span class="dt">quote =</span> <span class="ot">NULL</span>)
+
+<span class="kw">ggplot</span>(imiss_F15, <span class="kw">aes</span>(<span class="dt">x =</span> F_MISS)) +
+<span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">binwidth =</span> .<span class="dv">01</span>, <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;grey95&quot;</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">mean</span>(F_MISS, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkred&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">geom_vline</span>(<span class="kw">aes</span>(<span class="dt">xintercept =</span> <span class="kw">quantile</span>(F_MISS, .<span class="dv">95</span>)),
+                 <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, <span class="dt">linetype =</span> <span class="st">&quot;dashed&quot;</span>, <span class="dt">size =</span> <span class="dv">1</span>) +
+<span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;missing data per individual&quot;</span>) +
+<span class="st">  </span>theme_standard</code></pre></div>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Set final cut-off for allowable missing data per individual to &lt; 50%.</p>
+<pre><code>mawk -v x=0.5 '$5 &gt; x' FamB.F15a.imiss | cut -f1 &gt; lowDP.indv
+vcftools --vcf FamB.F15a.recode.vcf --out FamB.SNP --remove lowDP.indv --recode --recode-INFO-all
+
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --missing-indv
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --missing-site
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --site-mean-depth 
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --depth 
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --het 
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --hardy 
+vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --freq  </code></pre>
+</div>
+</div>
+<div id="final-thresholds-values-for-filtered-data-set-fama" class="section level3">
+<h3>Final thresholds values for filtered data set FamA:</h3>
 <ul>
 <li>minimum sequence quality (minQ):</li>
 <li>minimum genotype call rate per locus (geno): %</li>
@@ -229,8 +894,6 @@ dDocent</code></pre>
 <li>Indels removed from data set</li>
 </ul>
 </div>
-<div id="family-b" class="section level2">
-<h2>Family B</h2>
 </div>
 </div>
 <div id="haplotyping" class="section level1">
@@ -253,7 +916,7 @@ dDocent</code></pre>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNvbXBhcmF0aXZlIEdlbm9taWNzIFNvdXRoZXJuIEZsb3VuZGVyIg0Kb3V0cHV0Og0KICBodG1sX25vdGVib29rOg0KICAgIGNvZGVfZm9sZGluZzogaGlkZQ0KICAgIGRmX3ByaW50OiBwYWdlZA0KICAgIGhpZ2hsaWdodDoga2F0ZQ0KICAgIHRoZW1lOiBmbGF0bHkNCiAgICB0b2M6IHllcw0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogeWVzDQotLS0NCg0KYGBge3IgbG9hZCBsaWJyYXJpZXMsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCnNvdXJjZSgibGliL2xpYnJhcmllcy5SIikNCnNvdXJjZSgibGliL2dncGxvdC5SIikNCnNvdXJjZSgibGliL0hhcGxvdHlwUi5SIikNCg0KYGBgDQoNCiMgUmVhZCBNYXBwaW5nDQoNCk1hcCBlYWNoIGxpYnJhcnkgdG8gb3B0aW1pemVkICpkZSBub3ZvKiByZWZlcmVuY2UgYnkgdHJhbnNmZXJpbmcgY29weSBvZiBgcmVmZXJlbmNlLmZhc3RhYCBhbmQgYXNzb2NpYXRlZCBmaWxlcyBmb3IgSzEgPSAyIGFuZCBLMiA9IDEgaW50byBlYWNoIGRpcmVjdG9yeSBjb250YWluaW5nIGRlbXVsdGlwbGV4ZWQgYW5kIHF1YWxpdHkgdHJpbW1lZCBgZmFzdHFgLWZpbGVzLg0KDQogICAgY2QgL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9SRUYvUkVGMjENCiAgICBjcCByZWZlcmVuY2UuZmFzdGEqIC9ob21lL3NvbGVhcnkvRkxPVU5ERVIvU0VRVUVOQ0VTL1NGTC0xDQogICAgY3AgcmVmZXJlbmNlLmZhc3RhKiAvaG9tZS9zb2xlYXJ5L0ZMT1VOREVSL1NFUVVFTkNFUy9TRkwtRmFtQg0KDQpSdW4gYGREb2NlbnRgIGZyb20gd2l0aGluIGVhY2ggbGlicmFyeSBkaXJlY3RvcnkgdG8gbWFwIHJlYWRzIHRvIGByZWZlcmVuY2UuZmFzdGFgLiBDaGFuZ2UgbWFwcGluZyBwYXJhbWV0ZXJzIGZvciBCV0EgdG86DQoNCiogTWFwcGluZyBNYXRjaF9WYWx1ZTogMQ0KKiBNYXBwaW5nIE1pc21hdGNoX1ZhbHVlOiAzDQoqIE1hcHBpbmcgR2FwT3Blbl9QZW5hbHR5OiA1DQoNClJ1biBkRG9jZW50IHNlcGFyYXRlbHkgZm9yIGVhY2ggbWFwcGluZyBmYW1pbHk6DQoNCiAgICBjZCAvaG9tZS9zb2xlYXJ5L0ZMT1VOREVSL1NFUVVFTkNFUy9TRkwtMQ0KICAgIGREb2NlbnQNCg0KICAgIGNkIC9ob21lL3NvbGVhcnkvRkxPVU5ERVIvU0VRVUVOQ0VTL1NGTC1GYW1CDQogICAgZERvY2VudA0KDQojIFNOUCBDYWxsaW5nDQoNCkNhbGwgU05QcyBmb3IgZWFjaCBtYXBwaW5nIGZhbWlseSBzZXBhcmF0ZWx5Lg0KDQogICAgY2QgL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9TRVFVRU5DRVMvU0ZMLTENCiAgICBkRG9jZW50DQogICAgDQogICAgY2QgL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9TRVFVRU5DRVMvU0ZMLTINCiAgICBkRG9jZW50DQoNCkZpbGUgYFRvdGFsUmF3U05Qcy52Y2ZgIGNvbnRhaW5zIGFsbCByYXcgU05QL0lOREVMIGNhbGxzLg0KDQojIFNOUCBGaWx0ZXJpbmcNCg0KRmlsdGVyIGFuZCBoYXBsb3R5cGluZyByZXN1bHRpbmcgU05QIGRhdGEgc2V0cyBzZXBhcmF0ZWx5IGZvciBGYW0tQSBhbmQgRmFtLUIuDQoNCkJhc2ggc2NyaXB0IGBzY3Ivb3RoZXIvVkNGX0ZpbHRlcmluZy5zaGAgY29udGFpbnMgY29tbWFuZHMgdG8gdXNlIGB2Y2Z0b29sc2AgdG8gcnVuIHRocm91Z2ggYSB2YXJpZXR5IG9mIG9wdGlvbnMgYW5kIGNvbWJpbmF0aW9ucyBvZiB0aHJlc2hvbGQgdmFsdWVzIGZvciBxdWFsaXR5LCBhbGxvd2VkIG1pc3NpbmcgZGF0YSwgbWlub3IgYWxsZWxlcyBldGMuIFRoZSBudW1iZXIgb2YgU05QcyBhbmQgaW5kaXZpZHVhbHMgcmV0YWluZWQgYXQgZWFjaCBzdGVwIGlzIHJlY29yZGVkIGluIHRoZSBzcHJlYWRzaGVldCBgZGF0YS9WQ0YvRmlsdGVyU3RhdHMueGxzYCB0byBoZWxwIHNlbGVjdCBhcHByb3ByaWF0ZSBmaWx0ZXJpbmcgc3RlcHMgYW5kIGZpbmFsIHRocmVzaG9sZCB2YWx1ZXMuDQoNCiMjIEZhbWlseSBBDQoNCkZvciAqRmFtaWx5LUEqIEhpU2VxIGRhdGEgbWFwcGVkIHRvIE1pU2VxIHJlZmVyZW5jZSBnZW5lcmF0ZWQgdXNpbmcgYWxsIGluZGl2aWR1YWxzIGluIGxpYnJhcnkuIA0KDQpvcHRpb24gQi4xLjMuMy4yLjMuMi4xLjIgd2FzIHVzZWQuIA0KDQoNCg0KRmluYWwgdGhyZXNob2xkcyB2YWx1ZXMgZm9yIGZpbHRlcmVkIGRhdGEgc2V0Og0KDQoqIG1pbmltdW0gc2VxdWVuY2UgcXVhbGl0eSAobWluUSk6IA0KKiBtaW5pbXVtIGdlbm90eXBlIGNhbGwgcmF0ZSBwZXIgbG9jdXMgKGdlbm8pOiAlDQoqIG1pbmltdW0gbWlub3IgYWxsZWxlIGNvdW50IChtYWMpOiANCiogbWluaW11bSBkZXB0aCAobWluRCk6IA0KKiBtYXhpbXVtIG1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbCAobWlzc0luZCk6ICUNCiogbWluaW11bSBtaW5vciBhbGxlbGUgZnJlcXVlbmNlIChtYWYpOiAwLg0KKiBtZWFuIG1pbmltdW0gZGVwdGggKG0tbWluRCk6IA0KKiBkRG9jZW50IGZpbHRlcnMgcnVuIGZvciBhbGxlbGljIGJhbGFuY2UsIEZvcndhcmQvUmV2ZXJzZSBhbmQgcGFpcmVkIHN0YXR1cywgZGVwdGgvcXVhbGl0eSByYXRpbyBhbmQgbWF4aW11bSBtZWFuIGRlcHRoDQoqIEluZGVscyByZW1vdmVkIGZyb20gZGF0YSBzZXQNCg0KDQojIyBGYW1pbHkgQg0KDQoNCiMgSGFwbG90eXBpbmcNCg0KIyMgRmFtaWx5IEENCg0KDQojIyBGYW1pbHkgQg0KDQojIFByZXBhcmUgZmluYWwgZGF0YSBzZXQgZm9yIG1hcHBpbmcNCg0KIyMgRmFtaWx5IEENCg0KIyMgRmFtaWx5IEINCg0K</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIkNvbXBhcmF0aXZlIEdlbm9taWNzIFNvdXRoZXJuIEZsb3VuZGVyIg0Kb3V0cHV0Og0KICBodG1sX25vdGVib29rOg0KICAgIGNvZGVfZm9sZGluZzogaGlkZQ0KICAgIGRmX3ByaW50OiBwYWdlZA0KICAgIGhpZ2hsaWdodDoga2F0ZQ0KICAgIHRoZW1lOiBmbGF0bHkNCiAgICB0b2M6IHllcw0KICBodG1sX2RvY3VtZW50Og0KICAgIHRvYzogeWVzDQotLS0NCg0KYGBge3IgbG9hZCBsaWJyYXJpZXMsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCnNvdXJjZSgibGliL2xpYnJhcmllcy5SIikNCnNvdXJjZSgibGliL2dncGxvdC5SIikNCnNvdXJjZSgibGliL1ZDRmZpbHRlcnN0YXRzLlIiKQ0Kc291cmNlKCJsaWIvSGFwbG90eXBSLlIiKQ0KDQpgYGANCg0KIyBSZWFkIE1hcHBpbmcNCg0KTWFwIGVhY2ggbGlicmFyeSB0byBvcHRpbWl6ZWQgKmRlIG5vdm8qIHJlZmVyZW5jZSBieSB0cmFuc2ZlcmluZyBjb3B5IG9mIGByZWZlcmVuY2UuZmFzdGFgIGFuZCBhc3NvY2lhdGVkIGZpbGVzIGZvciBLMSA9IDIgYW5kIEsyID0gMSBpbnRvIGVhY2ggZGlyZWN0b3J5IGNvbnRhaW5pbmcgZGVtdWx0aXBsZXhlZCBhbmQgcXVhbGl0eSB0cmltbWVkIGBmYXN0cWAtZmlsZXMuDQoNCiAgICBjZCAvaG9tZS9zb2xlYXJ5L0ZMT1VOREVSL1JFRi9SRUYyMQ0KICAgIGNwIHJlZmVyZW5jZS5mYXN0YSogL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9TRVFVRU5DRVMvU0ZMLTENCiAgICBjcCByZWZlcmVuY2UuZmFzdGEqIC9ob21lL3NvbGVhcnkvRkxPVU5ERVIvU0VRVUVOQ0VTL1NGTC1GYW1CDQoNClJ1biBgZERvY2VudGAgZnJvbSB3aXRoaW4gZWFjaCBsaWJyYXJ5IGRpcmVjdG9yeSB0byBtYXAgcmVhZHMgdG8gYHJlZmVyZW5jZS5mYXN0YWAuIENoYW5nZSBtYXBwaW5nIHBhcmFtZXRlcnMgZm9yIEJXQSB0bzoNCg0KKiBNYXBwaW5nIE1hdGNoX1ZhbHVlOiAxDQoqIE1hcHBpbmcgTWlzbWF0Y2hfVmFsdWU6IDMNCiogTWFwcGluZyBHYXBPcGVuX1BlbmFsdHk6IDUNCg0KUnVuIGREb2NlbnQgc2VwYXJhdGVseSBmb3IgZWFjaCBtYXBwaW5nIGZhbWlseToNCg0KICAgIGNkIC9ob21lL3NvbGVhcnkvRkxPVU5ERVIvU0VRVUVOQ0VTL1NGTC0xDQogICAgZERvY2VudA0KDQogICAgY2QgL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9TRVFVRU5DRVMvU0ZMLUZhbUINCiAgICBkRG9jZW50DQoNCiMgVmFyaWFudCBDYWxsaW5nDQoNCkNhbGwgU05QcyBmb3IgZWFjaCBtYXBwaW5nIGZhbWlseSBzZXBhcmF0ZWx5Lg0KDQogICAgY2QgL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9TRVFVRU5DRVMvU0ZMLTENCiAgICBkRG9jZW50DQogICAgDQogICAgY2QgL2hvbWUvc29sZWFyeS9GTE9VTkRFUi9TRVFVRU5DRVMvU0ZMLTINCiAgICBkRG9jZW50DQoNCkZpbGUgYFRvdGFsUmF3U05Qcy52Y2ZgIGNvbnRhaW5zIGFsbCByYXcgU05QL0lOREVMIGNhbGxzLg0KDQojIFNOUCBGaWx0ZXJpbmcNCg0KRmlsdGVyIGFuZCBoYXBsb3R5cGluZyByZXN1bHRpbmcgU05QIGRhdGEgc2V0cyBzZXBhcmF0ZWx5IGZvciBGYW0tQSBhbmQgRmFtLUIuDQoNCkJhc2ggc2NyaXB0IGBzY3Ivb3RoZXIvVkNGX0ZpbHRlcmluZy5zaGAgY29udGFpbnMgY29tbWFuZHMgdG8gdXNlIGB2Y2Z0b29sc2AgdG8gcnVuIHRocm91Z2ggYSB2YXJpZXR5IG9mIG9wdGlvbnMgYW5kIGNvbWJpbmF0aW9ucyBvZiB0aHJlc2hvbGQgdmFsdWVzIGZvciBxdWFsaXR5LCBhbGxvd2VkIG1pc3NpbmcgZGF0YSwgbWlub3IgYWxsZWxlcyBldGMuIFRoZSBudW1iZXIgb2YgU05QcyBhbmQgaW5kaXZpZHVhbHMgcmV0YWluZWQgYXQgZWFjaCBzdGVwIGlzIHJlY29yZGVkIGluIHRoZSBzcHJlYWRzaGVldCBgZGF0YS9WQ0YvRmlsdGVyU3RhdHMueGxzYCB0byBoZWxwIHNlbGVjdCBhcHByb3ByaWF0ZSBmaWx0ZXJpbmcgc3RlcHMgYW5kIGZpbmFsIHRocmVzaG9sZCB2YWx1ZXMuDQoNCiMjIEZhbWlseSBBDQoNCg0KDQojIyBGYW1pbHkgQg0KDQpGb3IgKkZhbWlseS1CKiBIaVNlcSBkYXRhIG1hcHBlZCB0byBNaVNlcSByZWZlcmVuY2UgZ2VuZXJhdGVkIHVzaW5nIGFsbCBpbmRpdmlkdWFscyBpbiBsaWJyYXJ5LiANCg0KIyMjIFByZXBhcmUgU05QIGRhdGEgc2V0IGZvciBmaWx0ZXJpbmcNCg0KZERvY2VudCB1c2VzIEZyZWVCYXllcyB0byBjYWxsIFNOUHMgYW5kIHdyaXRlIGEgVkNGLWZpbGUgYFRvdGFsUmF3U05Qcy52Y2ZgLiBUaGlzIGRhdGEgc2V0IHdhcyBmaWx0ZXJlZCB0byByZW1vdmUgbG93IHF1YWxpdHkgYW5kIGFydGVmYWN0dWFsIFNOUCBzaXRlcywgcGFyYWxvZ3MgYW5kIGxvdyBxdWFsaXR5IGluZGl2aWR1YWxzIGJhc2VkIG9uIGxldmVscyBvZiBtaXNzaW5nIGRhdGEsIG1pbmltdW0vbWF4aW11bSByZWFkIGRlcHRoLCBnZW5vdHlwZSBjYWxsIHJhdGUsIGFuZCBtaW5vciBhbGxlbGUgZnJlcXVlbmNpZXMuIENvbnRpZ3MgbWF5IGNvbnRhaW4gbW9yZSB0aGFuIG9uZSBTTlA7IHRoZSBzY3JpcHQgYHJhZF9oYXBsb3R5cGVyLnBsYCB3YXMgdXNlZCB0byBjcmVhdGUgaGFwbG90eXBlcyBmb3IgZWFjaCBsb2N1cy4NCg0KR2VuZXJhdGUgYSBsaXN0IG9mIGFsbCBpbmRpdmlkdWFscyBpbmNsdWRlZCBpbiB0aGUgU05QIGRhdGEgc2V0IGNhbGxlZCBieSBGcmVlQmF5ZXMgaW4gdGhlIGREb2NlbnQgcGlwZWxpbmUuDQoNCiAgICBjZCAvaG9tZS9zb2xlYXJ5L0ZMT1VOREVSL1NFUVVFTkNFUy9TRkwtRmFtQg0KICAgIHZjZnNhbXBsZW5hbWVzIFRvdGFsUmF3U05Qcy52Y2YgPiBJbmRfUkFXDQogICAgDQpVc2UgYFZDRnRvb2xzYCB0byBjcmVhdGUgc3RhdHMgZmlsZXMgZm9yIGRlcHRoLCBtaXNzaW5nIGRhdGEsIGhldGVyb3p5Z29zaXR5IGFuZCBzaXRlIHF1YWxpdHkgZm9yIHRoZSByYXcgZGF0YS4NCg0KICAgIHZjZnRvb2xzIC0tdmNmIFRvdGFsUmF3U05Qcy52Y2YgLS1vdXQgRmFtQl9yYXcgLS1kZXB0aCANCiAgICB2Y2Z0b29scyAtLXZjZiBUb3RhbFJhd1NOUHMudmNmIC0tb3V0IEZhbUJfcmF3IC0tc2l0ZS1tZWFuLWRlcHRoIA0KICAgIHZjZnRvb2xzIC0tdmNmIFRvdGFsUmF3U05Qcy52Y2YgLS1vdXQgRmFtQl9yYXcgLS1zaXRlLXF1YWxpdHkgDQogICAgdmNmdG9vbHMgLS12Y2YgVG90YWxSYXdTTlBzLnZjZiAtLW91dCBGYW1CX3JhdyAtLW1pc3NpbmctaW5kdiANCiAgICB2Y2Z0b29scyAtLXZjZiBUb3RhbFJhd1NOUHMudmNmIC0tb3V0IEZhbUJfcmF3IC0tbWlzc2luZy1zaXRlIA0KICAgIHZjZnRvb2xzIC0tdmNmIFRvdGFsUmF3U05Qcy52Y2YgLS1vdXQgRmFtQl9yYXcgLS1oZXQNCg0KSWRlbnRpZnkgbG93IHF1YWxpdHkgaW5kaXZpZHVhbHMgYnkgY29tcGFyaW5nIGxldmVscyBvZiBtaXNzaW5nIGRhdGEgYW5kIHJlYWQgZGVwdGguDQogICAgDQpgYGB7ciBsb2FkIHJhdyBpbmR2IHN0YXRzLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KDQppbmRfc3RhdHNfcmF3IDwtIHJlYWQuaW5kLnN0YXRzKGRpciA9ICJkYXRhL1ZDRiIsIHZjZiA9ICJGYW1CX1JBVyIpICU+JQ0KICBzZXBhcmF0ZShJTkRWLCBpbnRvID0gYygiU1AiLCAiTElCIiwgIlNBTVBMRV9JRCIpLCBzZXAgPSAiXyIsIHJlbW92ZSA9IEZBTFNFKQ0KDQpgYGANCg0KTWVhbiByZWFkIGRlcHRoIHBlciBpbmRpdmlkdWFsIGFjcm9zcyBhbGwgU05QIHNpdGVzLCB0aGUgbWVhbiBtZWFuIGRlcHRoIGFjcm9zcyBhbGwgU05QIHNpdGVzIGlzIGByIG1lYW4oaW5kX3N0YXRzX3JhdyRNRUFOX0RFUFRIX0ZhbUJfUkFXLCBuYS5ybSA9IFRSVUUpYCwgdGhlIDV0aCAlIHF1YW50aWxlIGlzIGByIHF1YW50aWxlKGluZF9zdGF0c19yYXckTUVBTl9ERVBUSF9GYW1CX1JBVywgLjA1KWA6DQoNCmBgYHtyIHJlYWQgZGVwdGggaW5kdiByYXcsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCiMgcGxvdCBkZXB0aCBkaXN0cmlidXRpb24NCmdncGxvdChpbmRfc3RhdHNfcmF3LCBhZXMoeCA9IE1FQU5fREVQVEhfRmFtQl9SQVcpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CX1JBVywgbmEucm0gPSBUUlVFKSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtyZWQiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUVBTl9ERVBUSF9GYW1CX1JBVywgLjA1KSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gIm1lYW4gcmVhZCBkZXB0aCBpbmRpdmlkdWFsIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KRnJlcXVlbmN5IG9mIG1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbCBhY3Jvc3MgYWxsIFNOUCBzaXRlczsgdGhlIG1lYW4gbWVhbiBkZXB0aCBhY3Jvc3MgYWxsIGluZGl2aWR1YWxzIGlzIGByIG1lYW4oaW5kX3N0YXRzX3JhdyRNSVNTX0ZhbUJfUkFXKWAsIHRoZSA5NXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX3JhdyRNSVNTX0ZhbUJfUkFXLCAuOTUpYDoNCg0KYGBge3IgbWlzc2luZyBkYXRhIGluZHYgcmF3fQ0KDQojIHBsb3QgZGlzdHJpYnV0aW9uIG9mIG1pc3NpbmcgZGF0YQ0KZ2dwbG90KGluZF9zdGF0c19yYXcsIGFlcyh4ID0gTUlTU19GYW1CX1JBVykpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gImJsYWNrIiwgZmlsbCA9ICJncmV5OTUiKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKE1JU1NfRmFtQl9SQVcsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKE1JU1NfRmFtQl9SQVcsIC45NSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCmBgYA0KDQpIZXRlcm96eWdvc2l0eSBwZXIgaW5kaXZpZHVhbCBhY3Jvc3MgYWxsIFNOUCBzaXRlczsgdGhlIG1lYW4gdmFsdWVzIGZvciBGaXMgaXMgYHIgbWVhbihpbmRfc3RhdHNfcmF3JEZpc19GYW1CX1JBVywgbmEucm0gPSBUUlVFKWAsIHRoZSA5NXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX3JhdyRGaXNfRmFtQl9SQVcsIC45NSlgIGFuZCB0aGUgNXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX3JhdyRGaXNfRmFtQl9SQVcsIC4wNSlgOg0KDQpgYGB7ciBGaXMgaW5kdiByYXd9DQoNCiMgcGxvdCBGaXMNCmdncGxvdChpbmRfc3RhdHNfcmF3LCBhZXMoeCA9IEZpc19GYW1CX1JBVykpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gImJsYWNrIiwgZmlsbCA9ICJncmV5OTUiKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKEZpc19GYW1CX1JBVywgbmEucm0gPSBUUlVFKSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtyZWQiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUJfUkFXLCAuOTUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAiRmlzIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KIyMjIENob29zZSB0aHJlc2hvbGQgdmFsdWVzIGZvciBxdWFsaXR5IHNjb3JlLCBjb3ZlcmFnZSwgbWlzc2luZyBkYXRhLCBtaW5vciBhbGxlbGVzDQoNCiMjIyMgRmlsdGVyIDA6IFNlcXVlbmNlIHF1YWxpdHkNCiAgICANClRoZSBRVUFMIGNvbHVtbiBvZiBhIFZDRiBmaWxlIGlzIGEgcGhyZWQgYmFzZWQgc2NvcmUgaW5kaWNhdGluZyB0aGUgcHJvYmFiaWxpdHkgdGhhdCB0aGUgdmFyaWFudCBzaG93biBpbiB0aGUgQUxUIGNvbHVtbiBpcyB3cm9uZy4gR2l2ZW4gdGhlIFBocmVkIHF1YWxpdHkgc2NvcmUgKFEpLCBhbmQgdGhlIHByb2JhYmlsaXR5IHRoYXQgYSBiYXNlIGlzIGluY29ycmVjdGx5IGNhbGxlZCAoUCksIFEgPSAtMTAoTG9nMTBQKS4NCg0KYGBge3Igc2l0ZSBxdWFsaXR5IHJhd30NCg0Kc2l0ZV9xdWFsIDwtIHJlYWQudGFibGUoImRhdGEvVkNGL0ZhbUJfcmF3LmxxdWFsIiwgDQogICAgICAgICAgICAgICAgICAgICAgICBoZWFkZXIgPSBUUlVFLCBzdHJpbmdzQXNGYWN0b3JzID0gRkFMU0UpICU+JQ0KICBtdXRhdGUoUFJPQiA9IDEwXigtUVVBTC8xMCkpDQoNCiMgcGxvdCBkaXN0cmlidXRpb24gb2YgcHJvYmFiaWxpdHkgdGhhdCB3cm9uZyBjYWxsDQpnZ3Bsb3Qoc2l0ZV9xdWFsLCBhZXMoeCA9IFBST0IpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gMC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oUFJPQiwgbmEucm0gPSBUUlVFKSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IDAuMDEpLCBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gInByb2JhYmlsaXR5IG9mIGluY29ycmVjdCBjYWxsIiwgeSA9ICJudW1iZXIgb2YgbG9jaSIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCkEgcXVhbGl0eSBzY29yZSBvZiAyMCBpbmRpY2F0ZXMsIGEgMSBpbiAxMDAgY2hhbmNlIHRoYXQgdGhlIFNOUCBzaXRlIGhhcyBiZWVuIGNhbGxlZCBpbmNvcnJlY3RseSAoaS5lLiA5OSUgcHJvYmFiaWxpdHkgdGhhdCBjb3JyZWN0IGNhbGwpLiBGaWx0ZXIgbG9jaSBiZWxvdyBtaW5pbXVtIHF1YWxpdHkgb2YgMjA6DQoNCiAgICB2Y2Z0b29scyAtLXZjZiBUb3RhbFJhd1NOUHMudmNmIC0tb3V0IEZhbUIuRjAgLS1taW5RIDIwIC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQoNCiMjIyMgRmlsdGVyIDE6IGdlbm90eXBlIGNhbGwgcmF0ZSAmIG1pbmltdW0gbWlub3IgYWxsZWxlIGNvdW50DQoNCmBgYHtyIG1pc3NpbmcgZGF0YSByYXcsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCmxvY19zdGF0c19yYXcgPC0gcmVhZC5sb2Muc3RhdHMoZGlyID0gImRhdGEvVkNGLyIsIHZjZiA9ICJGYW1CX3JhdyIpDQoNCiMgcGxvdCBkaXN0cmlidXRpb24gcmVhZCBkZXB0aA0KZ2dwbG90KGxvY19zdGF0c19yYXcsIGFlcyh4ID0gTUlTU19GYW1CX3JhdykpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAwLjAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUJfcmF3LCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAiJSBtaXNzaW5nIGRhdGEgcGVyIGxvY3VzIiwgeSA9ICJudW1iZXIgb2YgbG9jaSIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCkZpbHRlciBsb2NpIHdpdGggbWlub3IgYWxsZWxlIGNvdW50IDwgMyBhbmQgZ2Vub3R5cGUgY2FsbCByYXRlIDwgMC41DQoNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYwLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GMSAtLW1heC1taXNzaW5nIDAuNSAtLW1hYyAzIC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQoNCiMjIyMgRmlsdGVyIDI6IG1pbmltdW0gZGVwdGggcGVyIGdlbm90eXBlDQoNCmBgYHtyIHJlYWQgZGVwdGggcmF3LCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KDQojIHBsb3QgZGlzdHJpYnV0aW9uIG1pc3NpbmcgZGF0YQ0KZ2dwbG90KGxvY19zdGF0c19yYXcsIGFlcyh4ID0gTUVBTl9ERVBUSF9GYW1CX3JhdykpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAxMCwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CX3JhdywgbmEucm0gPSBUUlVFKSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gIm1lYW4gcmVhZCBkZXB0aCBwZXIgbG9jdXMiLCB5ID0gIm51bWJlciBvZiBsb2NpIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KQ29kZSBsb2NpIHdpdGggbGVzcyB0aGFuIDMgcmVhZHMgcGVyIGxvY3VzIHBlciBpbmRpdmlkdWFsIGFzIG1pc3NpbmcuDQoNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYxLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GMmEgLS1taW5EUCAzIC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQoNClJlbW92ZSBmbGFnZ2VkIGxvY2kuICAgIA0KDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMmEucmVjb2RlLnZjZiAtLW91dCBGYW1CLkYyICAtLW1heC1taXNzaW5nIDAuNSAtLXJlY29kZSAtLXJlY29kZS1JTkZPLWFsbA0KICAgIA0KUXVlcnkgaW5kaXZpZHVhbCBhbmQgc2l0ZSBzdGF0czoNCg0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjIucmVjb2RlLnZjZiAtLW91dCBGYW1CLkYyIC0tZGVwdGggDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjIgLS1zaXRlLW1lYW4tZGVwdGggDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjIgLS1zaXRlLXF1YWxpdHkgDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjIgLS1taXNzaW5nLXNpdGUgDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjItLW1pc3NpbmctaW5kdg0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjIucmVjb2RlLnZjZiAtLW91dCBGYW1CLkYyIC0taGV0IA0KDQpBc3Nlc3MgaW5kaXZpZHVhbCBxdWFsaXR5IGJ5IGNvbXBhcmluZyBsZXZlbHMgb2YgbWlzc2luZyBkYXRhIGFuZCByZWFkIGRlcHRoLg0KICAgIA0KYGBge3IgbG9hZCBGMiBpbmR2IHN0YXRzLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KDQppbmRfc3RhdHNfRjIgPC0gcmVhZC5pbmQuc3RhdHMoZGlyID0gImRhdGEvVkNGIiwgdmNmID0gIkZhbUIuRjIiKSAlPiUNCiAgc2VwYXJhdGUoSU5EViwgaW50byA9IGMoIlNQIiwgIkxJQiIsICJTQU1QTEVfSUQiKSwgc2VwID0gIl8iLCByZW1vdmUgPSBGQUxTRSkNCg0KYGBgDQoNCk1lYW4gcmVhZCBkZXB0aCBwZXIgaW5kaXZpZHVhbCBhY3Jvc3MgYWxsIFNOUCBzaXRlcywgdGhlIG1lYW4gbWVhbiBkZXB0aCBhY3Jvc3MgYWxsIFNOUCBzaXRlcyBpcyBgciBtZWFuKGluZF9zdGF0c19GMiRNRUFOX0RFUFRIX0ZhbUIuRjIsIG5hLnJtID0gVFJVRSlgLCB0aGUgNXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX0YyJE1FQU5fREVQVEhfRmFtQi5GMiwgLjA1KWA6DQoNCmBgYHtyIHJlYWQgZGVwdGggaW5kdiBGMn0NCg0KZ2dwbG90KGluZF9zdGF0c19GMiwgYWVzKHggPSBNRUFOX0RFUFRIX0ZhbUIuRjIpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CLkYyLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNRUFOX0RFUFRIX0ZhbUIuRjIsIC4wNSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtZWFuIHJlYWQgZGVwdGggaW5kaXZpZHVhbCIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCkZyZXF1ZW5jeSBvZiBtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwgYWNyb3NzIGFsbCBTTlAgc2l0ZXM7IHRoZSBtZWFuIG1lYW4gZGVwdGggYWNyb3NzIGFsbCBpbmRpdmlkdWFscyBpcyBgciBtZWFuKGluZF9zdGF0c19yYXckTUlTU19GYW1CLkYyKWAsIHRoZSA5NXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX3JhdyRNSVNTX0ZhbUIuRjIsIC45NSlgOg0KDQpgYGB7ciBtaXNzaW5nIGRhdGEgaW5kdiBGMn0NCg0KZ2dwbG90KGluZF9zdGF0c19GMiwgYWVzKHggPSBNSVNTX0ZhbUIuRjIpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUIuRjIsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKE1JU1NfRmFtQi5GMiwgLjk1KSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbCIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCkhldGVyb3p5Z29zaXR5IHBlciBpbmRpdmlkdWFsIGFjcm9zcyBhbGwgU05QIHNpdGVzOyB0aGUgbWVhbiB2YWx1ZXMgZm9yIEZpcyBpcyBgciBtZWFuKGluZF9zdGF0c19GMiRGaXNfRmFtQi5GMiwgbmEucm0gPSBUUlVFKWAsIHRoZSA5NXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX0YyJEZpc19GYW1CLkYyLCAuOTUpYCBhbmQgdGhlIDV0aCAlIHF1YW50aWxlIGlzIGByIHF1YW50aWxlKGluZF9zdGF0c19GMiRGaXNfRmFtQi5GMiwgLjA1KWA6DQoNCmBgYHtyIEZpcyBpbmR2IEYyfQ0KDQpnZ3Bsb3QoaW5kX3N0YXRzX0YyLCBhZXMoeCA9IEZpc19GYW1CLkYyKSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRmlzX0ZhbUIuRjIsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKEZpc19GYW1CLkYyLCAuOTUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAiRmlzIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KIyMjIyBGaWx0ZXIgMzogbWlzc2luZyBkYXRhIChsb2N1cy9pbmR2KSBJDQoNCkZpbHRlciBsb2NpIHdpdGggZ2Vub3R5cGUgY2FsbCByYXRlIDwgMC42IA0KDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjNhIC0tbWF4LW1pc3NpbmcgMC42IC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GM2EucmVjb2RlLnZjZiAtLW91dCBGYW1CLkYzYSAtLW1pc3NpbmcNCiAgICANCmBgYHtyIEYzIG1pc3NpbmcgZGF0YX0NCg0KaW1pc3NfRjMgPC0gcmVhZC50YWJsZSgiZGF0YS9WQ0YvRmFtQi5GM2EuaW1pc3MiLCANCiAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyID0gVFJVRSwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKQ0KDQpnZ3Bsb3QoaW1pc3NfRjMsIGFlcyh4ID0gRl9NSVNTKSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRl9NSVNTLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCmBgYA0KDQpSZW1vdmUgaW5kaXZpZHVhbHMgd2l0aCBtb3JlIHRoYW4gOTAlIG1pc3NpbmcgZGF0YQ0KDQogICAgbWF3ayAtdiB4PTAuOSAnJDUgPiB4JyBGYW1CLkYzYS5pbWlzcyB8IGN1dCAtZjEgPiBsb3dEUC5pbmR2DQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GM2EucmVjb2RlLnZjZiAtLXJlbW92ZSBsb3dEUC5pbmR2IC0tb3V0IEZhbUIuRjNiIC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQoNCiMjIyMgRmlsdGVyIDQ6IG1pbm9yIGFsbGVsZSBmcmVxdWVuY3ksIG1lYW4gbWluaW11bSBkZXB0aCBJDQoNClJlbW92ZSBsb2NpIHdpdGggbWlub3IgYWxsZWxlIGZyZXF1ZW5jeSA8IDAuMDEgYW5kIG1lYW4gbWluaW11bSBkZXB0aCAoYWNyb3NzIGFsbCBpbmRpdmlkdWFscykgPCA1DQoNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYzYi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjQgLS1tYWYgMC4wMSAtLW1pbi1tZWFuRFAgNSAtLXJlY29kZSAtLXJlY29kZS1JTkZPLWFsbA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjQucmVjb2RlLnZjZiAtLW91dCBGYW1CLkY0IC0tbWlzc2luZy1pbmR2DQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GNC5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjQgLS1taXNzaW5nLXNpdGUNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkY0LnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GNCAtLWRlcHRoIA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjQucmVjb2RlLnZjZiAtLW91dCBGYW1CLkY0IC0taGV0IA0KDQpBc3Nlc3MgaW5kaXZpZHVhbCBxdWFsaXR5IGJ5IGNvbXBhcmluZyBsZXZlbHMgb2YgbWlzc2luZyBkYXRhIGFuZCByZWFkIGRlcHRoLg0KICAgIA0KYGBge3IgbG9hZCBGNCBpbmR2IHN0YXRzLCBtZXNzYWdlPUZBTFNFLCB3YXJuaW5nPUZBTFNFfQ0KDQppbmRfc3RhdHNfRjQgPC0gcmVhZC5pbmQuc3RhdHMoZGlyID0gImRhdGEvVkNGIiwgdmNmID0gIkZhbUIuRjQiKSAlPiUNCiAgc2VwYXJhdGUoSU5EViwgaW50byA9IGMoIlNQIiwgIkxJQiIsICJTQU1QTEVfSUQiKSwgc2VwID0gIl8iLCByZW1vdmUgPSBGQUxTRSkNCg0KYGBgDQoNCk1lYW4gcmVhZCBkZXB0aCBwZXIgaW5kaXZpZHVhbCBhY3Jvc3MgYWxsIFNOUCBzaXRlcywgdGhlIG1lYW4gbWVhbiBkZXB0aCBhY3Jvc3MgYWxsIFNOUCBzaXRlcyBpcyBgciBtZWFuKGluZF9zdGF0c19GNCRNRUFOX0RFUFRIX0ZhbUIuRjQsIG5hLnJtID0gVFJVRSlgLCB0aGUgNXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX0Y0JE1FQU5fREVQVEhfRmFtQi5GNCwgLjA1KWA6DQoNCmBgYHtyIHJlYWQgZGVwdGggaW5kdiBGNH0NCg0KZ2dwbG90KGluZF9zdGF0c19GNCwgYWVzKHggPSBNRUFOX0RFUFRIX0ZhbUIuRjQpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gNSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oTUVBTl9ERVBUSF9GYW1CLkY0LCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNRUFOX0RFUFRIX0ZhbUIuRjQsIC4wNSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtZWFuIHJlYWQgZGVwdGggaW5kaXZpZHVhbCIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCkZyZXF1ZW5jeSBvZiBtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwgYWNyb3NzIGFsbCBTTlAgc2l0ZXM7IHRoZSBtZWFuIG1lYW4gZGVwdGggYWNyb3NzIGFsbCBpbmRpdmlkdWFscyBpcyBgciBtZWFuKGluZF9zdGF0c19yYXckTUlTU19GYW1CLkY0KWAsIHRoZSA5NXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX3JhdyRNSVNTX0ZhbUIuRjQsIC45NSlgOg0KDQpgYGB7ciBtaXNzaW5nIGRhdGEgaW5kdiBGNH0NCg0KZ2dwbG90KGluZF9zdGF0c19GNCwgYWVzKHggPSBNSVNTX0ZhbUIuRjQpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUIuRjQsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKE1JU1NfRmFtQi5GNCwgLjk1KSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gIm1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbCIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCkhldGVyb3p5Z29zaXR5IHBlciBpbmRpdmlkdWFsIGFjcm9zcyBhbGwgU05QIHNpdGVzOyB0aGUgbWVhbiB2YWx1ZXMgZm9yIEZpcyBpcyBgciBtZWFuKGluZF9zdGF0c19GNCRGaXNfRmFtQi5GNCwgbmEucm0gPSBUUlVFKWAsIHRoZSA5NXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX0Y0JEZpc19GYW1CLkY0LCAuOTUpYCBhbmQgdGhlIDV0aCAlIHF1YW50aWxlIGlzIGByIHF1YW50aWxlKGluZF9zdGF0c19GNCRGaXNfRmFtQi5GNCwgLjA1KWA6DQoNCmBgYHtyIEZpcyBpbmR2IEY0fQ0KDQpnZ3Bsb3QoaW5kX3N0YXRzX0Y0LCBhZXMoeCA9IEZpc19GYW1CLkY0KSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRmlzX0ZhbUIuRjQsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKEZpc19GYW1CLkY0LCAuOTUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAiRmlzIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KIyMjIyBGaWx0ZXIgNTogbWlzc2luZyBkYXRhIChsb2N1cy9pbmR2KSBJSQ0KDQpSZW1vdmUgbG9jaSB3aXRoIGdlbm90eXBlIGNhbGwgcmF0ZSA8IDAuOA0KDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GNC5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjVhIC0tbWF4LW1pc3NpbmcgMC44ICAtLXJlY29kZSAtLXJlY29kZS1JTkZPLWFsbA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjVhLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GNWEgLS1taXNzaW5nDQoNCmBgYHtyIEY1IG1pc3NpbmcgZGF0YX0NCg0KaW1pc3NfRjUgPC0gcmVhZC50YWJsZSgiZGF0YS9WQ0YvRmFtQi5GNWEuaW1pc3MiLCANCiAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyID0gVFJVRSwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKQ0KDQpnZ3Bsb3QoaW1pc3NfRjUsIGFlcyh4ID0gRl9NSVNTKSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRl9NSVNTLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCmBgYA0KDQpSZW1vdmUgaW5kaXZpZHVhbHMgd2l0aCA+IDc1JSBtaXNzaW5nIGRhdGENCg0KICAgIG1hd2sgLXYgeD0wLjc1ICckNSA+IHgnIEZhbUIuRjVhLmltaXNzIHwgY3V0IC1mMSA+IGxvd0RQLmluZHYNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkY1YS5yZWNvZGUudmNmIC0tcmVtb3ZlIGxvd0RQLmluZHYgLS1yZWNvZGUgLS1yZWNvZGUtSU5GTy1hbGwgLS1vdXQgRmFtQi5GNWINCg0KIyMjIyBGaWx0ZXIgNjogbWlub3IgYWxsZWxlIGZyZXF1ZW5jeSwgbWVhbiBtaW5pbXVtIGRlcHRoIElJDQoNCkZpbHRlciBsb2NpIHdpdGggbWlub3IgYWxsZWxlIGZyZXF1ZW5jeSA8IDAuMDMgYW5kIG1lYW4gbWluaW11bSBkZXB0aCAoYWNyb3NzIGFsbCBpbmRpdmlkdWFscykgPCAxMA0KDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GNWIucmVjb2RlLnZjZiAtLW91dCBGYW1CLkY2IC0tbWFmIDAuMDMgLS1yZWNvZGUgLS1yZWNvZGUtSU5GTy1hbGwNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkY2LnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GNiAtLW1pbi1tZWFuRFAgMTAgDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GNi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjYgLS1taXNzaW5nIA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjYucmVjb2RlLnZjZiAtLW91dCBGYW1CLkY2IC0tZGVwdGggDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GNi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjYgLS1oZXQNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkY2LnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GNiAtLW1pc3NpbmctaW5kdg0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjYucmVjb2RlLnZjZiAtLW91dCBGYW1CLkY2IC0tbWlzc2luZy1zaXRlDQoNCkFzc2VzcyBpbmRpdmlkdWFsIHF1YWxpdHkgYnkgY29tcGFyaW5nIGxldmVscyBvZiBtaXNzaW5nIGRhdGEgYW5kIHJlYWQgZGVwdGguDQogICAgDQpgYGB7ciBsb2FkIEY2IGluZHYgc3RhdHMsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCmluZF9zdGF0c19GNiA8LSByZWFkLmluZC5zdGF0cyhkaXIgPSAiZGF0YS9WQ0YiLCB2Y2YgPSAiRmFtQi5GNiIpICU+JQ0KICBzZXBhcmF0ZShJTkRWLCBpbnRvID0gYygiU1AiLCAiTElCIiwgIlNBTVBMRV9JRCIpLCBzZXAgPSAiXyIsIHJlbW92ZSA9IEZBTFNFKQ0KDQpgYGANCg0KTWVhbiByZWFkIGRlcHRoIHBlciBpbmRpdmlkdWFsIGFjcm9zcyBhbGwgU05QIHNpdGVzLCB0aGUgbWVhbiBtZWFuIGRlcHRoIGFjcm9zcyBhbGwgU05QIHNpdGVzIGlzIGByIG1lYW4oaW5kX3N0YXRzX0Y2JE1FQU5fREVQVEhfRmFtQi5GNiwgbmEucm0gPSBUUlVFKWAsIHRoZSA1dGggJSBxdWFudGlsZSBpcyBgciBxdWFudGlsZShpbmRfc3RhdHNfRjYkTUVBTl9ERVBUSF9GYW1CLkY2LCAuMDUpYDoNCg0KYGBge3IgcmVhZCBkZXB0aCBpbmR2IEY2fQ0KDQojIHBsb3QgbWVhbiByZWFkIGRlcHRoIHBlciBpbmR2DQpnZ3Bsb3QoaW5kX3N0YXRzX0Y2LCBhZXMoeCA9IE1FQU5fREVQVEhfRmFtQi5GNikpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSA1LCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNRUFOX0RFUFRIX0ZhbUIuRjYsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKE1FQU5fREVQVEhfRmFtQi5GNiwgLjA1KSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gIm1lYW4gcmVhZCBkZXB0aCBpbmRpdmlkdWFsIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KRnJlcXVlbmN5IG9mIG1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbCBhY3Jvc3MgYWxsIFNOUCBzaXRlczsgdGhlIG1lYW4gbWVhbiBkZXB0aCBhY3Jvc3MgYWxsIGluZGl2aWR1YWxzIGlzIGByIG1lYW4oaW5kX3N0YXRzX3JhdyRNSVNTX0ZhbUIuRjYpYCwgdGhlIDk1dGggJSBxdWFudGlsZSBpcyBgciBxdWFudGlsZShpbmRfc3RhdHNfcmF3JE1JU1NfRmFtQi5GNiwgLjk1KWA6DQoNCmBgYHtyIG1pc3NpbmcgZGF0YSBpbmR2IEY2fQ0KDQpnZ3Bsb3QoaW5kX3N0YXRzX0Y2LCBhZXMoeCA9IE1JU1NfRmFtQi5GNikpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAuMDEsIGNvbG9yID0gImJsYWNrIiwgZmlsbCA9ICJncmV5OTUiKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKE1JU1NfRmFtQi5GNiwgbmEucm0gPSBUUlVFKSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtyZWQiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoTUlTU19GYW1CLkY2LCAuOTUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAibWlzc2luZyBkYXRhIHBlciBpbmRpdmlkdWFsIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KSGV0ZXJvenlnb3NpdHkgcGVyIGluZGl2aWR1YWwgYWNyb3NzIGFsbCBTTlAgc2l0ZXM7IHRoZSBtZWFuIHZhbHVlcyBmb3IgRmlzIGlzIGByIG1lYW4oaW5kX3N0YXRzX0Y2JEZpc19GYW1CLkY2LCBuYS5ybSA9IFRSVUUpYCwgdGhlIDk1dGggJSBxdWFudGlsZSBpcyBgciBxdWFudGlsZShpbmRfc3RhdHNfRjYkRmlzX0ZhbUIuRjYsIC45NSlgIGFuZCB0aGUgNXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX0Y2JEZpc19GYW1CLkY2LCAuMDUpYDoNCg0KYGBge3IgRmlzIGluZHYgRjZ9DQoNCmdncGxvdChpbmRfc3RhdHNfRjYsIGFlcyh4ID0gRmlzX0ZhbUIuRjYpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihGaXNfRmFtQi5GNiwgbmEucm0gPSBUUlVFKSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtyZWQiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUoRmlzX0ZhbUIuRjYsIC45NSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJGaXMiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCmBgYA0KDQojIyMjIEZpbHRlciA3OiBtaXNzaW5nIGRhdGEgKGxvY3VzL2luZHYpIElJSQ0KDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GNi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjdhIC0tbWF4LW1pc3NpbmcgMC44NSAtLXJlY29kZSAtLXJlY29kZS1JTkZPLWFsbA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjdhLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GN2EgLS1taXNzaW5nDQoNCmBgYHtyIEY3IG1pc3NpbmcgZGF0YX0NCg0KaW1pc3NfRjcgPC0gcmVhZC50YWJsZSgiZGF0YS9WQ0YvRmFtQi5GN2EuaW1pc3MiLCANCiAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyID0gVFJVRSwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFKQ0KDQpnZ3Bsb3QoaW1pc3NfRjcsIGFlcyh4ID0gRl9NSVNTKSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRl9NSVNTLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCg0KYGBgDQoNClJlbW92ZSBpbmRpdmlkdWFscyB3aXRoID4gNjUlIG1pc3NpbmcgZGF0YS4NCg0KICAgIG1hd2sgLXYgeD0wLjY1ICckNSA+IHgnIEZhbUIuRjdhLmltaXNzIHwgY3V0IC1mMSA+IGxvd0RQLmluZHYNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkY3YS5yZWNvZGUudmNmIC0tcmVtb3ZlIGxvd0RQLmluZHYgLS1yZWNvZGUgLS1yZWNvZGUtSU5GTy1hbGwgLS1vdXQgRmFtQi5GN2INCg0KIyMjIyBGaWx0ZXIgODogUmF0aW9zIG9mIHJlZmVyZW5jZS9hbHRlcm5hdGUgYWxsZWxlcywgcXVhbGl0eS9kZXB0aCwgYW5kIG1hcHBpbmcgcXVhbGl0eQ0KDQpBbGxlbGUgYmFsYW5jZSBpcyB0aGUgcmF0aW8gb2YgcmVhZHMgZm9yIHJlZmVyZW5jZSBhbGxlbGUgdG8gYWxsIHJlYWRzLCBjb25zaWRlcmluZyBvbmx5IHJlYWRzIGZyb20gaW5kaXZpZHVhbHMgY2FsbGVkIGFzIGhldGVyb3p5Z291cy4gVmFsdWVzIHJhbmdlIGZyb20gMCAtIDE7IGFsbGVsZSBiYWxhbmNlIChmb3IgcmVhbCBsb2NpKSBzaG91bGQgYmUgYXBwcm94LiAwLjUuIEZpbHRlciBjb250aWdzIFNOUHMgZm9yIHdoaWNoIHRoZSB3aXRoIGFsbGVsZSBiYWxhbmNlIDwgMC4yNSBhbmQgPiAwLjc1Lg0KDQogICAgdmNmZmlsdGVyIC1zIC1mICJBQiA+IDAuMiAmIEFCIDwgMC44IHwgQUIgPCAwLjAxIHwgQUIgPiAwLjk5IiAtcyAtZyAiUVIgPiAwIHwgUUEgPiAwIiBGYW1CLkY3Yi5yZWNvZGUudmNmID4gRmFtQi5GOGEudmNmIA0KICAgIA0KUmVtb3ZlIGxvY2kgd2l0aCBxdWFsaXR5L2RlcHRoIHJhdGlvIDwgMC4yDQoNCiAgICB2Y2ZmaWx0ZXIgLXMgLWYgIlFVQUwgLyBEUCA+IDAuMiIgRmFtQi5GOGEudmNmID4gRmFtQi5GOGIudmNmICANCg0KUmVtb3ZlIGxvY2kgYmFzZWQgb24gcmF0aW8gb2YgbWFwcGluZyBxdWFsaXR5IGZvciByZWZlcmVuY2UgYW5kIGFsdGVybmF0ZSBhbGxlbGUsIGkuZS4gc2l0ZXMgdGhhdCBoYXZlIGEgaGlnaCBkaXNjcmVwYW5jeSBiZXR3ZWVuIHRoZSBtYXBwaW5nIHF1YWxpdGllcyBvZiB0d28gYWxsZWxlcy4NCg0KICAgIHZjZmZpbHRlciAtcyAtZiAiTVFNIC8gTVFNUiA+IDAuMjUgJiBNUU0gLyBNUU1SIDwgMS43NSIgRmFtQi5GOGIudmNmID4gRmFtQi5GOGMudmNmDQoNCkNvbXBhcmUgbnVtYmVyIG9mIGxvY2kgcHJlL3Bvc3QtZmlsdGVyaW5nIA0KDQogICAgbWF3ayAnIS8jLycgRmFtQi5GN2IucmVjb2RlLnZjZiB8IHdjIC1sDQogICAgbWF3ayAnIS8jLycgRmFtQi5GOGEudmNmIHwgd2MgLWwNCiAgICBtYXdrICchLyMvJyBGYW1CLkY4Yi52Y2YgfCB3YyAtbA0KICAgIG1hd2sgJyEvIy8nIEZhbUIuRjhjLnZjZiB8IHdjIC1sDQoNCiMjIyMgRmlsdGVyIDk6IExvY2kgd2l0aCByZWFkcyBmcm9tIGJvdGggc3RyYW5kcw0KDQpQYWlyZWQgZW5kIHJlYWRzIHNob3VsZCBub3Qgb3ZlcmxhcCwgYW5kIGEgU05QIHNpdGUgc2hvdWxkIG9ubHkgYmUgY292ZXJlZCBieSBlaXRoZXIgdGhlIGZvcndhcmQgb3IgcmV2ZXJzZSByZWFkIChzdHJhbmQpLiBSZW1vdmUgU05QIHNpdGVzIHRoYXQgaGF2ZSA+IDEwMHggbW9yZSBmb3J3YXJkIGFsdGVybmF0ZSByZWFkcyB0aGFuIHJldmVyc2UgYWx0ZXJuYXRlIHJlYWRzIGFuZCA+IDEwMHggbW9yZSBmb3J3YXJkIHJldmVyc2UgcmVhZHMgdGhhbiByZXZlcnNlIGFsdGVybmF0ZSByZWFkcy4NCg0KICAgIHZjZmZpbHRlciAtZiAiU0FGIC8gU0FSID4gMTAwICYgU1JGIC8gU1JSID4gMTAwIHwgU0FSIC8gU0FGID4gMTAwICYgU1JSIC8gU1JGID4gNTAiIC1zIEZhbUIuRjhjLnZjZiA+IEZhbUIuRjkudmNmDQogICAgDQpDb21wYXJlIG51bWJlciBvZiBsb2NpIHByZS9wb3N0LWZpbHRlcmluZyANCg0KICAgIG1hd2sgJyEvIy8nIEZhbUIuRjkudmNmIHwgd2MgLWwNCg0KIyMjIyBGaWx0ZXIgMTA6IFByb3Blcmx5IHBhaXJlZCBzdGF0dXMNCg0KSWRlbnRpZnkgbG9jaSB0aGF0IG9ubHkgdW5wYWlyZWQgcmVhZHMgbWFwcGluZyB0byB0aGVtIC0gYW4gYXJ0aWZhY3QgaW50cm9kdWNlZCBkdWUgZGUgbm92byByZWZlcmVuY2UgYXNzZW1ibHkuIENvbXBhcmUgbnVtYmVyIG9mIHBhaXJlZCByZWFkcyBtYXBwaW5nIHRoZSByZWZlcmVuY2UgYW5kIHRoZSBhbHRlcm5hdGUgYWxsZWxlcyB0byBpZGVudGlmeSBkaXNjcmVwYW5jeSBpbiB0aGUgcGFpcmVkIHN0YXR1cyBmb3IgcmVhZHMgc3VwcG9ydGluZyByZWZlcmVuY2UgYW5kIGFsdGVybmF0ZSBhbGxlbGVzLg0KDQogICAgdmNmZmlsdGVyIC1mICJQQUlSRUQgPiAwLjA1ICYgUEFJUkVEUiA+IDAuMDUgJiBQQUlSRURSIC8gUEFJUkVEIDwgMS43NSAmIFBBSVJFRFIgLyBQQUlSRUQgPiAwLjI1IHwgUEFJUkVEIDwgMC4wNSAmIFBBSVJFRFIgPCAwLjA1IiAtcyBGYW1CLkY5LnZjZiA+IEZhbUIuRjEwLnZjZg0KDQpDb21wYXJlIG51bWJlciBvZiBsb2NpIHJlcC9wb3N0LWZpbHRlcmluZyANCg0KICAgIG1hd2sgJyEvIy8nIEZhbUIuRjEwLnZjZiB8IHdjIC1sDQoNCiMjIyMgRmlsdGVyIDExOiBNYXhpbXVtIGRlcHRoDQoNCkVzdGltYXRlIHRoZSBvcmlnaW5hbCBudW1iZXIgb2YgaW5kaXZpZHVhbHMgaW4gdGhlIFZDRiBmaWxlIChJTkZPIGZsYWdzIGluIGZpbHRlcmVkIGRhdGEgc2V0IGFyZSBhcmUgYmFzZWQgb24gb3JpZ2luYWwgbnVtYmVyIG9mIGluZGl2aWR1YWxzIGluIGRhdGEgc2V0KToNCg0KICAgIGdyZXAgLW8gLWUgJ05TPVswLTldKicgRmFtQi5GMTAudmNmIHwgc2VkIHMvTlM9Ly9nIHwgc29ydCB8IHRhaWwgLTENCg0KQ3JlYXRlIGZpbGUgd2l0aCB0aGUgb3JpZ2luYWwgc2l0ZSBkZXB0aCBhbmQgcXVhbGl0eSBzY29yZSBmb3IgZWFjaCBzaXRlOg0KDQogICAgY3V0IC1mOCBGYW1CLkYxMC52Y2YgfCBncmVwIC1vZSAiRFA9WzAtOV0qIiB8IHNlZCAtcyAncy9EUD0vL2cnID4gRmFtQi5GMTAuREVQVEgNCiAgICBtYXdrICchLyMvJyAgRmFtQi5GMTAudmNmIHwgY3V0IC1mMSwyLDYgPiBGYW1CLkYxMC5sb2NpLnF1YWwNCg0KQ2FsY3VsYXRlIGF2ZXJhZ2UgZGVwdGggYW5kIHN0YW5kYXJkIGRldmlhdGlvbjoNCg0KICAgIG1hd2sgJ3sgc3VtICs9ICQxOyBuKysgfSBFTkQgeyBpZiAobiA+IDApIHByaW50IHN1bSAvIG47IH0nIEZhbUIuRjEwLkRFUFRIDQogICAgDQogICAgbWF3ayAne2RlbHRhID0gJDEgLSBhdmc7IGF2ZyArPSBkZWx0YSAvIE5SOyBtZWFuMiArPSBkZWx0YSAqICgkMSAtIGF2Zyk7IH0gRU5EIHsgcHJpbnQgc3FydChtZWFuMiAvIE5SKTsgfScgRmFtQi5GMTAuREVQVEgNCg0KTWVhbiBkZXB0aCBwZXIgbG9jdXMgKGFjcm9zcyBhbGwgaW5kaXZ1YWxzKSBpcyAxNDM0NS4xIGFuZCB0aGUgc3RhbmRhcmQgZGV2aWF0aW9uIGlzIDEwMzA0LjQuIEZpbHRlciBTTlAgc2l0ZSB3aXRoIGRlcHRoID4gbWVhbiBkZXB0aCArIDEgc3RhbmRhcmQgZGV2aWF0aW9uID0gYHIgMTQzNDUuMSArIDEwMzA0LjRgIGFuZCB0aGF0IGhhdmUgcXVhbGl0eSBzY29yZXMgPCAyeCB0aGUgZGVwdGggYXQgdGhhdCBzaXRlLg0KDQogICAgcGFzdGUgRmFtQi5GMTAubG9jaS5xdWFsIEZhbUIuRjEwLkRFUFRIIHwgbWF3ayAtdiB4PTI0NjQ5LjUgJyQ0ID4geCd8IG1hd2sgJyQzIDwgMiAqICQ0JyA+IEZhbUIuRjEwLmxvd1FEbG9jaQ0KDQpSZWNhbGN1bGF0ZSBzaXRlIGRlcHRoIGZvciB0aGUgcmVtYWluaW5nIHNpdGVzIGFuZCBjYWxjdWxhdGUgdGhlIGF2ZXJhZ2UgZGVwdGggcGVyIGluZGl2aWR1YWw7IDg4NyBpbmRpdmlkdWFscyByZW1haW5pbmcgaW4gZGF0YSBzZXQgYXQgdGhpcyBwb2ludC4NCg0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjEwLnZjZiAtLXJlbW92ZS1maWx0ZXJlZCBOUCAtLWV4Y2x1ZGUtcG9zaXRpb25zIEZhbUIuRjEwLmxvd1FEbG9jaSAtLXNpdGUtZGVwdGggLS1vdXQgRmFtQi5GMTANCiAgICBjdXQgLWYzIEZhbUIuRjEwLmxkZXB0aCA+IEZhbUIuRjEwLnNpdGUuZGVwdGgNCiAgICBtYXdrICchL0QvJyBGYW1CLkYxMC5zaXRlLmRlcHRoIHwgbWF3ayAtdiB4PTg4NyAne3ByaW50ICQxL3h9JyA+IG1lYW5kZXB0aHBlcnNpdGUNCg0KQ29tcGFyZSB0aGUgZGlzdHJpYnV0aW9uIG9mIG1lYW4gZGVwdGggcGVyIHNpdGUgYXZlcmFnZWQgYWNyb3NzIGluZGl2aWR1YWxzIHRvIGRldGVybWluZSBjdXQtb2ZmIHZhbHVlIG9mIHNpdGVzIHdpdGggZXhjZXNzaXZlbHkgaGlnaCBkZXB0aCBpbmRpY2F0aXZlIG9mIHBhcmFsb2dzL211bHRpY29weSBsb2NpLg0KDQpgYGB7cn0NCg0KIyBpbXBvcnQgbWVhbiBkZXB0aCBwZXIgc2l0ZQ0KbWVhbmRlcHRocGVyc2l0ZSA8LSByZWFkLnRhYmxlKCJkYXRhL1ZDRi9tZWFuZGVwdGhwZXJzaXRlIiwgaGVhZGVyID0gRkFMU0UpDQoNCiMgbG9vayBhdCBkaXN0cmlidXRpb24NCmdncGxvdChtZWFuZGVwdGhwZXJzaXRlLCBhZXMoeCA9IFYxKSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IDUsIGNvbG9yID0gImJsYWNrIiwgZmlsbCA9ICJncmV5OTUiKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBtZWFuKFYxLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gcXVhbnRpbGUobWVhbmRlcHRocGVyc2l0ZSRWMSwgLjk1KSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKG1lYW5kZXB0aHBlcnNpdGUkVjEsIC45OSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtZWFuIGRlcHRoIHBlciBzaXRlIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KQ2hvb3NlIGN1dC1vZmYgdmFsdWUgPSA2NS4gQ29tYmluZSBib3RoIGRlcHRoIGZpbHRlcnMgdG8gcHJvZHVjZSBmaWx0ZXJlZCBkYXRhIHNldC4NCg0KICAgIHZjZnRvb2xzIC0tdmNmICBGYW1CLkYxMC52Y2YgLS1tYXgtbWVhbkRQIDgwIC0tZXhjbHVkZS1wb3NpdGlvbnMgRmFtQi5GMTAubG93UURsb2NpIC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsIC0tb3V0IEZhbUIuRjExICANCg0KIyMjIyBGaWx0ZXIgMTI6IFJlbW92ZSBJbmRlbHMNCg0KUmVtb3ZlIEluZGVscyBmcm9tIGRhdGEgc2V0Lg0KDQogICAgdmNmYWxsZWxpY3ByaW1pdGl2ZXMgRmFtQi5GMTEucmVjb2RlLnZjZiAtLWtlZXAtaW5mbyAtLWtlZXAtZ2VubyA+IEZhbUIucHJpbS52Y2YNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLnByaW0udmNmIC0tb3V0IEZhbUIuRjEyIC0tcmVtb3ZlLWluZGVscyAtLXJlY29kZSAtLXJlY29kZS1JTkZPLWFsbA0KDQojIyMjIEZpbHRlciAxMzogTWlub3IgYWxsZWxlIGZyZXF1ZW5jeQ0KDQpTZXQgZmluYWwgY3V0LW9mZiBmb3IgbWlub3IgYWxsZWxlIGZyZXF1bmN5IGF0IDAuMDI1DQoNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYxMi5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjEzIC0tbWFmIDAuMDUgLS1yZWNvZGUgLS1yZWNvZGUtSU5GTy1hbGwNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYxMy5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjEzIC0taGV0IA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjEzLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GMTMgLS1taXNzaW5nLWluZHYNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYxMy5yZWNvZGUudmNmIC0tb3V0IEZhbUIuRjEzIC0tbWlzc2luZy1zaXRlDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMTMucmVjb2RlLnZjZiAtLW91dCBGYW1CLkYxMyAtLWRlcHRoIA0KDQoqKkFzc2VzcyBpbmRpdmlkdWFsIHF1YWxpdHkqKg0KDQpJZGVudGlmeSBsb3cgcXVhbGl0eSBpbmRpdmlkdWFscyBieSBjb21wYXJpbmcgbGV2ZWxzIG9mIG1pc3NpbmcgZGF0YSBhbmQgcmVhZCBkZXB0aC4NCiAgICANCmBgYHtyIGxvYWQgRjEzIGluZHYgc3RhdHMsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCmluZF9zdGF0c19GMTMgPC0gcmVhZC5pbmQuc3RhdHMoZGlyID0gImRhdGEvVkNGIiwgdmNmID0gIkZhbUIuRjEzIikgJT4lDQogIHNlcGFyYXRlKElORFYsIGludG8gPSBjKCJTUCIsICJMSUIiLCAiU0FNUExFX0lEIiksIHNlcCA9ICJfIiwgcmVtb3ZlID0gRkFMU0UpDQoNCmBgYA0KDQpNZWFuIHJlYWQgZGVwdGggcGVyIGluZGl2aWR1YWwgYWNyb3NzIGFsbCBTTlAgc2l0ZXMsIHRoZSBtZWFuIG1lYW4gZGVwdGggYWNyb3NzIGFsbCBTTlAgc2l0ZXMgaXMgYHIgbWVhbihpbmRfc3RhdHNfRjEzJE1FQU5fREVQVEhfRmFtQi5GMTMsIG5hLnJtID0gVFJVRSlgLCB0aGUgNXRoICUgcXVhbnRpbGUgaXMgYHIgcXVhbnRpbGUoaW5kX3N0YXRzX0YxMyRNRUFOX0RFUFRIX0ZhbUIuRjEzLCAuMDUpYDoNCg0KYGBge3IgcmVhZCBkZXB0aCBpbmR2IEYxM30NCg0KZ2dwbG90KGluZF9zdGF0c19GMTMsIGFlcyh4ID0gTUVBTl9ERVBUSF9GYW1CLkYxMykpICsNCiAgZ2VvbV9oaXN0b2dyYW0oYmlud2lkdGggPSAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNRUFOX0RFUFRIX0ZhbUIuRjEzLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNRUFOX0RFUFRIX0ZhbUIuRjEzLCAuMDUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAibWVhbiByZWFkIGRlcHRoIGluZGl2aWR1YWwiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCmBgYA0KDQpGcmVxdWVuY3kgb2YgbWlzc2luZyBkYXRhIHBlciBpbmRpdmlkdWFsIGFjcm9zcyBhbGwgU05QIHNpdGVzOyB0aGUgbWVhbiBtZWFuIGRlcHRoIGFjcm9zcyBhbGwgaW5kaXZpZHVhbHMgaXMgYHIgbWVhbihpbmRfc3RhdHNfcmF3JE1JU1NfRmFtQi5GMTMpYCwgdGhlIDk1dGggJSBxdWFudGlsZSBpcyBgciBxdWFudGlsZShpbmRfc3RhdHNfcmF3JE1JU1NfRmFtQi5GMTMsIC45NSlgOg0KDQpgYGB7ciBtaXNzaW5nIGRhdGEgaW5kdiBGMTN9DQoNCmdncGxvdChpbmRfc3RhdHNfRjEzLCBhZXMoeCA9IE1JU1NfRmFtQi5GMTMpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihNSVNTX0ZhbUIuRjEzLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShNSVNTX0ZhbUIuRjEzLCAuOTUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya2JsdWUiLCBsaW5ldHlwZSA9ICJkYXNoZWQiLCBzaXplID0gMSkgKw0KICBsYWJzKHggPSAibWlzc2luZyBkYXRhIHBlciBpbmRpdmlkdWFsIikgKw0KICB0aGVtZV9zdGFuZGFyZA0KDQpgYGANCg0KSGV0ZXJvenlnb3NpdHkgcGVyIGluZGl2aWR1YWwgYWNyb3NzIGFsbCBTTlAgc2l0ZXM7IHRoZSBtZWFuIHZhbHVlcyBmb3IgRmlzIGlzIGByIG1lYW4oaW5kX3N0YXRzX0YxMyRGaXNfRmFtQi5GMTMsIG5hLnJtID0gVFJVRSlgLCB0aGUgOTV0aCAlIHF1YW50aWxlIGlzIGByIHF1YW50aWxlKGluZF9zdGF0c19GMTMkRmlzX0ZhbUIuRjEzLCAuOTUpYCBhbmQgdGhlIDV0aCAlIHF1YW50aWxlIGlzIGByIHF1YW50aWxlKGluZF9zdGF0c19GMTMkRmlzX0ZhbUIuRjEzLCAuMDUpYDoNCg0KYGBge3IgRmlzIGluZHYgRjEzfQ0KDQpnZ3Bsb3QoaW5kX3N0YXRzX0YxMywgYWVzKHggPSBGaXNfRmFtQi5GMTMpKSArDQogIGdlb21faGlzdG9ncmFtKGJpbndpZHRoID0gLjAxLCBjb2xvciA9ICJibGFjayIsIGZpbGwgPSAiZ3JleTk1IikgKw0KICBnZW9tX3ZsaW5lKGFlcyh4aW50ZXJjZXB0ID0gbWVhbihGaXNfRmFtQi5GMTMsIG5hLnJtID0gVFJVRSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrcmVkIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IHF1YW50aWxlKEZpc19GYW1CLkYxMywgLjk1KSksDQogICAgICAgICAgICAgICAgIGNvbG9yID0gImRhcmtibHVlIiwgbGluZXR5cGUgPSAiZGFzaGVkIiwgc2l6ZSA9IDEpICsNCiAgbGFicyh4ID0gIkZpcyIpICsNCiAgdGhlbWVfc3RhbmRhcmQNCg0KYGBgDQoNCiMjIyMgRmlsdGVyIDE1OiBNaXNzaW5nIGRhdGENCg0KU2V0IGZpbmFsIGN1dC1vZmYgZm9yIGdlbm90eXBlIGNhbGwgcmF0ZSB0byA+IDkwJS4NCg0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuRjEzLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GMTVhIC0tbWF4LW1pc3NpbmcgMC45IC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5GMTVhLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5GMTVhIC0tbWlzc2luZy1pbmR2DQoNCmBgYHtyIG1pc3NpbmcgZGF0YSBpbmRpdmlkdWFscyBGMTUsIG1lc3NhZ2U9RkFMU0UsIHdhcm5pbmc9RkFMU0V9DQoNCmltaXNzX0YxNSA8LSByZWFkLnRhYmxlKCJkYXRhL1ZDRi9GYW1CLkYxNWEuaW1pc3MiLCANCiAgICAgICAgICAgICAgICAgICAgICAgaGVhZGVyID0gVFJVRSwgc3RyaW5nc0FzRmFjdG9ycyA9IEZBTFNFLCBxdW90ZSA9IE5VTEwpDQoNCmdncGxvdChpbWlzc19GMTUsIGFlcyh4ID0gRl9NSVNTKSkgKw0KICBnZW9tX2hpc3RvZ3JhbShiaW53aWR0aCA9IC4wMSwgY29sb3IgPSAiYmxhY2siLCBmaWxsID0gImdyZXk5NSIpICsNCiAgZ2VvbV92bGluZShhZXMoeGludGVyY2VwdCA9IG1lYW4oRl9NSVNTLCBuYS5ybSA9IFRSVUUpKSwNCiAgICAgICAgICAgICAgICAgY29sb3IgPSAiZGFya3JlZCIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGdlb21fdmxpbmUoYWVzKHhpbnRlcmNlcHQgPSBxdWFudGlsZShGX01JU1MsIC45NSkpLA0KICAgICAgICAgICAgICAgICBjb2xvciA9ICJkYXJrYmx1ZSIsIGxpbmV0eXBlID0gImRhc2hlZCIsIHNpemUgPSAxKSArDQogIGxhYnMoeCA9ICJtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwiKSArDQogIHRoZW1lX3N0YW5kYXJkDQoNCmBgYA0KDQpTZXQgZmluYWwgY3V0LW9mZiBmb3IgYWxsb3dhYmxlIG1pc3NpbmcgZGF0YSBwZXIgaW5kaXZpZHVhbCB0byA8IDUwJS4NCg0KICAgIG1hd2sgLXYgeD0wLjUgJyQ1ID4geCcgRmFtQi5GMTVhLmltaXNzIHwgY3V0IC1mMSA+IGxvd0RQLmluZHYNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLkYxNWEucmVjb2RlLnZjZiAtLW91dCBGYW1CLlNOUCAtLXJlbW92ZSBsb3dEUC5pbmR2IC0tcmVjb2RlIC0tcmVjb2RlLUlORk8tYWxsDQogICAgDQogICAgdmNmdG9vbHMgLS12Y2YgRmFtQi5TTlAucmVjb2RlLnZjZiAtLW91dCBGYW1CLlNOUCAtLW1pc3NpbmctaW5kdg0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuU05QLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5TTlAgLS1taXNzaW5nLXNpdGUNCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLlNOUC5yZWNvZGUudmNmIC0tb3V0IEZhbUIuU05QIC0tc2l0ZS1tZWFuLWRlcHRoIA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuU05QLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5TTlAgLS1kZXB0aCANCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLlNOUC5yZWNvZGUudmNmIC0tb3V0IEZhbUIuU05QIC0taGV0IA0KICAgIHZjZnRvb2xzIC0tdmNmIEZhbUIuU05QLnJlY29kZS52Y2YgLS1vdXQgRmFtQi5TTlAgLS1oYXJkeSANCiAgICB2Y2Z0b29scyAtLXZjZiBGYW1CLlNOUC5yZWNvZGUudmNmIC0tb3V0IEZhbUIuU05QIC0tZnJlcSAgDQoNCiMjIyBGaW5hbCB0aHJlc2hvbGRzIHZhbHVlcyBmb3IgZmlsdGVyZWQgZGF0YSBzZXQgRmFtQToNCg0KKiBtaW5pbXVtIHNlcXVlbmNlIHF1YWxpdHkgKG1pblEpOiANCiogbWluaW11bSBnZW5vdHlwZSBjYWxsIHJhdGUgcGVyIGxvY3VzIChnZW5vKTogJQ0KKiBtaW5pbXVtIG1pbm9yIGFsbGVsZSBjb3VudCAobWFjKTogDQoqIG1pbmltdW0gZGVwdGggKG1pbkQpOiANCiogbWF4aW11bSBtaXNzaW5nIGRhdGEgcGVyIGluZGl2aWR1YWwgKG1pc3NJbmQpOiAlDQoqIG1pbmltdW0gbWlub3IgYWxsZWxlIGZyZXF1ZW5jZSAobWFmKTogMC4NCiogbWVhbiBtaW5pbXVtIGRlcHRoIChtLW1pbkQpOiANCiogZERvY2VudCBmaWx0ZXJzIHJ1biBmb3IgYWxsZWxpYyBiYWxhbmNlLCBGb3J3YXJkL1JldmVyc2UgYW5kIHBhaXJlZCBzdGF0dXMsIGRlcHRoL3F1YWxpdHkgcmF0aW8gYW5kIG1heGltdW0gbWVhbiBkZXB0aA0KKiBJbmRlbHMgcmVtb3ZlZCBmcm9tIGRhdGEgc2V0DQoNCiMgSGFwbG90eXBpbmcNCg0KIyMgRmFtaWx5IEENCg0KDQojIyBGYW1pbHkgQg0KDQoNCg0KDQojIFByZXBhcmUgZmluYWwgZGF0YSBzZXQgZm9yIG1hcHBpbmcNCg0KIyMgRmFtaWx5IEENCg0KIyMgRmFtaWx5IEINCg0K</div>
 
 
 
