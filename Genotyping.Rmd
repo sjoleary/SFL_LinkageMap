@@ -15,6 +15,11 @@ output:
 
 knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
+Mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+
 source("lib/libraries.R")
 source("lib/ggplot.R")
 source("lib/VCFfilterstats.R")
@@ -94,7 +99,7 @@ ind_stats_raw <- read.ind.stats(dir = "data/VCF", vcf = "FamA_RAW") %>%
 
 ```
 
-Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is `r round(mean(ind_stats_raw$MEAN_DEPTH_FamA_RAW, na.rm = TRUE), digits = 1)`, the 5th % quantile is `r round(quantile(ind_stats_raw$MEAN_DEPTH_FamA_RAW, .05, na.rm = TRUE), digits = 1)`:
+Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is `r round(mean(ind_stats_raw$MEAN_DEPTH_FamA_RAW, na.rm = TRUE), digits = 1)`, the 5th % quantile is `r round(quantile(ind_stats_raw$MEAN_DEPTH_FamA_RAW, .05, na.rm = TRUE), digits = 1)` and the mode is `r Mode(ind_stats_raw$MEAN_DEPTH_FamA_RAW)`:
 
 ```{r read depth indv raw A, message=FALSE, warning=FALSE}
 
@@ -165,7 +170,15 @@ ggplot(site_qual, aes(x = PROB)) +
 
 ```
 
-A quality score of 20 indicates, a 1 in 100 chance that the SNP site has been called incorrectly (i.e. 99% probability that correct call). Filter loci below minimum quality of 20:
+A quality score of 20 indicates, a 1 in 100 chance that the SNP site has been called incorrectly (i.e. 99% probability that correct call). 
+
+```{r}
+
+count(site_qual, QUAL < 20)
+
+```
+
+Filter loci with quality score < 20:
 
     vcftools --vcf TotalRawSNPs.vcf --out FamA.F0 --minQ 20 --recode --recode-INFO-all
 
@@ -180,10 +193,19 @@ ggplot(loc_stats_raw, aes(x = MISS_FamA_raw)) +
   geom_histogram(binwidth = 0.01, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(MISS_FamA_raw, na.rm = TRUE)),
                  color = "darkblue", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = 0.5),
+                 color = "red", linetype = "dashed", size = 1) +
   labs(x = "% missing data per locus", y = "number of loci") +
   theme_standard
 
 ```
+
+```{r}
+
+count(loc_stats_raw, MISS_FamA_raw)
+
+```
+
 
 Filter loci with minor allele count < 3 and genotype call rate < 0.5
 
@@ -733,7 +755,7 @@ ind_stats_raw <- read.ind.stats(dir = "data/VCF", vcf = "FamB_RAW") %>%
 
 ```
 
-Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is `r mean(ind_stats_raw$MEAN_DEPTH_FamB_RAW, na.rm = TRUE)`, the 5th % quantile is `r quantile(ind_stats_raw$MEAN_DEPTH_FamB_RAW, .05)`:
+Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is `r mean(ind_stats_raw$MEAN_DEPTH_FamB_RAW, na.rm = TRUE)`, the 5th % quantile is `r quantile(ind_stats_raw$MEAN_DEPTH_FamB_RAW, .05)`; the mode is `r Mode(ind_stats_raw$MEAN_DEPTH_FamB_RAW)`:
 
 ```{r read depth indv raw}
 
@@ -749,7 +771,7 @@ ggplot(ind_stats_raw, aes(x = MEAN_DEPTH_FamB_RAW)) +
 
 ```
 
-Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is `r mean(ind_stats_raw$MISS_FamB_RAW)`, the 95th % quantile is `r quantile(ind_stats_raw$MISS_FamB_RAW, .95)`:
+Frequency of mean read per individual across all SNP sites; the mean mean depth across all individuals is `r mean(ind_stats_raw$MISS_FamB_RAW)`, the 95th % quantile is `r quantile(ind_stats_raw$MISS_FamB_RAW, .95)` and the mode is `r Mode(ind_stats_raw$MISS_FamB_RAW)`:
 
 ```{r missing data indv raw, message=FALSE, warning=FALSE}
 
@@ -804,7 +826,15 @@ ggplot(site_qual, aes(x = PROB)) +
 
 ```
 
-A quality score of 20 indicates, a 1 in 100 chance that the SNP site has been called incorrectly (i.e. 99% probability that correct call). Filter loci below minimum quality of 20:
+A quality score of 20 indicates, a 1 in 100 chance that the SNP site has been called incorrectly (i.e. 99% probability that correct call). 
+
+```{r}
+
+count(site_qual, QUAL < 20)
+
+```
+
+Filter loci below minimum quality of 20:
 
     vcftools --vcf TotalRawSNPs.vcf --out FamB.F0 --minQ 20 --recode --recode-INFO-all
 
@@ -819,8 +849,16 @@ ggplot(loc_stats_raw, aes(x = MISS_FamB_raw)) +
   geom_histogram(binwidth = 0.01, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(MISS_FamB_raw, na.rm = TRUE)),
                  color = "darkblue", linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = 0.5),
+                 color = "red", linetype = "dashed", size = 1) +
   labs(x = "% missing data per locus", y = "number of loci") +
   theme_standard
+
+```
+
+```{r}
+
+count(loc_stats_raw, MISS_FamB_raw > 0.5)
 
 ```
 
@@ -856,7 +894,7 @@ Query individual and site stats:
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --site-mean-depth 
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --site-quality 
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --missing-site 
-    vcftools --vcf FamB.F2.recode.vcf --out FamB.F2--missing-indv
+    vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --missing-indv
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --het 
 
 Assess individual quality by comparing levels of missing data and read depth.
@@ -868,7 +906,7 @@ ind_stats_F2 <- read.ind.stats(dir = "data/VCF", vcf = "FamB.F2") %>%
 
 ```
 
-Mean read depth per individual across all SNP sites, the mean mean depth across all SNP sites is `r mean(ind_stats_F2$MEAN_DEPTH_FamB.F2, na.rm = TRUE)`, the 5th % quantile is `r quantile(ind_stats_F2$MEAN_DEPTH_FamB.F2, .05)`:
+Mean read depth per individual across all SNP sites (mode = `r Mode(ind_stats_F2$MEAN_DEPTH_FamB.F2)`).
 
 ```{r read depth indv F2}
 
@@ -883,7 +921,7 @@ ggplot(ind_stats_F2, aes(x = MEAN_DEPTH_FamB.F2)) +
 
 ```
 
-Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is `r mean(ind_stats_F2$MISS_FamB.F2)`, the 95th % quantile is `r quantile(ind_stats_raw$MISS_FamB.F2, .95)`:
+Frequency of missing data per individual across all SNP sites after removing poor quality loci:
 
 ```{r missing data indv F2}
 
@@ -898,7 +936,7 @@ ggplot(ind_stats_F2, aes(x = MISS_FamB.F2)) +
 
 ```
 
-Heterozygosity per individual across all SNP sites; the mean values for Fis is `r mean(ind_stats_F2$Fis_FamB.F2, na.rm = TRUE)`, the 95th % quantile is `r quantile(ind_stats_F2$Fis_FamB.F2, .95)` and the 5th % quantile is `r quantile(ind_stats_F2$Fis_FamB.F2, .05)`:
+Heterozygosity per individual across all SNP sites after removing poor quality loci:
 
 ```{r Fis indv F2}
 
@@ -913,12 +951,54 @@ ggplot(ind_stats_F2, aes(x = Fis_FamB.F2)) +
 
 ```
 
+Sequence quality (likelihood of correct variant call) after removing poor quality loci:
+
+```{r}
+
+site_qual <- read.table("data/VCF/FamB.F2.lqual", 
+                        header = TRUE, stringsAsFactors = FALSE) %>%
+  mutate(PROB = 10^(-QUAL/10))
+
+# plot distribution of probability that wrong call
+ggplot(site_qual, aes(x = QUAL)) +
+  geom_histogram(binwidth = 1, color = "black", fill = "grey95") +
+  geom_vline(aes(xintercept = mean(PROB, na.rm = TRUE)),
+                 color = "darkblue", linetype = "dashed", size = 1) +
+  labs(x = "quality score", y = "number of loci") +
+  theme_standard
+
+```
+
 #### Filter 3: missing data (locus/indv) I
+
+Distribution of nissing data per locus:
+
+```{r missing data F2, message=FALSE, warning=FALSE}
+
+loc_stats_F2 <- read.loc.stats(dir = "data/VCF/", vcf = "FamB.F2")
+
+# plot distribution read depth
+ggplot(loc_stats_F2, aes(x = MISS_FamB_raw)) +
+  geom_histogram(binwidth = 0.01, color = "black", fill = "grey95") +
+  geom_vline(aes(xintercept = mean(MISS_FamB_raw, na.rm = TRUE)),
+                 color = "darkblue", linetype = "dashed", size = 1) +
+    geom_vline(aes(xintercept = 0.5),
+                 color = "red", linetype = "dashed", size = 1) +
+  labs(x = "% missing data per locus", y = "number of loci") +
+  theme_standard
+
+```
+
+```{r}
+
+count(loc_stats_F2, MISS_FamB.F2 > 0.6)
+
+```
 
 Filter loci with genotype call rate < 0.6 
 
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F3a --max-missing 0.6 --recode --recode-INFO-all
-    vcftools --vcf FamB.F3a.recode.vcf --out FamB.F3a --missing
+    vcftools --vcf FamB.F3a.recode.vcf --out FamB.F3a --missing-indv
     
 ```{r F3 missing data}
 
