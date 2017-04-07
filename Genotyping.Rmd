@@ -13,12 +13,13 @@ output:
 
 ```{r load libraries, message=FALSE, warning=FALSE}
 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
 source("lib/libraries.R")
 source("lib/ggplot.R")
 source("lib/VCFfilterstats.R")
 source("lib/HaplotypR.R")
 
-knitr::opts_chunk$set(warning = FALSE, message = FALSE)
 
 ```
 
@@ -51,7 +52,7 @@ Call SNPs for each mapping family separately.
     cd /home/soleary/FLOUNDER/SEQUENCES/SFL-1
     dDocent
     
-    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-2
+    cd /home/soleary/FLOUNDER/SEQUENCES/SFL-FamB
     dDocent
 
 File `TotalRawSNPs.vcf` contains all raw SNP/INDEL calls.
@@ -1554,6 +1555,8 @@ write.table(FamA_tsv_filtered, file = "data/VCF/FamA.filtered.tsv",
 
 Create list of loci to filter from linkage map file (`*.tsv`-file), this can be done before converting to `*.raw` for analysis in r/QTL and onemap as the file format is one locus per row, then the genotype call in each individual.
 
+Remove loci not called in 70% of offspring (`r round(174*0.7, digits = 0)`) from `*.tsv`-file.
+
 ```{r read data sets to filter, message=FALSE, warning=FALSE}
 
 # import genepop file
@@ -1561,15 +1564,15 @@ Create list of loci to filter from linkage map file (`*.tsv`-file), this can be 
 # import tsv file
 FamB_tsv <- read.delim("data/VCF/FamB.tsv", header = TRUE)
 
+count(FamB_tsv, Count > 122)
+
 # remove all loci not called in at least 80% of individuals
 FamB_tsv <- FamB_tsv %>%
   filter(Count > 122)
 
-count(FamB_tsv, Count > 122)
+
 
 ```
-
-Remove loci not called in 70% of offspring (`r round(174*0.7, digits = 0)`) from `*.tsv`-file.
 
 ## Summary stats by locus
 
@@ -1611,7 +1614,7 @@ plot.ind.hap.stats(hap_ind_statsB)
 
 ### Proportion of individuals haplotyped
 
-Loci that were not successfully haplotyped in more than 80% of individuals were filtered during haplotyping process. Already removed from tsv file.
+Loci that were not successfully haplotyped in more than 90% of individuals were filtered during haplotyping process. Already removed from tsv file.
 
 ```{r filter loci genotype call rate B, message=FALSE, warning=FALSE}
 
@@ -1619,10 +1622,10 @@ Loci that were not successfully haplotyped in more than 80% of individuals were 
 quantile(hap_statsB$Prop_Haplotyped, c(.5, .75, .85, .9, .95))
 
 # number of loci called in >80% individuals
-count(hap_statsB, Prop_Haplotyped < 0.8)
+count(hap_statsB, Prop_Haplotyped < 0.9)
 
 # create vector of loci to remove (choose cut-off)
-Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsB, 0.8)
+Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsB, 0.9)
 
 ```
 
@@ -1656,17 +1659,17 @@ quantile(hap_statsB$Haplotypes, c(.5, .75, .85, .9, .95))
 
 # number of loci with number of SNPs > 10
 count(hap_statsB, Sites > 5)
-count(hap_statsB, Haplotypes > 7)
+count(hap_statsB, Haplotypes > 4)
 
 # create vector of loci to remove (choose cut-off >5)
 NoSNps <- filter.loci.noSNPs(hap_statsB, 5)
-NoHaps <- filter.loci.NoHaps(hap_statsB, 7)
+NoHaps <- filter.loci.NoHaps(hap_statsB, 4)
 
 ```
 
 ### Low Coverage/Genotyping Error
 
-After combining SNPs at the same contig during the haplotyping process it is possible to observe fewer than the expected number of haplotypes. When this occurs, that is coded as missing data for that particular indvidual and the locus is flagged as a potential genotyping error or suffering from allelic drop out and the number of individuals with potential genotyping error/allelic dropout due to low coverage detected for a given locus is recorded. Cut-off value to remove locus if flagged as potential genotyping error in more than 10% of individuals is `r nrow(hap_ind_statsB)*0.1`.
+After combining SNPs at the same contig during the haplotyping process it is possible to observe fewer than the expected number of haplotypes. When this occurs, that is coded as missing data for that particular indvidual and the locus is flagged as a potential genotyping error or suffering from allelic drop out and the number of individuals with potential genotyping error/allelic dropout due to low coverage detected for a given locus is recorded. Cut-off value to remove locus if flagged as potential genotyping error in more than 10% of individuals is `r nrow(hap_ind_statsB)*0.05`.
 
 ```{r filter low coverage/genotyping error, message=FALSE, warning=FALSE}
 
@@ -1674,16 +1677,16 @@ After combining SNPs at the same contig during the haplotyping process it is pos
 quantile(hap_statsB$Low_Cov.Geno_Err, c(.5, .75, .85, .9, .95))
 
 # summary of count of possible genotyping errors
-count(hap_statsB, Low_Cov.Geno_Err > 17)
+count(hap_statsB, Low_Cov.Geno_Err > 9)
 
 # create vector of loci to remove
-Geno_Err <- filter.loci.geno_err(hap_statsB, 17)
+Geno_Err <- filter.loci.geno_err(hap_statsB, 9)
 
 ```
 
-Filter loci flagged as potential genotyping error in more than 10% of individuals (`r length(Geno_Err)` loci).
+Filter loci flagged as potential genotyping error in more than 5% of individuals (`r length(Geno_Err)` loci).
 
-## Remove loci from tsv file
+## Remove loci and individuals from tsv file
 
 ```{r remove loci individuals B}
 
@@ -1696,6 +1699,24 @@ FamB_tsv_filtered <- FamB_tsv %>%
   filter(!Parents == "aa/aa") %>%
   filter(!Parents == "--/--")
 
+# identify individuals w/high missing data
+removeInd <- hap_ind_statsB %>%
+    filter(Prop_Success < 0.7)
+
+FamB_tsv_filtered <- FamB_tsv_filtered %>%
+    select(-`FamB_FamB.027`) %>%
+    select(-`FamB_FamB.028`) %>%
+    select(-`FamB_FamB.088`) %>%
+    select(-`FamB_FamB.102`) %>%
+    select(-`FamB_FamB.103`) %>%
+    select(-`FamB_FamB.105`) %>%
+    select(-`FamB_FamB.107`) %>%
+    select(-`FamB_FamB.109`) %>%
+    select(-`FamB_FamB.110`) %>%
+    select(-`FamB_FamB.111`) %>%
+    select(-`FamB_FamB.163`) %>%
+    select(-`FamB_FamB.180`)
+
 genotypes_FamB <- FamB_tsv_filtered %>%
   group_by(Parents) %>%
   summarise(n())
@@ -1705,6 +1726,8 @@ write.table(FamB_tsv_filtered, file = "data/VCF/FamB.filtered.tsv",
             quote = FALSE, row.names = FALSE)
 
 ```
+
+Filtered data set contains `r nrow(FamB_tsv_filtered)` loci and `r (ncol(FamB_tsv_filtered)-4) individuals.
 
 # Prepare final data set for mapping
 

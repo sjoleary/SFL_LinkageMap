@@ -20,7 +20,7 @@ source("lib/ggplot.R")
 
 ```
 
-# Family A Female Map
+# Family B Female Map
 
 ## Load data
 
@@ -29,14 +29,14 @@ Required inputfiles are `genfile`: `*.raw` generated using `convert.pl` to conve
 ```{r, message=FALSE, warning=FALSE}
 
 # load data
-FamA_F <- read.cross("mm", dir="data/LINKMAP/", 
-                     "FamA-F.raw", "FamA-F.map", estimate.map = FALSE)
+FamB_F <- read.cross("mm", dir="data/LINKMAP/", 
+                     "FamB-F.raw", "FamB-F.map", estimate.map = FALSE)
 
 # number of individuals/loci in data set
-Sum_FamA_F.raw <- summary(FamA_F)
-
+Sum_FamB_F.raw <- summary(FamB_F)
+summary(FamB_F)
 ```
-Raw data set contains `r as.numeric(Sum_FamA_F.raw$n.ind)` individuals and `r sum(as.numeric(Sum_FamA_F.raw$n.mar))` loci.
+Raw data set contains `r as.numeric(Sum_FamB_F.raw$n.ind)` individuals and `r sum(as.numeric(Sum_FamB_F.raw$n.mar))` loci.
 
 ## Pre-mapping quality control
 
@@ -47,7 +47,7 @@ Missing genotypes (loci/individuals)
 ```{r}
 
 # plot pattern of missing data
-plotMissing(FamA_F)
+plotMissing(FamB_F)
 
 ```
 
@@ -55,35 +55,47 @@ Omit loci with > 5% missing data and individuals with > 25% missing data.
 
 ```{r, message=FALSE, warning=FALSE}
 
-Nind_F.raw <- as.numeric(Sum_FamA_F.raw$n.ind)
+Nind_F.raw <- as.numeric(Sum_FamB_F.raw$n.ind)
 
 # number of typed indivuals per locus
-ntyped_F.l <- ntyped(FamA_F, "mar")
+ntyped_F.l <- ntyped(FamB_F, "mar")
 ntyped_F.l <- data.frame(LOCUS = names(ntyped_F.l), NTYPED = ntyped_F.l, row.names = NULL) %>%
   mutate(GENO = NTYPED/Nind_F.raw)
 
+count(ntyped_F.l, GENO > 0.9)
+
 # omit markers with >5% missing data
-temp <- filter(ntyped_F.l, GENO < 0.95)
+temp <- filter(ntyped_F.l, GENO < 0.9)
 drop.l <- as.character(temp$LOCUS)
-FamA_F.f1 <- drop.markers(FamA_F, drop.l)
-
-# omit individuals with > 5% missing data
-Nloci_F.raw <- sum(as.numeric(Sum_FamA_F.raw$n.mar))
-
-FamA_F.f1 <- subset(FamA_F.f1, ind = (ntyped(FamA_F.f1) > Nloci_F.raw*0.75))
+FamB_F.f1A <- drop.markers(FamB_F, drop.l)
 
 # number of individuals/loci in data set
-Sum_FamA_F.f1 <- summary(FamA_F.f1)
-Nind_F.f1 <- as.numeric(Sum_FamA_F.f1$n.ind)
-Nloci_F.f1 <- sum(as.numeric(Sum_FamA_F.f1$n.mar))
+Sum_FamB_F.f1A <- summary(FamB_F.f1A)
+Nind_F.f1A <- as.numeric(Sum_FamB_F.f1A$n.ind)
+Nloci_F.f1A <- sum(as.numeric(Sum_FamB_F.f1A$n.mar))
 
 # plot patterns of missing data after filter
 par(mfrow=c(1,1))
-plotMissing(FamA_F.f1)
+plotMissing(FamB_F.f1A)
 
 ```
 
-After filtering data set contains `r Nind_F.f1` individuals and `r Nloci_F.f1` loci.
+```{r}
+# omit individuals with > 5% missing data
+FamB_F.f1B <- subset(FamB_F.f1A, ind = (ntyped(FamB_F.f1A) > Nloci_F.f1A*0.85))
+
+# number of individuals/loci in data set
+Sum_FamB_F.f1B <- summary(FamB_F.f1B)
+Nind_F.f1B <- as.numeric(Sum_FamB_F.f1B$n.ind)
+Nloci_F.f1B <- sum(as.numeric(Sum_FamB_F.f1B$n.mar))
+
+# plot patterns of missing data after filter
+par(mfrow=c(1,1))
+plotMissing(FamB_F.f1B)
+
+```
+
+After filtering data set contains `r Nind_F.f1B` individuals and `r Nloci_F.f1B` loci.
 
 ### Filter 2: Omit duplicate individuals
 
@@ -92,14 +104,12 @@ Compare genotypes of pairs of individuals to identify pairs with unusually simil
 ```{r}
 
 # create matrix with proportion of matching genotypes for all pairs of individuals
-cg <- comparegeno(FamA_F.f1)
+cg <- comparegeno(FamB_F.f1B)
 
 # plot proport. of matching genotypes
 par(mfrow=c(1,1))
 hist(cg[lower.tri(cg)], breaks=seq(0, 1, len=101), xlab="proportion of matching genotypes") 
 rug(cg[lower.tri(cg)])
-
-
 
 ```
 
@@ -113,12 +123,12 @@ No matching individuals were identified.
 # match.i 
 
 # if no matching individuals identified
-FamA_F.f2 <- FamA_F.f1
+FamB_F.f2 <- FamB_F.f1
 
 # number of individuals/loci in data set
-Sum_FamA_F.f2 <- summary(FamA_F.f2)
-Nind_F.f2 <- as.numeric(Sum_FamA_F.f2$n.ind)
-Nloci_F.f2 <- sum(as.numeric(Sum_FamA_F.f2$n.mar))
+Sum_FamB_F.f2 <- summary(FamB_F.f2)
+Nind_F.f2 <- as.numeric(Sum_FamB_F.f2$n.ind)
+Nloci_F.f2 <- sum(as.numeric(Sum_FamB_F.f2$n.mar))
 
 ```
 
@@ -131,25 +141,25 @@ Identify matching markers. Drop duplicate markers but create table of correspond
 ```{r, message=FALSE, warning=FALSE}
 
 # identify matching markers (matching genotypes/including missing data)
-match.loci <- findDupMarkers(FamA_F.f2, exact.only = TRUE)
+match.loci <- findDupMarkers(FamB_F.f2, exact.only = TRUE)
 
 # keep table to add markers back in after mapping
 match.loci_F <- ldply(match.loci, data.frame) %>%
   rename(LOCUS = `.id`, MATCHLOC = `X..i..`)
 
-write.table(match.loci_F, file = "data/LINKMAP/MatchLociFamAF.txt", 
+write.table(match.loci_F, file = "data/LINKMAP/MatchLociFamBF.txt", 
             quote = FALSE, row.names = FALSE, sep = "\t")
 
 # create list of matching loci
 match.l <- as.character(match.loci_F$MATCHLOC) 
 
 # drop duplicate markers
-FamA_F.f3 <- drop.markers(FamA_F.f2, match.l)
+FamB_F.f3 <- drop.markers(FamB_F.f2, match.l)
 
 # number of individuals/loci in data set
-Sum_FamA_F.f3 <- summary(FamA_F.f3)
-Nind_F.f3 <- as.numeric(Sum_FamA_F.f3$n.ind)
-Nloci_F.f3 <- sum(as.numeric(Sum_FamA_F.f3$n.mar))
+Sum_FamB_F.f3 <- summary(FamB_F.f3)
+Nind_F.f3 <- as.numeric(Sum_FamB_F.f3$n.ind)
+Nloci_F.f3 <- sum(as.numeric(Sum_FamB_F.f3$n.mar))
 
 ```
 
@@ -162,19 +172,19 @@ Loci should have specific segregation patterns based on marker type.
 ```{r, message=FALSE, warning=FALSE}
 
 # calculate genotype frequencies and p-value (after Bonferroni correction)
-geno.freq.l <- geno.table(FamA_F.f3)
+geno.freq.l <- geno.table(FamB_F.f3)
 
 # create list of markers with p-value <0.05
-seg.dist.l <- geno.freq.l[geno.freq.l$P.value < 0.05/totmar(FamA_F.f3),] 
+seg.dist.l <- geno.freq.l[geno.freq.l$P.value < 0.05/totmar(FamB_F.f3),] 
 drop.l.seg.dist <- rownames(geno.freq.l[geno.freq.l$P.value < 1e-10,])
 
 # drop markers with significant (p<0.05) deviation from expected segregation patterns
-FamA_F.f4 <- drop.markers(FamA_F.f3, drop.l.seg.dist)
+FamB_F.f4 <- drop.markers(FamB_F.f3, drop.l.seg.dist)
 
 # number of individuals/loci in data set
-Sum_FamA_F.f4 <- summary(FamA_F.f4)
-Nind_F.f4 <- as.numeric(Sum_FamA_F.f4$n.ind)
-Nloci_F.f4 <- sum(as.numeric(Sum_FamA_F.f4$n.mar))
+Sum_FamB_F.f4 <- summary(FamB_F.f4)
+Nind_F.f4 <- as.numeric(Sum_FamB_F.f4$n.ind)
+Nloci_F.f4 <- sum(as.numeric(Sum_FamB_F.f4$n.mar))
 
 ```
 
@@ -187,7 +197,7 @@ Determine genotype frequencies by individual and remove individuals as necessary
 ```{r, message=FALSE, warning=FALSE}
 
 # determine genotype frequencies by individual
-geno.frq.i <- pull.geno(FamA_F.f3)
+geno.frq.i <- pull.geno(FamB_F.f3)
 gfreq.i <- apply(geno.frq.i, 1, function(a) table(factor(a, levels=1:3)))
 gfreq.i <- t(t(gfreq.i) / colSums(gfreq.i))
 
@@ -197,12 +207,12 @@ for(i in 1:3)
   plot(gfreq.i[i,], ylab="Genotype frequency", main=c("AA", "AB", "BB")[i], ylim=c(0,1))
 
 # if no individuals removed
-FamA_F.f5 <- FamA_F.f4
+FamB_F.f5 <- FamB_F.f4
 
 # number of individuals/loci in data set
-Sum_FamA_F.f5 <- summary(FamA_F.f5)
-Nind_F.f5 <- as.numeric(Sum_FamA_F.f5$n.ind)
-Nloci_F.f5 <- sum(as.numeric(Sum_FamA_F.f5$n.mar))
+Sum_FamB_F.f5 <- summary(FamB_F.f5)
+Nind_F.f5 <- as.numeric(Sum_FamB_F.f5$n.ind)
+Nloci_F.f5 <- sum(as.numeric(Sum_FamB_F.f5$n.mar))
 
 ```
 
@@ -215,11 +225,11 @@ Estimate recombination fraction (rf) & LOD score for each marker pair. Potential
 ```{r, message=FALSE, warning=FALSE}
 
 # estimate recombination fraction (rf) & LOD score for each marker pair
-FamA_F.LP <- est.rf(FamA_F.f5)
+FamB_F.LP <- est.rf(FamB_F.f5)
 
 # plot LOD score vs. rf
-rf <- pull.rf(FamA_F.LP)
-lod <- pull.rf(FamA_F.LP, what="lod")
+rf <- pull.rf(FamB_F.LP)
+lod <- pull.rf(FamB_F.LP, what="lod")
 par(mfrow=c(1,1))
 plot(as.numeric(rf), as.numeric(lod), xlab="recombination fraction", ylab="LOD score")
 
@@ -230,11 +240,11 @@ Form initial linkage groups and re-organize loci into initial LGs.
 ```{r}
 
 # form initial linkage groups
-init.lg <- formLinkageGroups(FamA_F.LP, max.rf = 0.35, min.lod = 6)
+init.lg <- formLinkageGroups(FamB_F.LP, max.rf = 0.35, min.lod = 6)
 table(init.lg[,2])
 
 # re-organize markers into inferred initial LGs
-FamA_F.LP <- formLinkageGroups(FamA_F.LP, max.rf = 0.35, min.lod = 6, reorgMarkers=TRUE)
+FamB_F.LP <- formLinkageGroups(FamB_F.LP, max.rf = 0.35, min.lod = 6, reorgMarkers=TRUE)
 
 ```
 
@@ -244,7 +254,7 @@ Plot rf vs LOD to identify chromosomes to switch alleles for.
 
 # plot rf vs LOD to see re-organized markers
 par(mfrow=c(1,1))
-plotRF(FamA_F.LP, alternate.chrid=TRUE)
+plotRF(FamB_F.LP, alternate.chrid=TRUE)
 
 ```
 
@@ -252,20 +262,19 @@ Switch alleles, re-estimate rf, form new linkage groups and re-organize markers.
 
 ```{r}
 # use plot to identify chromosomes to switch alleles for
-for (chr in c(4, 6, 12, 15, 18,
-              20, 22, 26:27, 29,
-              31, 33:39, 41, 43, 45:49)){
-  toswitch <- markernames(FamA_F.LP, chr=(chr))
-  FamA_F.LP <- switchAlleles(FamA_F.LP, toswitch)
+for (chr in c(11, 14:16, 18, 22, 25, 28:29,
+              31:34, 37:40, 42:48)){
+  toswitch <- markernames(FamB_F.LP, chr=(chr))
+  FamB_F.LP <- switchAlleles(FamB_F.LP, toswitch)
 }
 
 # re-estimate rf
-FamA_F.LP <- est.rf(FamA_F.LP)
+FamB_F.LP <- est.rf(FamB_F.LP)
 
 # form new linkage groups & re-organize markers
-init.lg <- formLinkageGroups(FamA_F.LP, max.rf=0.35, min.lod=6)
+init.lg <- formLinkageGroups(FamB_F.LP, max.rf=0.35, min.lod=6)
 table(init.lg[,2])
-FamA_F.LP <- formLinkageGroups(FamA_F.LP, max.rf=0.35, min.lod=6, reorgMarkers=TRUE)
+FamB_F.LP <- formLinkageGroups(FamB_F.LP, max.rf=0.35, min.lod=6, reorgMarkers=TRUE)
 
 ```
 
@@ -274,7 +283,7 @@ Plot rf vs LOD:
 ```{r}
 
 # plot rf vs LOD to see re-organized markers
-plotRF(FamA_F.LP, alternate.chrid=TRUE)
+plotRF(FamB_F.LP, alternate.chrid=TRUE)
 
 ```
 
@@ -283,8 +292,26 @@ Drop marker in LG25:
 ```{r}
 
 # if necessary identify outlier markers to drop
-pull.map(FamA_F.LP, chr="25")
-FamA_F.LP <- drop.markers(FamA_F.LP, "dDocent_Contig_22126")
+pull.map(FamB_F.LP, chr="25")
+FamB_F.LP <- drop.markers(FamB_F.LP, c("dDocent_Contig_112677", "dDocent_Contig_55140"))
+pull.map(FamB_F.LP, chr="26")
+FamB_F.LP <- drop.markers(FamB_F.LP, c("dDocent_Contig_3380", "dDocent_Contig_57682"))
+pull.map(FamB_F.LP, chr="27")
+FamB_F.LP <- drop.markers(FamB_F.LP, c("dDocent_Contig_393412", "dDocent_Contig_39533"))
+pull.map(FamB_F.LP, chr="28")
+FamB_F.LP <- drop.markers(FamB_F.LP, "dDocent_Contig_13646")
+pull.map(FamB_F.LP, chr="29")
+FamB_F.LP <- drop.markers(FamB_F.LP, "dDocent_Contig_166471")
+pull.map(FamB_F.LP, chr="30")
+FamB_F.LP <- drop.markers(FamB_F.LP, "dDocent_Contig_18025")
+pull.map(FamB_F.LP, chr="31")
+FamB_F.LP <- drop.markers(FamB_F.LP, "dDocent_Contig_285352")
+pull.map(FamB_F.LP, chr="32")
+FamB_F.LP <- drop.markers(FamB_F.LP, "dDocent_Contig_9377")
+
+# plot rf vs LOD to see re-organized markers
+plotRF(FamB_F.LP, alternate.chrid=TRUE)
+
 ```
 
 ## Establish initial marker order
@@ -294,10 +321,10 @@ Establish initial marker order within LGs using greedy algorithm. Adds one marke
 ```{r}
 
 # Create final cross/map object
-FamA_F.final <- FamA_F.LP
+FamB_F.final <- FamB_F.LP
 
 # establish initial marker orders
-FamA_F.final <- orderMarkers(FamA_F.final, chr=1:24)
+FamB_F.final <- orderMarkers(FamB_F.final, chr=1:24)
 
 ```
 
@@ -311,7 +338,7 @@ Plot rf vs LOD after ordering markers:
 
 # inspect pairwise linkage
 par(ps = 12, cex.lab = 1)
-plotRF(FamA_F.final, what = c("both"), alternate.chrid = TRUE, mark.diagonal = TRUE)
+plotRF(FamB_F.final, what = c("both"), alternate.chrid = TRUE, mark.diagonal = TRUE)
 
 ```
 
@@ -320,18 +347,18 @@ Large gaps between markers indicate that adjacent markers are only weakly linked
 ```{r}
 
 # compare average and largest spacing per LG
-summaryMap(FamA_F.final)
+summaryMap(FamB_F.final)
 
 ```
 
 ```{r}
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 # plot map of specific chromosome (with contig names)
 # par(mfrow=c(1,1), ps=12, cex.lab=1)
-# plotMap(FamA_F.final, chr="", horizontal=FALSE, shift=TRUE, show.marker.names=TRUE, alternate.chrid=TRUE)
+# plotMap(FamB_F.final, chr="", horizontal=FALSE, shift=TRUE, show.marker.names=TRUE, alternate.chrid=TRUE)
 
 ```
 
@@ -339,7 +366,7 @@ Drop markers one by one to determine change in chromosome length & change in log
 
 ```{r}
 # drop each marker and compare effect
-dropone <- droponemarker(FamA_F.final, maxit = 4000, tol = 1e-6, 
+dropone <- droponemarker(FamB_F.final, maxit = 4000, tol = 1e-6, 
                          error.prob = 0.001, verbose = TRUE) %>%
   add_rownames("Marker") %>%
   gather("Effect", "Change", 4:5)
@@ -381,22 +408,55 @@ Drop markers as necessary and re-estimate map.
 
 ```{r}
 # drop markers (LOD more positive, larger diff in likelihood)
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_11546") # LG24
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_50993") # LG24
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_10422") # LG21
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_49388") # LG17
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_274264") # LG14
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_328929") # LG10
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_23211") # LG8
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_159654") # LG24
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_13057") # LG24
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_159654") # LG23
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_295837") # LG23
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_126887") # LG22
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_84432") # LG22
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_247420") # LG22
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_21187") # LG22
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_197704") # LG21
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_134963") # LG21
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_2978") # LG21
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_121755") # LG20
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_75380") # LG20
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_59623") # LG20
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_11361") # LG17
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_203849") # LG17
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_17094") # LG16
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_31799") # LG16
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_130447") # LG15
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_305002") # LG14
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_51748") # LG13
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_4809") # LG10
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_141878") # LG10
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_82981") # LG10
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_123865") # LG9
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_4680") # LG9
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_36090") # LG9
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_2788") # LG8
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_318298") # LG8
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_1425") # LG7
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_152405") # LG6
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_325424") # LG4
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_7480") # LG3
+FamB_F.final <- drop.markers(FamB_F.final, "dDocent_Contig_39105") # LG2
 
 # re-estimate map after eliminating markers
-FamA_F.dropl <- est.map(FamA_F.final, error.prob=0.001)
-FamA_F.final <- replace.map(FamA_F.final, FamA_F.dropl)
+FamB_F.dropl <- est.map(FamB_F.final, error.prob=0.001)
+FamB_F.final <- replace.map(FamB_F.final, FamB_F.dropl)
 
 # plot maps of all chromosomes
-summaryMap(FamA_F.final)
+summaryMap(FamB_F.final)
+
+```
+
+```{r}
+
 par(ps=12, cex.lab=1)
-plotMap(FamA_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, 
+alternate.chrid=FALSE)
 
 ```
 
@@ -408,10 +468,16 @@ Observed number of crossovers per individual:
 
 # observed number of crossovers per individual
 par(mfrow=c(1,1), ps=12, cex=1)
-plot(countXO(FamA_F.final), ylab="Number of crossover", xlab="individual")
+plot(countXO(FamB_F.final), ylab="Number of crossover", xlab="individual")
+
+```
+
+Remove individuals with > 50 crossovers
+
+```{r}
 
 # # remove individuals with excessively high number of crossovers (< 50)
-# FamA_F.final <- subset(FamA_F.final, ind=(countXO(FamA_F.final) < 50))
+FamB_F.final <- subset(FamB_F.final, ind=(countXO(FamB_F.final) < 50))
 
 ```
 
@@ -425,7 +491,7 @@ Estimate genotyping error rate.
 loglik <- err <- c(0.0001, 0.0005, 0.001, 0.0025, 0.005, 0.0075, 0.01, 0.015, 0.02)
 for(i in seq(along=err)) {
   cat(i, "of", length(err), "\n")
-  tempmap <- est.map(FamA_F.final, error.prob=err[i])
+  tempmap <- est.map(FamB_F.final, error.prob=err[i])
   loglik[i] <- sum(sapply(tempmap, attr, "loglik"))
 }
 lod <- (loglik - max(loglik))/log(10)
@@ -445,11 +511,11 @@ Tight double-crossovers (single marker out of phase with adjacent markers) indic
 ```{r, message=FALSE, warning=FALSE}
 
 # produce list of genotypes with largest error LOD scores (added to cross object)
-FamA_F.final <- calc.errorlod(FamA_F.final, error.prob = 0.0005)
+FamB_F.final <- calc.errorlod(FamB_F.final, error.prob = 0.005)
 
 # plot grid of LOD scores indicating genotypes likely to be in error
 # darker pixels likely to be error: white (LOD <2), grey (2 < LOD < 3), pink (3 < LOD < 4.5), purple (LOD >4.5)
-plotErrorlod(FamA_F.final)
+plotErrorlod(FamB_F.final)
 
 ```
 
@@ -457,27 +523,28 @@ Eliminate genotypes (coded as missing) for LOD > 6 and re-estimate map.
 
 ```{r}
 # determine cut-off (LOD > 6)
-toperr <- top.errorlod(FamA_F.final, cutoff=6)
+toperr <- top.errorlod(FamB_F.final, cutoff=6)
 
 # look at genotypes flagged on selected chromosomes
 # par(mfrow[1,1], ps=12, cex=1)
-# plotGeno(FamA_F.final, chr=1, ind=toperr$id[toperr$chr==1], cutoff=6, include.xo=FALSE)
+# plotGeno(FamB_F.final, chr=1, ind=toperr$id[toperr$chr==1], cutoff=6, include.xo=FALSE)
 
 # eliminate genotypes if necessary (make them missing)
-FamA_F.final <- FamA_F.final
+FamB_F.final <- FamB_F.final
 for(i in 1:nrow(toperr)) {
   chr <- toperr$chr[i]
   id <- toperr$id[i]
   mar <- toperr$marker[i]
-  FamA_F.final$geno[[chr]]$data[FamA_F$pheno$id==id, mar] <- NA
+  FamB_F.final$geno[[chr]]$data[FamB_F$pheno$id==id, mar] <- NA
 }
 
 # re-estimate map
-FamA_F.dropl <- est.map(FamA_F.final, error.prob = 0.001)
-FamA_F.final <- replace.map(FamA_F.final, FamA_F.dropl)
+FamB_F.dropl <- est.map(FamB_F.final, error.prob = 0.001)
+FamB_F.final <- replace.map(FamB_F.final, FamB_F.dropl)
+
 ```
 
-`r toperr` genotypes were coded as missing.
+`r nrow(toperr)` genotypes were coded as missing.
 
 ## Re-order markers by LG and compare alternate orders
 
@@ -488,18 +555,18 @@ Re-order markers after loci and individuals have been removed and use sliding wi
 ```{r}
 
 # compare number of obligate crossovers for alternate orders
-FamA_F.XO <- lapply(c(1:24), function(chr) {
-  rip <- ripple(FamA_F.final, chr = chr, window = 7, method="countxo", error.prob = 0.001, maxit = 2000, tol = 1e-6)
+FamB_F.XO <- lapply(c(1:24), function(chr) {
+  rip <- ripple(FamB_F.final, chr = chr, window = 7, method="countxo", error.prob = 0.001, maxit = 2000, tol = 1e-6)
   rip <- rip[1:11,]
 })
 
 # access each element in list using [[]]
-# Ch1_XO <- as.data.frame(FamA_F.XO[[1]]) %>%
+# Ch1_XO <- as.data.frame(FamB_F.XO[[1]]) %>%
 #  rename(Chr1 = obligXO) %>%
 #  select(Chr1)
 
-FamA_F.lik <- lapply(c(1:24), function(chr) {
-  rip.lik <- ripple(FamA_F.final, chr = chr, window = 5, method="likelihood", error.prob=0.002, maxit=2000, tol=1e-4)
+FamB_F.lik <- lapply(c(1:24), function(chr) {
+  rip.lik <- ripple(FamB_F.final, chr = chr, window = 5, method="likelihood", error.prob=0.002, maxit=2000, tol=1e-4)
   rip.lik <- rip.lik[1:11,]
 })
 
@@ -512,139 +579,139 @@ Identify order with lowest number of XO and highest LOD while minimizing chromos
 ```{r}
 
 change.marker.order <- function(LG, neworder) {
-  Orderlikelih <- as.data.frame(FamA_F.lik[[LG]]) %>%
+  Orderlikelih <- as.data.frame(FamB_F.lik[[LG]]) %>%
     select(-LOD) %>%
     select(-chrlen)
   switch_marker <- as.numeric(Orderlikelih[3,])
-  FamA_F.final <- switch.order(FamA_F.final, chr = LG, switch_marker, error.prob=0.001)
+  FamB_F.final <- switch.order(FamB_F.final, chr = LG, switch_marker, error.prob=0.001)
 }
 
 ## LG1
 # Identify order with lowest no. of XO & highest LOD while minimizing chromosome length
-FamA_F.XO[[1]]
-FamA_F.lik[[1]]
+FamB_F.XO[[1]]
+FamB_F.lik[[1]]
 # change.marker.order(1, new)
 
 ## LG2 
-FamA_F.XO[[2]]
-FamA_F.lik[[2]]
+FamB_F.XO[[2]]
+FamB_F.lik[[2]]
 change.marker.order(2, 1)
 
 ## LG3
-FamA_F.XO[[3]]
-FamA_F.lik[[3]]
+FamB_F.XO[[3]]
+FamB_F.lik[[3]]
 # change.marker.order(3, 1)
 
 ## LG4
-FamA_F.XO[[4]]
-FamA_F.lik[[4]]
+FamB_F.XO[[4]]
+FamB_F.lik[[4]]
 # change.marker.order(4, neworder)
 
 ## LG5
-FamA_F.XO[[5]]
-FamA_F.lik[[5]]
+FamB_F.XO[[5]]
+FamB_F.lik[[5]]
 # change.marker.order(5, 2)
 
 ## LG6
-FamA_F.XO[[6]]
-FamA_F.lik[[6]]
+FamB_F.XO[[6]]
+FamB_F.lik[[6]]
 # change.marker.order(6, neworder)
 
 ## LG7 
-FamA_F.XO[[7]]
-FamA_F.lik[[7]]
+FamB_F.XO[[7]]
+FamB_F.lik[[7]]
 # change.marker.order(7, neworder)
 
 ## LG8
-FamA_F.XO[[8]]
-FamA_F.lik[[8]]
+FamB_F.XO[[8]]
+FamB_F.lik[[8]]
 # change.marker.order(8, neworder)
 
 ## LG9
-FamA_F.XO[[9]]
-FamA_F.lik[[9]]
+FamB_F.XO[[9]]
+FamB_F.lik[[9]]
 # change.marker.order(9, neworder)
 
 ## LG10
-FamA_F.XO[[10]]
-FamA_F.lik[[10]]
+FamB_F.XO[[10]]
+FamB_F.lik[[10]]
 change.marker.order(10, 1)
 
 ## LG11
-FamA_F.XO[[11]]
-FamA_F.lik[[11]]
+FamB_F.XO[[11]]
+FamB_F.lik[[11]]
 # change.marker.order(11, new)
 
 ## LG12
-FamA_F.XO[[12]]
-FamA_F.lik[[12]]
+FamB_F.XO[[12]]
+FamB_F.lik[[12]]
 # change.marker.order(12, 1)
 
 ## LG13
-FamA_F.XO[[13]]
-FamA_F.lik[[13]]
+FamB_F.XO[[13]]
+FamB_F.lik[[13]]
 # change.marker.order(13, new)
 
 ## LG14
-FamA_F.XO[[14]]
-FamA_F.lik[[14]]
+FamB_F.XO[[14]]
+FamB_F.lik[[14]]
 # change.marker.order(14, new)
 
 ## LG15
-FamA_F.XO[[15]]
-FamA_F.lik[[15]]
+FamB_F.XO[[15]]
+FamB_F.lik[[15]]
 change.marker.order(15, 1)
 
 ## LG16
-FamA_F.XO[[16]]
-FamA_F.lik[[16]]
+FamB_F.XO[[16]]
+FamB_F.lik[[16]]
 # change.marker.order(16, neworder)
 
 ## LG17
-FamA_F.XO[[17]]
-FamA_F.lik[[17]]
+FamB_F.XO[[17]]
+FamB_F.lik[[17]]
 # change.marker.order(17, neworder)
 
 ## LG18
-FamA_F.XO[[18]]
-FamA_F.lik[[18]]
+FamB_F.XO[[18]]
+FamB_F.lik[[18]]
 # change.marker.order(18, 1)
 
 ## LG19
-FamA_F.XO[[19]]
-FamA_F.lik[[19]]
+FamB_F.XO[[19]]
+FamB_F.lik[[19]]
 # change.marker.order(19, new)
 
 ## LG20
-FamA_F.XO[[20]]
-FamA_F.lik[[20]]
+FamB_F.XO[[20]]
+FamB_F.lik[[20]]
 # change.marker.order(20, new)
 
 ## LG21
-FamA_F.XO[[21]]
-FamA_F.lik[[21]]
+FamB_F.XO[[21]]
+FamB_F.lik[[21]]
 change.marker.order(21, 4)
 
 ## LG22
-FamA_F.XO[[22]]
-FamA_F.lik[[22]]
+FamB_F.XO[[22]]
+FamB_F.lik[[22]]
 # change.marker.order(22, new)
 
 ## LG23
-FamA_F.XO[[23]]
-FamA_F.lik[[23]]
+FamB_F.XO[[23]]
+FamB_F.lik[[23]]
 # change.marker.order(23, new)
 
 ## LG24
-FamA_F.XO[[24]]
-FamA_F.lik[[24]]
+FamB_F.XO[[24]]
+FamB_F.lik[[24]]
 # change.marker.order(24, new)
 
 # re-estimate map after re-ordering all LGs (chromosomes)
-FamA_F.reorder <- est.map(FamA_F.final, error.prob = 0.001)
+FamB_F.reorder <- est.map(FamB_F.final, error.prob = 0.001)
 
 # re-place map portion of cross
-FamA_F.reorder <- replace.map(FamA_F.final, FamA_F.reorder)
+FamB_F.reorder <- replace.map(FamB_F.final, FamB_F.reorder)
 
 ```
 
@@ -657,7 +724,7 @@ Plot rf vs LOD
 ```{r}
 
 # inspect pairwise linkage
-plotRF(FamA_F.final)
+plotRF(FamB_F.final)
 
 ```
 
@@ -666,7 +733,7 @@ Identify large gaps between markers which is indicative of adjacent markers bein
 ```{r}
 
 # large gaps between markers indicate that adjacent markers are only weakly linked
-summaryMap(FamA_F.final)
+summaryMap(FamB_F.final)
 
 ```
 
@@ -675,7 +742,7 @@ Plot maps of all linkage groups:
 ```{r}
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 ```
 
@@ -683,7 +750,7 @@ Drop markers one by one determine change in chromosome length & change in log li
 
 ```{r}
 # drop each marker and compare effect
-dropone <- droponemarker(FamA_F.final, maxit = 4000, tol = 1e-6, 
+dropone <- droponemarker(FamB_F.final, maxit = 4000, tol = 1e-6, 
                          error.prob = 0.001, verbose = TRUE) %>%
   add_rownames("Marker") %>%
   gather("Effect", "Change", 4:5)
@@ -724,33 +791,15 @@ dropone_sum <- dropone %>%
 ```{r}
 
 # drop markers (LOD more positive, larger diff in likelihood) 
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_21716") # LG1
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_47619") # LG1
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_38230") # LG2
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_13127") # LG4
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_27344") # LG6
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_1566") # LG7
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_154980") # LG8
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_52942") # LG9
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_264920") # LG10
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_99931") # LG12
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_226254") # LG13
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_71675") # LG13
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_206957") # LG17
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_38538") # LG19
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_37810") # LG19
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_275327") # LG21
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_85931") # LG21
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_11136") # LG21
-FamA_F.final <- drop.markers(FamA_F.final, "dDocent_Contig_48040") # LG21
+FamB_F.final <- drop.markers(FamB_F.final, "") # LG
 
 # re-estimate map after eliminating markers
-FamA_F.dropl <- est.map(FamA_F.final, error.prob = 0.001)
-FamA_F.final <- replace.map(FamA_F.final, FamA_F.dropl)
+FamB_F.dropl <- est.map(FamB_F.final, error.prob = 0.001)
+FamB_F.final <- replace.map(FamB_F.final, FamB_F.dropl)
 
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 ```
 
@@ -760,10 +809,10 @@ plotMap(FamA_F.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alt
 
 # observed number of crossovers per individual
 par(mfrow=c(1,1), ps=12, cex=1)
-plot(countXO(FamA_F.final), ylab="Number of crossover", xlab="individual")
+plot(countXO(FamB_F.final), ylab="Number of crossover", xlab="individual")
 
 # # remove individuals with excessively high number of crossovers
-# FamA_F.final <- subset(FamA_F.final, ind=(countXO(FamA_F.final) < 50))
+# FamB_F.final <- subset(FamB_F.final, ind=(countXO(FamB_F.final) < 50))
 
 ```
 
@@ -772,21 +821,21 @@ plot(countXO(FamA_F.final), ylab="Number of crossover", xlab="individual")
 ```{r}
 
 # print summary map and map data
-SummaryFamA_F <- summaryMap(FamA_F.final)
+SummaryFamB_F <- summaryMap(FamB_F.final)
 
-write.table(SummaryFamA_F, file = "results/SummaryFamA_F.map",
+write.table(SummaryFamB_F, file = "results/SummaryFamB_F.map",
           quote = FALSE, sep = "\t", row.names = FALSE)
 
-FamA_F.map <- pull.map(FamA_F.final,as.table = TRUE)
+FamB_F.map <- pull.map(FamB_F.final,as.table = TRUE)
 
-write.table(FamA_F.map, file = "data/LINKMAP/FamA_F.map",
+write.table(FamB_F.map, file = "data/LINKMAP/FamB_F.map",
             quote = FALSE, sep = "\t", row.names = TRUE)
 
 ```
 
-Write files of finalized maps. Write files of finalized map. Map contains `r nrow(FamA_F.map)` loci grouped into 24 LG.
+Write files of finalized maps. Write files of finalized map. Map contains `r nrow(FamB_F.map)` loci grouped into 24 LG.
 
-# Family A Male Map
+# Family B Male Map
 
 ## Load data
 
@@ -795,14 +844,15 @@ Required inputfiles are `genfile`: `*.raw` generated using `convert.pl` to conve
 ```{r, message=FALSE, warning=FALSE}
 
 # load data
-FamA_M <- read.cross("mm", dir="data/LINKMAP/", 
-                     "FamA-M.raw", "FamA-M.map", estimate.map = FALSE)
+FamB_M <- read.cross("mm", dir="data/LINKMAP/", 
+                     "FamB-M.raw", "FamB-M.map", estimate.map = FALSE)
 
 # number of individuals/loci in data set
-Sum_FamA_M.raw <- summary(FamA_M)
+Sum_FamB_M.raw <- summary(FamB_M)
+Sum_FamB_M.raw
 
 ```
-Raw data set contains `r as.numeric(Sum_FamA_M.raw$n.ind)` individuals and `r sum(as.numeric(Sum_FamA_M.raw$n.mar))` loci.
+Raw data set contains `r as.numeric(Sum_FamB_M.raw$n.ind)` individuals and `r sum(as.numeric(Sum_FamB_M.raw$n.mar))` loci.
 
 ## Pre-mapping quality control
 
@@ -813,7 +863,7 @@ Missing genotypes (loci/individuals)
 ```{r}
 
 # plot pattern of missing data
-plotMissing(FamA_M)
+plotMissing(FamB_M)
 
 ```
 
@@ -821,31 +871,31 @@ Omit loci with > 5% missing data and individuals with > 25% missing data.
 
 ```{r, message=FALSE, warning=FALSE}
 
-Nind_M.raw <- as.numeric(Sum_FamA_M.raw$n.ind)
+Nind_M.raw <- as.numeric(Sum_FamB_M.raw$n.ind)
 
 # number of typed indivuals per locus
-ntyped_M.l <- ntyped(FamA_M, "mar")
+ntyped_M.l <- ntyped(FamB_M, "mar")
 ntyped_M.l <- data.frame(LOCUS = names(ntyped_M.l), NTYPED = ntyped_M.l, row.names = NULL) %>%
   mutate(GENO = NTYPED/Nind_M.raw)
 
 # omit markers with >5% missing data
 temp <- filter(ntyped_M.l, GENO < 0.95)
 drop.l <- as.character(temp$LOCUS)
-FamA_M.f1 <- drop.markers(FamA_M, drop.l)
+FamB_M.f1 <- drop.markers(FamB_M, drop.l)
 
 # omit individuals with > 5% missing data
-Nloci_M.raw <- sum(as.numeric(Sum_FamA_M.raw$n.mar))
+Nloci_M.raw <- sum(as.numeric(Sum_FamB_M.raw$n.mar))
 
-FamA_M.f1 <- subset(FamA_M.f1, ind = (ntyped(FamA_M.f1) > Nloci_F.raw*0.75))
+FamB_M.f1 <- subset(FamB_M.f1, ind = (ntyped(FamB_M.f1) > Nloci_M.raw*0.6))
 
 # number of individuals/loci in data set
-Sum_FamA_M.f1 <- summary(FamA_M.f1)
-Nind_M.f1 <- as.numeric(Sum_FamA_M.f1$n.ind)
-Nloci_M.f1 <- sum(as.numeric(Sum_FamA_M.f1$n.mar))
+Sum_FamB_M.f1 <- summary(FamB_M.f1)
+Nind_M.f1 <- as.numeric(Sum_FamB_M.f1$n.ind)
+Nloci_M.f1 <- sum(as.numeric(Sum_FamB_M.f1$n.mar))
 
 # plot patterns of missing data after filter
 par(mfrow=c(1,1))
-plotMissing(FamA_M.f1)
+plotMissing(FamB_M.f1)
 
 ```
 
@@ -858,7 +908,7 @@ Compare genotypes of pairs of individuals to identify pairs with unusually simil
 ```{r}
 
 # create matrix with proportion of matching genotypes for all pairs of individuals
-cg <- comparegeno(FamA_M.f1)
+cg <- comparegeno(FamB_M.f1)
 
 # plot proport. of matching genotypes
 par(mfrow=c(1,1))
@@ -877,12 +927,12 @@ No matching individuals were identified.
 # match.i 
 
 # if no matching individuals identified
-FamA_M.f2 <- FamA_M.f1
+FamB_M.f2 <- FamB_M.f1
 
 # number of individuals/loci in data set
-Sum_FamA_M.f2 <- summary(FamA_M.f2)
-Nind_M.f2 <- as.numeric(Sum_FamA_M.f2$n.ind)
-Nloci_M.f2 <- sum(as.numeric(Sum_FamA_M.f2$n.mar))
+Sum_FamB_M.f2 <- summary(FamB_M.f2)
+Nind_M.f2 <- as.numeric(Sum_FamB_M.f2$n.ind)
+Nloci_M.f2 <- sum(as.numeric(Sum_FamB_M.f2$n.mar))
 
 ```
 
@@ -895,25 +945,25 @@ Identify matching markers. Drop duplicate markers but create table of correspond
 ```{r, message=FALSE, warning=FALSE}
 
 # identify matching markers (matching genotypes/including missing data)
-match.loci <- findDupMarkers(FamA_M.f2, exact.only = TRUE)
+match.loci <- findDupMarkers(FamB_M.f2, exact.only = TRUE)
 
 # keep table to add markers back in after mapping
 match.loci_M <- ldply(match.loci, data.frame) %>%
   rename(LOCUS = `.id`, MATCHLOC = `X..i..`)
 
-write.table(match.loci_M, file = "data/LINKMAP/MatchLociFamAM.txt", 
+write.table(match.loci_M, file = "data/LINKMAP/MatchLociFamBM.txt", 
             quote = FALSE, row.names = FALSE, sep = "\t")
 
 # create list of matching loci
 match.l <- as.character(match.loci_M$MATCHLOC) 
 
 # drop duplicate markers
-FamA_M.f3 <- drop.markers(FamA_M.f2, match.l)
+FamB_M.f3 <- drop.markers(FamB_M.f2, match.l)
 
 # number of individuals/loci in data set
-Sum_FamA_M.f3 <- summary(FamA_M.f3)
-Nind_M.f3 <- as.numeric(Sum_FamA_M.f3$n.ind)
-Nloci_M.f3 <- sum(as.numeric(Sum_FamA_M.f3$n.mar))
+Sum_FamB_M.f3 <- summary(FamB_M.f3)
+Nind_M.f3 <- as.numeric(Sum_FamB_M.f3$n.ind)
+Nloci_M.f3 <- sum(as.numeric(Sum_FamB_M.f3$n.mar))
 
 ```
 
@@ -926,19 +976,19 @@ Loci should have specific segregation patterns based on marker type.
 ```{r, message=FALSE, warning=FALSE}
 
 # calculate genotype frequencies and p-value (after Bonferroni correction)
-geno.freq.l <- geno.table(FamA_M.f3)
+geno.freq.l <- geno.table(FamB_M.f3)
 
 # create list of markers with p-value <0.05
-seg.dist.l <- geno.freq.l[geno.freq.l$P.value < 0.05/totmar(FamA_M.f3),] 
+seg.dist.l <- geno.freq.l[geno.freq.l$P.value < 0.05/totmar(FamB_M.f3),] 
 drop.l.seg.dist <- rownames(geno.freq.l[geno.freq.l$P.value < 1e-10,])
 
 # drop markers with significant (p<0.05) deviation from expected segregation patterns
-FamA_M.f4 <- drop.markers(FamA_M.f3, drop.l.seg.dist)
+FamB_M.f4 <- drop.markers(FamB_M.f3, drop.l.seg.dist)
 
 # number of individuals/loci in data set
-Sum_FamA_M.f4 <- summary(FamA_M.f4)
-Nind_M.f4 <- as.numeric(Sum_FamA_M.f4$n.ind)
-Nloci_M.f4 <- sum(as.numeric(Sum_FamA_M.f4$n.mar))
+Sum_FamB_M.f4 <- summary(FamB_M.f4)
+Nind_M.f4 <- as.numeric(Sum_FamB_M.f4$n.ind)
+Nloci_M.f4 <- sum(as.numeric(Sum_FamB_M.f4$n.mar))
 
 ```
 
@@ -951,7 +1001,7 @@ Determine genotype frequencies by individual and remove individuals as necessary
 ```{r, message=FALSE, warning=FALSE}
 
 # determine genotype frequencies by individual
-geno.frq.i <- pull.geno(FamA_M.f3)
+geno.frq.i <- pull.geno(FamB_M.f3)
 gfreq.i <- apply(geno.frq.i, 1, function(a) table(factor(a, levels=1:3)))
 gfreq.i <- t(t(gfreq.i) / colSums(gfreq.i))
 
@@ -961,12 +1011,12 @@ for(i in 1:3)
   plot(gfreq.i[i,], ylab="Genotype frequency", main=c("AA", "AB", "BB")[i], ylim=c(0,1))
 
 # if no individuals removed
-FamA_M.f5 <- FamA_M.f4
+FamB_M.f5 <- FamB_M.f4
 
 # number of individuals/loci in data set
-Sum_FamA_M.f5 <- summary(FamA_M.f5)
-Nind_M.f5 <- as.numeric(Sum_FamA_M.f5$n.ind)
-Nloci_M.f5 <- sum(as.numeric(Sum_FamA_M.f5$n.mar))
+Sum_FamB_M.f5 <- summary(FamB_M.f5)
+Nind_M.f5 <- as.numeric(Sum_FamB_M.f5$n.ind)
+Nloci_M.f5 <- sum(as.numeric(Sum_FamB_M.f5$n.mar))
 
 ```
 
@@ -979,11 +1029,11 @@ Estimate recombination fraction (rf) & LOD score for each marker pair. Potential
 ```{r, message=FALSE, warning=FALSE}
 
 # estimate recombination fraction (rf) & LOD score for each marker pair
-FamA_M.LP <- est.rf(FamA_M.f5)
+FamB_M.LP <- est.rf(FamB_M.f5)
 
 # plot LOD score vs. rf
-rf <- pull.rf(FamA_M.LP)
-lod <- pull.rf(FamA_M.LP, what="lod")
+rf <- pull.rf(FamB_M.LP)
+lod <- pull.rf(FamB_M.LP, what="lod")
 par(mfrow=c(1,1))
 plot(as.numeric(rf), as.numeric(lod), xlab="recombination fraction", ylab="LOD score")
 
@@ -994,11 +1044,11 @@ Form initial linkage groups and re-organize loci into initial LGs.
 ```{r}
 
 # form initial linkage groups
-init.lg <- formLinkageGroups(FamA_M.LP, max.rf = 0.35, min.lod = 6)
+init.lg <- formLinkageGroups(FamB_M.LP, max.rf = 0.35, min.lod = 6)
 table(init.lg[,2])
 
 # re-organize markers into inferred initial LGs
-FamA_M.LP <- formLinkageGroups(FamA_M.LP, max.rf = 0.35, min.lod = 6, reorgMarkers=TRUE)
+FamB_M.LP <- formLinkageGroups(FamB_M.LP, max.rf = 0.35, min.lod = 6, reorgMarkers=TRUE)
 
 ```
 
@@ -1008,7 +1058,7 @@ Plot rf vs LOD to identify chromosomes to switch alleles for.
 
 # plot rf vs LOD to see re-organized markers
 par(mfrow=c(1,1))
-plotRF(FamA_M.LP, alternate.chrid=TRUE)
+plotRF(FamB_M.LP, alternate.chrid=TRUE)
 
 ```
 
@@ -1018,17 +1068,17 @@ Switch alleles, re-estimate rf, form new linkage groups and re-organize markers.
 # use plot to identify chromosomes to switch alleles for
 for (chr in c(8, 12:14, 16, 18,
               21:23, 32:33, 35, 37:48)){
-  toswitch <- markernames(FamA_M.LP, chr=(chr))
-  FamA_M.LP <- switchAlleles(FamA_M.LP, toswitch)
+  toswitch <- markernames(FamB_M.LP, chr=(chr))
+  FamB_M.LP <- switchAlleles(FamB_M.LP, toswitch)
 }
 
 # re-estimate rf
-FamA_M.LP <- est.rf(FamA_M.LP)
+FamB_M.LP <- est.rf(FamB_M.LP)
 
 # form new linkage groups & re-organize markers
-init.lg <- formLinkageGroups(FamA_M.LP, max.rf=0.35, min.lod=6)
+init.lg <- formLinkageGroups(FamB_M.LP, max.rf=0.35, min.lod=6)
 table(init.lg[,2])
-FamA_M.LP <- formLinkageGroups(FamA_M.LP, max.rf=0.35, min.lod=6, reorgMarkers=TRUE)
+FamB_M.LP <- formLinkageGroups(FamB_M.LP, max.rf=0.35, min.lod=6, reorgMarkers=TRUE)
 
 ```
 
@@ -1037,7 +1087,7 @@ Plot rf vs LOD after switching alleles:
 ```{r}
 
 # plot rf vs LOD to see re-organized markers
-plotRF(FamA_M.LP, alternate.chrid=TRUE)
+plotRF(FamB_M.LP, alternate.chrid=TRUE)
 
 ```
 
@@ -1046,9 +1096,9 @@ Drop marker in LG25 and 26:
 ```{r}
 
 # if necessary identify outlier markers to drop
-pull.map(FamA_M.LP, chr="25")
-pull.map(FamA_M.LP, chr="26")
-FamA_M.LP <- drop.markers(FamA_M.LP, c("dDocent_Contig_211176", "dDocent_Contig_25489"))
+pull.map(FamB_M.LP, chr="25")
+pull.map(FamB_M.LP, chr="26")
+FamB_M.LP <- drop.markers(FamB_M.LP, c("dDocent_Contig_211176", "dDocent_Contig_25489"))
 
 ```
 
@@ -1059,10 +1109,10 @@ Establish initial marker order within LGs using greedy algorithm. Adds one marke
 ```{r}
 
 # Create final cross/map object
-FamA_M.final <- FamA_M.LP
+FamB_M.final <- FamB_M.LP
 
 # establish initial marker orders
-FamA_M.final <- orderMarkers(FamA_M.final, chr=1:24)
+FamB_M.final <- orderMarkers(FamB_M.final, chr=1:24)
 
 ```
 
@@ -1076,7 +1126,7 @@ Plot rf vs LOD after ordering markers:
 
 # inspect pairwise linkage
 par(ps = 12, cex.lab = 1)
-plotRF(FamA_M.final, what = c("both"), alternate.chrid = TRUE, mark.diagonal = TRUE)
+plotRF(FamB_M.final, what = c("both"), alternate.chrid = TRUE, mark.diagonal = TRUE)
 
 ```
 
@@ -1085,14 +1135,14 @@ Large gaps between markers indicate that adjacent markers are only weakly linked
 ```{r}
 
 # compare average and largest spacing per LG
-summaryMap(FamA_M.final)
+summaryMap(FamB_M.final)
 
 ```
 
 ```{r}
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 ```
 
@@ -1100,7 +1150,7 @@ Drop markers one by one to determine change in chromosome length & change in log
 
 ```{r}
 # drop each marker and compare effect
-dropone <- droponemarker(FamA_M.final, maxit = 4000, tol = 1e-6, 
+dropone <- droponemarker(FamB_M.final, maxit = 4000, tol = 1e-6, 
                          error.prob = 0.001, verbose = TRUE) %>%
   add_rownames("Marker") %>%
   gather("Effect", "Change", 4:5)
@@ -1143,26 +1193,26 @@ Drop markers as necessary and re-estimate map.
 ```{r}
 
 # drop markers (LOD more positive, larger diff in likelihood)
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_271212") # LG24
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_29936") # LG24
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_255676") # LG24
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_278198") # LG22
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_285561") # LG17
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_11919") # LG17
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_62235") # LG16
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_188592") # LG15
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_134784") # LG15
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_91847") # LG14
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_1157") # LG14
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_33950") # LG3
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_271212") # LG24
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_29936") # LG24
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_255676") # LG24
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_278198") # LG22
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_285561") # LG17
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_11919") # LG17
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_62235") # LG16
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_188592") # LG15
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_134784") # LG15
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_91847") # LG14
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_1157") # LG14
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_33950") # LG3
 
 # re-estimate map after eliminating markers
-FamA_M.dropl <- est.map(FamA_M.final, error.prob=0.001)
-FamA_M.final <- replace.map(FamA_M.final, FamA_M.dropl)
+FamB_M.dropl <- est.map(FamB_M.final, error.prob=0.001)
+FamB_M.final <- replace.map(FamB_M.final, FamB_M.dropl)
 
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 ```
 
@@ -1174,10 +1224,10 @@ Observed number of crossovers per individual; eliminate individuals with excessi
 
 # observed number of crossovers per individual
 par(mfrow=c(1,1), ps=12, cex=1)
-plot(countXO(FamA_M.final), ylab="Number of crossover", xlab="individual")
+plot(countXO(FamB_M.final), ylab="Number of crossover", xlab="individual")
 
 # # remove individuals with excessively high number of crossovers (< 50)
-# FamA_M.final <- subset(FamA_M.final, ind=(countXO(FamA_M.final) < 50))
+# FamB_M.final <- subset(FamB_M.final, ind=(countXO(FamB_M.final) < 50))
 
 ```
 
@@ -1191,7 +1241,7 @@ Estimate genotyping error rate.
 loglik <- err <- c(0.0001, 0.0005, 0.001, 0.0025, 0.005, 0.0075, 0.01, 0.015, 0.02)
 for(i in seq(along=err)) {
   cat(i, "of", length(err), "\n")
-  tempmap <- est.map(FamA_M.final, error.prob=err[i])
+  tempmap <- est.map(FamB_M.final, error.prob=err[i])
   loglik[i] <- sum(sapply(tempmap, attr, "loglik"))
 }
 lod <- (loglik - max(loglik))/log(10)
@@ -1211,11 +1261,11 @@ Tight double-crossovers (single marker out of phase with adjacent markers) indic
 ```{r, message=FALSE, warning=FALSE}
 
 # produce list of genotypes with largest error LOD scores (added to cross object)
-FamA_M.final <- calc.errorlod(FamA_M.final, error.prob = 0.0005)
+FamB_M.final <- calc.errorlod(FamB_M.final, error.prob = 0.0005)
 
 # plot grid of LOD scores indicating genotypes likely to be in error
 # darker pixels likely to be error: white (LOD <2), grey (2 < LOD < 3), pink (3 < LOD < 4.5), purple (LOD >4.5)
-plotErrorlod(FamA_M.final)
+plotErrorlod(FamB_M.final)
 
 ```
 
@@ -1223,24 +1273,24 @@ Eliminate genotypes (coded as missing) for LOD > 6 and re-estimate map.
 
 ```{r}
 # determine cut-off (LOD > 6)
-toperr <- top.errorlod(FamA_M.final, cutoff=6)
+toperr <- top.errorlod(FamB_M.final, cutoff=6)
 
 # look at genotypes flagged on selected chromosomes
 # par(mfrow[1,1], ps=12, cex=1)
-# plotGeno(FamA_M.final, chr=1, ind=toperr$id[toperr$chr==1], cutoff=6, include.xo=FALSE)
+# plotGeno(FamB_M.final, chr=1, ind=toperr$id[toperr$chr==1], cutoff=6, include.xo=FALSE)
 
 # eliminate genotypes if necessary (make them missing)
-FamA_M.final <- FamA_M.final
+FamB_M.final <- FamB_M.final
 for(i in 1:nrow(toperr)) {
   chr <- toperr$chr[i]
   id <- toperr$id[i]
   mar <- toperr$marker[i]
-  FamA_M.final$geno[[chr]]$data[FamA_M$pheno$id==id, mar] <- NA
+  FamB_M.final$geno[[chr]]$data[FamB_M$pheno$id==id, mar] <- NA
 }
 
 # re-estimate map
-FamA_M.dropl <- est.map(FamA_M.final, error.prob = 0.001)
-FamA_M.final <- replace.map(FamA_M.final, FamA_M.dropl)
+FamB_M.dropl <- est.map(FamB_M.final, error.prob = 0.001)
+FamB_M.final <- replace.map(FamB_M.final, FamB_M.dropl)
 
 ```
 
@@ -1253,18 +1303,18 @@ Re-order markers after loci and individuals have been removed and use sliding wi
 ```{r}
 
 # compare number of obligate crossovers for alternate orders
-FamA_M.XO <- lapply(c(1:24), function(chr) {
-  rip <- ripple(FamA_M.final, chr = chr, window = 7, method="countxo", error.prob = 0.001, maxit = 2000, tol = 1e-6)
+FamB_M.XO <- lapply(c(1:24), function(chr) {
+  rip <- ripple(FamB_M.final, chr = chr, window = 7, method="countxo", error.prob = 0.001, maxit = 2000, tol = 1e-6)
   rip <- rip[1:11,]
 })
 
 # access each element in list using [[]]
-# Ch1_XO <- as.data.frame(FamA_M.XO[[1]]) %>%
+# Ch1_XO <- as.data.frame(FamB_M.XO[[1]]) %>%
 #  rename(Chr1 = obligXO) %>%
 #  select(Chr1)
 
-FamA_M.lik <- lapply(c(1:24), function(chr) {
-  rip.lik <- ripple(FamA_M.final, chr = chr, window = 5, method="likelihood", error.prob=0.002, maxit=2000, tol=1e-4)
+FamB_M.lik <- lapply(c(1:24), function(chr) {
+  rip.lik <- ripple(FamB_M.final, chr = chr, window = 5, method="likelihood", error.prob=0.002, maxit=2000, tol=1e-4)
   rip.lik <- rip.lik[1:11,]
 })
 
@@ -1277,139 +1327,139 @@ Identify order with lowest number of XO and highest LOD while minimizing chromos
 ```{r}
 
 change.marker.order <- function(LG, neworder) {
-  Orderlikelih <- as.data.frame(FamA_M.lik[[LG]]) %>%
+  Orderlikelih <- as.data.frame(FamB_M.lik[[LG]]) %>%
     select(-LOD) %>%
     select(-chrlen)
   switch_marker <- as.numeric(Orderlikelih[3,])
-  FamA_M.final <- switch.order(FamA_M.final, chr = LG, switch_marker, error.prob=0.001)
+  FamB_M.final <- switch.order(FamB_M.final, chr = LG, switch_marker, error.prob=0.001)
 }
 
 ## LG1
 # Identify order with lowest no. of XO & highest LOD while minimizing chromosome length
-FamA_M.XO[[1]]
-FamA_M.lik[[1]]
+FamB_M.XO[[1]]
+FamB_M.lik[[1]]
 # change.marker.order(1, new)
 
 ## LG2 
-FamA_M.XO[[2]]
-FamA_M.lik[[2]]
+FamB_M.XO[[2]]
+FamB_M.lik[[2]]
 # change.marker.order(2, 1)
 
 ## LG3
-FamA_M.XO[[3]]
-FamA_M.lik[[3]]
+FamB_M.XO[[3]]
+FamB_M.lik[[3]]
 # change.marker.order(3, 1)
 
 ## LG4
-FamA_M.XO[[4]]
-FamA_M.lik[[4]]
+FamB_M.XO[[4]]
+FamB_M.lik[[4]]
 # change.marker.order(4, neworder)
 
 ## LG5
-FamA_M.XO[[5]]
-FamA_M.lik[[5]]
+FamB_M.XO[[5]]
+FamB_M.lik[[5]]
 # change.marker.order(5, 2)
 
 ## LG6
-FamA_M.XO[[6]]
-FamA_M.lik[[6]]
+FamB_M.XO[[6]]
+FamB_M.lik[[6]]
 # change.marker.order(6, neworder)
 
 ## LG7 
-FamA_M.XO[[7]]
-FamA_M.lik[[7]]
+FamB_M.XO[[7]]
+FamB_M.lik[[7]]
 # change.marker.order(7, neworder)
 
 ## LG8
-FamA_M.XO[[8]]
-FamA_M.lik[[8]]
+FamB_M.XO[[8]]
+FamB_M.lik[[8]]
 # change.marker.order(8, neworder)
 
 ## LG9
-FamA_M.XO[[9]]
-FamA_M.lik[[9]]
+FamB_M.XO[[9]]
+FamB_M.lik[[9]]
 # change.marker.order(9, neworder)
 
 ## LG10
-FamA_M.XO[[10]]
-FamA_M.lik[[10]]
+FamB_M.XO[[10]]
+FamB_M.lik[[10]]
 # change.marker.order(10, 1)
 
 ## LG11
-FamA_M.XO[[11]]
-FamA_M.lik[[11]]
+FamB_M.XO[[11]]
+FamB_M.lik[[11]]
 change.marker.order(11, 1)
 
 ## LG12
-FamA_M.XO[[12]]
-FamA_M.lik[[12]]
+FamB_M.XO[[12]]
+FamB_M.lik[[12]]
 # change.marker.order(12, 1)
 
 ## LG13
-FamA_M.XO[[13]]
-FamA_M.lik[[13]]
+FamB_M.XO[[13]]
+FamB_M.lik[[13]]
 # change.marker.order(13, new)
 
 ## LG14
-FamA_M.XO[[14]]
-FamA_M.lik[[14]]
+FamB_M.XO[[14]]
+FamB_M.lik[[14]]
 # change.marker.order(14, new)
 
 ## LG15
-FamA_M.XO[[15]]
-FamA_M.lik[[15]]
+FamB_M.XO[[15]]
+FamB_M.lik[[15]]
 # change.marker.order(15, 1)
 
 ## LG16
-FamA_M.XO[[16]]
-FamA_M.lik[[16]]
+FamB_M.XO[[16]]
+FamB_M.lik[[16]]
 # change.marker.order(16, neworder)
 
 ## LG17
-FamA_M.XO[[17]]
-FamA_M.lik[[17]]
+FamB_M.XO[[17]]
+FamB_M.lik[[17]]
 # change.marker.order(17, neworder)
 
 ## LG18
-FamA_M.XO[[18]]
-FamA_M.lik[[18]]
+FamB_M.XO[[18]]
+FamB_M.lik[[18]]
 # change.marker.order(18, 1)
 
 ## LG19
-FamA_M.XO[[19]]
-FamA_M.lik[[19]]
+FamB_M.XO[[19]]
+FamB_M.lik[[19]]
 # change.marker.order(19, new)
 
 ## LG20
-FamA_M.XO[[20]]
-FamA_M.lik[[20]]
+FamB_M.XO[[20]]
+FamB_M.lik[[20]]
 # change.marker.order(20, new)
 
 ## LG21
-FamA_M.XO[[21]]
-FamA_M.lik[[21]]
+FamB_M.XO[[21]]
+FamB_M.lik[[21]]
 # change.marker.order(21, 4)
 
 ## LG22
-FamA_M.XO[[22]]
-FamA_M.lik[[22]]
+FamB_M.XO[[22]]
+FamB_M.lik[[22]]
 # change.marker.order(22, new)
 
 ## LG23
-FamA_M.XO[[23]]
-FamA_M.lik[[23]]
+FamB_M.XO[[23]]
+FamB_M.lik[[23]]
 # change.marker.order(23, new)
 
 ## LG24
-FamA_M.XO[[24]]
-FamA_M.lik[[24]]
+FamB_M.XO[[24]]
+FamB_M.lik[[24]]
 # change.marker.order(24, new)
 
 # re-estimate map after re-ordering all LGs (chromosomes)
-FamA_M.reorder <- est.map(FamA_M.final, error.prob = 0.001)
+FamB_M.reorder <- est.map(FamB_M.final, error.prob = 0.001)
 
 # re-place map portion of cross
-FamA_M.reorder <- replace.map(FamA_M.final, FamA_M.reorder)
+FamB_M.reorder <- replace.map(FamB_M.final, FamB_M.reorder)
 
 ```
 
@@ -1422,7 +1472,7 @@ Plot rf vs LOD
 ```{r}
 
 # inspect pairwise linkage
-plotRF(FamA_M.final)
+plotRF(FamB_M.final)
 
 ```
 
@@ -1431,7 +1481,7 @@ Identify large gaps between markers which is indicative of adjacent markers bein
 ```{r}
 
 # large gaps between markers indicate that adjacent markers are only weakly linked
-summaryMap(FamA_M.final)
+summaryMap(FamB_M.final)
 
 ```
 
@@ -1440,7 +1490,7 @@ Plot maps of all linkage groups:
 ```{r}
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 ```
 
@@ -1449,7 +1499,7 @@ Drop markers one by one determine change in chromosome length & change in log li
 ```{r}
 
 # drop each marker and compare effect
-dropone <- droponemarker(FamA_M.final, maxit = 4000, tol = 1e-6, 
+dropone <- droponemarker(FamB_M.final, maxit = 4000, tol = 1e-6, 
                          error.prob = 0.001, verbose = TRUE) %>%
   add_rownames("Marker") %>%
   gather("Effect", "Change", 4:5)
@@ -1490,19 +1540,19 @@ dropone_sum <- dropone %>%
 ```{r}
 
 # drop markers (LOD more positive, larger diff in likelihood) 
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_9840") # LG17
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_87663") # LG16
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_40559") # LG15
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_42990") # LG14
-FamA_M.final <- drop.markers(FamA_M.final, "dDocent_Contig_10941") # LG4
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_9840") # LG17
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_87663") # LG16
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_40559") # LG15
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_42990") # LG14
+FamB_M.final <- drop.markers(FamB_M.final, "dDocent_Contig_10941") # LG4
 
 # re-estimate map after eliminating markers
-FamA_M.dropl <- est.map(FamA_M.final, error.prob = 0.001)
-FamA_M.final <- replace.map(FamA_M.final, FamA_M.dropl)
+FamB_M.dropl <- est.map(FamB_M.final, error.prob = 0.001)
+FamB_M.final <- replace.map(FamB_M.final, FamB_M.dropl)
 
 # plot maps of all chromosomes
 par(ps=12, cex.lab=1)
-plotMap(FamA_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
+plotMap(FamB_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alternate.chrid=FALSE)
 
 ```
 
@@ -1512,10 +1562,10 @@ plotMap(FamA_M.final, horizontal=FALSE, shift=TRUE, show.marker.names=FALSE, alt
 
 # observed number of crossovers per individual
 par(mfrow=c(1,1), ps=12, cex=1)
-plot(countXO(FamA_M.final), ylab="Number of crossover", xlab="individual")
+plot(countXO(FamB_M.final), ylab="Number of crossover", xlab="individual")
 
 # # remove individuals with excessively high number of crossovers
-# FamA_M.final <- subset(FamA_M.final, ind=(countXO(FamA_M.final) < 50))
+# FamB_M.final <- subset(FamB_M.final, ind=(countXO(FamB_M.final) < 50))
 
 ```
 
@@ -1524,19 +1574,19 @@ plot(countXO(FamA_M.final), ylab="Number of crossover", xlab="individual")
 ```{r}
 
 # print summary map and map data
-SummaryFamA_M <- summaryMap(FamA_M.final)
+SummaryFamB_M <- summaryMap(FamB_M.final)
 
-write.table(SummaryFamA_M, file = "results/SummaryFamA_M.map",
+write.table(SummaryFamB_M, file = "results/SummaryFamB_M.map",
           quote = FALSE, sep = "\t", row.names = FALSE)
 
-FamA_M.map <- pull.map(FamA_M.final,as.table = TRUE)
+FamB_M.map <- pull.map(FamB_M.final,as.table = TRUE)
 
-write.table(FamA_M.map, file = "data/LINKMAP/FamA_M.map",
+write.table(FamB_M.map, file = "data/LINKMAP/FamB_M.map",
             quote = FALSE, sep = "\t", row.names = TRUE)
 
 ```
 
-Write files of finalized map. Map contains `r nrow(FamA_M.map)` loci grouped into 24 LG.
+Write files of finalized map. Map contains `r nrow(FamB_M.map)` loci grouped into 24 LG.
 
 # Compare male/female maps
 
@@ -1547,22 +1597,22 @@ Finalize the female map by inserting the loci that had duplicate segregation pat
 ```{r}
 
 # import female map
-FamA_F.map <- read.table("data/LINKMAP/FamA_F.map", stringsAsFactors = FALSE, header = FALSE,
+FamB_F.map <- read.table("data/LINKMAP/FamB_F.map", stringsAsFactors = FALSE, header = FALSE,
                          col.names = c("LOCUS", "LG_F", "POS_F"), skip = 1)
 
 # add duplicate loci back in
-match.loci_F <- read.table("data/LINKMAP/MatchLociFamAF.txt", header = TRUE,
+match.loci_F <- read.table("data/LINKMAP/MatchLociFamBF.txt", header = TRUE,
                          stringsAsFactors = FALSE) %>%
-  left_join(FamA_F.map) %>%
+  left_join(FamB_F.map) %>%
   select(MATCHLOC, LG_F, POS_F) %>%
   rename(LOCUS = MATCHLOC)
 
 # update female map
-FamA_F.map <- bind_rows(FamA_F.map, match.loci_F) %>%
+FamB_F.map <- bind_rows(FamB_F.map, match.loci_F) %>%
   group_by(LG_F) %>%
   arrange(POS_F)
 
-write.table(FamA_F.map, file = "results/FamA_F.map",
+write.table(FamB_F.map, file = "results/FamB_F.map",
           quote = FALSE, sep = "\t", row.names = FALSE)
 
 ```
@@ -1572,22 +1622,22 @@ Finalize the male map by inserting the loci that had duplicate segregation patte
 ```{r}
 
 # import male map
-FamA_M.map <- read.table("data/LINKMAP/FamA_M.map", stringsAsFactors = FALSE, header = FALSE,
+FamB_M.map <- read.table("data/LINKMAP/FamB_M.map", stringsAsFactors = FALSE, header = FALSE,
                          col.names = c("LOCUS", "LG_M", "POS_M"), skip = 1)
 
 # add duplicate loci back in
-match.loci_M <- read.table("data/LINKMAP/MatchLociFamAM.txt", header = TRUE,
+match.loci_M <- read.table("data/LINKMAP/MatchLociFamBM.txt", header = TRUE,
                          stringsAsFactors = FALSE) %>%
-  left_join(FamA_M.map) %>%
+  left_join(FamB_M.map) %>%
   select(MATCHLOC, LG_M, POS_M) %>%
   rename(LOCUS = MATCHLOC)
 
 # update female map
-FamA_M.map <- bind_rows(FamA_M.map, match.loci_M) %>%
+FamB_M.map <- bind_rows(FamB_M.map, match.loci_M) %>%
   group_by(LG_M) %>%
   arrange(POS_M)
 
-write.table(FamA_M.map, file = "results/FamA_M.map",
+write.table(FamB_M.map, file = "results/FamB_M.map",
           quote = FALSE, sep = "\t", row.names = FALSE)
 
 ```
@@ -1597,11 +1647,11 @@ write.table(FamA_M.map, file = "results/FamA_M.map",
 ```{r}
 
 # number of markers in maps
-F.total <- as.numeric(nrow(FamA_F.map))
-M.total <- as.numeric(nrow(FamA_M.map))
+F.total <- as.numeric(nrow(FamB_F.map))
+M.total <- as.numeric(nrow(FamB_M.map))
 
 # number of shared markers
-marker.shared <- inner_join(FamA_F.map, FamA_M.map, by = "LOCUS", copy = FALSE)
+marker.shared <- inner_join(FamB_F.map, FamB_M.map, by = "LOCUS", copy = FALSE)
 m.shared <- as.numeric(nrow(marker.shared))
 
 # number of unique markers in each map
@@ -1609,7 +1659,7 @@ F.unique <- (F.total - m.shared)
 M.unique <- (M.total - m.shared)
 
 # Combine Female & Male maps (Marker, F_LG, F_LGPos, M_LG, M_LGPos)
-marker.all <- full_join(FamA_F.map, FamA_M.map, by = "LOCUS", copy = FALSE) %>%
+marker.all <- full_join(FamB_F.map, FamB_M.map, by = "LOCUS", copy = FALSE) %>%
     ungroup()
 
 # total number of mapped markers
@@ -1621,7 +1671,7 @@ N_MARKERS <- c(F.total, M.total, m.shared, F.unique, M.unique, m.total)
 overview  <- data.frame(CAT, N_MARKERS)
 
 # print output
-write.table(marker.all, file = "results/FamA_allmarkers.txt")
+write.table(marker.all, file = "results/FamB_allmarkers.txt")
 
 # dataframe with all mapped markers
 mapped_markers <- select(marker.all, LOCUS) %>%
@@ -1629,9 +1679,9 @@ mapped_markers <- select(marker.all, LOCUS) %>%
 
 ```
 
-For mapping family A, the female and male maps contain `r F.total` and `r M.total` loci, respectively. Of those the `r m.shared` are shared, while the female and male maps contain `r F.unique` and `r M.unique` unique loci, respectively.
+For mapping Family B, the female and male maps contain `r F.total` and `r M.total` loci, respectively. Of those the `r m.shared` are shared, while the female and male maps contain `r F.unique` and `r M.unique` unique loci, respectively.
 
-# FamA family map (onemap)
+# FamB family map (onemap)
 
 Map all loci segregating in male and/or female using full-cross.
 
@@ -1642,17 +1692,17 @@ Import tab delimited onemap input file converted from filtered `*.tsv`-file usin
 ```{r}
 
 # change header names to Marker | Markertype | Genotype
-FamA.onemap <- read.delim("data/LINKMAP/FamA.onemap", header = FALSE,
+FamB.onemap <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
                           col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
                           skip = 1, stringsAsFactors = FALSE)
 
 # number of individuals in dataset
-N <- read.delim("data/LINKMAP/FamA.onemap", header = FALSE,
+N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
                           col.names = c("N_IND", "N_LOCI"),
                           nrows = 1, stringsAsFactors = FALSE)
 
 # keep only markers in combined data set (filter by joined data set)
-Onemap.filtered <- semi_join(FamA.onemap, mapped_markers)
+Onemap.filtered <- semi_join(FamB.onemap, mapped_markers)
 
 ```
 
@@ -1675,7 +1725,7 @@ match_loc <- anti_join(Onemap.filtered, Onemap.filt2) %>%
 
 # write filtered input file for Onemap
 # need to add extra line back in
-con <- file("data/LINKMAP/FamAfilter.onemap", open = "wt")
+con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
 writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
 write.table(Onemap.filt2, con, 
             append = FALSE, quote = FALSE, sep = " ", 
@@ -1692,10 +1742,10 @@ The filtered data set contains `r nrow(Onemap.filt2)` loci.
 ```{r}
 
 # import datafile
-FamA.Map <- read.outcross(file="data/LINKMAP/FamAfilter.onemap")
+FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
 
 # Summary of datafile
-FamA.Map
+FamB.Map
 
 ```
 
@@ -1705,7 +1755,7 @@ Estimate two-point recombination fractions between all pairs of markers (Wu et a
 
 # estimate recombination fraction between all pairs of markers
 # creates object of class rf.2pts
-FamA.Map.rf.L6.rf35 <- rf.2pts(FamA.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
 
 ```
 
@@ -1714,7 +1764,7 @@ Assign markers to linkage groups. Create sequence of all markers to assign to LG
 ```{r}
 
 # create sequence (list) of all markers to assign to LGs
-all.markers <- make.seq(FamA.Map.rf.L6.rf35, "all") 
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all") 
 
 # assign markers to linkage groups
 LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
@@ -1797,13 +1847,13 @@ rf.graph.table(LG_final[[1]], inter = FALSE)
 ```{r}
 
 # group all final ordered LGs
-FamA.map <- LG_final
+FamB.map <- LG_final
 
 # draw map for all LGs
-draw.map(FamA.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
 
 # draw map for specific LG
-# draw.map(FamA.map[[LG]], names=TRUE, grid=TRUE, cex.mrk=0.7) 
+# draw.map(FamB.map[[LG]], names=TRUE, grid=TRUE, cex.mrk=0.7) 
 
 ```
 
@@ -1812,25 +1862,25 @@ Add duplicate markers (with same genotype/segregation pattern) and save finalize
 ```{r}
 
 # export map to file
-write.map(FamA.map, "data/LINKMAP/FamA.fullmap")
-FamA.fullmap <- read.table("data/LINKMAP/FamA.fullmap", 
+write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap", 
                            skip = 1, header = FALSE) %>%
   mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
   rename(LG = V1, POSITION = V3) %>%
   select(LOCUS, LG, POSITION)
 
 # add mapping positions
-temp <- left_join(match_loc, FamA.fullmap, by = "LOCUS") %>%
+temp <- left_join(match_loc, FamB.fullmap, by = "LOCUS") %>%
   select(MATCHLOC, LG, POSITION) %>%
   rename(LOCUS = MATCHLOC)
 
 # add markers to final map
-FamA.fullmap <- bind_rows(FamA.fullmap, temp) %>%
+FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
   group_by(LG) %>%
   arrange(POSITION) %>%
   ungroup()
 
 # write output to file
-write.table(FamA.fullmap, "results/FamA.fullmap", row.names = FALSE)
+write.table(FamB.fullmap, "results/FamB.fullmap", row.names = FALSE)
 
 ```
