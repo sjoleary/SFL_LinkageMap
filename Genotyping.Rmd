@@ -864,7 +864,13 @@ count(loc_stats_raw, MISS_FamB_raw > 0.5)
 
 Filter loci with minor allele count < 3 and genotype call rate < 0.5
 
-    vcftools --vcf FamB.F0.recode.vcf --out FamB.F1 --max-missing 0.5 --mac 3 --recode --recode-INFO-all
+    vcftools --vcf FamB.F0.recode.vcf --out FamB.F1a --mac 3 --recode --recode-INFO-all
+    
+retain 194,600 of 281,853 loci.
+    
+    vcftools --vcf FamB.F1a.recode.vcf --out FamB.F1b --max-missing 0.5 --recode --recode-INFO-all
+    
+retain 169,426 of 194,600 loci.
 
 #### Filter 2: minimum depth per genotype
 
@@ -882,11 +888,13 @@ ggplot(loc_stats_raw, aes(x = MEAN_DEPTH_FamB_raw)) +
 
 Code loci with less than 3 reads per locus per individual as missing.
 
-    vcftools --vcf FamB.F1.recode.vcf --out FamB.F2a --minDP 3 --recode --recode-INFO-all
+    vcftools --vcf FamB.F1b.recode.vcf --out FamB.F2a --minDP 3 --recode --recode-INFO-all
 
 Remove flagged loci.    
 
     vcftools --vcf FamB.F2a.recode.vcf --out FamB.F2  --max-missing 0.5 --recode --recode-INFO-all
+    
+Remaining loci 74,329.
     
 Query individual and site stats:
 
@@ -959,28 +967,22 @@ site_qual <- read.table("data/VCF/FamB.F2.lqual",
                         header = TRUE, stringsAsFactors = FALSE) %>%
   mutate(PROB = 10^(-QUAL/10))
 
-# plot distribution of probability that wrong call
-ggplot(site_qual, aes(x = QUAL)) +
-  geom_histogram(binwidth = 1, color = "black", fill = "grey95") +
-  geom_vline(aes(xintercept = mean(PROB, na.rm = TRUE)),
-                 color = "darkblue", linetype = "dashed", size = 1) +
-  labs(x = "quality score", y = "number of loci") +
-  theme_standard
+quantile(site_qual$QUAL)
 
 ```
 
 #### Filter 3: missing data (locus/indv) I
 
-Distribution of nissing data per locus:
+Distribution of missing data per locus:
 
 ```{r missing data F2, message=FALSE, warning=FALSE}
 
 loc_stats_F2 <- read.loc.stats(dir = "data/VCF/", vcf = "FamB.F2")
 
 # plot distribution read depth
-ggplot(loc_stats_F2, aes(x = MISS_FamB_raw)) +
+ggplot(loc_stats_F2, aes(x = MISS_FamB.F2)) +
   geom_histogram(binwidth = 0.01, color = "black", fill = "grey95") +
-  geom_vline(aes(xintercept = mean(MISS_FamB_raw, na.rm = TRUE)),
+  geom_vline(aes(xintercept = mean(MISS_FamB.F2, na.rm = TRUE)),
                  color = "darkblue", linetype = "dashed", size = 1) +
     geom_vline(aes(xintercept = 0.5),
                  color = "red", linetype = "dashed", size = 1) +
@@ -995,9 +997,9 @@ count(loc_stats_F2, MISS_FamB.F2 > 0.6)
 
 ```
 
-Filter loci with genotype call rate < 0.6 
+Filter loci with genotype call rate < 0.75 
 
-    vcftools --vcf FamB.F2.recode.vcf --out FamB.F3a --max-missing 0.6 --recode --recode-INFO-all
+    vcftools --vcf FamB.F2.recode.vcf --out FamB.F3a --max-missing 0.8 --recode --recode-INFO-all
     vcftools --vcf FamB.F3a.recode.vcf --out FamB.F3a --missing-indv
     
 ```{r F3 missing data}
@@ -1016,19 +1018,29 @@ ggplot(imiss_F3, aes(x = F_MISS)) +
 
 ```
 
-Remove individuals with more than 90% missing data
+Remove individuals with more than 80% missing data
 
-    mawk -v x=0.9 '$5 > x' FamB.F3a.imiss | cut -f1 > lowDP.indv
+    mawk -v x=0.8 '$5 > x' FamB.F3a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F3a.recode.vcf --remove lowDP.indv --out FamB.F3b --recode --recode-INFO-all
+    
+Remaining loci: 38503 loci and 174 individuals
 
 #### Filter 4: minor allele frequency, mean minimum depth I
 
-Remove loci with minor allele frequency < 0.01 and mean minimum depth (across all individuals) < 5
+Remove loci with minor allele frequency < 0.01 and mean minimum depth (across all individuals) < 10
 
-    vcftools --vcf FamB.F3b.recode.vcf --out FamB.F4 --maf 0.01 --min-meanDP 5 --recode --recode-INFO-all
+    vcftools --vcf FamB.F3b.recode.vcf --out FamB.F4a --min-meanDP 10 --recode --recode-INFO-all
+    
+Remaining loci: 32,545
+
+    vcftools --vcf FamB.F4a.recode.vcf --out FamB.F4b --maf 0.01 --recode --recode-INFO-all
+    
+Remaining loci: 31,496
+    
     vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --missing-indv
     vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --missing-site
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --depth 
+    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --depth
+    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --site-mean-depth
     vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --het 
 
 Assess individual quality by comparing levels of missing data and read depth.
@@ -1055,7 +1067,7 @@ ggplot(ind_stats_F4, aes(x = MEAN_DEPTH_FamB.F4)) +
 
 ```
 
-Frequency of missing data per individual across all SNP sites; the mean mean depth across all individuals is `r mean(ind_stats_raw$MISS_FamB.F4)`, the 95th % quantile is `r quantile(ind_stats_raw$MISS_FamB.F4, .95)`:
+Frequency of missing data per individual across all SNP sites:
 
 ```{r missing data indv F4}
 
@@ -1087,10 +1099,13 @@ ggplot(ind_stats_F4, aes(x = Fis_FamB.F4)) +
 
 #### Filter 5: missing data (locus/indv) II
 
-Remove loci with genotype call rate < 0.8
+Remove loci with genotype call rate < 0.9
 
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F5a --max-missing 0.8  --recode --recode-INFO-all
-    vcftools --vcf FamB.F5a.recode.vcf --out FamB.F5a --missing
+    vcftools --vcf FamB.F4.recode.vcf --out FamB.F5a --max-missing 0.9  --recode --recode-INFO-all
+    vcftools --vcf FamB.F5a.recode.vcf --out FamB.F5a --missing-indv
+    
+Remaining loci: 28,302
+
 
 ```{r F5 missing data}
 
@@ -1108,19 +1123,25 @@ ggplot(imiss_F5, aes(x = F_MISS)) +
 
 ```
 
-Remove individuals with > 75% missing data
+Remove individuals with > 65% missing data
 
-    mawk -v x=0.75 '$5 > x' FamB.F5a.imiss | cut -f1 > lowDP.indv
+    mawk -v x=0.65 '$5 > x' FamB.F5a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F5a.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out FamB.F5b
 
 #### Filter 6: minor allele frequency, mean minimum depth II
 
-Filter loci with minor allele frequency < 0.03 and mean minimum depth (across all individuals) < 10
+Filter loci with minor allele frequency < 0.03 and mean minimum depth (across all individuals) < 15
 
-    vcftools --vcf FamB.F5b.recode.vcf --out FamB.F6 --maf 0.03 --recode --recode-INFO-all
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --min-meanDP 10 
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing 
+    vcftools --vcf FamB.F5b.recode.vcf --out FamB.F6a --min-meanDP 15 --recode --recode-INFO-all
+    
+Remaining loci: 25,232
+    
+    vcftools --vcf FamB.F6a.recode.vcf --out FamB.F6b --maf 0.03 --recode --recode-INFO-all
+
+Remaining loci: 23,511
+    
     vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --depth 
+    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --site-mean-depth
     vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --het
     vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing-indv
     vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing-site
@@ -1182,8 +1203,25 @@ ggplot(ind_stats_F6, aes(x = Fis_FamB.F6)) +
 
 #### Filter 7: missing data (locus/indv) III
 
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F7a --max-missing 0.85 --recode --recode-INFO-all
-    vcftools --vcf FamB.F7a.recode.vcf --out FamB.F7a --missing
+```{r}
+
+lmiss_F6 <- read.table("data/VCF/FamB.F6.lmiss", header = TRUE, stringsAsFactors = FALSE)
+
+ggplot(lmiss_F6, aes(x = F_MISS)) +
+  geom_histogram(binwidth = .01, color = "black", fill = "grey95") +
+  geom_vline(aes(xintercept = mean(F_MISS, na.rm = TRUE)),
+                 color = "darkred", linetype = "dashed", size = 1) +
+  geom_vline(aes(xintercept = quantile(F_MISS, .95)),
+                 color = "darkblue", linetype = "dashed", size = 1) +
+  labs(x = "missing data per locus") +
+  theme_standard
+
+```
+
+    vcftools --vcf FamB.F6.recode.vcf --out FamB.F7a --max-missing 0.95 --recode --recode-INFO-all
+    vcftools --vcf FamB.F7a.recode.vcf --out FamB.F7a --missing-indv
+    
+Remaining loci: 20,508 of 23,511
 
 ```{r F7 missing data}
 
@@ -1202,7 +1240,7 @@ ggplot(imiss_F7, aes(x = F_MISS)) +
 
 ```
 
-Remove individuals with > 65% missing data.
+Remove individuals with > 50% missing data.
 
     mawk -v x=0.65 '$5 > x' FamB.F7a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F7a.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out FamB.F7b
@@ -1213,13 +1251,19 @@ Allele balance is the ratio of reads for reference allele to all reads, consider
 
     vcffilter -s -f "AB > 0.2 & AB < 0.8 | AB < 0.01 | AB > 0.99" -s -g "QR > 0 | QA > 0" FamB.F7b.recode.vcf > FamB.F8a.vcf 
     
+Remaining loci: 19234
+    
 Remove loci with quality/depth ratio < 0.2
 
     vcffilter -s -f "QUAL / DP > 0.2" FamB.F8a.vcf > FamB.F8b.vcf  
+    
+Remaining loci: 18748
 
 Remove loci based on ratio of mapping quality for reference and alternate allele, i.e. sites that have a high discrepancy between the mapping qualities of two alleles.
 
     vcffilter -s -f "MQM / MQMR > 0.25 & MQM / MQMR < 1.75" FamB.F8b.vcf > FamB.F8c.vcf
+    
+Remaining loci: 18696
 
 Compare number of loci pre/post-filtering 
 
@@ -1234,7 +1278,7 @@ Paired end reads should not overlap, and a SNP site should only be covered by ei
 
     vcffilter -f "SAF / SAR > 100 & SRF / SRR > 100 | SAR / SAF > 100 & SRR / SRF > 50" -s FamB.F8c.vcf > FamB.F9.vcf
     
-Compare number of loci pre/post-filtering 
+Remaining loci: 18,514
 
     mawk '!/#/' FamB.F9.vcf | wc -l
 
@@ -1244,7 +1288,7 @@ Identify loci that only unpaired reads mapping to them - an artifact introduced 
 
     vcffilter -f "PAIRED > 0.05 & PAIREDR > 0.05 & PAIREDR / PAIRED < 1.75 & PAIREDR / PAIRED > 0.25 | PAIRED < 0.05 & PAIREDR < 0.05" -s FamB.F9.vcf > FamB.F10.vcf
 
-Compare number of loci rep/post-filtering 
+Remaining number of loci: 18,437
 
     mawk '!/#/' FamB.F10.vcf | wc -l
 
@@ -1253,6 +1297,8 @@ Compare number of loci rep/post-filtering
 Estimate the original number of individuals in the VCF file (INFO flags in filtered data set are are based on original number of individuals in data set):
 
     grep -o -e 'NS=[0-9]*' FamB.F10.vcf | sed s/NS=//g | sort | tail -1
+    
+Original data set contained 175 individuals.
 
 Create file with the original site depth and quality score for each site:
 
@@ -1265,9 +1311,9 @@ Calculate average depth and standard deviation:
     
     mawk '{delta = $1 - avg; avg += delta / NR; mean2 += delta * ($1 - avg); } END { print sqrt(mean2 / NR); }' FamB.F10.DEPTH
 
-Mean depth per locus (across all indivuals) is 14345.1 and the standard deviation is 10304.4. Filter SNP site with depth > mean depth + 1 standard deviation = `r 14345.1 + 10304.4` and that have quality scores < 2x the depth at that site.
+Mean depth per locus (across all indivuals) is 14345.1 and the standard deviation is 10304.4. Filter SNP site with depth > mean depth + 1 standard deviation = `r 17388.3 + 9615.7` and that have quality scores < 2x the depth at that site.
 
-    paste FamB.F10.loci.qual FamB.F10.DEPTH | mawk -v x=24649.5 '$4 > x'| mawk '$3 < 2 * $4' > FamB.F10.lowQDloci
+    paste FamB.F10.loci.qual FamB.F10.DEPTH | mawk -v x=27004 '$4 > x'| mawk '$3 < 2 * $4' > FamB.F10.lowQDloci
 
 Recalculate site depth for the remaining sites and calculate the average depth per individual; 180 individuals remaining in data set at this point.
 
@@ -1296,9 +1342,13 @@ ggplot(meandepthpersite, aes(x = V1)) +
 
 ```
 
-Choose cut-off value = 250. Combine both depth filters to produce filtered data set.
+Choose cut-off value = 210. Combine both depth filters to produce filtered data set.
 
-    vcftools --vcf  FamB.F10.vcf --max-meanDP 250 --exclude-positions FamB.F10.lowQDloci --recode --recode-INFO-all --out FamB.F11  
+    vcftools --vcf  FamB.F10.vcf --max-meanDP 210 --exclude-positions FamB.F10.lowQDloci --recode --recode-INFO-all --out FamB.F11  
+    
+Remaining number of loci: 18,182
+    
+    mawk '!/#/' FamB.F11.recode.vcf | wc -l
 
 #### Filter 12: Remove Indels
 
@@ -1306,16 +1356,24 @@ Remove Indels from data set.
 
     vcfallelicprimitives FamB.F11.recode.vcf --keep-info --keep-geno > FamB.prim.vcf
     vcftools --vcf FamB.prim.vcf --out FamB.F12 --remove-indels --recode --recode-INFO-all
+    
+Remaining number of loci: 18,368
+    
+    mawk '!/#/' FamB.F12.recode.vcf | wc -l
 
 #### Filter 13: Minor allele frequency
 
-Set final cut-off for minor allele frequncy at 0.025
+Set final cut-off for minor allele frequncy at 0.05
 
     vcftools --vcf FamB.F12.recode.vcf --out FamB.F13 --maf 0.05 --recode --recode-INFO-all
+    
+Loci remaining: 18,364
+    
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --het 
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --missing-indv
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --missing-site
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --depth 
+    vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --site-mean-depth
 
 **Assess individual quality**
 
@@ -1377,7 +1435,7 @@ ggplot(ind_stats_F13, aes(x = Fis_FamB.F13)) +
 
 Set final cut-off for genotype call rate to > 90%.
 
-    vcftools --vcf FamB.F13.recode.vcf --out FamB.F15a --max-missing 0.9 --recode --recode-INFO-all
+    vcftools --vcf FamB.F13.recode.vcf --out FamB.F15a --max-missing 0.95 --recode --recode-INFO-all
     vcftools --vcf FamB.F15a.recode.vcf --out FamB.F15a --missing-indv
 
 ```{r missing data individuals F15, message=FALSE, warning=FALSE}
@@ -1409,7 +1467,7 @@ Set final cut-off for allowable missing data per individual to < 50%.
     vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --hardy 
     vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --freq  
 
-### Final thresholds values for filtered data set FamA:
+### Final thresholds values for filtered data set FamB:
 
 * minimum sequence quality (minQ): 
 * minimum genotype call rate per locus (geno): %
