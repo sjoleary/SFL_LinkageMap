@@ -1708,8 +1708,6 @@ count(FamB_tsv, Count > 122)
 FamB_tsv <- FamB_tsv %>%
   filter(Count > 122)
 
-
-
 ```
 
 ## Summary stats by locus
@@ -1797,11 +1795,11 @@ quantile(hap_statsB$Haplotypes, c(.5, .75, .85, .9, .95))
 
 # number of loci with number of SNPs > 10
 count(hap_statsB, Sites > 5)
-count(hap_statsB, Haplotypes > 4)
+count(hap_statsB, Haplotypes > 7)
 
 # create vector of loci to remove (choose cut-off >5)
 NoSNps <- filter.loci.noSNPs(hap_statsB, 5)
-NoHaps <- filter.loci.NoHaps(hap_statsB, 4)
+NoHaps <- filter.loci.NoHaps(hap_statsB, 7)
 
 ```
 
@@ -1839,21 +1837,24 @@ FamB_tsv_filtered <- FamB_tsv %>%
 
 # identify individuals w/high missing data
 removeInd <- hap_ind_statsB %>%
-    filter(Prop_Success < 0.7)
+    filter(Prop_Success < 0.8)
+
+removeInd$Ind
 
 FamB_tsv_filtered <- FamB_tsv_filtered %>%
     select(-`FamB_FamB.027`) %>%
-    select(-`FamB_FamB.028`) %>%
-    select(-`FamB_FamB.088`) %>%
     select(-`FamB_FamB.102`) %>%
-    select(-`FamB_FamB.103`) %>%
     select(-`FamB_FamB.105`) %>%
     select(-`FamB_FamB.107`) %>%
+    select(-`FamB_FamB.108`) %>%
     select(-`FamB_FamB.109`) %>%
     select(-`FamB_FamB.110`) %>%
     select(-`FamB_FamB.111`) %>%
+    select(-`FamB_FamB.153`) %>%
     select(-`FamB_FamB.163`) %>%
-    select(-`FamB_FamB.180`)
+    select(-`FamB_FamB.180`) %>%
+    select(-`FamB_FamB.187`) %>%
+    select(-`FamB_FamB.M2`)
 
 genotypes_FamB <- FamB_tsv_filtered %>%
   group_by(Parents) %>%
@@ -1865,7 +1866,7 @@ write.table(FamB_tsv_filtered, file = "data/VCF/FamB.filtered.tsv",
 
 ```
 
-Filtered data set contains `r nrow(FamB_tsv_filtered)` loci and `r (ncol(FamB_tsv_filtered)-4) individuals.
+Filtered data set contains `r nrow(FamB_tsv_filtered)` loci and `r (ncol(FamB_tsv_filtered)-4)` individuals.
 
 # Prepare final data set for mapping
 
