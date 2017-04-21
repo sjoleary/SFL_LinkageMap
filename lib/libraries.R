@@ -12,6 +12,7 @@ library(ggthemes)
 # libraries for linkage mapping
 library(qtl)
 library(onemap)
+library(LPmerge)
 
 # libraries for downloading sequences
 library(ape)

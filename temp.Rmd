@@ -1,0 +1,649 @@
+---
+title: "Comparative Genomics Southern Flounder"
+output:
+  html_notebook:
+    code_folding: hide
+    df_print: paged
+    highlight: kate
+    theme: flatly
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+```{r load libraries, message=FALSE, warning=FALSE}
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+source("lib/libraries.R")
+source("lib/ggplot.R")
+
+```
+
+# Merge Family maps
+
+Load family maps
+
+```{r}
+
+FamA_1 <- read.delim("data/LINKMAP/FamA.fullmap", 
+                   stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LGa", "LOCUS", "POSITION"))
+
+FamB_1 <- read.delim("data/LINKMAP/FamB.fullmap", 
+                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LGa", "LOCUS", "POSITION"))
+
+temp <- bind_rows(FamA_1, FamB_1)
+
+all_markers <- unique(temp$LOCUS)
+
+```
+
+Each map consists of 24 linkage groups and a total of `r nrow(FamA_1)` and `r nrow(FamB_1)` markers for Family A and B, respectively with `r length(temp$LOCUS)-length(all_markers)` markers overlapping between the two family maps.
+
+Use LPmerge to create consensus linkage map by merging linkage maps from Family A and B. LPmerge uses linear programming to minimize the mean absolute error between the consensus and family linkage maps; preserve ordering of the markers in the linkage map using linear inequality constraints. When marker order is inconsisten between maps being merged a minimum set of ordinal constraints is delected to resolve the conflicts.
+
+## Merge maps for LGa1:
+
+```{r}
+
+LGa1_A <- FamA_1 %>%
+    filter(LGa == 1) %>%
+    select(LOCUS, POSITION)
+
+LGa1_B <- FamB_1 %>%
+    filter(LGa == 1) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa1_A, LGa1_B)
+
+# Start writing to an output file
+sink("results/LGa1.merge")
+
+# merge
+LGa1 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+Look at stats:
+
+
+
+## Merge maps for LGa2:
+
+```{r}
+
+LGa2_A <- FamA_1 %>%
+    filter(LGa == 2) %>%
+    select(LOCUS, POSITION)
+
+LGa2_B <- FamB_1 %>%
+    filter(LGa == 5) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa2_A, LGa2_B)
+
+# Start writing to an output file
+sink("results/LGa2.merge")
+
+# merge
+LGa2 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa3:
+
+```{r}
+
+LGa3_A <- FamA_1 %>%
+    filter(LGa == 3) %>%
+    select(LOCUS, POSITION)
+
+LGa3_B <- FamB_1 %>%
+    filter(LGa == 2) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa3_A, LGa3_B)
+
+# Start writing to an output file
+sink("results/LGa3.merge")
+
+# merge
+LGa3 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa4:
+
+```{r}
+
+LGa4_A <- FamA_1 %>%
+    filter(LGa == 4) %>%
+    select(LOCUS, POSITION)
+
+LGa4_B <- FamB_1 %>%
+    filter(LGa == 13) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa4_A, LGa4_B)
+
+# Start writing to an output file
+sink("results/LGa4.merge")
+
+# merge
+LGa4 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa5:
+
+```{r}
+
+LGa5_A <- FamA_1 %>%
+    filter(LGa == 5) %>%
+    select(LOCUS, POSITION)
+
+LGa5_B <- FamB_1 %>%
+    filter(LGa == 8) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa5_A, LGa5_B)
+
+# Start writing to an output file
+sink("results/LGa5.merge")
+
+# merge
+LGa5 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa6:
+
+```{r}
+
+LGa6_A <- FamA_1 %>%
+    filter(LGa == 6) %>%
+    select(LOCUS, POSITION)
+
+LGa6_B <- FamB_1 %>%
+    filter(LGa == 11) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa6_A, LGa6_B)
+
+# Start writing to an output file
+sink("results/LGa6.merge")
+
+# merge
+LGa6 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa7:
+
+```{r}
+
+LGa7_A <- FamA_1 %>%
+    filter(LGa == 7) %>%
+    select(LOCUS, POSITION)
+
+LGa7_B <- FamB_1 %>%
+    filter(LGa == 3) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa7_A, LGa7_B)
+
+# Start writing to an output file
+sink("results/LGa7.merge")
+
+# merge
+LGa7 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa8:
+
+```{r}
+
+LGa8_A <- FamA_1 %>%
+    filter(LGa == 8) %>%
+    select(LOCUS, POSITION)
+
+LGa8_B <- FamB_1 %>%
+    filter(LGa == 24) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa8_A, LGa8_B)
+
+# Start writing to an output file
+sink("results/LGa8.merge")
+
+# merge
+LGa8 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa9:
+
+```{r}
+
+LGa9_A <- FamA_1 %>%
+    filter(LGa == 9) %>%
+    select(LOCUS, POSITION)
+
+LGa9_B <- FamB_1 %>%
+    filter(LGa == 17) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa9_A, LGa9_B)
+
+# Start writing to an output file
+sink("results/LGa9.merge")
+
+# merge
+LGa9 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa10:
+
+```{r}
+
+LGa10_A <- FamA_1 %>%
+    filter(LGa == 10) %>%
+    select(LOCUS, POSITION)
+
+LGa10_B <- FamB_1 %>%
+    filter(LGa == 6) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa10_A, LGa10_B)
+
+# Start writing to an output file
+sink("results/LGa10.merge")
+
+# merge
+LGa10 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa11:
+
+```{r}
+
+LGa11_A <- FamA_1 %>%
+    filter(LGa == 11) %>%
+    select(LOCUS, POSITION)
+
+LGa11_B <- FamB_1 %>%
+    filter(LGa == 18) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa11_A, LGa11_B)
+
+# Start writing to an output file
+sink("results/LGa11.merge")
+
+# merge
+LGa11 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa12:
+
+```{r}
+
+LGa12_A <- FamA_1 %>%
+    filter(LGa == 12) %>%
+    select(LOCUS, POSITION)
+
+LGa12_B <- FamB_1 %>%
+    filter(LGa == 10) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa12_A, LGa12_B)
+
+# Start writing to an output file
+sink("results/LGa12.merge")
+
+# merge
+LGa12 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa13:
+
+```{r}
+
+LGa13_A <- FamA_1 %>%
+    filter(LGa == 13) %>%
+    select(LOCUS, POSITION)
+
+LGa13_B <- FamB_1 %>%
+    filter(LGa == 7) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa13_A, LGa13_B)
+
+# Start writing to an output file
+sink("results/LGa13.merge")
+
+# merge
+LGa13 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa14:
+
+```{r}
+
+LGa14_A <- FamA_1 %>%
+    filter(LGa == 14) %>%
+    select(LOCUS, POSITION)
+
+LGa14_B <- FamB_1 %>%
+    filter(LGa == 4) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa14_A, LGa14_B)
+
+# Start writing to an output file
+sink("results/LGa14.merge")
+
+# merge
+LGa14 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa15:
+
+```{r}
+
+LGa15_A <- FamA_1 %>%
+    filter(LGa == 15) %>%
+    select(LOCUS, POSITION)
+
+LGa15_B <- FamB_1 %>%
+    filter(LGa == 12) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa15_A, LGa15_B)
+
+# Start writing to an output file
+sink("results/LGa15.merge")
+
+# merge
+LGa15 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa16:
+
+```{r}
+
+LGa16_A <- FamA_1 %>%
+    filter(LGa == 16) %>%
+    select(LOCUS, POSITION)
+
+LGa16_B <- FamB_1 %>%
+    filter(LGa == 9) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa16_A, LGa16_B)
+
+# Start writing to an output file
+sink("results/LGa16.merge")
+
+# merge
+LGa16 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa17:
+
+```{r}
+
+LGa17_A <- FamA_1 %>%
+    filter(LGa == 17) %>%
+    select(LOCUS, POSITION)
+
+LGa17_B <- FamB_1 %>%
+    filter(LGa == 15) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa17_A, LGa17_B)
+
+# Start writing to an output file
+sink("results/LGa17.merge")
+
+# merge
+LGa17 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa18:
+
+```{r}
+
+LGa18_A <- FamA_1 %>%
+    filter(LGa == 18) %>%
+    select(LOCUS, POSITION)
+
+LGa18_B <- FamB_1 %>%
+    filter(LGa == 14) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa18_A, LGa18_B)
+
+# Start writing to an output file
+sink("results/LGa18.merge")
+
+# merge
+LGa18 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa19:
+
+```{r}
+
+LGa19_A <- FamA_1 %>%
+    filter(LGa == 19) %>%
+    select(LOCUS, POSITION)
+
+LGa19_B <- FamB_1 %>%
+    filter(LGa == 16) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa19_A, LGa19_B)
+
+# Start writing to an output file
+sink("results/LGa19.merge")
+
+# merge
+LGa19 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa20:
+
+```{r}
+
+LGa20_A <- FamA_1 %>%
+    filter(LGa == 20) %>%
+    select(LOCUS, POSITION)
+
+LGa20_B <- FamB_1 %>%
+    filter(LGa == 19) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa20_A, LGa20_B)
+
+# Start writing to an output file
+sink("results/LGa20.merge")
+
+# merge
+LGa20 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa21:
+
+```{r}
+
+LGa21_A <- FamA_1 %>%
+    filter(LGa == 21) %>%
+    select(LOCUS, POSITION)
+
+LGa21_B <- FamB_1 %>%
+    filter(LGa == 21) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa21_A, LGa21_B)
+
+# Start writing to an output file
+sink("results/LGa21.merge")
+
+# merge
+LGa21 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa22:
+
+```{r}
+
+LGa22_A <- FamA_1 %>%
+    filter(LGa == 22) %>%
+    select(LOCUS, POSITION)
+
+LGa22_B <- FamB_1 %>%
+    filter(LGa == 23) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa22_A, LGa22_B)
+
+# Start writing to an output file
+sink("results/LGa22.merge")
+
+# merge
+LGa22 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa23:
+
+```{r}
+
+LGa23_A <- FamA_1 %>%
+    filter(LGa == 23) %>%
+    select(LOCUS, POSITION)
+
+LGa23_B <- FamB_1 %>%
+    filter(LGa == 20) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa23_A, LGa23_B)
+
+# Start writing to an output file
+sink("results/LGa23.merge")
+
+# merge
+LGa23 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
+
+## Merge maps for LGa24:
+
+```{r}
+
+LGa24_A <- FamA_1 %>%
+    filter(LGa == 24) %>%
+    select(LOCUS, POSITION)
+
+LGa24_B <- FamB_1 %>%
+    filter(LGa == 22) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LGa24_A, LGa24_B)
+
+# Start writing to an output file
+sink("results/LGa24.merge")
+
+# merge
+LGa24 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+
+# Stop writing to the file
+sink()
+
+```
