@@ -1,8 +1,10 @@
 # libraries for data wrangling
-library(tidyr)
 library(reshape2)
 library(plyr)
 library(dplyr)
+library(tidyr)
+library(stringr)
+library(readr)
 
 # libraries for data visunarkalization
 library(ggplot2)

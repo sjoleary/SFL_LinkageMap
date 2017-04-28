@@ -47,6 +47,8 @@ Use LPmerge to create consensus linkage map by merging linkage maps from Family 
 
 ## Merge maps for LG1:
 
+Merge maps, for maximum interval K = 1 - 100 between bins to indlude in objective function. Creates consensus map bins containing markers from map and the corresponding distance in the consensus map. 
+
 ```{r}
 
 LG1_A <- FamA %>%
@@ -70,6 +72,111 @@ sink()
 
 ```
 
+Total error is calculated across each individual map compared to consensus map, as well as mean and standard deviation. Select most appropriate K values based on minimizing the root mean-squared error (RMSE) between the consensus and linkage maps. Further, evaluate consensus map length compared to family maps.
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG1.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG1.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG1_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+```
+
+Choose K = 41.
+
+```{r}
+
+View(LG1[[41]])
+
+LG1_cons <- LG1[[41]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "1")
+
+write.table(LG1_cons, "results/LG1.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG1_cons
+
+```
 
 ## Merge maps for LG2:
 
@@ -93,6 +200,112 @@ LG2 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Load stats for K = 1 - 100.
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG2.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG2.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+```
+
+Choose K = 5.
+
+```{r}
+
+View(LG2[[5]])
+
+LG2_cons <- LG2[[5]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "2")
+
+write.table(LG2_cons, "results/LG2.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG2_cons
 
 ```
 
@@ -121,6 +334,112 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG3.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG3.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 5.
+
+```{r}
+
+View(LG3[[5]])
+
+LG3_cons <- LG3[[5]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "3")
+
+write.table(LG3_cons, "results/LG3.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG3_cons
+
+```
+
 ## Merge maps for LG4:
 
 ```{r}
@@ -143,6 +462,111 @@ LG4 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG4.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG4.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 23.
+
+```{r}
+
+View(LG4[[23]])
+
+LG4_cons <- LG4[[23]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "4")
+
+write.table(LG4_cons, "results/LG4.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG4_cons
 
 ```
 
@@ -171,6 +595,112 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG5.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG5.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 74.
+
+```{r}
+
+View(LG5[[74]])
+
+LG5_cons <- LG5[[74]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "5")
+
+write.table(LG5_cons, "results/LG5.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG5_cons
+
+```
+
 ## Merge maps for LG6:
 
 ```{r}
@@ -193,6 +723,112 @@ LG6 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG6.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG6.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 27.
+
+```{r}
+
+View(LG6[[27]])
+
+LG6_cons <- LG6[[27]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "6")
+
+write.table(LG6_cons, "results/LG6.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG6_cons
 
 ```
 
@@ -221,6 +857,113 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG7.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG7.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 75.
+
+```{r}
+
+View(LG7[[75]])
+
+LG7_cons <- LG7[[75]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "7")
+
+write.table(LG7_cons, "results/LG7.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG7_cons
+
+```
+
 ## Merge maps for LG8:
 
 ```{r}
@@ -243,6 +986,120 @@ LG8 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG8.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG8.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = RMSE)) +
+    geom_histogram(binwidth = 1) +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 4.
+
+```{r}
+
+View(LG8[[4]])
+
+LG8_cons <- LG8[[4]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "8")
+
+write.table(LG8_cons, "results/LG8.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG8_cons
 
 ```
 
@@ -271,6 +1128,114 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG9.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG9.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 41.
+
+```{r}
+
+View(LG9[[41]])
+
+LG9_cons <- LG9[[41]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "9")
+
+write.table(LG9_cons, "results/LG9.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG9_cons
+
+```
+
 ## Merge maps for LG10:
 
 ```{r}
@@ -293,6 +1258,110 @@ LG10 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG10.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG10.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+```
+
+Choose K = 82.
+
+```{r}
+
+View(LG10[[82]])
+
+LG10_cons <- LG10[[82]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "10")
+
+write.table(LG10_cons, "results/LG10.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG10_cons
 
 ```
 
@@ -321,6 +1390,110 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG11.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG11.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+```
+
+Choose K = 69.
+
+```{r}
+
+View(LG11[[69]])
+
+LG11_cons <- LG11[[69]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "11")
+
+write.table(LG11_cons, "results/LG11.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG11_cons
+
+```
+
 ## Merge maps for LG12:
 
 ```{r}
@@ -343,6 +1516,113 @@ LG12 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG12.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG12.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 64.
+
+```{r}
+
+View(LG1[[64]])
+
+LG12_cons <- LG1[[64]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "12")
+
+write.table(LG12_cons, "results/LG12.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG12_cons
 
 ```
 
@@ -371,6 +1651,113 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG13.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG13.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 18.
+
+```{r}
+
+View(LG13[[18]])
+
+LG13_cons <- LG13[[18]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "13")
+
+write.table(LG13_cons, "results/LG13.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG13_cons
+
+```
+
 ## Merge maps for LG14:
 
 ```{r}
@@ -393,6 +1780,114 @@ LG14 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG14.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG14.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 7.
+
+```{r}
+
+View(LG14[[7]])
+
+LG14_cons <- LG14[[7]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "14")
+
+write.table(LG14_cons, "results/LG14.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG14_cons
 
 ```
 
@@ -421,6 +1916,114 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG15.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG15.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 2.
+
+```{r}
+
+View(LG15[[2]])
+
+LG15_cons <- LG15[[2]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "15")
+
+write.table(LG15_cons, "results/LG15.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG15_cons
+
+```
+
 ## Merge maps for LG16:
 
 ```{r}
@@ -443,6 +2046,114 @@ LG16 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG16.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG16.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 5.
+
+```{r}
+
+View(LG16[[5]])
+
+LG16_cons <- LG16[[5]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "16")
+
+write.table(LG16_cons, "results/LG16.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG16_cons
 
 ```
 
@@ -471,6 +2182,114 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG17.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG17.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 18.
+
+```{r}
+
+View(LG17[[18]])
+
+LG17_cons <- LG17[[18]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "17")
+
+write.table(LG17_cons, "results/LG17.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG17_cons
+
+```
+
 ## Merge maps for LG18:
 
 ```{r}
@@ -493,6 +2312,114 @@ LG18 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG18.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG18.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 79.
+
+```{r}
+
+View(LG18[[79]])
+
+LG18_cons <- LG18[[79]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "18")
+
+write.table(LG18_cons, "results/LG18.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG18_cons
 
 ```
 
@@ -521,6 +2448,114 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG19.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG19.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 63.
+
+```{r}
+
+View(LG19[[63]])
+
+LG19_cons <- LG19[[63]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "19")
+
+write.table(LG19_cons, "results/LG19.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG19_cons
+
+```
+
 ## Merge maps for LG20:
 
 ```{r}
@@ -543,6 +2578,114 @@ LG20 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG20.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG20.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 59.
+
+```{r}
+
+View(LG20[[59]])
+
+LG20_cons <- LG20[[59]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "20")
+
+write.table(LG20_cons, "results/LG20.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG20_cons
 
 ```
 
@@ -571,6 +2714,114 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG21.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG21.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 53.
+
+```{r}
+
+View(LG21[[53]])
+
+LG21_cons <- LG21[[53]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "21")
+
+write.table(LG21_cons, "results/LG21.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG21_cons
+
+```
+
 ## Merge maps for LG22:
 
 ```{r}
@@ -593,6 +2844,114 @@ LG22 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG22.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG22.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 7.
+
+```{r}
+
+View(LG22[[7]])
+
+LG22_cons <- LG22[[7]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "22")
+
+write.table(LG22_cons, "results/LG22.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG22_cons
 
 ```
 
@@ -621,6 +2980,111 @@ sink()
 
 ```
 
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG23.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG23.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+```
+
+Choose K = 63.
+
+```{r}
+
+View(LG23[[63]])
+
+LG23_cons <- LG23[[63]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "23")
+
+write.table(LG23_cons, "results/LG23.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG23_cons
+
+```
+
 ## Merge maps for LG24:
 
 ```{r}
@@ -643,5 +3107,113 @@ LG24 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+```{r}
+
+# load file
+merge_stats <- readLines("results/LG24.merge")
+
+```
+
+Markers with constraints that needed to be solved.
+
+```{r}
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+map_extract
+
+```
+
+View RMSE values for Map1, 2, mean and sd.
+
+```{r, message=FALSE, warning=FALSE}
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    mutate(temp = str_replace(temp, "3", " ")) %>%
+    mutate(RMSE = parse_number(temp)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+LG_merge <- bind_rows(rmse_mean, rmse_sd)
+LG_merge <- bind_rows(LG_merge, rmse_map1)
+LG_merge <- bind_rows(LG_merge, rmse_map2)
+
+write.table(LG_merge, "results/LG24.merge.sum",
+            col.names = TRUE, quote = FALSE)
+
+# plot stats
+ggplot(LG_merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Choose K = 4.
+
+```{r}
+
+View(LG24[[4]])
+
+LG24_cons <- LG24[[4]] %>%
+    rename(LOCUS = marker,
+           POS = consensus,
+           POSfamA = X1,
+           POSfamB = X2) %>%
+    mutate(LG = "24")
+
+write.table(LG24_cons, "results/LG24.consensus",
+            col.names = TRUE, quote = FALSE)
+
+LG24_cons
 
 ```
