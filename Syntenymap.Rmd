@@ -1,0 +1,300 @@
+---
+title: "Comparative Genomics Southern Flounder"
+output:
+  html_notebook:
+    code_folding: hide
+    df_print: paged
+    highlight: kate
+    theme: flatly
+    toc: yes
+  html_document:
+    toc: yes
+---
+
+```{r load libraries, message=FALSE, warning=FALSE}
+
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+
+source("lib/libraries.R")
+source("lib/ggplot.R")
+
+```
+
+# Comparative Genomics
+
+Comparative genomics can be used to determine patterns of homology and synteny between the consensus linkage map and fully sequenced fish genomes. Chris Hollenbeck has created an efficient pipeline (`synteny_mapper.pl`) that will blast the mapped loci to fully sequenced fish genomes on a local database hosted on deepthought and determine their relative positions on the corresponding chromosome in order to identify synteny blocks.
+
+## Create Inputfiles
+
+Several input and configuration files are required by the pipeline to specify the loci being blasted, the genomes the linkage map should be compared to and the arguments/settings for BLAST.
+
+### Linkage map (`map_file`)
+
+The linkage map input file (`map_file`) consists of a text file with linkage map information in a tidy format with specifying the locus name, linkage group and position.
+
+For example:
+
+    LOCUS   LG    POS
+    locus1  1     0.0
+    locus2  1     0.01
+    
+It is imperative that the locus names in this file correspond to the locus names in the `fasta`-file with the corresponding sequences. For example, onemap adds a `*` in front of each locus name, this needs to be removed before running the synteny pipeline.
+
+```{r format map_file}
+
+# read fullmap data (generated using onemap)
+map <- read.table("results/SFL.map",
+                header = TRUE, stringsAsFactors = FALSE) %>%
+  separate(LOCUS, c("1", "2", "3"), sep = "_") %>%
+  mutate(temp = "dDocent") %>%
+  select(temp, `2`, `3`, LG, POS) %>%
+  unite(LOCUS, 1:3, sep = "_")
+
+# write map file to data folder
+write.table(map, "data/SYNTENY/map.tab", 
+            quote = FALSE, row.names = FALSE)
+
+```
+
+### Blast configurations (`blast_args`)
+
+The BLAST+ arguments and their associated settings are specified in the `blast_args` configuration file. The pipeline will perform an `blastn`, i.e. a standard nucleotide blast aligning nucleotides to nucleotides. THe recommended algorithm is discontiguous megablast, though this can be changed in the configuration file.
+
+```{r format blast_args}
+
+# define blast arguments/settings
+Blast_args <- data.frame(Argument = c("num_alignments", "evalue", "num_threads", "lcase_masking", "dust", "task"),
+                         Setting = c("10", "1e-10", "10", "yes", "yes", "dc-megablast"))
+
+# write blast_arg file to data folder
+write.table(Blast_args, "data/SYNTENY/blast_args.txt", 
+            quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+The code for the pipeline can be further edited to change `blastn` [parameters](http://www.ncbi.nlm.nih.gov/books/NBK279675/).
+
+### Fasta file with mapped loci (`fasta_file`)
+
+In order to blast the mapped loci their sequences must be specified in `fasta`-format.
+
+The perl script `filter_fasta_by_map.pl` will use the `map.tab` file to filter the `fasta` file for the *de novo* reference used to map reads during the SNP calling process to create a `fasta`-file containing only the mapped loci for the linkage map.
+
+Execute the perl script from within the directory with the *de novo* reference and the perl script.
+
+    cd FLOUNDER/Synteny/
+    perl filter_fasta_by_map.pl map.tab reference.fasta
+    
+This the script will write a `fasta`-file named `filtered.fasta`. Rename file to `mapped.fasta`.
+
+    mv filter.fasta mapped.fasta
+    
+### Fasta file of additional unmapped loci (`synteny_map_loci`)
+
+An additional `fasta`-file containing known but unmapped loci from that are not part of the linkage map can be specified. For example, a set of genes identified in a gene expression/transcriptomics study on the same species or markers that could not be mapped in a conventional way because they did not segregate in any of the parents.
+
+If provided the pipeline will attempt to map these loci by blasting them to the species genomes, determining if a hit lies within a synteny block and then using the position within that synteny block to identify the (approximate) position within the linkage map.
+
+The additional `fasta`-file is defined using the `synteny_map_loci` setting in the configuration file.
+
+```{r}
+
+# ----- CREATE FASTA FILE OF GENES FROM ACCESSION NUMBERS TO SYNENTY MAP --------------
+
+# create fasta file of accession numbers (assumes dataframe has column called "ACCESSION")
+# file cannot have have any Na values
+download.fasta <- function(inputfile, outputfile){
+  
+  # import data frames with loci to map
+  dat <- read.delim(inputfile, stringsAsFactors = FALSE, header = TRUE)
+  
+  # create list of accession numbers
+  acc <- as.character(dat$ACCESSION)
+  
+  # download sequences from genbank
+  gen <-read.GenBank(acc)
+  
+  #export as fasta file
+  write.dna(gen, outputfile, format = "fasta")
+}
+
+# Williams et al 2003 stress resonse
+# download.fasta("data/SYNTENY/Stress_response_W03.txt", "data/SYNTENY/Loci_stress.fasta")
+
+# Williams et al. 2007 gene expression exposed to estradiol
+# download.fasta("data/SYNTENY/Estradiol_response_W07.txt", "data/SYNTENY/Loci_estradiol.fasta")
+
+# Larsen et al. 2007 gene expression salinity differences
+# download.fasta("data/SYNTENY/Salinity_response_L07.csv", "data/SYNTENY/Salinity_response.fasta")
+
+# Faciani et al. 2008 gene expression exposed to pollutants (lab and wild populations)
+# download.fasta("data/SYNTENY/Pollutants_response_F08.txt", "data/SYNTENY/Loci_pollutants.fasta")
+
+# microsatellite in linkage map (Japanese flounder)
+# download.fasta("data/SYNTENY/LinkMapI.txt", "data/SYNTENY/Loci_JapFl1.fasta")
+# download.fasta("data/SYNTENY/LinkMapII.txt", "data/SYNTENY/Loci_JapFl2.fasta")
+
+# ----- IMPORT INFORMATION ON LOCI TO SYNTENY MAP ------------------------------------
+
+# Williams et al 2003 stress resonse
+stress_response <- read.delim("data/SYNTENY/Stress_response_W03.txt",
+           header = TRUE, stringsAsFactors = FALSE)
+
+# Williams et al. 2007 gene expression exposed to estradiol
+estradiol_response <- read.delim("data/SYNTENY/Estradiol_response_W07.txt",
+                              header = TRUE, stringsAsFactors = FALSE)
+
+# Larsen et al. 2007 gene expression salinity differences
+salinity_response <- read.delim("data/SYNTENY/Salinity_response_L07.txt",
+                                 header = TRUE, stringsAsFactors = FALSE)
+
+# Faciani et al. 2008 gene expression exposed to pollutants (lab and wild populations)
+pollutants_response <- read.delim("data/SYNTENY/Pollutants_response_F08.txt",
+                                header = TRUE, stringsAsFactors = FALSE)
+
+# microsatellite in linkage map (Japanese flounder)
+Japfl_linkmapI <- read.delim("data/SYNTENY/LinkMapI.txt",
+                                  header = TRUE, stringsAsFactors = FALSE)
+
+Japfl_linkmapII <- read.delim("data/SYNTENY/LinkMapII.txt",
+                             header = TRUE, stringsAsFactors = FALSE)
+
+# ----- DOWNLOAD FASTA FILES -----------------------------------------------------------
+
+# create vector of accession numbers
+acc <- unique(c(stress_response$ACCESSION, 
+                estradiol_response$ACCESSION, 
+                salinity_response$ACCESSION, 
+                pollutants_response$ACCESSION,
+                Japfl_linkmapI$ACCESSION,
+                Japfl_linkmapII$ACCESSION))
+
+acc <- na.omit(acc)
+
+# split into chunks of 100 samples
+acc <- split(acc, ceiling(seq_along(acc)/100))
+
+# use alternate function (standard one has issues with scaffolds)
+read.GenBank.FASTA <- function(access.nb)
+{
+  N <- length(access.nb)
+  ## if more than 400 sequences, we break down the requests
+  nrequest <- N %/% 400 + as.logical(N %% 400)
+  X <- character(0)
+  for (i in 1:nrequest) {
+    a <- (i - 1) * 400 + 1
+    b <- 400 * i
+    if (i == nrequest) b <- N
+    URL <- paste("http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=",
+                 paste(access.nb[a:b], collapse = ","),
+                 "&rettype=fasta&retmode=text", sep = "")
+    X <- c(X, scan(file = URL, what = "", sep = "\n", quiet = TRUE))
+  }
+  fl <- tempfile()
+  cat(X, sep = "\n", file = fl)
+  read.FASTA(fl)
+}
+
+gen <- read.GenBank.FASTA(acc)
+
+#export as fasta file
+write.dna(gen, "data/SYNTENY/flounderloci.fasta", format = "fasta")
+
+# ----- FORMAT IDs -----------------------------------------------------------------
+
+flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", header = FALSE) %>%
+  rename(LOCUS = V2, ACCESSION = V4) %>%
+  separate(ACCESSION, c("ACCESSION", "temp"), sep = -3) %>%
+  select(LOCUS, ACCESSION)
+
+
+
+```
+
+
+## Configuration file (`config.txt`)
+
+The specification for the pipeline are listed in a configuration file.
+
+First, the genomes the linkage map should be compared to are specified. Currently there are 7 genomes in the local database on earth:
+
+* Zebrafish, _Danio rerio_ (drer)
+* Stickleback, _Gasterosteus aculatus_ (gacu)
+* Fugu, _Takifugu rubripes_ (trub)  
+* Nile tilapia, _Oreochromis niloticus_ (onil)
+* Asian seabass, _Late calcarifer_  (lcal)
+* European seabass, _Dicentrarchus labrax_ (dlab)
+* Spotten green puffer, _Tetraodon nigroviridis_ (tnig)
+
+```{r format config file I}
+
+Species_comp <- data.frame(Species = c("drer", "gacu", "tnig", "trub", "onil", "lcal", "dlab"),
+                          Compare = c("FALSE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE"))
+
+```
+
+Next, the location of the local blast database is defined, and the input files and  minimum number of basepairs needed for a hit to count as a match specified.
+
+```{r format config file II}
+
+# determine settings
+Synt_settings <- data.frame(Option = c("db_dir", "fasta_file", "map_file", "blast_args", "min_hit_length"),
+                            Setting = c("/home/blast/db", "mapped.fasta", "map.tab", "blast_args.txt", "50")) 
+
+# # if additional unmapped files being mapped
+# Synt_settings <- data.frame(Option = c("db_dir", "fasta_file", "map_file", "synteny_map_loci", "blast_args", "min_hit_length", "error_rate"),
+#                             Setting = c("/home/blast/db", "mapped.fasta", "map.tab", "flounderloci.fasta", "blast_args.txt", "50", "0.025"))
+
+# write configuration file
+con <- file("data/SYNTENY/config.txt", open = "wt")
+writeLines("# List of comparison species", con)
+write.table(Species_comp, con, 
+            append = FALSE, quote = FALSE, sep = " ", col.names = FALSE, row.names = FALSE)
+writeLines("# Settings", con)
+write.table(Synt_settings, con, 
+            append = TRUE, quote = FALSE, sep = " ", col.names = FALSE, row.names = FALSE)
+close(con)
+
+```
+
+# Run synteny_mapper
+
+Currently, the local blast database is hosted on deepthought. Create a project folder containing all the necessary input and configuration files, as well as the fasta-filtering script.
+
+After all the necessary files have been assembled `synteny_mapper.pl` can be executed using: 
+
+    synteny_mapper.pl config.txt
+
+The pipeline will blast the sequences of the mapped loci to each species-genome using the discontiguous-megablast algorithm. Matches are considered similar if more than 50bp overlap and have an e-value <10e-10 (or as specified in `config.txt`). Only sequences with a single hit are considered a match, if loci match multiple locations on a given genome they are discarded.
+
+For successfully aligned loci, the pipeline will code the loci as relative positions along the chromosome/linkage group by dividing the starting position by the total chromosome length (in basepairs and the linkage group position by the total linkage group length (in cM).
+
+The pipeline defines synteny blocks as sets of loci on a linkage group that are found in the same order uninterrupted by any other shared locus on the corresponding chromosome. Order mismatches separated by less than 5% of the total length of the LG/chromosome are considered the result of either small-scale local arrangements or ordering errors due to uncertainty in the mapping process and ignored.
+
+# Pipeline output
+
+Synteny mapper will create a set of output files located in a subdirectory (`results_#`); results folders from previous runs will not be overwritten, rather a new results subdirectory will be created. The results subdirectory contains three files and one subfolder with genome-specific output-files for each species genome the linkage group loci were blasted to.
+
+## Main syteny mapping & summaries
+
+`*-report.out.tab` efficiently summarizes the blast results per species genome documented in the alignment report by listing the header lines from the blast report in a tab-deliminated file which identify the locus name, the genbank entry/contig it was aligned to (including accession number), the alignment score (?? what is that score called ??) and the start and end basepairs of the contig it was aligned to.
+
+`*.synteny.stats` summarizes the total number of loci mapped, the total number of blocks and summary statistics for the number of loci per block, and block sizes on the species genome (in bp) and the linkage map (in cM).
+
+`all.blocks.tab` is a tab-delimited file consisting of 12 columns that offer an overview of all the synteny blocks identified for all species genomes the linkage map was compared to. The first column lists the species genome being compared (`COMP_SPECIES`) and the first and last locus from the linkage map forming that block(`START_LOCUS`, `END_LOCUS`), as well as the number of loci contained in that synteny block (`NUM_LOCI`). The final eight columns document the corresponding chromosomes and linkage groups (`COMP_CHR`, `MAP_LG`) and the start and ending coordinates of the corresponding blocks (`COMP_START`, `COMP_END`,	`MAP_LG`, `MAP_START`, `MAP_STOP`), as well as the length of the blocks in basepairs and cM, respectively (`COMP_SIZE`, `MAP_SIZE`).
+
+`*.synteny.tab` follows the same format as `all.blocks.tab`, except that it does not contain a column specifying the species genome that linkage groups are being compared to.
+
+`*-synteny.blocks` consists of one entry per locus giving the LG and Position and the corresponding chromosome and position on the species genome. Loci are grouped by syteny block (separated by a line of dashes).
+
+## other output files
+
+`config.txt` documents the configuration setting used for the `synteny_mapper.pl` run corresponding to the results.
+
+`loci.txt` contains a list of all loci in the linkage map (one locus per line).
+
+`*.report.out` reports the (actual) alignments of the loci from the linkage map that were successfully blasted to the reference genome.
+
+`*.synteny.log` is a log file documenting the process of organizing loci mapped to a species genome into synteny blocks.
+
+`*.synteny.sum` follows a similar format to `all.blocks.tab`, with the difference being that the first column consists of all the loci in a given synteny block (separated by `,`).

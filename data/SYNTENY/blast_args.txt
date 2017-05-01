@@ -1,0 +1,6 @@
+num_alignments 10
+evalue 1e-10
+num_threads 10
+lcase_masking yes
+dust yes
+task dc-megablast

@@ -1,0 +1,14 @@
+# List of comparison species
+drer FALSE
+gacu TRUE
+tnig TRUE
+trub TRUE
+onil TRUE
+lcal TRUE
+dlab TRUE
+# Settings
+db_dir /home/blast/db
+fasta_file mapped.fasta
+map_file map.tab
+blast_args blast_args.txt
+min_hit_length 50
