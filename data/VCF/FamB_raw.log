@@ -1,0 +1,14 @@
+
+VCFtools - 0.1.15
+(C) Adam Auton and Anthony Marcketta 2009
+
+Parameters as interpreted:
+	--vcf TotalRawSNPs.vcf
+	--het
+	--out FamB_raw
+
+After filtering, kept 175 out of 175 Individuals
+Outputting Individual Heterozygosity
+	Individual Heterozygosity: Only using biallelic SNPs.
+After filtering, kept 447144 out of a possible 447144 Sites
+Run Time = 18.00 seconds

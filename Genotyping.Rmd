@@ -1,9 +1,7 @@
 ---
 title: "Comparative Genomics Southern Flounder"
 output:
-  html_document:
-    toc: yes
-  html_notebook:
+   html_notebook:
     code_folding: hide
     df_print: paged
     highlight: kate
@@ -202,7 +200,7 @@ ggplot(loc_stats_raw, aes(x = MISS_FamA_raw)) +
 
 ```{r}
 
-count(loc_stats_raw, MISS_FamA_raw)
+count(loc_stats_raw, MISS_FamA_raw > 0.5)
 
 ```
 
@@ -636,7 +634,7 @@ Mean read depth per individual across all SNP sites, the mean mean depth across 
 ```{r read depth indv F13 A, message=FALSE, warning=FALSE}
 
 ggplot(ind_stats_F13, aes(x = MEAN_DEPTH_FamA.F13)) +
-  geom_histogram(binwidth = 1, color = "black", fill = "grey95") +
+  geom_histogram(binwidth = 5, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(MEAN_DEPTH_FamA.F13, na.rm = TRUE)),
                  color = "darkred", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = quantile(MEAN_DEPTH_FamA.F13, .05)),
@@ -714,13 +712,13 @@ Set final cut-off for allowable missing data per individual to < 50%.
 
 ### Final thresholds values for filtered data set FamA:
 
-* minimum sequence quality (minQ): 
-* minimum genotype call rate per locus (geno): %
-* minimum minor allele count (mac): 
-* minimum depth (minD): 
-* maximum missing data per individual (missInd): %
-* minimum minor allele frequence (maf): 0.
-* mean minimum depth (m-minD): 
+* minimum sequence quality (minQ): 20
+* minimum genotype call rate per locus (geno): 90%
+* minimum minor allele count (mac): 3
+* minimum depth (minD): 3
+* maximum missing data per individual (missInd): 50%
+* minimum minor allele frequence (maf): 0.05
+* mean minimum depth (m-minD): 15
 * dDocent filters run for allelic balance, Forward/Reverse and paired status, depth/quality ratio and maximum mean depth
 * Indels removed from data set
 
@@ -828,9 +826,9 @@ ggplot(site_qual, aes(x = PROB)) +
 
 A quality score of 20 indicates, a 1 in 100 chance that the SNP site has been called incorrectly (i.e. 99% probability that correct call). 
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 
-count(site_qual, QUAL < 20)
+count(site_qual, QUAL > 20)
 
 ```
 
@@ -867,7 +865,7 @@ Filter loci with minor allele count < 3 and genotype call rate < 0.5
     vcftools --vcf FamB.F0.recode.vcf --out FamB.F1a --mac 3 --recode --recode-INFO-all
     
 retain 194,600 of 281,853 loci.
-    
+
     vcftools --vcf FamB.F1a.recode.vcf --out FamB.F1b --max-missing 0.5 --recode --recode-INFO-all
     
 retain 169,426 of 194,600 loci.
@@ -886,16 +884,16 @@ ggplot(loc_stats_raw, aes(x = MEAN_DEPTH_FamB_raw)) +
 
 ```
 
-Code loci with less than 3 reads per locus per individual as missing.
+Code loci with less than 5 reads per locus per individual as missing.
 
-    vcftools --vcf FamB.F1b.recode.vcf --out FamB.F2a --minDP 3 --recode --recode-INFO-all
+    vcftools --vcf FamB.F1b.recode.vcf --out FamB.F2a --minDP 5 --recode --recode-INFO-all
 
 Remove flagged loci.    
 
     vcftools --vcf FamB.F2a.recode.vcf --out FamB.F2  --max-missing 0.5 --recode --recode-INFO-all
     
-Remaining loci 74,329.
-    
+Remaining loci 47,027.
+
 Query individual and site stats:
 
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F2 --depth 
@@ -919,7 +917,7 @@ Mean read depth per individual across all SNP sites (mode = `r Mode(ind_stats_F2
 ```{r read depth indv F2}
 
 ggplot(ind_stats_F2, aes(x = MEAN_DEPTH_FamB.F2)) +
-  geom_histogram(binwidth = 1, color = "black", fill = "grey95") +
+  geom_histogram(binwidth = 2.5, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(MEAN_DEPTH_FamB.F2, na.rm = TRUE)),
                  color = "darkred", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = quantile(MEAN_DEPTH_FamB.F2, .05)),
@@ -979,7 +977,7 @@ Distribution of missing data per locus:
 
 loc_stats_F2 <- read.loc.stats(dir = "data/VCF/", vcf = "FamB.F2")
 
-# plot distribution read depth
+# plot distribution missing data
 ggplot(loc_stats_F2, aes(x = MISS_FamB.F2)) +
   geom_histogram(binwidth = 0.01, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(MISS_FamB.F2, na.rm = TRUE)),
@@ -993,11 +991,11 @@ ggplot(loc_stats_F2, aes(x = MISS_FamB.F2)) +
 
 ```{r}
 
-count(loc_stats_F2, MISS_FamB.F2 > 0.6)
+count(loc_stats_F2, MISS_FamB.F2 < 0.2)
 
 ```
 
-Filter loci with genotype call rate < 0.75 
+Filter loci with genotype call rate < 0.8.
 
     vcftools --vcf FamB.F2.recode.vcf --out FamB.F3a --max-missing 0.8 --recode --recode-INFO-all
     vcftools --vcf FamB.F3a.recode.vcf --out FamB.F3a --missing-indv
@@ -1023,25 +1021,25 @@ Remove individuals with more than 80% missing data
     mawk -v x=0.8 '$5 > x' FamB.F3a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F3a.recode.vcf --remove lowDP.indv --out FamB.F3b --recode --recode-INFO-all
     
-Remaining loci: 38503 loci and 174 individuals
+Remaining loci: 30.217 loci and 173 individuals.
 
 #### Filter 4: minor allele frequency, mean minimum depth I
 
-Remove loci with minor allele frequency < 0.01 and mean minimum depth (across all individuals) < 10
+Remove loci with minor allele frequency < 0.01 and mean minimum depth (across all individuals) < 15
 
-    vcftools --vcf FamB.F3b.recode.vcf --out FamB.F4a --min-meanDP 10 --recode --recode-INFO-all
+    vcftools --vcf FamB.F3b.recode.vcf --out FamB.F4a --min-meanDP 15 --recode --recode-INFO-all
     
-Remaining loci: 32,545
+Remaining loci: 26,419.
 
     vcftools --vcf FamB.F4a.recode.vcf --out FamB.F4b --maf 0.01 --recode --recode-INFO-all
     
-Remaining loci: 31,496
+Remaining loci: 25,523
     
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --missing-indv
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --missing-site
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --depth
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --site-mean-depth
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F4 --het 
+    vcftools --vcf FamB.F4b.recode.vcf --out FamB.F4 --missing-indv
+    vcftools --vcf FamB.F4b.recode.vcf --out FamB.F4 --missing-site
+    vcftools --vcf FamB.F4b.recode.vcf --out FamB.F4 --depth
+    vcftools --vcf FamB.F4b.recode.vcf --out FamB.F4 --site-mean-depth
+    vcftools --vcf FamB.F4b.recode.vcf --out FamB.F4 --het 
 
 Assess individual quality by comparing levels of missing data and read depth.
     
@@ -1101,10 +1099,10 @@ ggplot(ind_stats_F4, aes(x = Fis_FamB.F4)) +
 
 Remove loci with genotype call rate < 0.9
 
-    vcftools --vcf FamB.F4.recode.vcf --out FamB.F5a --max-missing 0.9  --recode --recode-INFO-all
+    vcftools --vcf FamB.F4b.recode.vcf --out FamB.F5a --max-missing 0.9  --recode --recode-INFO-all
     vcftools --vcf FamB.F5a.recode.vcf --out FamB.F5a --missing-indv
     
-Remaining loci: 28,302
+Remaining loci: 23,147
 
 
 ```{r F5 missing data}
@@ -1123,28 +1121,32 @@ ggplot(imiss_F5, aes(x = F_MISS)) +
 
 ```
 
-Remove individuals with > 65% missing data
+Remove individuals with >50% missing data.
 
-    mawk -v x=0.65 '$5 > x' FamB.F5a.imiss | cut -f1 > lowDP.indv
+    mawk -v x=0.5 '$5 > x' FamB.F5a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F5a.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out FamB.F5b
+    
+Data set contains 170 individuals and 23,147 SNPs
 
 #### Filter 6: minor allele frequency, mean minimum depth II
 
-Filter loci with minor allele frequency < 0.03 and mean minimum depth (across all individuals) < 15
+Filter loci with mean minimum depth (across all individuals) < 20
 
-    vcftools --vcf FamB.F5b.recode.vcf --out FamB.F6a --min-meanDP 15 --recode --recode-INFO-all
+    vcftools --vcf FamB.F5b.recode.vcf --out FamB.F6a --min-meanDP 20 --recode --recode-INFO-all
     
 Remaining loci: 25,232
-    
+
+Filter loci with minor allele frequency < 0.03.
+
     vcftools --vcf FamB.F6a.recode.vcf --out FamB.F6b --maf 0.03 --recode --recode-INFO-all
 
-Remaining loci: 23,511
-    
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --depth 
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --site-mean-depth
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --het
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing-indv
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F6 --missing-site
+Remaining loci: 20,919
+
+    vcftools --vcf FamB.F6b.recode.vcf --out FamB.F6 --depth 
+    vcftools --vcf FamB.F6b.recode.vcf --out FamB.F6 --site-mean-depth
+    vcftools --vcf FamB.F6b.recode.vcf --out FamB.F6 --het
+    vcftools --vcf FamB.F6b.recode.vcf --out FamB.F6 --missing-indv
+    vcftools --vcf FamB.F6b.recode.vcf --out FamB.F6 --missing-site
 
 Assess individual quality by comparing levels of missing data and read depth.
     
@@ -1208,7 +1210,7 @@ ggplot(ind_stats_F6, aes(x = Fis_FamB.F6)) +
 lmiss_F6 <- read.table("data/VCF/FamB.F6.lmiss", header = TRUE, stringsAsFactors = FALSE)
 
 ggplot(lmiss_F6, aes(x = F_MISS)) +
-  geom_histogram(binwidth = .01, color = "black", fill = "grey95") +
+  geom_histogram(binwidth = .005, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(F_MISS, na.rm = TRUE)),
                  color = "darkred", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = quantile(F_MISS, .95)),
@@ -1218,10 +1220,10 @@ ggplot(lmiss_F6, aes(x = F_MISS)) +
 
 ```
 
-    vcftools --vcf FamB.F6.recode.vcf --out FamB.F7a --max-missing 0.95 --recode --recode-INFO-all
+    vcftools --vcf FamB.F6b.recode.vcf --out FamB.F7a --max-missing 0.95 --recode --recode-INFO-all
     vcftools --vcf FamB.F7a.recode.vcf --out FamB.F7a --missing-indv
     
-Remaining loci: 20,508 of 23,511
+Remaining loci: 19,132 (of 20,919)
 
 ```{r F7 missing data}
 
@@ -1240,10 +1242,12 @@ ggplot(imiss_F7, aes(x = F_MISS)) +
 
 ```
 
-Remove individuals with > 50% missing data.
+Remove individuals with > 30% missing data.
 
-    mawk -v x=0.65 '$5 > x' FamB.F7a.imiss | cut -f1 > lowDP.indv
+    mawk -v x=0.3 '$5 > x' FamB.F7a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F7a.recode.vcf --remove lowDP.indv --recode --recode-INFO-all --out FamB.F7b
+
+Data set consists of 167 individuals and 19,132 loci.
 
 #### Filter 8: Ratios of reference/alternate alleles, quality/depth, and mapping quality
 
@@ -1251,19 +1255,19 @@ Allele balance is the ratio of reads for reference allele to all reads, consider
 
     vcffilter -s -f "AB > 0.2 & AB < 0.8 | AB < 0.01 | AB > 0.99" -s -g "QR > 0 | QA > 0" FamB.F7b.recode.vcf > FamB.F8a.vcf 
     
-Remaining loci: 19234
+Remaining loci: 18,076
     
 Remove loci with quality/depth ratio < 0.2
 
     vcffilter -s -f "QUAL / DP > 0.2" FamB.F8a.vcf > FamB.F8b.vcf  
     
-Remaining loci: 18748
+Remaining loci: 17,678
 
 Remove loci based on ratio of mapping quality for reference and alternate allele, i.e. sites that have a high discrepancy between the mapping qualities of two alleles.
 
     vcffilter -s -f "MQM / MQMR > 0.25 & MQM / MQMR < 1.75" FamB.F8b.vcf > FamB.F8c.vcf
     
-Remaining loci: 18696
+Remaining loci: 17,635
 
 Compare number of loci pre/post-filtering 
 
@@ -1278,7 +1282,7 @@ Paired end reads should not overlap, and a SNP site should only be covered by ei
 
     vcffilter -f "SAF / SAR > 100 & SRF / SRR > 100 | SAR / SAF > 100 & SRR / SRF > 50" -s FamB.F8c.vcf > FamB.F9.vcf
     
-Remaining loci: 18,514
+Remaining loci: 17,512
 
     mawk '!/#/' FamB.F9.vcf | wc -l
 
@@ -1288,7 +1292,7 @@ Identify loci that only unpaired reads mapping to them - an artifact introduced 
 
     vcffilter -f "PAIRED > 0.05 & PAIREDR > 0.05 & PAIREDR / PAIRED < 1.75 & PAIREDR / PAIRED > 0.25 | PAIRED < 0.05 & PAIREDR < 0.05" -s FamB.F9.vcf > FamB.F10.vcf
 
-Remaining number of loci: 18,437
+Remaining number of loci: 17,439
 
     mawk '!/#/' FamB.F10.vcf | wc -l
 
@@ -1309,11 +1313,13 @@ Calculate average depth and standard deviation:
 
     mawk '{ sum += $1; n++ } END { if (n > 0) print sum / n; }' FamB.F10.DEPTH
     
+average depth: 18087.1
+    
     mawk '{delta = $1 - avg; avg += delta / NR; mean2 += delta * ($1 - avg); } END { print sqrt(mean2 / NR); }' FamB.F10.DEPTH
 
-Mean depth per locus (across all indivuals) is 14345.1 and the standard deviation is 10304.4. Filter SNP site with depth > mean depth + 1 standard deviation = `r 17388.3 + 9615.7` and that have quality scores < 2x the depth at that site.
+Mean depth per locus (across all indivuals) is 18087.1 and the standard deviation is 9400. Filter SNP site with depth > mean depth + 1 standard deviation = `r 18087.1 + 9400` and that have quality scores < 2x the depth at that site.
 
-    paste FamB.F10.loci.qual FamB.F10.DEPTH | mawk -v x=27004 '$4 > x'| mawk '$3 < 2 * $4' > FamB.F10.lowQDloci
+    paste FamB.F10.loci.qual FamB.F10.DEPTH | mawk -v x=27487.1 '$4 > x'| mawk '$3 < 2 * $4' > FamB.F10.lowQDloci
 
 Recalculate site depth for the remaining sites and calculate the average depth per individual; 180 individuals remaining in data set at this point.
 
@@ -1342,11 +1348,11 @@ ggplot(meandepthpersite, aes(x = V1)) +
 
 ```
 
-Choose cut-off value = 210. Combine both depth filters to produce filtered data set.
+Choose cut-off value = 200. Combine both depth filters to produce filtered data set.
 
-    vcftools --vcf  FamB.F10.vcf --max-meanDP 210 --exclude-positions FamB.F10.lowQDloci --recode --recode-INFO-all --out FamB.F11  
+    vcftools --vcf  FamB.F10.vcf --max-meanDP 200 --exclude-positions FamB.F10.lowQDloci --recode --recode-INFO-all --out FamB.F11  
     
-Remaining number of loci: 18,182
+Remaining number of loci: 16,638.
     
     mawk '!/#/' FamB.F11.recode.vcf | wc -l
 
@@ -1357,7 +1363,7 @@ Remove Indels from data set.
     vcfallelicprimitives FamB.F11.recode.vcf --keep-info --keep-geno > FamB.prim.vcf
     vcftools --vcf FamB.prim.vcf --out FamB.F12 --remove-indels --recode --recode-INFO-all
     
-Remaining number of loci: 18,368
+Remaining number of loci: 16,805.
     
     mawk '!/#/' FamB.F12.recode.vcf | wc -l
 
@@ -1367,7 +1373,7 @@ Set final cut-off for minor allele frequncy at 0.05
 
     vcftools --vcf FamB.F12.recode.vcf --out FamB.F13 --maf 0.05 --recode --recode-INFO-all
     
-Loci remaining: 18,364
+Loci remaining: 16,802.
     
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --het 
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F13 --missing-indv
@@ -1391,7 +1397,7 @@ Mean read depth per individual across all SNP sites, the mean mean depth across 
 ```{r read depth indv F13}
 
 ggplot(ind_stats_F13, aes(x = MEAN_DEPTH_FamB.F13)) +
-  geom_histogram(binwidth = 1, color = "black", fill = "grey95") +
+  geom_histogram(binwidth = 5, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(MEAN_DEPTH_FamB.F13, na.rm = TRUE)),
                  color = "darkred", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = quantile(MEAN_DEPTH_FamB.F13, .05)),
@@ -1433,7 +1439,7 @@ ggplot(ind_stats_F13, aes(x = Fis_FamB.F13)) +
 
 #### Filter 15: Missing data
 
-Set final cut-off for genotype call rate to > 90%.
+Set final cut-off for genotype call rate to > 95%.
 
     vcftools --vcf FamB.F13.recode.vcf --out FamB.F15a --max-missing 0.95 --recode --recode-INFO-all
     vcftools --vcf FamB.F15a.recode.vcf --out FamB.F15a --missing-indv
@@ -1444,7 +1450,7 @@ imiss_F15 <- read.table("data/VCF/FamB.F15a.imiss",
                        header = TRUE, stringsAsFactors = FALSE, quote = NULL)
 
 ggplot(imiss_F15, aes(x = F_MISS)) +
-  geom_histogram(binwidth = .01, color = "black", fill = "grey95") +
+  geom_histogram(binwidth = .005, color = "black", fill = "grey95") +
   geom_vline(aes(xintercept = mean(F_MISS, na.rm = TRUE)),
                  color = "darkred", linetype = "dashed", size = 1) +
   geom_vline(aes(xintercept = quantile(F_MISS, .95)),
@@ -1454,10 +1460,12 @@ ggplot(imiss_F15, aes(x = F_MISS)) +
 
 ```
 
-Set final cut-off for allowable missing data per individual to < 50%.
+Set final cut-off for allowable missing data per individual to < 25%.
 
-    mawk -v x=0.5 '$5 > x' FamB.F15a.imiss | cut -f1 > lowDP.indv
+    mawk -v x=0.25 '$5 > x' FamB.F15a.imiss | cut -f1 > lowDP.indv
     vcftools --vcf FamB.F15a.recode.vcf --out FamB.SNP --remove lowDP.indv --recode --recode-INFO-all
+    
+Final data set consisnts of 16,802 loci and 167 individuals.
     
     vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --missing-indv
     vcftools --vcf FamB.SNP.recode.vcf --out FamB.SNP --missing-site
@@ -1469,17 +1477,17 @@ Set final cut-off for allowable missing data per individual to < 50%.
 
 ### Final thresholds values for filtered data set FamB:
 
-* minimum sequence quality (minQ): 
-* minimum genotype call rate per locus (geno): %
-* minimum minor allele count (mac): 
-* minimum depth (minD): 
-* maximum missing data per individual (missInd): %
-* minimum minor allele frequence (maf): 0.
-* mean minimum depth (m-minD): 
+* minimum sequence quality (minQ): 20
+* minimum genotype call rate per locus (geno): 95%
+* minimum minor allele count (mac): 3
+* minimum depth (minD): 5
+* maximum missing data per individual (missInd): 25%
+* minimum minor allele frequence (maf): 0.05
+* mean minimum depth (m-minD): 20
 * dDocent filters run for allelic balance, Forward/Reverse and paired status, depth/quality ratio and maximum mean depth
 * Indels removed from data set
 
-The final data set contains xx loci (xx% of raw sites) and xx individuals (xx%).
+The final data set contains 16,802 loci and 167 individuals.
 
 # Haplotyping
 
@@ -1496,7 +1504,7 @@ Parental genotypes:
 
 Use `SFL-FamA.individuals` to create `popmap` as a tab-separated file of individuals and their population designation, with one individual per line (make sure UNIX format). This file is needed to write the genepop file, if not provided the script will run through the process but not write a genepop file and place into same folder `rad_haplotyper.pl` will be run from.
 
-    nohup rad_haplotyper.pl -v FamA.recode.vcf -r reference.fasta -x 35 -d 10 -z 3 -m .5 -g FamA.gen -p FamA.popmap -t FamA.tsv -p1 SFL-1_SFL-A-F1 -p2 SFL-1_SFL-A-M1 -e
+    nohup rad_haplotyper.pl -v FamA.recode.vcf -r reference.fasta -x 35 -d 10 -z 3 -m .5 -g FamA.gen -p FamB.popmap -t FamA.tsv -p1 SFL-1_SFL-A-F1 -p2 SFL-1_SFL-A-M1 -e
 
 Copy files for analysis into `data/VCF/`-folder:
 * FamA_ind_stats.out
@@ -1520,7 +1528,7 @@ Create list of individuals retained in final vcf file:
 
 Use `FamB.individuals` to create `FamB.popmap` as a tab-separated file of individuals and their population designation, with one individual per line (make sure UNIX format). This file is needed to write the genepop file, if not provided the script will run through the process but not write a genepop file and place into same folder `rad_haplotyper.pl` will be run from.
 
-    nohup rad_haplotyper.pl -v FamB.recode.vcf -r reference.fasta -x 35 -d 10 -z 3 -m .5 -g FamB.gen -p FamB.popmap -t FamB.tsv -p1 FamB_FamB-059 -p2 FamB_FamB-194 -e
+    nohup rad_haplotyper.pl -v FamB.recode.vcf -r reference.fasta -x 55 -d 10 -z 3 -m .5 -g FamB.gen -p FamB.popmap -t FamB.tsv -p1 FamB_FamB-059 -p2 FamB_FamB-194 -e
 
 Rename files and copy for analysis into `data/VCF/`-folder:
 * FamB_ind_stats.out
@@ -1542,15 +1550,15 @@ Create list of loci to filter from linkage map file (`*.tsv`-file), this can be 
 # import tsv file
 FamA_tsv <- read.delim("data/VCF/FamA.tsv", header = TRUE)
 
+count(FamA_tsv, Count > 163)
+
 # remove all loci not called in at least 80% of individuals
 FamA_tsv <- FamA_tsv %>%
-  filter(Count > 127)
-
-count(FamA_tsv, Count > 127)
+    filter(Count > 163)
 
 ```
 
-Remove loci not called in 70% of offspring (`r round(181*0.7, digits = 0)` individuals) from `*.tsv`-file.
+Remove loci not called in 90% of offspring (`r round(181*0.9, digits = 0)` individuals) from `*.tsv`-file.
 
 ## Summary stats by locus
 
@@ -1569,6 +1577,7 @@ plot.filter.status(hap_statsA)
 
 # retain only "passed" loci
 hap_statsA <- remove.filtered.haps(hap_statsA)
+
 ```
 
 Overview of haplotyping stats per locus:
@@ -1591,7 +1600,7 @@ plot.ind.hap.stats(hap_ind_statsA)
 
 ### Proportion of individuals haplotyped
 
-Loci that were not successfully haplotyped in more than 80% of individuals were filtered during haplotyping process. Already removed from tsv file.
+Loci that were not successfully haplotyped in more than 95% of individuals were filtered during haplotyping process. Should already be removed from tsv file.
 
 ```{r filter loci genotype call rate A, message=FALSE, warning=FALSE}
 
@@ -1599,10 +1608,10 @@ Loci that were not successfully haplotyped in more than 80% of individuals were 
 quantile(hap_statsA$Prop_Haplotyped, c(.5, .75, .85, .9, .95))
 
 # number of loci called in >80% individuals
-count(hap_statsA, Prop_Haplotyped < 0.8)
+count(hap_statsA, Prop_Haplotyped > 0.95)
 
 # create vector of loci to remove (choose cut-off)
-Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsA, 0.8)
+Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsA, 0.95)
 
 ```
 
@@ -1610,7 +1619,7 @@ Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsA, 0.8)
 
 Loci are flagged as possible paralogs for an individuals when more than the expected number of haplotypes based on the genotype call (homozygote, heterozygote) are detected.
 
-Base threshold values on percent of individuals a locus was flagged as a potential paralog or based on distribution. 10% of individuals would mean that a locus was flagged in `r nrow(hap_ind_statsA)*0.1` individuals.
+Base threshold values on percent of individuals a locus was flagged as a potential paralog or based on distribution. 10% of individuals would mean that a locus was flagged in `r nrow(hap_ind_statsA)*0.05` individuals.
 
 ```{r filter loci paralogs A}
 
@@ -1618,10 +1627,10 @@ Base threshold values on percent of individuals a locus was flagged as a potenti
 quantile(hap_statsA$Poss_Paralog, c(.5, .75, .85, .9, .95, 0.99))
 
 # number of loci with Poss_Paralogs in > 10 individuals
-count(hap_statsA, Poss_Paralog > 18)
+count(hap_statsA, Poss_Paralog > 9)
 
 # create vector of loci to remove (choose cut-off)
-Poss_Paralogs <- filter.loci.paralogs(hap_statsA, 18)
+Poss_Paralogs <- filter.loci.paralogs(hap_statsA, 9)
 
 ```
 
@@ -1637,17 +1646,17 @@ quantile(hap_statsA$Haplotypes, c(.5, .75, .85, .9, .95))
 
 # number of loci with number of SNPs > 10
 count(hap_statsA, Sites > 5)
-count(hap_statsA, Haplotypes > 7)
+count(hap_statsA, Haplotypes > 4)
 
 # create vector of loci to remove (choose cut-off >5)
 NoSNps <- filter.loci.noSNPs(hap_statsA, 5)
-NoHaps <- filter.loci.NoHaps(hap_statsA, 7)
+NoHaps <- filter.loci.NoHaps(hap_statsA, 4)
 
 ```
 
 ### Low Coverage/Genotyping Error
 
-After combining SNPs at the same contig during the haplotyping process it is possible to observe fewer than the expected number of haplotypes. When this occurs, that is coded as missing data for that particular indvidual and the locus is flagged as a potential genotyping error or suffering from allelic drop out and the number of individuals with potential genotyping error/allelic dropout due to low coverage detected for a given locus is recorded. Cut-off value to remove locus if flagged as potential genotyping error in more than 10% of individuals is `r nrow(hap_ind_statsA)*0.1`.
+After combining SNPs at the same contig during the haplotyping process it is possible to observe fewer than the expected number of haplotypes. When this occurs, that is coded as missing data for that particular indvidual and the locus is flagged as a potential genotyping error or suffering from allelic drop out and the number of individuals with potential genotyping error/allelic dropout due to low coverage detected for a given locus is recorded. Cut-off value to remove locus if flagged as potential genotyping error in more than 1% of individuals is `r nrow(hap_ind_statsA)*0.01`.
 
 ```{r filter low coverage/genotyping error A, message=FALSE, warning=FALSE}
 
@@ -1655,27 +1664,100 @@ After combining SNPs at the same contig during the haplotyping process it is pos
 quantile(hap_statsA$Low_Cov.Geno_Err, c(.5, .75, .85, .9, .95))
 
 # summary of count of possible genotyping errors
-count(hap_statsA, Low_Cov.Geno_Err > 18)
+count(hap_statsA, Low_Cov.Geno_Err > 2)
 
 # create vector of loci to remove
-Geno_Err <- filter.loci.geno_err(hap_statsA, 18)
+Geno_Err <- filter.loci.geno_err(hap_statsA, 2)
 
 ```
 
-Filter loci flagged as potential genotyping error in more than 10% of individuals (`r length(Geno_Err)` loci).
+Filter loci flagged as potential genotyping error in more than 1% of individuals (`r length(Geno_Err)` loci).
+
+### Identify problematic individuals
+
+**Possible paralogs per individual**
+
+Individuals with high proportion of loci flagged as possible paralogs should be flagged as potential problem individuals. Cut-off for individuals with loci flagged paralogs in more than 15% of loci is `r nrow(hap_statsA)*0.10`.
+
+```{r filter paralogs indv A}
+
+# calculate deciles of number of possible paralogs (loci) per individual
+quantile(hap_ind_statsA$Poss_Paralogs, c(.5, .75, .85, .9, .95, .99))
+
+# count individuals above set threshold
+count(hap_ind_statsA, Poss_Paralogs > 433)
+
+```
+
+The highest number of flagged loci in an individuals is `r max(hap_ind_statsA$Poss_Paralogs, na.rm = TRUE)`, which is equivalent to `r round(max(hap_ind_statsA$Poss_Paralogs, na.rm = TRUE)/nrow(hap_statsA), digits = 4)*100`% of loci.
+
+**Individuals with low proportion of successfully haplotyped loci**
+
+Problem individuals can be identified by choosing a cut-off value for the minium proportion of sucessfully haplotyped loci and excluding individuals below that threshold value.
+
+```{r filter success haplotyped indv A}
+
+# calculate proportion of missing data per individual
+quantile(hap_ind_statsA$Prop_Success, c(.5, .75, .85, .9, .95))
+
+# count individuals above set threshold
+count(hap_ind_statsA, Prop_Success < .9)
+
+# create vector of indv to remove (choose cut-off)
+PropSuccessInd <- filter.ind.prop_success(hap_ind_statsA, .9)
+
+```
+
+**Individuals with high proportion of potential allele dropout/genotyping error**
+
+Remove individuals with high proportion of loci that have been flagged as potential allele dropouts/genotyping error.
+
+```{r filter genotyping error indv A}
+
+# calculate quantiles/deciles of number of number of geno_err per individual
+quantile(hap_ind_statsA$Low_Coverage.Errors, c(.5, .75, .85, .9, .95))
+
+# count individuals above set threshold
+count(hap_ind_statsA, Low_Coverage.Errors > 433)
+
+```
+
+The highest number of flagged loci in an individuals is `r max(hap_ind_statsA$Low_Coverage.Errors, na.rm = TRUE)`, which is equivalent to `r round(max(hap_ind_statsA$Low_Coverage.Errors, na.rm = TRUE)/nrow(hap_statsA), digits = 4)*100`% of loci.
 
 ## Remove loci from tsv file
 
 ```{r remove loci individuals A}
 
-# remove flagged loci
+PropSuccessInd
+
+# remove flagged loci & individuals
 FamA_tsv_filtered <- FamA_tsv %>%
-  filter(!Locus %in% NoSNps) %>%
-  filter(!Locus %in% Geno_Err) %>%
-  filter(!Locus %in% NoHaps) %>%
-  filter(!Locus %in% Poss_Paralogs) %>%
-  filter(!Parents == "aa/aa") %>%
-  filter(!Parents == "--/--")
+    filter(!Locus %in% NoSNps) %>%
+    filter(!Locus %in% Geno_Err) %>%
+    filter(!Locus %in% NoHaps) %>%
+    filter(!Locus %in% Poss_Paralogs) %>%
+    filter(!Locus %in% Prop_Haplotyped) %>%
+    filter(!Parents == "aa/aa") %>%
+    filter(!Parents == "--/--") %>%
+    select(-`SFL.1_SFL.A.022`) %>%
+    select(-`SFL.1_SFL.A.037`) %>%
+    select(-`SFL.1_SFL.A.038`) %>%
+    select(-`SFL.1_SFL.A.046`) %>%
+    select(-`SFL.1_SFL.A.086`) %>%
+    select(-`SFL.1_SFL.A.087`) %>%
+    select(-`SFL.1_SFL.A.088`) %>%
+    select(-`SFL.1_SFL.A.092`) %>%
+    select(-`SFL.1_SFL.A.095`) %>%
+    select(-`SFL.1_SFL.A.115`) %>%
+    select(-`SFL.1_SFL.A.116`) %>%
+    select(-`SFL.1_SFL.A.125`) %>%
+    select(-`SFL.1_SFL.A.129`) %>%
+    select(-`SFL.1_SFL.A.154`) %>%
+    select(-`SFL.1_SFL.A.178`) %>%
+    select(-`SFL.1_SFL.A.188`) %>%
+    select(-`SFL.1_SFL.A.200`) %>%
+    select(-`SFL.1_SFL.A.205`) %>%
+    select(-`SFL.1_SFL.A.211`)
 
 genotypes_FamA <- FamA_tsv_filtered %>%
   group_by(Parents) %>%
@@ -1693,7 +1775,7 @@ write.table(FamA_tsv_filtered, file = "data/VCF/FamA.filtered.tsv",
 
 Create list of loci to filter from linkage map file (`*.tsv`-file), this can be done before converting to `*.raw` for analysis in r/QTL and onemap as the file format is one locus per row, then the genotype call in each individual.
 
-Remove loci not called in 70% of offspring (`r round(174*0.7, digits = 0)`) from `*.tsv`-file.
+Remove loci not called in 90% of offspring (`r round(166*0.9, digits = 0)`) from `*.tsv`-file.
 
 ```{r read data sets to filter, message=FALSE, warning=FALSE}
 
@@ -1702,11 +1784,11 @@ Remove loci not called in 70% of offspring (`r round(174*0.7, digits = 0)`) from
 # import tsv file
 FamB_tsv <- read.delim("data/VCF/FamB.tsv", header = TRUE)
 
-count(FamB_tsv, Count > 122)
+count(FamB_tsv, Count > 149)
 
-# remove all loci not called in at least 80% of individuals
+# remove all loci not called in at least 90% of individuals
 FamB_tsv <- FamB_tsv %>%
-  filter(Count > 122)
+  filter(Count > 157)
 
 ```
 
@@ -1750,7 +1832,7 @@ plot.ind.hap.stats(hap_ind_statsB)
 
 ### Proportion of individuals haplotyped
 
-Loci that were not successfully haplotyped in more than 90% of individuals were filtered during haplotyping process. Already removed from tsv file.
+Loci that were not successfully haplotyped in more than 95% of individuals were filtered during haplotyping process. Already removed from tsv file.
 
 ```{r filter loci genotype call rate B, message=FALSE, warning=FALSE}
 
@@ -1758,10 +1840,10 @@ Loci that were not successfully haplotyped in more than 90% of individuals were 
 quantile(hap_statsB$Prop_Haplotyped, c(.5, .75, .85, .9, .95))
 
 # number of loci called in >80% individuals
-count(hap_statsB, Prop_Haplotyped < 0.9)
+count(hap_statsB, Prop_Haplotyped < 0.95)
 
 # create vector of loci to remove (choose cut-off)
-Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsB, 0.9)
+Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsB, 0.95)
 
 ```
 
@@ -1769,17 +1851,17 @@ Prop_Haplotyped <- filter.loci.prop_haplotyped(hap_statsB, 0.9)
 
 Loci are flagged as possible paralogs for an individuals when more than the expected number of haplotypes based on the genotype call (homozygote, heterozygote) are detected.
 
-Base threshold values on percent of individuals a locus was flagged as a potential paralog or based on distribution. 10% of individuals would mean that a locus was flagged in `r nrow(hap_ind_statsB)*0.1` individuals.
+Base threshold values on percent of individuals a locus was flagged as a potential paralog or based on distribution. 5% of individuals would mean that a locus was flagged in `r nrow(hap_ind_statsB)*0.05` individuals.
 
 ```{r filter loci paralogs B, message=FALSE, warning=FALSE}
 # summary of count of possible paralogs
 quantile(hap_statsB$Poss_Paralog, c(.5, .75, .85, .9, .95, 0.99))
 
 # number of loci with Poss_Paralogs in > 10 individuals
-count(hap_statsB, Poss_Paralog > 17)
+count(hap_statsB, Poss_Paralog > 8)
 
 # create vector of loci to remove (choose cut-off)
-Poss_Paralogs <- filter.loci.paralogs(hap_statsB, 17)
+Poss_Paralogs <- filter.loci.paralogs(hap_statsB, 8)
 
 ```
 
@@ -1795,17 +1877,17 @@ quantile(hap_statsB$Haplotypes, c(.5, .75, .85, .9, .95))
 
 # number of loci with number of SNPs > 10
 count(hap_statsB, Sites > 5)
-count(hap_statsB, Haplotypes > 7)
+count(hap_statsB, Haplotypes > 4)
 
 # create vector of loci to remove (choose cut-off >5)
 NoSNps <- filter.loci.noSNPs(hap_statsB, 5)
-NoHaps <- filter.loci.NoHaps(hap_statsB, 7)
+NoHaps <- filter.loci.NoHaps(hap_statsB, 4)
 
 ```
 
 ### Low Coverage/Genotyping Error
 
-After combining SNPs at the same contig during the haplotyping process it is possible to observe fewer than the expected number of haplotypes. When this occurs, that is coded as missing data for that particular indvidual and the locus is flagged as a potential genotyping error or suffering from allelic drop out and the number of individuals with potential genotyping error/allelic dropout due to low coverage detected for a given locus is recorded. Cut-off value to remove locus if flagged as potential genotyping error in more than 10% of individuals is `r nrow(hap_ind_statsB)*0.05`.
+After combining SNPs at the same contig during the haplotyping process it is possible to observe fewer than the expected number of haplotypes. When this occurs, that is coded as missing data for that particular indvidual and the locus is flagged as a potential genotyping error or suffering from allelic drop out and the number of individuals with potential genotyping error/allelic dropout due to low coverage detected for a given locus is recorded. Cut-off value to remove locus if flagged as potential genotyping error in more than 5% of individuals is `r nrow(hap_ind_statsB)*0.01`.
 
 ```{r filter low coverage/genotyping error, message=FALSE, warning=FALSE}
 
@@ -1813,14 +1895,65 @@ After combining SNPs at the same contig during the haplotyping process it is pos
 quantile(hap_statsB$Low_Cov.Geno_Err, c(.5, .75, .85, .9, .95))
 
 # summary of count of possible genotyping errors
-count(hap_statsB, Low_Cov.Geno_Err > 9)
+count(hap_statsB, Low_Cov.Geno_Err > 1)
 
 # create vector of loci to remove
-Geno_Err <- filter.loci.geno_err(hap_statsB, 9)
+Geno_Err <- filter.loci.geno_err(hap_statsB, 1)
 
 ```
 
-Filter loci flagged as potential genotyping error in more than 5% of individuals (`r length(Geno_Err)` loci).
+Filter loci flagged as potential genotyping error in more than 1% of individuals (`r length(Geno_Err)` loci).
+
+### Identify problematic individuals
+
+**Possible paralogs per individual**
+
+Individuals with high proportion of loci flagged as possible paralogs should be flagged as potential problem individuals. Cut-off for individuals with loci flagged paralogs in more than 25% of loci is `r nrow(hap_statsB)*0.1`.
+
+```{r filter paralogs indv}
+
+# calculate deciles of number of possible paralogs (loci) per individual
+quantile(hap_ind_statsB$Poss_Paralogs, c(.5, .75, .85, .9, .95, .99))
+
+# count individuals above set threshold
+count(hap_ind_statsB, Poss_Paralogs > 422)
+
+```
+
+The highest number of flagged loci in an individuals is `r max(hap_ind_statsA$Poss_Paralogs, na.rm = TRUE)`, which is equivalent to `r round(max(hap_ind_statsA$Poss_Paralogs, na.rm = TRUE)/nrow(hap_statsA), digits = 4)*100`% of loci.
+
+**Individuals with low proportion of successfully haplotyped loci**
+
+Problem individuals can be identified by choosing a cut-off value for the minium proportion of sucessfully haplotyped loci and excluding individuals below that threshold value.
+
+```{r filter success haplotyped indv}
+
+# calculate proportion of missing data per individual
+quantile(hap_ind_statsB$Prop_Success, c(.5, .75, .85, .9, .95))
+
+# count individuals above set threshold
+count(hap_ind_statsB, Prop_Success < .8)
+
+# create vector of indv to remove (choose cut-off)
+PropSuccessInd <- filter.ind.prop_success(hap_ind_statsB, .9)
+
+```
+
+**Individuals with high proportion of potential allele dropout/genotyping error**
+
+Remove individuals with high proportion of loci that have been flagged as potential allele dropouts/genotyping error.
+
+```{r filter genotyping error indv}
+
+# calculate quantiles/deciles of number of number of geno_err per individual
+quantile(hap_ind_statsB$Low_Coverage.Errors, c(.5, .75, .85, .9, .95))
+
+# count individuals above set threshold
+count(hap_ind_statsB, Low_Coverage.Errors > 433)
+
+```
+
+The highest number of flagged loci in an individuals is `r max(hap_ind_statsA$Low_Coverage.Errors, na.rm = TRUE)`, which is equivalent to `r round(max(hap_ind_statsA$Low_Coverage.Errors, na.rm = TRUE)/nrow(hap_statsA), digits = 4)*100`% of loci.
 
 ## Remove loci and individuals from tsv file
 
@@ -1837,22 +1970,27 @@ FamB_tsv_filtered <- FamB_tsv %>%
 
 # identify individuals w/high missing data
 removeInd <- hap_ind_statsB %>%
-    filter(Prop_Success < 0.8)
+    filter(Prop_Success < 0.9)
+
+removeInd$Ind
+
+removeInd <- hap_ind_statsB %>%
+    filter(Poss_Paralogs > 200)
 
 removeInd$Ind
 
 FamB_tsv_filtered <- FamB_tsv_filtered %>%
-    select(-`FamB_FamB.027`) %>%
+    select(-`FamB_FamB.028`) %>%
+    select(-`FamB_FamB.058`) %>%
+    select(-`FamB_FamB.088`) %>%
+    select(-`FamB_FamB.094`) %>%
     select(-`FamB_FamB.102`) %>%
-    select(-`FamB_FamB.105`) %>%
-    select(-`FamB_FamB.107`) %>%
+    select(-`FamB_FamB.103`) %>%
+    select(-`FamB_FamB.104`) %>%
     select(-`FamB_FamB.108`) %>%
-    select(-`FamB_FamB.109`) %>%
-    select(-`FamB_FamB.110`) %>%
     select(-`FamB_FamB.111`) %>%
     select(-`FamB_FamB.153`) %>%
     select(-`FamB_FamB.163`) %>%
-    select(-`FamB_FamB.180`) %>%
     select(-`FamB_FamB.187`) %>%
     select(-`FamB_FamB.M2`)
 
@@ -1877,10 +2015,10 @@ Convert `*filtered.tsv`-file using `map_convert.pl`. Make sure that UNIX text fi
 Create male and female map (mapmaker format) for analysis in `r/qtl`:
 
     # male map
-    perl map_convert.pl -i FamA.filtered.tsv -n tsv -o FamA-M -u mm -s M -F SFL-A-F1 -M SFL-A-M1 -l 0.7 -c 0.7
+    perl map_convert.pl -i FamA.filtered.tsv -n tsv -o FamA-M -u mm -s M -F SFL-A-F1 -M SFL-A-M1 -l 0.9 -c 0.9
 
     # female map
-    perl map_convert.pl -i FamA.filtered.tsv -n tsv -o FamA-F -u mm -s F -F SFL-A-F1 -M SFL-A-M1 -l 0.7 -c 0.7
+    perl map_convert.pl -i FamA.filtered.tsv -n tsv -o FamA-F -u mm -s F -F SFL-A-F1 -M SFL-A-M1 -l 0.9 -c 0.9
 
 Rename and move outputfiles in `data/LINKMAP`:
 
@@ -1889,7 +2027,7 @@ Rename and move outputfiles in `data/LINKMAP`:
 
 Create onemap input file:
 
-    perl map_convert.pl -i FamA.filtered.tsv -n tsv -o FamA -u onemap -F SFL-A-F1 -M SFL-A-M1 -l 0.7 -c 0.7
+    perl map_convert.pl -i FamA.filtered.tsv -n tsv -o FamA -u onemap -F SFL-A-F1 -M SFL-A-M1 -l 0.9 -c 0.9
     
 Rename and move output files to `data/LINKMAP`:
 
@@ -1901,19 +2039,19 @@ Rename and move output files to `data/LINKMAP`:
 Create sex-specific input files for filtering in r/QTL:
 
     # male map
-    perl map_convert.pl -i FamB.filtered.tsv -n tsv -o FamB-M -u mm -s M -F SFL-FamB.059 -M SFL-FamB.194 -l 0.7 -c 0.7
+    perl map_convert.pl -i FamB.filtered.tsv -n tsv -o FamB-M -u mm -s M -F SFL-FamB.059 -M SFL-FamB.194 -l 0.9 -c 0.9
 
     # female map
-    perl map_convert.pl -i FamB.filtered.tsv -n tsv -o FamB-F -u mm -s F -F SFL-FamB.059 -M SFL-FamB.194 -l 0.7 -c 0.7
+    perl map_convert.pl -i FamB.filtered.tsv -n tsv -o FamB-F -u mm -s F -F SFL-FamB.059 -M SFL-FamB.194 -l 0.9 -c 0.9
     
 Rename and move outputfiles in `data/LINKMAP`:
 
-* FamB-F.raw (individuals in file `FamA-B.ind`)
-* FamB-M.raw (individuals in file `FamA-B.ind`)
+* FamB-F.raw (individuals in file `FamB-F.ind`)
+* FamB-M.raw (individuals in file `FamB-M.ind`)
 
 Create onemap input file:
 
-    perl map_convert.pl -i FamB.filtered.tsv -n tsv -o FamB -u onemap -F SFL-FamB.059 -M SFL-FamB.194 -l 0.7 -c 0.7
+    perl map_convert.pl -i FamB.filtered.tsv -n tsv -o FamB -u onemap -F SFL-FamB.059 -M SFL-FamB.194 -l 0.9 -c 0.9
     
 Rename and move output files to `data/LINKMAP`:
 

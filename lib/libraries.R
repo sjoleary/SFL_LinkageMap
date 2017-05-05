@@ -15,6 +15,7 @@ library(ggthemes)
 library(qtl)
 library(onemap)
 library(LPmerge)
+library(ASMap)
 
 # libraries for downloading sequences
 library(ape)
