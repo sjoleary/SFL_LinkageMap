@@ -20,25 +20,406 @@ source("lib/ggplot.R")
 
 ```
 
-# Compare female, male and family map for Family A
+# Compare family maps
 
-Load maps:
+Load family maps
 
 ```{r}
 
-FamA_F <- read.delim("results/FamA_F.map", 
+# FamA <- read.delim("data/LINKMAP/FamA.fullmap", 
+#                    stringsAsFactors = FALSE, sep = "", 
+#                    col.names = c("LG_FamA", "LOCUS", "POS_FamA"))
+# 
+# FamB <- read.delim("data/LINKMAP/FamB.fullmap", 
+#                    stringsAsFactors = FALSE, sep = "", 
+#                    col.names = c("LG_FamB", "LOCUS", "POS_FamB"))
+# 
+# temp <- inner_join(FamA, FamB, by = "LOCUS")
+# 
+# write.table(temp, "data/LINKMAP/shared.markers",
+#             quote = FALSE, col.names = TRUE, row.names = FALSE)
+
+```
+
+Identify markers that are out of sequence. Remove from family maps and re-map each one.
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamB.onemap <- read.delim("data/LINKMAP/FamBfilter.onemap", 
+                          header = FALSE, sep = " ",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# remove duplicate markers
+Onemap.filt2 <- FamB.onemap %>%
+  distinct(GENOTYPE, .keep_all = TRUE) %>%
+  filter(!LOCUS %in% c("*dDocent_Contig_87392", 
+                       "*dDocent_Contig_26999", 
+                       "*dDocent_Contig_178968",
+                       "*dDocent_Contig_30292",
+                       "*dDocent_Contig_5988",
+                       "*dDocent_Contig_3323",
+                       "*dDocent_Contig_23004",
+                       "*dDocent_Contig_23860",
+                       "*dDocent_Contig_32599",
+                       "*dDocent_Contig_97106",
+                       "*dDocent_Contig_213871",
+                       "*dDocent_Contig_3538",
+                       "*dDocent_Contig_16570",
+                       "*dDocent_Contig_50498",
+                       "*dDocent_Contig_390204",
+                       "*dDocent_Contig_21480",
+                       "*dDocent_Contig_12831",
+                       "*dDocent_Contig_14591",
+                       "*dDocent_Contig_36117",
+                       "*dDocent_Contig_30077",
+                       "*dDocent_Contig_18146"))
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
+write.table(Onemap.filt2, con, 
+            append = FALSE, quote = FALSE, sep = " ", 
+            na = "NA", dec = ".", 
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
+
+# Summary of datafile
+FamB.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all") 
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs 
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+    
+# group all final ordered LGs
+FamB.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap", 
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# create dataframe of removed loci and corresponding loci
+match_loc <- anti_join(FamB.onemap, Onemap.filt2) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>% 
+  left_join(Onemap.filt2, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# add mapping positions
+temp <- left_join(match_loc, FamB.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamB.fullmap, "results/FamB.fullmap", row.names = FALSE)
+
+## FamA
+
+# change header names to Marker | Markertype | Genotype
+FamA.onemap <- read.delim("data/LINKMAP/FamAfilter.onemap", 
+                          header = FALSE, sep = " ",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamA.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# remove duplicate markers
+Onemap.filt2 <- FamA.onemap %>%
+  distinct(GENOTYPE, .keep_all = TRUE) %>%
+  filter(!LOCUS %in% c("*dDocent_Contig_131586", 
+                       "*dDocent_Contig_92423", 
+                       "*dDocent_Contig_39533",
+                       "*dDocent_Contig_23004",
+                       "*dDocent_Contig_23860",
+                       "*dDocent_Contig_12218",
+                       "*dDocent_Contig_63085",
+                       "*dDocent_Contig_305075",
+                       "*dDocent_Contig_10702",
+                       "*dDocent_Contig_83367",
+                       "*dDocent_Contig_7091",
+                       "*dDocent_Contig_248473",
+                       "*dDocent_Contig_50498",
+                       "*dDocent_Contig_21480",
+                       "*dDocent_Contig_1694",
+                       "*dDocent_Contig_642",
+                       "*dDocent_Contig_12222",
+                       "*dDocent_Contig_14784",
+                       "*dDocent_Contig_1452",
+                       "*dDocent_Contig_990",
+                       "*dDocent_Contig_213918",
+                       "*dDocent_Contig_182486",
+                       "*dDocent_Contig_10808",
+                       "*dDocent_Contig_26467",
+                       "*dDocent_Contig_30202",
+                       "*dDocent_Contig_9761",
+                       "*dDocent_Contig_123370",
+                       "*dDocent_Contig_52542"))
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamAfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
+write.table(Onemap.filt2, con, 
+            append = FALSE, quote = FALSE, sep = " ", 
+            na = "NA", dec = ".", 
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamA.Map <- read.outcross(file="data/LINKMAP/FamAfilter.onemap")
+
+# Summary of datafile
+FamA.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamA.Map.rf.L6.rf35 <- rf.2pts(FamA.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamA.Map.rf.L6.rf35, "all") 
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs 
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+    
+# group all final ordered LGs
+FamA.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamA.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamA.map, "data/LINKMAP/FamA.fullmap")
+FamA.fullmap <- read.table("data/LINKMAP/FamA.fullmap", 
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# create dataframe of removed loci and corresponding loci
+match_loc <- anti_join(FamA.onemap, Onemap.filt2) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>% 
+  left_join(Onemap.filt2, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# add mapping positions
+temp <- left_join(match_loc, FamA.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamA.fullmap <- bind_rows(FamA.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamA.fullmap, "results/FamA.fullmap", row.names = FALSE)
+
+
+```
+
+
+# Compare family maps after removing and re-mapping markers
+
+Load family maps.
+
+```{r}
+
+FamA <- read.delim("data/LINKMAP/FamA.fullmap", 
                    stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
+                   col.names = c("LG_FamA", "LOCUS", "POS_FamA"))
 
-FamA_M <- read.delim("results/FamA_M.map", 
-                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
+FamB <- read.delim("data/LINKMAP/FamB.fullmap", 
+                   stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LG_FamB", "LOCUS", "POS_FamB"))
 
-FamA <- read.delim("results/FamA.fullmap", 
-                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
+temp <- inner_join(FamA, FamB, by = "LOCUS")
 
+write.table(temp, "data/LINKMAP/shared.markers",
+            quote = FALSE, col.names = TRUE, row.names = FALSE)
 
+```
+
+Compare family maps. Identify loci still out of sequence. Remove and re-map Family B map.
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamB.onemap <- read.delim("data/LINKMAP/FamBfilter.onemap", 
+                          header = FALSE, sep = " ",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# remove duplicate markers
+Onemap.filt2 <- FamB.onemap %>%
+  distinct(GENOTYPE, .keep_all = TRUE) %>%
+  filter(!LOCUS %in% c("*dDocent_Contig_21007", 
+                       "*dDocent_Contig_27780", 
+                       "*dDocent_Contig_16379",
+                       "*dDocent_Contig_27993",
+                       "*dDocent_Contig_169675"))
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
+write.table(Onemap.filt2, con, 
+            append = FALSE, quote = FALSE, sep = " ", 
+            na = "NA", dec = ".", 
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
+
+# Summary of datafile
+FamB.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all") 
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs 
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+    
+# group all final ordered LGs
+FamB.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap", 
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# create dataframe of removed loci and corresponding loci
+match_loc <- anti_join(FamB.onemap, Onemap.filt2) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>% 
+  left_join(Onemap.filt2, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# add mapping positions
+temp <- left_join(match_loc, FamB.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamB.fullmap, "results/FamB.fullmap", row.names = FALSE)
 
 ```
 
@@ -48,15 +429,15 @@ Load family maps
 
 ```{r}
 
-FamA_1 <- read.delim("data/LINKMAP/FamA.fullmap", 
+FamA <- read.delim("data/LINKMAP/FamA.fullmap", 
                    stringsAsFactors = FALSE, sep = "", 
                    col.names = c("LG", "LOCUS", "POSITION"))
 
-FamB_1 <- read.delim("data/LINKMAP/FamB.fullmap", 
+FamB <- read.delim("data/LINKMAP/FamB.fullmap", 
                    header = TRUE, stringsAsFactors = FALSE, sep = "", 
                    col.names = c("LG", "LOCUS", "POSITION"))
 
-temp <- bind_rows(FamA_1, FamB_1)
+temp <- bind_rows(FamA, FamB)
 
 all_markers <- unique(temp$LOCUS)
 
