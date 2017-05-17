@@ -1984,6 +1984,6 @@ FamA.fullmap <- bind_rows(FamA.fullmap, temp) %>%
   ungroup()
 
 # write output to file
-write.table(FamA.fullmap, "results/FamA.fullmap", row.names = FALSE)
+write.table(FamA.fullmap, "results/FamA.fullmap", row.names = FALSE, quote = FALSE)
 
 ```

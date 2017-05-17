@@ -20,154 +20,43 @@ source("lib/ggplot.R")
 
 ```
 
-# Compare family maps
+# Compare family maps I
 
-Load family maps
+Determine if there are ambivalent marker placings in each family map (e.g. large gaps). Check segregation distortion/missing data/recombination rates. Create list of markers to remove from each map.
 
 ```{r}
 
-# FamA <- read.delim("data/LINKMAP/FamA.fullmap", 
-#                    stringsAsFactors = FALSE, sep = "", 
-#                    col.names = c("LG_FamA", "LOCUS", "POS_FamA"))
-# 
-# FamB <- read.delim("data/LINKMAP/FamB.fullmap", 
-#                    stringsAsFactors = FALSE, sep = "", 
-#                    col.names = c("LG_FamB", "LOCUS", "POS_FamB"))
-# 
-# temp <- inner_join(FamA, FamB, by = "LOCUS")
-# 
-# write.table(temp, "data/LINKMAP/shared.markers",
-#             quote = FALSE, col.names = TRUE, row.names = FALSE)
+# load family map (with duplicate markers added back in)
+FamA <- read.table("results/FamA.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamA","POS_FamA"))
+
+FamB <- read.table("results/FamB.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamB","POS_FamB"))
+
+temp <- inner_join(FamA, FamB, by = "LOCUS")
+
+write.table(temp, "results/shared.markers",
+            quote = FALSE, col.names = TRUE, row.names = FALSE)
 
 ```
 
-Identify markers that are out of sequence. Remove from family maps and re-map each one.
+Identify markers that are out of sequence between the two family maps.
+
+Compare locations in family maps. Determine if in cluster of loci that are not properly resolved in just one of the maps, look at segregation distortion/crossovers/missing data.
+
+Create set of markers to be removed from each map.
+
+Remove from family maps and re-map each one.
+
+## Family A
 
 ```{r}
 
 # change header names to Marker | Markertype | Genotype
-FamB.onemap <- read.delim("data/LINKMAP/FamBfilter.onemap", 
-                          header = FALSE, sep = " ",
-                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
-                          skip = 1, stringsAsFactors = FALSE)
-
-# number of individuals in dataset
-N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
-                          col.names = c("N_IND", "N_LOCI"),
-                          nrows = 1, stringsAsFactors = FALSE)
-
-# remove duplicate markers
-Onemap.filt2 <- FamB.onemap %>%
-  distinct(GENOTYPE, .keep_all = TRUE) %>%
-  filter(!LOCUS %in% c("*dDocent_Contig_87392", 
-                       "*dDocent_Contig_26999", 
-                       "*dDocent_Contig_178968",
-                       "*dDocent_Contig_30292",
-                       "*dDocent_Contig_5988",
-                       "*dDocent_Contig_3323",
-                       "*dDocent_Contig_23004",
-                       "*dDocent_Contig_23860",
-                       "*dDocent_Contig_32599",
-                       "*dDocent_Contig_97106",
-                       "*dDocent_Contig_213871",
-                       "*dDocent_Contig_3538",
-                       "*dDocent_Contig_16570",
-                       "*dDocent_Contig_50498",
-                       "*dDocent_Contig_390204",
-                       "*dDocent_Contig_21480",
-                       "*dDocent_Contig_12831",
-                       "*dDocent_Contig_14591",
-                       "*dDocent_Contig_36117",
-                       "*dDocent_Contig_30077",
-                       "*dDocent_Contig_18146"))
-
-# write filtered input file for Onemap
-# need to add extra line back in
-con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
-writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
-write.table(Onemap.filt2, con, 
-            append = FALSE, quote = FALSE, sep = " ", 
-            na = "NA", dec = ".", 
-            col.names = FALSE, row.names = FALSE)
-close(con)
-
-# import datafile
-FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
-
-# Summary of datafile
-FamB.Map
-
-# estimate recombination fraction between all pairs of markers
-# creates object of class rf.2pts
-FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
-
-# create sequence (list) of all markers to assign to LGs
-all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all") 
-
-# assign markers to linkage groups
-LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
-
-# define map function
-set.map.fun(typ = "haldane")
-
-# create list of separate LGs 
-# (convert from class group to class sequence)
-LG_list <- lapply(c(1:24), function(LG) {
-  make.seq(LGs, LG)
-})
-
-# uses compare() to create a framework of most informative markers
-# map remaining markers using try.seq()
-# this step will take a few hours
-LG_ordered <- lapply((LG_list), function(LG){
-  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
-})
-
-# create marker order with all markers
-LG_final <- lapply((LG_ordered), function(LG){
-  make.seq(LG, "force")
-})
-    
-# group all final ordered LGs
-FamB.map <- LG_final
-
-# draw map for all LGs
-draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
-
-# export map to file
-write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
-FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap", 
-                           skip = 1, header = FALSE) %>%
-  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
-  rename(LG = V1, POSITION = V3) %>%
-  select(LOCUS, LG, POSITION)
-
-# create dataframe of removed loci and corresponding loci
-match_loc <- anti_join(FamB.onemap, Onemap.filt2) %>%
-  rename(MATCHLOC = LOCUS) %>%
-  select(MATCHLOC, GENOTYPE) %>% 
-  left_join(Onemap.filt2, by = "GENOTYPE") %>%
-  select(LOCUS, MATCHLOC)
-
-# add mapping positions
-temp <- left_join(match_loc, FamB.fullmap, by = "LOCUS") %>%
-  select(MATCHLOC, LG, POSITION) %>%
-  rename(LOCUS = MATCHLOC)
-
-# add markers to final map
-FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
-  group_by(LG) %>%
-  arrange(POSITION) %>%
-  ungroup()
-
-# write output to file
-write.table(FamB.fullmap, "results/FamB.fullmap", row.names = FALSE)
-
-## FamA
-
-# change header names to Marker | Markertype | Genotype
-FamA.onemap <- read.delim("data/LINKMAP/FamAfilter.onemap", 
-                          header = FALSE, sep = " ",
+FamA.onemap <- read.delim("data/LINKMAP/FamA.onemap",
+                          header = FALSE, sep = "\t",
                           col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
                           skip = 1, stringsAsFactors = FALSE)
 
@@ -176,45 +65,134 @@ N <- read.delim("data/LINKMAP/FamA.onemap", header = FALSE,
                           col.names = c("N_IND", "N_LOCI"),
                           nrows = 1, stringsAsFactors = FALSE)
 
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamA_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamA.onemap.filtered <- semi_join(FamA.onemap, mapped_markers)
+
+# remove flagged markers
+FamA.onemap.filtered <- FamA.onemap.filtered %>%
+    filter(!LOCUS %in% c("*dDocent_Contig_30805",
+                         "*dDocent_Contig_248473",
+                         "*dDocent_Contig_244117",
+                         "*dDocent_Contig_11546",
+                         "*dDocent_Contig_35991",
+                         "*dDocent_Contig_35624",
+                         "*dDocent_Contig_200224",
+                         "*dDocent_Contig_7091",
+                         "*dDocent_Contig_2358",
+                         "*dDocent_Contig_23388",
+                         "*dDocent_Contig_186256",
+                         "*dDocent_Contig_3817",
+                         "*dDocent_Contig_97890",
+                         "*dDocent_Contig_298306",
+                         "*dDocent_Contig_67843",
+                         "*dDocent_Contig_29969",
+                         "*dDocent_Contig_15670",
+                         "*dDocent_Contig_30792",
+                         "*dDocent_Contig_75671",
+                         "*dDocent_Contig_172925",
+                         "*dDocent_Contig_144097",
+                         "*dDocent_Contig_64257",
+                         "*dDocent_Contig_12459",
+                         "*dDocent_Contig_44930",
+                         "*dDocent_Contig_990",
+                         "*dDocent_Contig_50993",
+                         "*dDocent_Contig_8255",
+                         "*dDocent_Contig_20685",
+                         "*dDocent_Contig_57614",
+                         "*dDocent_Contig_3486",
+                         "*dDocent_Contig_69118",
+                         "*dDocent_Contig_51033",
+                         "*dDocent_Contig_34901",
+                         "*dDocent_Contig_1452",
+                         "*dDocent_Contig_2847",
+                         "*dDocent_Contig_6716",
+                         "*dDocent_Contig_60349",
+                         "*dDocent_Contig_77680",
+                         "*dDocent_Contig_12222",
+                         "*dDocent_Contig_62798",
+                         "*dDocent_Contig_87392",
+                         "*dDocent_Contig_39281",
+                         "*dDocent_Contig_13012",
+                         "*dDocent_Contig_44363",
+                         "*dDocent_Contig_52542",
+                         "*dDocent_Contig_123370",
+                         "*dDocent_Contig_63085",
+                         "*dDocent_Contig_138814",
+                         "*dDocent_Contig_261231",
+                         "*dDocent_Contig_47638",
+                         "*dDocent_Contig_9761",
+                         "*dDocent_Contig_4017",
+                         "*dDocent_Contig_233860",
+                         "*dDocent_Contig_24796",
+                         "*dDocent_Contig_30828",
+                         "*dDocent_Contig_52309",
+                         "*dDocent_Contig_78689",
+                         "*dDocent_Contig_62261",
+                         "*dDocent_Contig_97106",
+                         "*dDocent_Contig_1694",
+                         "*dDocent_Contig_184316",
+                         "*dDocent_Contig_483",
+                         "*dDocent_Contig_596",
+                         "*dDocent_Contig_13530",
+                         "*dDocent_Contig_14522",
+                         "*dDocent_Contig_50994",
+                         "*dDocent_Contig_315477",
+                         "*dDocent_Contig_730",
+                         "*dDocent_Contig_107875",
+                         "*dDocent_Contig_41408",
+                         '*dDocent_Contig_213918',
+                         "*dDocent_Contig_130476",
+                         "*dDocent_Contig_129129",
+                         "*dDocent_Contig_69979",
+                         "*dDocent_Contig_224858",
+                         "*dDocent_Contig_14784",
+                         "*dDocent_Contig_17546",
+                         "*dDocent_Contig_169675",
+                         "*dDocent_Contig_26617",
+                         "*dDocent_Contig_180953",
+                         "*dDocent_Contig_16379",
+                         "*dDocent_Contig_333713",
+                         "*dDocent_Contig_52478",
+                         "*dDocent_Contig_294562",
+                         "*dDocent_Contig_17020",
+                         "*dDocent_Contig_29858",
+                         "*dDocent_Contig_6740",
+                         "*dDocent_Contig_59297",
+                         "*dDocent_Contig_3323",
+                         "*dDocent_Contig_104837",
+                         "*dDocent_Contig_305075",
+                         "*dDocent_Contig_52003",
+                         "*dDocent_Contig_29931",
+                         "*dDocent_Contig_10018",
+                         "*dDocent_Contig_65233",
+                         "*dDocent_Contig_2867",
+                         "*dDocent_Contig_42394",
+                         "*dDocent_Contig_360",
+                         "*dDocent_Contig_25067"))
+
 # remove duplicate markers
-Onemap.filt2 <- FamA.onemap %>%
-  distinct(GENOTYPE, .keep_all = TRUE) %>%
-  filter(!LOCUS %in% c("*dDocent_Contig_131586", 
-                       "*dDocent_Contig_92423", 
-                       "*dDocent_Contig_39533",
-                       "*dDocent_Contig_23004",
-                       "*dDocent_Contig_23860",
-                       "*dDocent_Contig_12218",
-                       "*dDocent_Contig_63085",
-                       "*dDocent_Contig_305075",
-                       "*dDocent_Contig_10702",
-                       "*dDocent_Contig_83367",
-                       "*dDocent_Contig_7091",
-                       "*dDocent_Contig_248473",
-                       "*dDocent_Contig_50498",
-                       "*dDocent_Contig_21480",
-                       "*dDocent_Contig_1694",
-                       "*dDocent_Contig_642",
-                       "*dDocent_Contig_12222",
-                       "*dDocent_Contig_14784",
-                       "*dDocent_Contig_1452",
-                       "*dDocent_Contig_990",
-                       "*dDocent_Contig_213918",
-                       "*dDocent_Contig_182486",
-                       "*dDocent_Contig_10808",
-                       "*dDocent_Contig_26467",
-                       "*dDocent_Contig_30202",
-                       "*dDocent_Contig_9761",
-                       "*dDocent_Contig_123370",
-                       "*dDocent_Contig_52542"))
+temp <- FamA.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locA <- anti_join(FamA.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
 
 # write filtered input file for Onemap
 # need to add extra line back in
 con <- file("data/LINKMAP/FamAfilter.onemap", open = "wt")
-writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
-write.table(Onemap.filt2, con, 
-            append = FALSE, quote = FALSE, sep = " ", 
-            na = "NA", dec = ".", 
+writeLines(paste(N$N_IND, (nrow(FamA.onemap.filtered))), con)
+write.table(FamA.onemap.filtered, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
             col.names = FALSE, row.names = FALSE)
 close(con)
 
@@ -229,7 +207,7 @@ FamA.Map
 FamA.Map.rf.L6.rf35 <- rf.2pts(FamA.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
 
 # create sequence (list) of all markers to assign to LGs
-all.markers <- make.seq(FamA.Map.rf.L6.rf35, "all") 
+all.markers <- make.seq(FamA.Map.rf.L6.rf35, "all")
 
 # assign markers to linkage groups
 LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
@@ -237,7 +215,7 @@ LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
 # define map function
 set.map.fun(typ = "haldane")
 
-# create list of separate LGs 
+# create list of separate LGs
 # (convert from class group to class sequence)
 LG_list <- lapply(c(1:24), function(LG) {
   make.seq(LGs, LG)
@@ -254,7 +232,7 @@ LG_ordered <- lapply((LG_list), function(LG){
 LG_final <- lapply((LG_ordered), function(LG){
   make.seq(LG, "force")
 })
-    
+
 # group all final ordered LGs
 FamA.map <- LG_final
 
@@ -263,21 +241,15 @@ draw.map(FamA.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
 
 # export map to file
 write.map(FamA.map, "data/LINKMAP/FamA.fullmap")
-FamA.fullmap <- read.table("data/LINKMAP/FamA.fullmap", 
+
+FamA.fullmap <- read.table("data/LINKMAP/FamA.fullmap",
                            skip = 1, header = FALSE) %>%
   mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
   rename(LG = V1, POSITION = V3) %>%
   select(LOCUS, LG, POSITION)
 
-# create dataframe of removed loci and corresponding loci
-match_loc <- anti_join(FamA.onemap, Onemap.filt2) %>%
-  rename(MATCHLOC = LOCUS) %>%
-  select(MATCHLOC, GENOTYPE) %>% 
-  left_join(Onemap.filt2, by = "GENOTYPE") %>%
-  select(LOCUS, MATCHLOC)
-
 # add mapping positions
-temp <- left_join(match_loc, FamA.fullmap, by = "LOCUS") %>%
+temp <- left_join(match_locA, FamA.fullmap, by = "LOCUS") %>%
   select(MATCHLOC, LG, POSITION) %>%
   rename(LOCUS = MATCHLOC)
 
@@ -288,40 +260,17 @@ FamA.fullmap <- bind_rows(FamA.fullmap, temp) %>%
   ungroup()
 
 # write output to file
-write.table(FamA.fullmap, "results/FamA.fullmap", row.names = FALSE)
-
-
-```
-
-
-# Compare family maps after removing and re-mapping markers
-
-Load family maps.
-
-```{r}
-
-FamA <- read.delim("data/LINKMAP/FamA.fullmap", 
-                   stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG_FamA", "LOCUS", "POS_FamA"))
-
-FamB <- read.delim("data/LINKMAP/FamB.fullmap", 
-                   stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG_FamB", "LOCUS", "POS_FamB"))
-
-temp <- inner_join(FamA, FamB, by = "LOCUS")
-
-write.table(temp, "data/LINKMAP/shared.markers",
-            quote = FALSE, col.names = TRUE, row.names = FALSE)
+write.table(FamA.fullmap, "results/FamA.fullmap-1", row.names = FALSE)
 
 ```
 
-Compare family maps. Identify loci still out of sequence. Remove and re-map Family B map.
+## Family B:
 
 ```{r}
 
 # change header names to Marker | Markertype | Genotype
-FamB.onemap <- read.delim("data/LINKMAP/FamBfilter.onemap", 
-                          header = FALSE, sep = " ",
+FamB.onemap <- read.delim("data/LINKMAP/FamB.onemap",
+                          header = FALSE, sep = "\t",
                           col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
                           skip = 1, stringsAsFactors = FALSE)
 
@@ -330,22 +279,134 @@ N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
                           col.names = c("N_IND", "N_LOCI"),
                           nrows = 1, stringsAsFactors = FALSE)
 
-# remove duplicate markers
-Onemap.filt2 <- FamB.onemap %>%
-  distinct(GENOTYPE, .keep_all = TRUE) %>%
-  filter(!LOCUS %in% c("*dDocent_Contig_21007", 
-                       "*dDocent_Contig_27780", 
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamB_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamB.onemap.filtered <- semi_join(FamB.onemap, mapped_markers)
+
+# remove flagged markers
+FamB.onemap.filtered <- FamB.onemap.filtered %>%
+  filter(!LOCUS %in% c("*dDocent_Contig_30805",
+                       "*dDocent_Contig_248473",
+                       "*dDocent_Contig_244117",
+                       "*dDocent_Contig_11546",
+                       "*dDocent_Contig_35991",
+                       "*dDocent_Contig_35624",
+                       "*dDocent_Contig_200224",
+                       "*dDocent_Contig_7091",
+                       "*dDocent_Contig_2358",
+                       "*dDocent_Contig_23388",
+                       "*dDocent_Contig_186256",
+                       "*dDocent_Contig_3817",
+                       "*dDocent_Contig_97890",
+                       "*dDocent_Contig_298306",
+                       "*dDocent_Contig_67843",
+                       "*dDocent_Contig_29969",
+                       "*dDocent_Contig_15670",
+                       "*dDocent_Contig_30792",
+                       "*dDocent_Contig_75671",
+                       "*dDocent_Contig_172925",
+                       "*dDocent_Contig_144097",
+                       "*dDocent_Contig_64257",
+                       "*dDocent_Contig_12459",
+                       "*dDocent_Contig_44930",
+                       "*dDocent_Contig_990",
+                       "*dDocent_Contig_50993",
+                       "*dDocent_Contig_8255",
+                       "*dDocent_Contig_20685",
+                       "*dDocent_Contig_57614",
+                       "*dDocent_Contig_3486",
+                       "*dDocent_Contig_69118",
+                       "*dDocent_Contig_51033",
+                       "*dDocent_Contig_34901",
+                       "*dDocent_Contig_1452",
+                       "*dDocent_Contig_2847",
+                       "*dDocent_Contig_6716",
+                       "*dDocent_Contig_60349",
+                       "*dDocent_Contig_77680",
+                       "*dDocent_Contig_12222",
+                       "*dDocent_Contig_62798",
+                       "*dDocent_Contig_87392",
+                       "*dDocent_Contig_39281",
+                       "*dDocent_Contig_13012",
+                       "*dDocent_Contig_44363",
+                       "*dDocent_Contig_52542",
+                       "*dDocent_Contig_123370",
+                       "*dDocent_Contig_63085",
+                       "*dDocent_Contig_138814",
+                       "*dDocent_Contig_261231",
+                       "*dDocent_Contig_47638",
+                       "*dDocent_Contig_9761",
+                       "*dDocent_Contig_4017",
+                       "*dDocent_Contig_233860",
+                       "*dDocent_Contig_24796",
+                       "*dDocent_Contig_30828",
+                       "*dDocent_Contig_52309",
+                       "*dDocent_Contig_78689",
+                       "*dDocent_Contig_62261",
+                       "*dDocent_Contig_97106",
+                       "*dDocent_Contig_1694",
+                       "*dDocent_Contig_184316",
+                       "*dDocent_Contig_483",
+                       "*dDocent_Contig_596",
+                       "*dDocent_Contig_13530",
+                       "*dDocent_Contig_14522",
+                       "*dDocent_Contig_50994",
+                       "*dDocent_Contig_315477",
+                       "*dDocent_Contig_730",
+                       "*dDocent_Contig_107875",
+                       "*dDocent_Contig_41408",
+                       "*dDocent_Contig_213918",
+                       "*dDocent_Contig_130476",
+                       "*dDocent_Contig_129129",
+                       "*dDocent_Contig_69979",
+                       "*dDocent_Contig_224858",
+                       "*dDocent_Contig_14784",
+                       "*dDocent_Contig_17546",
+                       "*dDocent_Contig_169675",
+                       "*dDocent_Contig_26617",
+                       "*dDocent_Contig_180953",
                        "*dDocent_Contig_16379",
-                       "*dDocent_Contig_27993",
-                       "*dDocent_Contig_169675"))
+                       "*dDocent_Contig_333713",
+                       "*dDocent_Contig_52478",
+                       "*dDocent_Contig_294562",
+                       "*dDocent_Contig_17020",
+                       "*dDocent_Contig_29858",
+                       "*dDocent_Contig_6740",
+                       "*dDocent_Contig_59297",
+                       "*dDocent_Contig_3323",
+                       "*dDocent_Contig_104837",
+                       "*dDocent_Contig_305075",
+                       "*dDocent_Contig_52003",
+                       "*dDocent_Contig_29931",
+                       "*dDocent_Contig_10018",
+                       "*dDocent_Contig_65233",
+                       "*dDocent_Contig_2867",
+                       "*dDocent_Contig_42394",
+                       "*dDocent_Contig_360",
+                       "*dDocent_Contig_25067"))
+
+# remove duplicate markers
+temp <- FamB.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locB <- anti_join(FamB.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
 
 # write filtered input file for Onemap
 # need to add extra line back in
 con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
-writeLines(paste(N$N_IND, (nrow(Onemap.filt2))), con)
-write.table(Onemap.filt2, con, 
-            append = FALSE, quote = FALSE, sep = " ", 
-            na = "NA", dec = ".", 
+writeLines(paste(N$N_IND, (nrow(FamB.onemap.filtered))), con)
+write.table(FamB.onemap.filtered, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
             col.names = FALSE, row.names = FALSE)
 close(con)
 
@@ -360,7 +421,7 @@ FamB.Map
 FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
 
 # create sequence (list) of all markers to assign to LGs
-all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all") 
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all")
 
 # assign markers to linkage groups
 LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
@@ -368,7 +429,7 @@ LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
 # define map function
 set.map.fun(typ = "haldane")
 
-# create list of separate LGs 
+# create list of separate LGs
 # (convert from class group to class sequence)
 LG_list <- lapply(c(1:24), function(LG) {
   make.seq(LGs, LG)
@@ -385,7 +446,7 @@ LG_ordered <- lapply((LG_list), function(LG){
 LG_final <- lapply((LG_ordered), function(LG){
   make.seq(LG, "force")
 })
-    
+
 # group all final ordered LGs
 FamB.map <- LG_final
 
@@ -394,21 +455,15 @@ draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
 
 # export map to file
 write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
-FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap", 
+
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap",
                            skip = 1, header = FALSE) %>%
   mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
   rename(LG = V1, POSITION = V3) %>%
   select(LOCUS, LG, POSITION)
 
-# create dataframe of removed loci and corresponding loci
-match_loc <- anti_join(FamB.onemap, Onemap.filt2) %>%
-  rename(MATCHLOC = LOCUS) %>%
-  select(MATCHLOC, GENOTYPE) %>% 
-  left_join(Onemap.filt2, by = "GENOTYPE") %>%
-  select(LOCUS, MATCHLOC)
-
 # add mapping positions
-temp <- left_join(match_loc, FamB.fullmap, by = "LOCUS") %>%
+temp <- left_join(match_locB, FamB.fullmap, by = "LOCUS") %>%
   select(MATCHLOC, LG, POSITION) %>%
   rename(LOCUS = MATCHLOC)
 
@@ -419,7 +474,1399 @@ FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
   ungroup()
 
 # write output to file
-write.table(FamB.fullmap, "results/FamB.fullmap", row.names = FALSE)
+write.table(FamB.fullmap, "results/FamB.fullmap-1", row.names = FALSE)
+
+```
+
+
+# Compare family maps after removing and re-mapping markers I
+
+Load family maps and merge based on shared markers to compare sequence of shared markers in family A and B map.
+
+```{r}
+
+# load family map (with duplicate markers added back in)
+FamA <- read.table("data/LINKMAP/FamA.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LG_FamA","LOCUS", "POS_FamA"))
+
+FamB <- read.table("data/LINKMAP/FamB.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LG_FamB","LOCUS", "POS_FamB"))
+
+temp <- inner_join(FamA, FamB, by = "LOCUS")
+
+write.table(temp, "results/shared.markers-1",
+            quote = FALSE, col.names = TRUE, row.names = FALSE)
+
+```
+
+Compare family maps. Identify problematic loci.
+
+## Family A
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamA.onemap <- read.delim("data/LINKMAP/FamA.onemap",
+                          header = FALSE, sep = "\t",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamA.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamA_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamA.onemap.filtered <- semi_join(FamA.onemap, mapped_markers)
+
+# remove flagged markers
+FamA.onemap.filtered <- FamA.onemap.filtered %>%
+    filter(!LOCUS %in% c("*dDocent_Contig_39676",
+                         "*dDocent_Contig_34189",
+                         "*dDocent_Contig_53933",
+                         "*dDocent_Contig_20895",
+                         "*dDocent_Contig_25692",
+                         "*dDocent_Contig_9482",
+                         "*dDocent_Contig_169742",
+                         "*dDocent_Contig_42799",
+                         "*dDocent_Contig_83367",
+                         "*dDocent_Contig_38486",
+                         "*dDocent_Contig_29327",
+                         "*dDocent_Contig_84389",
+                         "*dDocent_Contig_24719",
+                         "*dDocent_Contig_91792",
+                         "*dDocent_Contig_121713",
+                         "*dDocent_Contig_12068",
+                         "*dDocent_Contig_59623",
+                         "*dDocent_Contig_41944",
+                         "*dDocent_Contig_26467",
+                         "*dDocent_Contig_30805",
+                         "*dDocent_Contig_248473",
+                         "*dDocent_Contig_244117",
+                         "*dDocent_Contig_11546",
+                         "*dDocent_Contig_35991",
+                         "*dDocent_Contig_35624",
+                         "*dDocent_Contig_200224",
+                         "*dDocent_Contig_7091",
+                         "*dDocent_Contig_2358",
+                         "*dDocent_Contig_23388",
+                         "*dDocent_Contig_186256",
+                         "*dDocent_Contig_3817",
+                         "*dDocent_Contig_97890",
+                         "*dDocent_Contig_298306",
+                         "*dDocent_Contig_67843",
+                         "*dDocent_Contig_29969",
+                         "*dDocent_Contig_15670",
+                         "*dDocent_Contig_30792",
+                         "*dDocent_Contig_75671",
+                         "*dDocent_Contig_172925",
+                         "*dDocent_Contig_144097",
+                         "*dDocent_Contig_64257",
+                         "*dDocent_Contig_12459",
+                         "*dDocent_Contig_44930",
+                         "*dDocent_Contig_990",
+                         "*dDocent_Contig_50993",
+                         "*dDocent_Contig_8255",
+                         "*dDocent_Contig_20685",
+                         "*dDocent_Contig_57614",
+                         "*dDocent_Contig_3486",
+                         "*dDocent_Contig_69118",
+                         "*dDocent_Contig_51033",
+                         "*dDocent_Contig_34901",
+                         "*dDocent_Contig_1452",
+                         "*dDocent_Contig_2847",
+                         "*dDocent_Contig_6716",
+                         "*dDocent_Contig_60349",
+                         "*dDocent_Contig_77680",
+                         "*dDocent_Contig_12222",
+                         "*dDocent_Contig_62798",
+                         "*dDocent_Contig_87392",
+                         "*dDocent_Contig_39281",
+                         "*dDocent_Contig_13012",
+                         "*dDocent_Contig_44363",
+                         "*dDocent_Contig_52542",
+                         "*dDocent_Contig_123370",
+                         "*dDocent_Contig_63085",
+                         "*dDocent_Contig_138814",
+                         "*dDocent_Contig_261231",
+                         "*dDocent_Contig_47638",
+                         "*dDocent_Contig_9761",
+                         "*dDocent_Contig_4017",
+                         "*dDocent_Contig_233860",
+                         "*dDocent_Contig_24796",
+                         "*dDocent_Contig_30828",
+                         "*dDocent_Contig_52309",
+                         "*dDocent_Contig_78689",
+                         "*dDocent_Contig_62261",
+                         "*dDocent_Contig_97106",
+                         "*dDocent_Contig_1694",
+                         "*dDocent_Contig_184316",
+                         "*dDocent_Contig_483",
+                         "*dDocent_Contig_596",
+                         "*dDocent_Contig_13530",
+                         "*dDocent_Contig_14522",
+                         "*dDocent_Contig_50994",
+                         "*dDocent_Contig_315477",
+                         "*dDocent_Contig_730",
+                         "*dDocent_Contig_107875",
+                         "*dDocent_Contig_41408",
+                         '*dDocent_Contig_213918',
+                         "*dDocent_Contig_130476",
+                         "*dDocent_Contig_129129",
+                         "*dDocent_Contig_69979",
+                         "*dDocent_Contig_224858",
+                         "*dDocent_Contig_14784",
+                         "*dDocent_Contig_17546",
+                         "*dDocent_Contig_169675",
+                         "*dDocent_Contig_26617",
+                         "*dDocent_Contig_180953",
+                         "*dDocent_Contig_16379",
+                         "*dDocent_Contig_333713",
+                         "*dDocent_Contig_52478",
+                         "*dDocent_Contig_294562",
+                         "*dDocent_Contig_17020",
+                         "*dDocent_Contig_29858",
+                         "*dDocent_Contig_6740",
+                         "*dDocent_Contig_59297",
+                         "*dDocent_Contig_3323",
+                         "*dDocent_Contig_104837",
+                         "*dDocent_Contig_305075",
+                         "*dDocent_Contig_52003",
+                         "*dDocent_Contig_29931",
+                         "*dDocent_Contig_10018",
+                         "*dDocent_Contig_65233",
+                         "*dDocent_Contig_2867",
+                         "*dDocent_Contig_42394",
+                         "*dDocent_Contig_360",
+                         "*dDocent_Contig_25067"))
+
+# remove duplicate markers
+temp <- FamA.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locA <- anti_join(FamA.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamAfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(temp))), con)
+write.table(temp, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamA.Map <- read.outcross(file="data/LINKMAP/FamAfilter.onemap")
+
+# Summary of datafile
+FamA.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamA.Map.rf.L6.rf35 <- rf.2pts(FamA.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamA.Map.rf.L6.rf35, "all")
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+
+# group all final ordered LGs
+FamA.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamA.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamA.map, "data/LINKMAP/FamA.fullmap")
+
+FamA.fullmap <- read.table("data/LINKMAP/FamA.fullmap",
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# add mapping positions
+temp <- left_join(match_locA, FamA.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamA.fullmap <- bind_rows(FamA.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamA.fullmap, "results/FamA-2.fullmap", row.names = FALSE)
+
+```
+
+## Family B:
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamB.onemap <- read.delim("data/LINKMAP/FamB.onemap",
+                          header = FALSE, sep = "\t",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamB_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamB.onemap.filtered <- semi_join(FamB.onemap, mapped_markers)
+
+# remove flagged markers
+FamB.onemap.filtered <- FamB.onemap.filtered %>%
+    filter(!LOCUS %in% c("*dDocent_Contig_30805",
+                         "*dDocent_Contig_248473",
+                         "*dDocent_Contig_244117",
+                         "*dDocent_Contig_11546",
+                         "*dDocent_Contig_35991",
+                         "*dDocent_Contig_35624",
+                         "*dDocent_Contig_200224",
+                         "*dDocent_Contig_7091",
+                         "*dDocent_Contig_2358",
+                         "*dDocent_Contig_23388",
+                         "*dDocent_Contig_186256",
+                         "*dDocent_Contig_3817",
+                         "*dDocent_Contig_97890",
+                         "*dDocent_Contig_298306",
+                         "*dDocent_Contig_67843",
+                         "*dDocent_Contig_29969",
+                         "*dDocent_Contig_15670",
+                         "*dDocent_Contig_30792",
+                         "*dDocent_Contig_75671",
+                         "*dDocent_Contig_172925",
+                         "*dDocent_Contig_144097",
+                         "*dDocent_Contig_64257",
+                         "*dDocent_Contig_12459",
+                         "*dDocent_Contig_44930",
+                         "*dDocent_Contig_990",
+                         "*dDocent_Contig_50993",
+                         "*dDocent_Contig_8255",
+                         "*dDocent_Contig_20685",
+                         "*dDocent_Contig_57614",
+                         "*dDocent_Contig_3486",
+                         "*dDocent_Contig_69118",
+                         "*dDocent_Contig_51033",
+                         "*dDocent_Contig_34901",
+                         "*dDocent_Contig_1452",
+                         "*dDocent_Contig_2847",
+                         "*dDocent_Contig_6716",
+                         "*dDocent_Contig_60349",
+                         "*dDocent_Contig_77680",
+                         "*dDocent_Contig_12222",
+                         "*dDocent_Contig_62798",
+                         "*dDocent_Contig_87392",
+                         "*dDocent_Contig_39281",
+                         "*dDocent_Contig_13012",
+                         "*dDocent_Contig_44363",
+                         "*dDocent_Contig_52542",
+                         "*dDocent_Contig_123370",
+                         "*dDocent_Contig_63085",
+                         "*dDocent_Contig_138814",
+                         "*dDocent_Contig_261231",
+                         "*dDocent_Contig_47638",
+                         "*dDocent_Contig_9761",
+                         "*dDocent_Contig_4017",
+                         "*dDocent_Contig_233860",
+                         "*dDocent_Contig_24796",
+                         "*dDocent_Contig_30828",
+                         "*dDocent_Contig_52309",
+                         "*dDocent_Contig_78689",
+                         "*dDocent_Contig_62261",
+                         "*dDocent_Contig_97106",
+                         "*dDocent_Contig_1694",
+                         "*dDocent_Contig_184316",
+                         "*dDocent_Contig_483",
+                         "*dDocent_Contig_596",
+                         "*dDocent_Contig_13530",
+                         "*dDocent_Contig_14522",
+                         "*dDocent_Contig_50994",
+                         "*dDocent_Contig_315477",
+                         "*dDocent_Contig_730",
+                         "*dDocent_Contig_107875",
+                         "*dDocent_Contig_41408",
+                         "*dDocent_Contig_213918",
+                         "*dDocent_Contig_130476",
+                         "*dDocent_Contig_129129",
+                         "*dDocent_Contig_69979",
+                         "*dDocent_Contig_224858",
+                         "*dDocent_Contig_14784",
+                         "*dDocent_Contig_17546",
+                         "*dDocent_Contig_169675",
+                         "*dDocent_Contig_26617",
+                         "*dDocent_Contig_180953",
+                         "*dDocent_Contig_16379",
+                         "*dDocent_Contig_333713",
+                         "*dDocent_Contig_52478",
+                         "*dDocent_Contig_294562",
+                         "*dDocent_Contig_17020",
+                         "*dDocent_Contig_29858",
+                         "*dDocent_Contig_6740",
+                         "*dDocent_Contig_59297",
+                         "*dDocent_Contig_3323",
+                         "*dDocent_Contig_104837",
+                         "*dDocent_Contig_305075",
+                         "*dDocent_Contig_52003",
+                         "*dDocent_Contig_29931",
+                         "*dDocent_Contig_10018",
+                         "*dDocent_Contig_65233",
+                         "*dDocent_Contig_2867",
+                         "*dDocent_Contig_42394",
+                         "*dDocent_Contig_360",
+                         "*dDocent_Contig_25067",
+                         "*dDocent_Contig_39676",
+                         "*dDocent_Contig_307589",
+                         "*dDocent_Contig_23860",
+                         "*dDocent_Contig_83810",
+                         "*dDocent_Contig_11000",
+                         "*dDocent_Contig_110843",
+                         "*dDocent_Contig_32599",
+                         "*dDocent_Contig_317880",
+                         "*dDocent_Contig_325604",
+                         "*dDocent_Contig_257",
+                         "*dDocent_Contig_99894",
+                         "*dDocent_Contig_10702",
+                         "*dDocent_Contig_388381",
+                         "*dDocent_Contig_236369",
+                         "*dDocent_Contig_301685",
+                         "*dDocent_Contig_30077",
+                         "*dDocent_Contig_40834",
+                         "*dDocent_Contig_4522",
+                         "*dDocent_Contig_13137",
+                         "*dDocent_Contig_182486",
+                         "*dDocent_Contig_14563",
+                         "*dDocent_Contig_53181",
+                         "*dDocent_Contig_30202",
+                         "*dDocent_Contig_34603",
+                         "*dDocent_Contig_80211",
+                         "*dDocent_Contig_147429",
+                         "*dDocent_Contig_61940",
+                         "*dDocent_Contig_14591",
+                         "*dDocent_Contig_12218",
+                         "*dDocent_Contig_21407",
+                         "*dDocent_Contig_21399",
+                         "*dDocent_Contig_89781",
+                         "*dDocent_Contig_9840",
+                         "*dDocent_Contig_31850",
+                         "*dDocent_Contig_10808",
+                         "*dDocent_Contig_360054",
+                         "*dDocent_Contig_23809",
+                         "*dDocent_Contig_36117",
+                         "*dDocent_Contig_15730",
+                         "*dDocent_Contig_390204",
+                         "*dDocent_Contig_63932",
+                         "*dDocent_Contig_48250",
+                         "*dDocent_Contig_394960"))
+
+# remove duplicate markers
+temp <- FamB.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locB <- anti_join(FamB.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(temp))), con)
+write.table(temp, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
+
+# Summary of datafile
+FamB.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all")
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+
+# group all final ordered LGs
+FamB.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
+
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap",
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# add mapping positions
+temp <- left_join(match_locB, FamB.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamB.fullmap, "results/FamB-2.fullmap", row.names = FALSE)
+
+```
+
+# Compare family maps after removing and re-mapping markers II
+
+Load family maps and merge based on shared markers to compare sequence of shared markers in family A and B map.
+
+```{r}
+
+# load family map (with duplicate markers added back in)
+FamA <- read.table("results/FamA-2.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamA", "POS_FamA"))
+
+FamB <- read.table("results/FamB-2.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamB", "POS_FamB"))
+
+temp <- inner_join(FamA, FamB, by = "LOCUS")
+
+write.table(temp, "results/shared.markers-2",
+            quote = FALSE, col.names = TRUE, row.names = FALSE)
+
+```
+
+Compare family maps. Identify problematic loci.
+
+## Family A
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamA.onemap <- read.delim("data/LINKMAP/FamA.onemap",
+                          header = FALSE, sep = "\t",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamA.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamA_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamA.onemap.filtered <- semi_join(FamA.onemap, mapped_markers)
+
+# remove flagged markers
+FamA.onemap.filtered <- FamA.onemap.filtered %>%
+    filter(!LOCUS %in% c("*dDocent_Contig_39676",
+                         "*dDocent_Contig_34189",
+                         "*dDocent_Contig_53933",
+                         "*dDocent_Contig_20895",
+                         "*dDocent_Contig_25692",
+                         "*dDocent_Contig_9482",
+                         "*dDocent_Contig_169742",
+                         "*dDocent_Contig_42799",
+                         "*dDocent_Contig_83367",
+                         "*dDocent_Contig_38486",
+                         "*dDocent_Contig_29327",
+                         "*dDocent_Contig_84389",
+                         "*dDocent_Contig_24719",
+                         "*dDocent_Contig_91792",
+                         "*dDocent_Contig_121713",
+                         "*dDocent_Contig_12068",
+                         "*dDocent_Contig_59623",
+                         "*dDocent_Contig_41944",
+                         "*dDocent_Contig_26467",
+                         "*dDocent_Contig_30805",
+                         "*dDocent_Contig_248473",
+                         "*dDocent_Contig_244117",
+                         "*dDocent_Contig_11546",
+                         "*dDocent_Contig_35991",
+                         "*dDocent_Contig_35624",
+                         "*dDocent_Contig_200224",
+                         "*dDocent_Contig_7091",
+                         "*dDocent_Contig_2358",
+                         "*dDocent_Contig_23388",
+                         "*dDocent_Contig_186256",
+                         "*dDocent_Contig_3817",
+                         "*dDocent_Contig_97890",
+                         "*dDocent_Contig_298306",
+                         "*dDocent_Contig_67843",
+                         "*dDocent_Contig_29969",
+                         "*dDocent_Contig_15670",
+                         "*dDocent_Contig_30792",
+                         "*dDocent_Contig_75671",
+                         "*dDocent_Contig_172925",
+                         "*dDocent_Contig_144097",
+                         "*dDocent_Contig_64257",
+                         "*dDocent_Contig_12459",
+                         "*dDocent_Contig_44930",
+                         "*dDocent_Contig_990",
+                         "*dDocent_Contig_50993",
+                         "*dDocent_Contig_8255",
+                         "*dDocent_Contig_20685",
+                         "*dDocent_Contig_57614",
+                         "*dDocent_Contig_3486",
+                         "*dDocent_Contig_69118",
+                         "*dDocent_Contig_51033",
+                         "*dDocent_Contig_34901",
+                         "*dDocent_Contig_1452",
+                         "*dDocent_Contig_2847",
+                         "*dDocent_Contig_6716",
+                         "*dDocent_Contig_60349",
+                         "*dDocent_Contig_77680",
+                         "*dDocent_Contig_12222",
+                         "*dDocent_Contig_62798",
+                         "*dDocent_Contig_87392",
+                         "*dDocent_Contig_39281",
+                         "*dDocent_Contig_13012",
+                         "*dDocent_Contig_44363",
+                         "*dDocent_Contig_52542",
+                         "*dDocent_Contig_123370",
+                         "*dDocent_Contig_63085",
+                         "*dDocent_Contig_138814",
+                         "*dDocent_Contig_261231",
+                         "*dDocent_Contig_47638",
+                         "*dDocent_Contig_9761",
+                         "*dDocent_Contig_4017",
+                         "*dDocent_Contig_233860",
+                         "*dDocent_Contig_24796",
+                         "*dDocent_Contig_30828",
+                         "*dDocent_Contig_52309",
+                         "*dDocent_Contig_78689",
+                         "*dDocent_Contig_62261",
+                         "*dDocent_Contig_97106",
+                         "*dDocent_Contig_1694",
+                         "*dDocent_Contig_184316",
+                         "*dDocent_Contig_483",
+                         "*dDocent_Contig_596",
+                         "*dDocent_Contig_13530",
+                         "*dDocent_Contig_14522",
+                         "*dDocent_Contig_50994",
+                         "*dDocent_Contig_315477",
+                         "*dDocent_Contig_730",
+                         "*dDocent_Contig_107875",
+                         "*dDocent_Contig_41408",
+                         '*dDocent_Contig_213918',
+                         "*dDocent_Contig_130476",
+                         "*dDocent_Contig_129129",
+                         "*dDocent_Contig_69979",
+                         "*dDocent_Contig_224858",
+                         "*dDocent_Contig_14784",
+                         "*dDocent_Contig_17546",
+                         "*dDocent_Contig_169675",
+                         "*dDocent_Contig_26617",
+                         "*dDocent_Contig_180953",
+                         "*dDocent_Contig_16379",
+                         "*dDocent_Contig_333713",
+                         "*dDocent_Contig_52478",
+                         "*dDocent_Contig_294562",
+                         "*dDocent_Contig_17020",
+                         "*dDocent_Contig_29858",
+                         "*dDocent_Contig_6740",
+                         "*dDocent_Contig_59297",
+                         "*dDocent_Contig_3323",
+                         "*dDocent_Contig_104837",
+                         "*dDocent_Contig_305075",
+                         "*dDocent_Contig_52003",
+                         "*dDocent_Contig_29931",
+                         "*dDocent_Contig_10018",
+                         "*dDocent_Contig_65233",
+                         "*dDocent_Contig_2867",
+                         "*dDocent_Contig_42394",
+                         "*dDocent_Contig_360",
+                         "*dDocent_Contig_25067",
+                         "*dDocent_Contig_200617",
+                         "*dDocent_Contig_46589",
+                         "*dDocent_Contig_117120",
+                         "*dDocent_Contig_27435",
+                         "*dDocent_Contig_19718",
+                         "*dDocent_Contig_9989",
+                         "*dDocent_Contig_35456",
+                         "*dDocent_Contig_4468"))
+
+# remove duplicate markers
+temp <- FamA.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locA <- anti_join(FamA.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamAfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(temp))), con)
+write.table(temp, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamA.Map <- read.outcross(file="data/LINKMAP/FamAfilter.onemap")
+
+# Summary of datafile
+FamA.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamA.Map.rf.L6.rf35 <- rf.2pts(FamA.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamA.Map.rf.L6.rf35, "all")
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+
+# group all final ordered LGs
+FamA.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamA.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamA.map, "data/LINKMAP/FamA.fullmap")
+
+FamA.fullmap <- read.table("data/LINKMAP/FamA.fullmap",
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# add mapping positions
+temp <- left_join(match_locA, FamA.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamA.fullmap <- bind_rows(FamA.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamA.fullmap, "results/FamA-3.fullmap", row.names = FALSE)
+
+```
+
+## Family B:
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamB.onemap <- read.delim("data/LINKMAP/FamB.onemap",
+                          header = FALSE, sep = "\t",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamB_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamB.onemap.filtered <- semi_join(FamB.onemap, mapped_markers)
+
+# remove flagged markers
+FamB.onemap.filtered <- FamB.onemap.filtered %>%
+    filter(!LOCUS %in% c("*dDocent_Contig_30805",
+                         "*dDocent_Contig_248473",
+                         "*dDocent_Contig_244117",
+                         "*dDocent_Contig_11546",
+                         "*dDocent_Contig_35991",
+                         "*dDocent_Contig_35624",
+                         "*dDocent_Contig_200224",
+                         "*dDocent_Contig_7091",
+                         "*dDocent_Contig_2358",
+                         "*dDocent_Contig_23388",
+                         "*dDocent_Contig_186256",
+                         "*dDocent_Contig_3817",
+                         "*dDocent_Contig_97890",
+                         "*dDocent_Contig_298306",
+                         "*dDocent_Contig_67843",
+                         "*dDocent_Contig_29969",
+                         "*dDocent_Contig_15670",
+                         "*dDocent_Contig_30792",
+                         "*dDocent_Contig_75671",
+                         "*dDocent_Contig_172925",
+                         "*dDocent_Contig_144097",
+                         "*dDocent_Contig_64257",
+                         "*dDocent_Contig_12459",
+                         "*dDocent_Contig_44930",
+                         "*dDocent_Contig_990",
+                         "*dDocent_Contig_50993",
+                         "*dDocent_Contig_8255",
+                         "*dDocent_Contig_20685",
+                         "*dDocent_Contig_57614",
+                         "*dDocent_Contig_3486",
+                         "*dDocent_Contig_69118",
+                         "*dDocent_Contig_51033",
+                         "*dDocent_Contig_34901",
+                         "*dDocent_Contig_1452",
+                         "*dDocent_Contig_2847",
+                         "*dDocent_Contig_6716",
+                         "*dDocent_Contig_60349",
+                         "*dDocent_Contig_77680",
+                         "*dDocent_Contig_12222",
+                         "*dDocent_Contig_62798",
+                         "*dDocent_Contig_87392",
+                         "*dDocent_Contig_39281",
+                         "*dDocent_Contig_13012",
+                         "*dDocent_Contig_44363",
+                         "*dDocent_Contig_52542",
+                         "*dDocent_Contig_123370",
+                         "*dDocent_Contig_63085",
+                         "*dDocent_Contig_138814",
+                         "*dDocent_Contig_261231",
+                         "*dDocent_Contig_47638",
+                         "*dDocent_Contig_9761",
+                         "*dDocent_Contig_4017",
+                         "*dDocent_Contig_233860",
+                         "*dDocent_Contig_24796",
+                         "*dDocent_Contig_30828",
+                         "*dDocent_Contig_52309",
+                         "*dDocent_Contig_78689",
+                         "*dDocent_Contig_62261",
+                         "*dDocent_Contig_97106",
+                         "*dDocent_Contig_1694",
+                         "*dDocent_Contig_184316",
+                         "*dDocent_Contig_483",
+                         "*dDocent_Contig_596",
+                         "*dDocent_Contig_13530",
+                         "*dDocent_Contig_14522",
+                         "*dDocent_Contig_50994",
+                         "*dDocent_Contig_315477",
+                         "*dDocent_Contig_730",
+                         "*dDocent_Contig_107875",
+                         "*dDocent_Contig_41408",
+                         "*dDocent_Contig_213918",
+                         "*dDocent_Contig_130476",
+                         "*dDocent_Contig_129129",
+                         "*dDocent_Contig_69979",
+                         "*dDocent_Contig_224858",
+                         "*dDocent_Contig_14784",
+                         "*dDocent_Contig_17546",
+                         "*dDocent_Contig_169675",
+                         "*dDocent_Contig_26617",
+                         "*dDocent_Contig_180953",
+                         "*dDocent_Contig_16379",
+                         "*dDocent_Contig_333713",
+                         "*dDocent_Contig_52478",
+                         "*dDocent_Contig_294562",
+                         "*dDocent_Contig_17020",
+                         "*dDocent_Contig_29858",
+                         "*dDocent_Contig_6740",
+                         "*dDocent_Contig_59297",
+                         "*dDocent_Contig_3323",
+                         "*dDocent_Contig_104837",
+                         "*dDocent_Contig_305075",
+                         "*dDocent_Contig_52003",
+                         "*dDocent_Contig_29931",
+                         "*dDocent_Contig_10018",
+                         "*dDocent_Contig_65233",
+                         "*dDocent_Contig_2867",
+                         "*dDocent_Contig_42394",
+                         "*dDocent_Contig_360",
+                         "*dDocent_Contig_25067",
+                         "*dDocent_Contig_39676",
+                         "*dDocent_Contig_307589",
+                         "*dDocent_Contig_23860",
+                         "*dDocent_Contig_83810",
+                         "*dDocent_Contig_11000",
+                         "*dDocent_Contig_110843",
+                         "*dDocent_Contig_32599",
+                         "*dDocent_Contig_317880",
+                         "*dDocent_Contig_325604",
+                         "*dDocent_Contig_257",
+                         "*dDocent_Contig_99894",
+                         "*dDocent_Contig_10702",
+                         "*dDocent_Contig_388381",
+                         "*dDocent_Contig_236369",
+                         "*dDocent_Contig_301685",
+                         "*dDocent_Contig_30077",
+                         "*dDocent_Contig_40834",
+                         "*dDocent_Contig_4522",
+                         "*dDocent_Contig_13137",
+                         "*dDocent_Contig_182486",
+                         "*dDocent_Contig_14563",
+                         "*dDocent_Contig_53181",
+                         "*dDocent_Contig_30202",
+                         "*dDocent_Contig_34603",
+                         "*dDocent_Contig_80211",
+                         "*dDocent_Contig_147429",
+                         "*dDocent_Contig_61940",
+                         "*dDocent_Contig_14591",
+                         "*dDocent_Contig_12218",
+                         "*dDocent_Contig_21407",
+                         "*dDocent_Contig_21399",
+                         "*dDocent_Contig_89781",
+                         "*dDocent_Contig_9840",
+                         "*dDocent_Contig_31850",
+                         "*dDocent_Contig_10808",
+                         "*dDocent_Contig_360054",
+                         "*dDocent_Contig_23809",
+                         "*dDocent_Contig_36117",
+                         "*dDocent_Contig_15730",
+                         "*dDocent_Contig_390204",
+                         "*dDocent_Contig_63932",
+                         "*dDocent_Contig_48250",
+                         "*dDocent_Contig_394960",
+                         "*dDocent_Contig_23004",
+                         "*dDocent_Contig_2987",
+                         "*dDocent_Contig_17774",
+                         "*dDocent_Contig_213871",
+                         "*dDocent_Contig_12852",
+                         "*dDocent_Contig_3932",
+                         "*dDocent_Contig_21467",
+                         "*dDocent_Contig_131586",
+                         "*dDocent_Contig_3278",
+                         "*dDocent_Contig_259416",
+                         "*dDocent_Contig_35267",
+                         "*dDocent_Contig_214291",
+                         "*dDocent_Contig_6178",
+                         "*dDocent_Contig_365182",
+                         "*dDocent_Contig_122254",
+                         "*dDocent_Contig_42515",
+                         "*dDocent_Contig_255676",
+                         "*dDocent_Contig_21480",
+                         "*dDocent_Contig_30292"))
+
+# remove duplicate markers
+temp <- FamB.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locB <- anti_join(FamB.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(temp))), con)
+write.table(temp, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
+
+# Summary of datafile
+FamB.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all")
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+
+# group all final ordered LGs
+FamB.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
+
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap",
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# add mapping positions
+temp <- left_join(match_locB, FamB.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamB.fullmap, "results/FamB-3.fullmap", row.names = FALSE)
+
+```
+
+# Compare map III
+
+Compare maps afte re-mapping.
+
+```{r}
+
+# load family map (with duplicate markers added back in)
+FamA <- read.table("results/FamA-3.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamA","POS_FamA"))
+
+FamB <- read.table("results/FamB-3.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamB","POS_FamB"))
+
+temp <- inner_join(FamA, FamB, by = "LOCUS")
+
+write.table(temp, "results/shared.markers-3",
+            quote = FALSE, col.names = TRUE, row.names = FALSE)
+
+```
+
+
+
+## Family B:
+
+```{r}
+
+# change header names to Marker | Markertype | Genotype
+FamB.onemap <- read.delim("data/LINKMAP/FamB.onemap",
+                          header = FALSE, sep = "\t",
+                          col.names = c("LOCUS", "LOCUSTYPE", "GENOTYPE"),
+                          skip = 1, stringsAsFactors = FALSE)
+
+# number of individuals in dataset
+N <- read.delim("data/LINKMAP/FamB.onemap", header = FALSE,
+                          col.names = c("N_IND", "N_LOCI"),
+                          nrows = 1, stringsAsFactors = FALSE)
+
+# load file with mapped markers and filter onemap file
+mapped_markers <- read.table("results/FamB_allmarkers.txt", 
+                             header = TRUE, stringsAsFactors = TRUE) %>%
+    select(LOCUS) %>%
+    transmute(LOCUS = paste(c("*"), LOCUS, sep = ""))
+
+FamB.onemap.filtered <- semi_join(FamB.onemap, mapped_markers)
+
+# remove flagged markers
+FamB.onemap.filtered <- FamB.onemap.filtered %>%
+    filter(!LOCUS %in% c("*dDocent_Contig_30805",
+                         "*dDocent_Contig_248473",
+                         "*dDocent_Contig_244117",
+                         "*dDocent_Contig_11546",
+                         "*dDocent_Contig_35991",
+                         "*dDocent_Contig_35624",
+                         "*dDocent_Contig_200224",
+                         "*dDocent_Contig_7091",
+                         "*dDocent_Contig_2358",
+                         "*dDocent_Contig_23388",
+                         "*dDocent_Contig_186256",
+                         "*dDocent_Contig_3817",
+                         "*dDocent_Contig_97890",
+                         "*dDocent_Contig_298306",
+                         "*dDocent_Contig_67843",
+                         "*dDocent_Contig_29969",
+                         "*dDocent_Contig_15670",
+                         "*dDocent_Contig_30792",
+                         "*dDocent_Contig_75671",
+                         "*dDocent_Contig_172925",
+                         "*dDocent_Contig_144097",
+                         "*dDocent_Contig_64257",
+                         "*dDocent_Contig_12459",
+                         "*dDocent_Contig_44930",
+                         "*dDocent_Contig_990",
+                         "*dDocent_Contig_50993",
+                         "*dDocent_Contig_8255",
+                         "*dDocent_Contig_20685",
+                         "*dDocent_Contig_57614",
+                         "*dDocent_Contig_3486",
+                         "*dDocent_Contig_69118",
+                         "*dDocent_Contig_51033",
+                         "*dDocent_Contig_34901",
+                         "*dDocent_Contig_1452",
+                         "*dDocent_Contig_2847",
+                         "*dDocent_Contig_6716",
+                         "*dDocent_Contig_60349",
+                         "*dDocent_Contig_77680",
+                         "*dDocent_Contig_12222",
+                         "*dDocent_Contig_62798",
+                         "*dDocent_Contig_87392",
+                         "*dDocent_Contig_39281",
+                         "*dDocent_Contig_13012",
+                         "*dDocent_Contig_44363",
+                         "*dDocent_Contig_52542",
+                         "*dDocent_Contig_123370",
+                         "*dDocent_Contig_63085",
+                         "*dDocent_Contig_138814",
+                         "*dDocent_Contig_261231",
+                         "*dDocent_Contig_47638",
+                         "*dDocent_Contig_9761",
+                         "*dDocent_Contig_4017",
+                         "*dDocent_Contig_233860",
+                         "*dDocent_Contig_24796",
+                         "*dDocent_Contig_30828",
+                         "*dDocent_Contig_52309",
+                         "*dDocent_Contig_78689",
+                         "*dDocent_Contig_62261",
+                         "*dDocent_Contig_97106",
+                         "*dDocent_Contig_1694",
+                         "*dDocent_Contig_184316",
+                         "*dDocent_Contig_483",
+                         "*dDocent_Contig_596",
+                         "*dDocent_Contig_13530",
+                         "*dDocent_Contig_14522",
+                         "*dDocent_Contig_50994",
+                         "*dDocent_Contig_315477",
+                         "*dDocent_Contig_730",
+                         "*dDocent_Contig_107875",
+                         "*dDocent_Contig_41408",
+                         "*dDocent_Contig_213918",
+                         "*dDocent_Contig_130476",
+                         "*dDocent_Contig_129129",
+                         "*dDocent_Contig_69979",
+                         "*dDocent_Contig_224858",
+                         "*dDocent_Contig_14784",
+                         "*dDocent_Contig_17546",
+                         "*dDocent_Contig_169675",
+                         "*dDocent_Contig_26617",
+                         "*dDocent_Contig_180953",
+                         "*dDocent_Contig_16379",
+                         "*dDocent_Contig_333713",
+                         "*dDocent_Contig_52478",
+                         "*dDocent_Contig_294562",
+                         "*dDocent_Contig_17020",
+                         "*dDocent_Contig_29858",
+                         "*dDocent_Contig_6740",
+                         "*dDocent_Contig_59297",
+                         "*dDocent_Contig_3323",
+                         "*dDocent_Contig_104837",
+                         "*dDocent_Contig_305075",
+                         "*dDocent_Contig_52003",
+                         "*dDocent_Contig_29931",
+                         "*dDocent_Contig_10018",
+                         "*dDocent_Contig_65233",
+                         "*dDocent_Contig_2867",
+                         "*dDocent_Contig_42394",
+                         "*dDocent_Contig_360",
+                         "*dDocent_Contig_25067",
+                         "*dDocent_Contig_39676",
+                         "*dDocent_Contig_307589",
+                         "*dDocent_Contig_23860",
+                         "*dDocent_Contig_83810",
+                         "*dDocent_Contig_11000",
+                         "*dDocent_Contig_110843",
+                         "*dDocent_Contig_32599",
+                         "*dDocent_Contig_317880",
+                         "*dDocent_Contig_325604",
+                         "*dDocent_Contig_257",
+                         "*dDocent_Contig_99894",
+                         "*dDocent_Contig_10702",
+                         "*dDocent_Contig_388381",
+                         "*dDocent_Contig_236369",
+                         "*dDocent_Contig_301685",
+                         "*dDocent_Contig_30077",
+                         "*dDocent_Contig_40834",
+                         "*dDocent_Contig_4522",
+                         "*dDocent_Contig_13137",
+                         "*dDocent_Contig_182486",
+                         "*dDocent_Contig_14563",
+                         "*dDocent_Contig_53181",
+                         "*dDocent_Contig_30202",
+                         "*dDocent_Contig_34603",
+                         "*dDocent_Contig_80211",
+                         "*dDocent_Contig_147429",
+                         "*dDocent_Contig_61940",
+                         "*dDocent_Contig_14591",
+                         "*dDocent_Contig_12218",
+                         "*dDocent_Contig_21407",
+                         "*dDocent_Contig_21399",
+                         "*dDocent_Contig_89781",
+                         "*dDocent_Contig_9840",
+                         "*dDocent_Contig_31850",
+                         "*dDocent_Contig_10808",
+                         "*dDocent_Contig_360054",
+                         "*dDocent_Contig_23809",
+                         "*dDocent_Contig_36117",
+                         "*dDocent_Contig_15730",
+                         "*dDocent_Contig_390204",
+                         "*dDocent_Contig_63932",
+                         "*dDocent_Contig_48250",
+                         "*dDocent_Contig_394960",
+                         "*dDocent_Contig_23004",
+                         "*dDocent_Contig_2987",
+                         "*dDocent_Contig_17774",
+                         "*dDocent_Contig_213871",
+                         "*dDocent_Contig_12852",
+                         "*dDocent_Contig_3932",
+                         "*dDocent_Contig_21467",
+                         "*dDocent_Contig_131586",
+                         "*dDocent_Contig_3278",
+                         "*dDocent_Contig_259416",
+                         "*dDocent_Contig_35267",
+                         "*dDocent_Contig_214291",
+                         "*dDocent_Contig_6178",
+                         "*dDocent_Contig_365182",
+                         "*dDocent_Contig_122254",
+                         "*dDocent_Contig_42515",
+                         "*dDocent_Contig_255676",
+                         "*dDocent_Contig_21480",
+                         "*dDocent_Contig_30292",
+                         "*dDocent_Contig_77513",
+                         "*dDocent_Contig_39037",
+                         "*dDocent_Contig_26999",
+                         "*dDocent_Contig_131658",
+                         "*dDocent_Contig_178968",
+                         "*dDocent_Contig_132810",
+                         "*dDocent_Contig_14159",
+                         "*dDocent_Contig_70156",
+                         "*dDocent_Contig_98489",
+                         "*dDocent_Contig_31046",
+                         "*dDocent_Contig_15848",
+                         "*dDocent_Contig_164687",
+                         "*dDocent_Contig_2755",
+                         "*dDocent_Contig_14160",
+                         "*dDocent_Contig_63373",
+                         "*dDocent_Contig_123246",
+                         "*dDocent_Contig_3903"))
+
+# remove duplicate markers
+temp <- FamB.onemap.filtered %>%
+    distinct(GENOTYPE, .keep_all = TRUE)
+    
+# create dataframe of removed loci and corresponding loci
+match_locB <- anti_join(FamB.onemap.filtered, temp) %>%
+  rename(MATCHLOC = LOCUS) %>%
+  select(MATCHLOC, GENOTYPE) %>%
+  left_join(temp, by = "GENOTYPE") %>%
+  select(LOCUS, MATCHLOC)
+
+# write filtered input file for Onemap
+# need to add extra line back in
+con <- file("data/LINKMAP/FamBfilter.onemap", open = "wt")
+writeLines(paste(N$N_IND, (nrow(temp))), con)
+write.table(temp, con,
+            append = FALSE, quote = FALSE, sep = " ",
+            na = "NA", dec = ".",
+            col.names = FALSE, row.names = FALSE)
+close(con)
+
+# import datafile
+FamB.Map <- read.outcross(file="data/LINKMAP/FamBfilter.onemap")
+
+# Summary of datafile
+FamB.Map
+
+# estimate recombination fraction between all pairs of markers
+# creates object of class rf.2pts
+FamB.Map.rf.L6.rf35 <- rf.2pts(FamB.Map, LOD = 6, max.rf = 0.35, verbose=TRUE)
+
+# create sequence (list) of all markers to assign to LGs
+all.markers <- make.seq(FamB.Map.rf.L6.rf35, "all")
+
+# assign markers to linkage groups
+LGs <- group(all.markers, LOD = 6, max.rf = 0.35)
+
+# define map function
+set.map.fun(typ = "haldane")
+
+# create list of separate LGs
+# (convert from class group to class sequence)
+LG_list <- lapply(c(1:24), function(LG) {
+  make.seq(LGs, LG)
+})
+
+# uses compare() to create a framework of most informative markers
+# map remaining markers using try.seq()
+# this step will take a few hours
+LG_ordered <- lapply((LG_list), function(LG){
+  order.seq(LG, n.init=6, THRES=3, touchdown=TRUE, tol=10e-2)
+})
+
+# create marker order with all markers
+LG_final <- lapply((LG_ordered), function(LG){
+  make.seq(LG, "force")
+})
+
+# group all final ordered LGs
+FamB.map <- LG_final
+
+# draw map for all LGs
+draw.map(FamB.map, names=FALSE, grid=TRUE, cex.mrk=0.7)
+
+# export map to file
+write.map(FamB.map, "data/LINKMAP/FamB.fullmap")
+
+FamB.fullmap <- read.table("data/LINKMAP/FamB.fullmap",
+                           skip = 1, header = FALSE) %>%
+  mutate(LOCUS = paste(c("*"), V2, sep = "")) %>%
+  rename(LG = V1, POSITION = V3) %>%
+  select(LOCUS, LG, POSITION)
+
+# add mapping positions
+temp <- left_join(match_locB, FamB.fullmap, by = "LOCUS") %>%
+  select(MATCHLOC, LG, POSITION) %>%
+  rename(LOCUS = MATCHLOC)
+
+# add markers to final map
+FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
+  group_by(LG) %>%
+  arrange(POSITION) %>%
+  ungroup()
+
+# write output to file
+write.table(FamB.fullmap, "results/FamB-4.fullmap", row.names = FALSE)
+
+```
+
+
+```{r}
+
+# load family map (with duplicate markers added back in)
+FamA <- read.table("results/FamA-3.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamA","POS_FamA"))
+
+FamB <- read.table("results/FamB-4.fullmap",
+                   stringsAsFactors = FALSE, sep = "", skip = 1,
+                   col.names = c("LOCUS", "LG_FamB","POS_FamB"))
+
+temp <- inner_join(FamA, FamB, by = "LOCUS")
+
+write.table(temp, "results/shared.markers-4",
+            quote = FALSE, col.names = TRUE, row.names = FALSE)
 
 ```
 
@@ -443,7 +1890,7 @@ all_markers <- unique(temp$LOCUS)
 
 ```
 
-Each map consists of 24 linkage groups and a total of `r nrow(FamA_1)` and `r nrow(FamB_1)` markers for Family A and B, respectively with `r length(temp$LOCUS)-length(all_markers)` markers overlapping between the two family maps.
+Each map consists of 24 linkage groups and a total of `r nrow(FamA)` and `r nrow(FamB)` markers for Family A and B, respectively with `r length(temp$LOCUS)-length(all_markers)` markers overlapping between the two family maps.
 
 Use LPmerge to create consensus linkage map by merging linkage maps from Family A and B. LPmerge uses linear programming to minimize the mean absolute error between the consensus and family linkage maps; preserve ordering of the markers in the linkage map using linear inequality constraints. When marker order is inconsisten between maps being merged a minimum set of ordinal constraints is delected to resolve the conflicts.
 
@@ -451,11 +1898,11 @@ Use LPmerge to create consensus linkage map by merging linkage maps from Family 
 
 ```{r}
 
-LG1_A <- FamA_1 %>%
+LG1_A <- FamA %>%
     filter(LG == 1) %>%
     select(LOCUS, POSITION)
 
-LG1_B <- FamB_1 %>%
+LG1_B <- FamB %>%
     filter(LG == 1) %>%
     select(LOCUS, POSITION)
 
@@ -465,7 +1912,7 @@ Maps <- list(LG1_A, LG1_B)
 sink("results/LG1.merge")
 
 # merge
-LG1 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG1 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -480,12 +1927,12 @@ Look at stats:
 
 ```{r}
 
-LG2_A <- FamA_1 %>%
+LG2_A <- FamA %>%
     filter(LG == 2) %>%
     select(LOCUS, POSITION)
 
-LG2_B <- FamB_1 %>%
-    filter(LG == 5) %>%
+LG2_B <- FamB %>%
+    filter(LG == 17) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG2_A, LG2_B)
@@ -494,7 +1941,7 @@ Maps <- list(LG2_A, LG2_B)
 sink("results/LG2.merge")
 
 # merge
-LG2 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG2 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -505,12 +1952,12 @@ sink()
 
 ```{r}
 
-LG3_A <- FamA_1 %>%
+LG3_A <- FamA %>%
     filter(LG == 3) %>%
     select(LOCUS, POSITION)
 
-LG3_B <- FamB_1 %>%
-    filter(LG == 2) %>%
+LG3_B <- FamB %>%
+    filter(LG == 8) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG3_A, LG3_B)
@@ -519,7 +1966,7 @@ Maps <- list(LG3_A, LG3_B)
 sink("results/LG3.merge")
 
 # merge
-LG3 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG3 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -530,12 +1977,12 @@ sink()
 
 ```{r}
 
-LG4_A <- FamA_1 %>%
+LG4_A <- FamA %>%
     filter(LG == 4) %>%
     select(LOCUS, POSITION)
 
-LG4_B <- FamB_1 %>%
-    filter(LG == 13) %>%
+LG4_B <- FamB %>%
+    filter(LG == 2) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG4_A, LG4_B)
@@ -544,7 +1991,7 @@ Maps <- list(LG4_A, LG4_B)
 sink("results/LG4.merge")
 
 # merge
-LG4 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG4 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -555,12 +2002,12 @@ sink()
 
 ```{r}
 
-LG5_A <- FamA_1 %>%
+LG5_A <- FamA %>%
     filter(LG == 5) %>%
     select(LOCUS, POSITION)
 
-LG5_B <- FamB_1 %>%
-    filter(LG == 8) %>%
+LG5_B <- FamB %>%
+    filter(LG == 4) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG5_A, LG5_B)
@@ -569,7 +2016,7 @@ Maps <- list(LG5_A, LG5_B)
 sink("results/LG5.merge")
 
 # merge
-LG5 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG5 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -580,12 +2027,12 @@ sink()
 
 ```{r}
 
-LG6_A <- FamA_1 %>%
+LG6_A <- FamA %>%
     filter(LG == 6) %>%
     select(LOCUS, POSITION)
 
-LG6_B <- FamB_1 %>%
-    filter(LG == 11) %>%
+LG6_B <- FamB %>%
+    filter(LG == 3) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG6_A, LG6_B)
@@ -594,7 +2041,7 @@ Maps <- list(LG6_A, LG6_B)
 sink("results/LG6.merge")
 
 # merge
-LG6 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG6 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -605,12 +2052,12 @@ sink()
 
 ```{r}
 
-LG7_A <- FamA_1 %>%
+LG7_A <- FamA %>%
     filter(LG == 7) %>%
     select(LOCUS, POSITION)
 
-LG7_B <- FamB_1 %>%
-    filter(LG == 3) %>%
+LG7_B <- FamB %>%
+    filter(LG == 11) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG7_A, LG7_B)
@@ -619,7 +2066,7 @@ Maps <- list(LG7_A, LG7_B)
 sink("results/LG7.merge")
 
 # merge
-LG7 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG7 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -630,12 +2077,12 @@ sink()
 
 ```{r}
 
-LG8_A <- FamA_1 %>%
+LG8_A <- FamA %>%
     filter(LG == 8) %>%
     select(LOCUS, POSITION)
 
-LG8_B <- FamB_1 %>%
-    filter(LG == 24) %>%
+LG8_B <- FamB %>%
+    filter(LG == 13) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG8_A, LG8_B)
@@ -644,7 +2091,7 @@ Maps <- list(LG8_A, LG8_B)
 sink("results/LG8.merge")
 
 # merge
-LG8 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG8 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -655,12 +2102,12 @@ sink()
 
 ```{r}
 
-LG9_A <- FamA_1 %>%
+LG9_A <- FamA %>%
     filter(LG == 9) %>%
     select(LOCUS, POSITION)
 
-LG9_B <- FamB_1 %>%
-    filter(LG == 17) %>%
+LG9_B <- FamB %>%
+    filter(LG == 6) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG9_A, LG9_B)
@@ -669,7 +2116,7 @@ Maps <- list(LG9_A, LG9_B)
 sink("results/LG9.merge")
 
 # merge
-LG9 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG9 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -680,12 +2127,12 @@ sink()
 
 ```{r}
 
-LG10_A <- FamA_1 %>%
+LG10_A <- FamA %>%
     filter(LG == 10) %>%
     select(LOCUS, POSITION)
 
-LG10_B <- FamB_1 %>%
-    filter(LG == 6) %>%
+LG10_B <- FamB %>%
+    filter(LG == 23) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG10_A, LG10_B)
@@ -694,7 +2141,7 @@ Maps <- list(LG10_A, LG10_B)
 sink("results/LG10.merge")
 
 # merge
-LG10 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG10 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -705,12 +2152,12 @@ sink()
 
 ```{r}
 
-LG11_A <- FamA_1 %>%
+LG11_A <- FamA %>%
     filter(LG == 11) %>%
     select(LOCUS, POSITION)
 
-LG11_B <- FamB_1 %>%
-    filter(LG == 18) %>%
+LG11_B <- FamB %>%
+    filter(LG == 16) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG11_A, LG11_B)
@@ -719,7 +2166,7 @@ Maps <- list(LG11_A, LG11_B)
 sink("results/LG11.merge")
 
 # merge
-LG11 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG11 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -730,12 +2177,12 @@ sink()
 
 ```{r}
 
-LG12_A <- FamA_1 %>%
+LG12_A <- FamA %>%
     filter(LG == 12) %>%
     select(LOCUS, POSITION)
 
-LG12_B <- FamB_1 %>%
-    filter(LG == 10) %>%
+LG12_B <- FamB %>%
+    filter(LG == 5) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG12_A, LG12_B)
@@ -744,7 +2191,7 @@ Maps <- list(LG12_A, LG12_B)
 sink("results/LG12.merge")
 
 # merge
-LG12 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG12 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -755,12 +2202,12 @@ sink()
 
 ```{r}
 
-LG13_A <- FamA_1 %>%
+LG13_A <- FamA %>%
     filter(LG == 13) %>%
     select(LOCUS, POSITION)
 
-LG13_B <- FamB_1 %>%
-    filter(LG == 7) %>%
+LG13_B <- FamB %>%
+    filter(LG == 12) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG13_A, LG13_B)
@@ -769,7 +2216,7 @@ Maps <- list(LG13_A, LG13_B)
 sink("results/LG13.merge")
 
 # merge
-LG13 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG13 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -780,12 +2227,12 @@ sink()
 
 ```{r}
 
-LG14_A <- FamA_1 %>%
+LG14_A <- FamA %>%
     filter(LG == 14) %>%
     select(LOCUS, POSITION)
 
-LG14_B <- FamB_1 %>%
-    filter(LG == 4) %>%
+LG14_B <- FamB %>%
+    filter(LG == 24) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG14_A, LG14_B)
@@ -794,7 +2241,7 @@ Maps <- list(LG14_A, LG14_B)
 sink("results/LG14.merge")
 
 # merge
-LG14 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG14 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -805,12 +2252,12 @@ sink()
 
 ```{r}
 
-LG15_A <- FamA_1 %>%
+LG15_A <- FamA %>%
     filter(LG == 15) %>%
     select(LOCUS, POSITION)
 
-LG15_B <- FamB_1 %>%
-    filter(LG == 12) %>%
+LG15_B <- FamB %>%
+    filter(LG == 18) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG15_A, LG15_B)
@@ -819,7 +2266,7 @@ Maps <- list(LG15_A, LG15_B)
 sink("results/LG15.merge")
 
 # merge
-LG15 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG15 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -830,12 +2277,12 @@ sink()
 
 ```{r}
 
-LG16_A <- FamA_1 %>%
+LG16_A <- FamA %>%
     filter(LG == 16) %>%
     select(LOCUS, POSITION)
 
-LG16_B <- FamB_1 %>%
-    filter(LG == 9) %>%
+LG16_B <- FamB %>%
+    filter(LG == 15) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG16_A, LG16_B)
@@ -844,7 +2291,7 @@ Maps <- list(LG16_A, LG16_B)
 sink("results/LG16.merge")
 
 # merge
-LG16 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG16 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -855,12 +2302,12 @@ sink()
 
 ```{r}
 
-LG17_A <- FamA_1 %>%
+LG17_A <- FamA %>%
     filter(LG == 17) %>%
     select(LOCUS, POSITION)
 
-LG17_B <- FamB_1 %>%
-    filter(LG == 15) %>%
+LG17_B <- FamB %>%
+    filter(LG == 20) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG17_A, LG17_B)
@@ -869,7 +2316,7 @@ Maps <- list(LG17_A, LG17_B)
 sink("results/LG17.merge")
 
 # merge
-LG17 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG17 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -880,12 +2327,12 @@ sink()
 
 ```{r}
 
-LG18_A <- FamA_1 %>%
+LG18_A <- FamA %>%
     filter(LG == 18) %>%
     select(LOCUS, POSITION)
 
-LG18_B <- FamB_1 %>%
-    filter(LG == 14) %>%
+LG18_B <- FamB %>%
+    filter(LG == 19) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG18_A, LG18_B)
@@ -894,7 +2341,7 @@ Maps <- list(LG18_A, LG18_B)
 sink("results/LG18.merge")
 
 # merge
-LG18 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG18 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -905,12 +2352,12 @@ sink()
 
 ```{r}
 
-LG19_A <- FamA_1 %>%
+LG19_A <- FamA %>%
     filter(LG == 19) %>%
     select(LOCUS, POSITION)
 
-LG19_B <- FamB_1 %>%
-    filter(LG == 16) %>%
+LG19_B <- FamB %>%
+    filter(LG == 14) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG19_A, LG19_B)
@@ -919,7 +2366,7 @@ Maps <- list(LG19_A, LG19_B)
 sink("results/LG19.merge")
 
 # merge
-LG19 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG19 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -930,12 +2377,12 @@ sink()
 
 ```{r}
 
-LG20_A <- FamA_1 %>%
+LG20_A <- FamA %>%
     filter(LG == 20) %>%
     select(LOCUS, POSITION)
 
-LG20_B <- FamB_1 %>%
-    filter(LG == 19) %>%
+LG20_B <- FamB %>%
+    filter(LG == 7) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG20_A, LG20_B)
@@ -944,7 +2391,7 @@ Maps <- list(LG20_A, LG20_B)
 sink("results/LG20.merge")
 
 # merge
-LG20 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG20 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -955,11 +2402,11 @@ sink()
 
 ```{r}
 
-LG21_A <- FamA_1 %>%
+LG21_A <- FamA %>%
     filter(LG == 21) %>%
     select(LOCUS, POSITION)
 
-LG21_B <- FamB_1 %>%
+LG21_B <- FamB %>%
     filter(LG == 21) %>%
     select(LOCUS, POSITION)
 
@@ -969,7 +2416,7 @@ Maps <- list(LG21_A, LG21_B)
 sink("results/LG21.merge")
 
 # merge
-LG21 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG21 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -980,12 +2427,12 @@ sink()
 
 ```{r}
 
-LG22_A <- FamA_1 %>%
+LG22_A <- FamA %>%
     filter(LG == 22) %>%
     select(LOCUS, POSITION)
 
-LG22_B <- FamB_1 %>%
-    filter(LG == 23) %>%
+LG22_B <- FamB %>%
+    filter(LG == 10) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG22_A, LG22_B)
@@ -994,7 +2441,7 @@ Maps <- list(LG22_A, LG22_B)
 sink("results/LG22.merge")
 
 # merge
-LG22 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG22 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -1005,12 +2452,12 @@ sink()
 
 ```{r}
 
-LG23_A <- FamA_1 %>%
+LG23_A <- FamA %>%
     filter(LG == 23) %>%
     select(LOCUS, POSITION)
 
-LG23_B <- FamB_1 %>%
-    filter(LG == 20) %>%
+LG23_B <- FamB %>%
+    filter(LG == 22) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG23_A, LG23_B)
@@ -1019,7 +2466,7 @@ Maps <- list(LG23_A, LG23_B)
 sink("results/LG23.merge")
 
 # merge
-LG23 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG23 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
@@ -1030,12 +2477,12 @@ sink()
 
 ```{r}
 
-LG24_A <- FamA_1 %>%
+LG24_A <- FamA %>%
     filter(LG == 24) %>%
     select(LOCUS, POSITION)
 
-LG24_B <- FamB_1 %>%
-    filter(LG == 22) %>%
+LG24_B <- FamB %>%
+    filter(LG == 9) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG24_A, LG24_B)
@@ -1044,7 +2491,7 @@ Maps <- list(LG24_A, LG24_B)
 sink("results/LG24.merge")
 
 # merge
-LG24 <- LPmerge(Maps, max.interval = 1:50, weights = NULL)
+LG24 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()

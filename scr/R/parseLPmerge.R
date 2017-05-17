@@ -7,7 +7,7 @@ library(ggplot2)
 
 
 # load file
-merge_stats <- readLines("results/LG10.merge")
+merge_stats <- readLines("results/LG12.merge")
 
 # markers with constraints
 map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
@@ -31,7 +31,7 @@ rmse_mean <- map_rmse %>%
     separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
     mutate(RMSE = parse_number(RMSE)) %>%
     select(CAT, RMSE) %>%
-    mutate(K = c(1:100))
+    mutate(K = c(1:50))
 
 ggplot(rmse_mean, aes(x = K, y = RMSE)) +
     geom_point() +
@@ -45,7 +45,7 @@ rmse_sd <- map_rmse %>%
     mutate(RMSE = parse_number(RMSE)) %>%
     mutate(CAT = str_trim(CAT)) %>%
     select(CAT, RMSE) %>%
-    mutate(K = c(1:100))
+    mutate(K = c(1:50))
 
 ggplot(rmse_sd, aes(x = K, y = RMSE)) +
     geom_point() +
@@ -73,7 +73,7 @@ rmse_map <- map_rmse %>%
 
 rmse_map1 <- rmse_map %>%
     filter(CAT == 1) %>%
-    mutate(K = c(1:100))
+    mutate(K = c(1:50))
 
 ggplot(rmse_map1, aes(x = K, y = RMSE)) +
     geom_point() +
@@ -81,17 +81,18 @@ ggplot(rmse_map1, aes(x = K, y = RMSE)) +
 
 rmse_map2 <- rmse_map %>%
     filter(CAT == 2) %>%
-    mutate(K = c(1:100))
+    mutate(K = c(1:50))
 
 # create data frame with all rmse values
-LG10_merge <- bind_rows(rmse_mean, rmse_sd)
-LG10_merge <- bind_rows(LG10_merge, rmse_map1)
-LG10_merge <- bind_rows(LG10_merge, rmse_map2)
+LG12_merge <- bind_rows(rmse_mean, rmse_sd)
+LG12_merge <- bind_rows(LG12_merge, rmse_map1)
+LG12_merge <- bind_rows(LG12_merge, rmse_map2)
 
-ggplot(LG10_merge, aes(x = K, y = RMSE)) +
+ggplot(LG12_merge, aes(x = K, y = RMSE)) +
     geom_point() +
     facet_grid(CAT ~ ., scales = "free") +
     theme_facet
 
+View(LG12[[22]])
 
     
