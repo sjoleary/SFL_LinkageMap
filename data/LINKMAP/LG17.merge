@@ -1,0 +1,805 @@
+[1] "# markers: 89"
+[1] "# bins: 74"
+[1] "# constraints: 83"
+[1] "Finding maximum feasible subsystem."
+[1] "Linkage maps had no ordering conflicts."
+[1] "Generating consensus map."
+[1] "Max.Interval = 1"
+[1] "Consensus map length: 58.79"
+   map RMSE
+1    1 2.93
+2    2 0.00
+3 mean 1.46
+4   sd 2.07
+[1] "Generating consensus map."
+[1] "Max.Interval = 2"
+[1] "Consensus map length: 59.45"
+   map RMSE
+1    1 1.72
+2    2 0.89
+3 mean 1.31
+4   sd 0.59
+[1] "Generating consensus map."
+[1] "Max.Interval = 3"
+[1] "Consensus map length: 59.56"
+   map RMSE
+1    1 1.64
+2    2 0.96
+3 mean 1.30
+4   sd 0.48
+[1] "Generating consensus map."
+[1] "Max.Interval = 4"
+[1] "Consensus map length: 60.9"
+   map RMSE
+1    1 1.24
+2    2 2.12
+3 mean 1.68
+4   sd 0.62
+[1] "Generating consensus map."
+[1] "Max.Interval = 5"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 6"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 7"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 8"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 9"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 10"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 11"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 12"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 13"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 14"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 15"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 16"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 17"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 18"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 19"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 20"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 21"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 22"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 23"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 24"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 25"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 26"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 27"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 28"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 29"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 30"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 31"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 32"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 33"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 34"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 35"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 36"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 37"
+[1] "Consensus map length: 60.79"
+   map RMSE
+1    1 1.22
+2    2 2.02
+3 mean 1.62
+4   sd 0.57
+[1] "Generating consensus map."
+[1] "Max.Interval = 38"
+[1] "Consensus map length: 58.79"
+   map RMSE
+1    1 1.64
+2    2 0.61
+3 mean 1.12
+4   sd 0.73
+[1] "Generating consensus map."
+[1] "Max.Interval = 39"
+[1] "Consensus map length: 102.69"
+   map  RMSE
+1    1 42.55
+2    2 39.76
+3 mean 41.16
+4   sd  1.97
+[1] "Generating consensus map."
+[1] "Max.Interval = 40"
+[1] "Consensus map length: 151.92"
+   map  RMSE
+1    1 90.19
+2    2 87.10
+3 mean 88.64
+4   sd  2.19
+[1] "Generating consensus map."
+[1] "Max.Interval = 41"
+[1] "Consensus map length: 103.76"
+   map  RMSE
+1    1 43.23
+2    2 44.37
+3 mean 43.80
+4   sd  0.81
+[1] "Generating consensus map."
+[1] "Max.Interval = 42"
+[1] "Consensus map length: 149.76"
+   map  RMSE
+1    1 89.22
+2    2 90.12
+3 mean 89.67
+4   sd  0.63
+[1] "Generating consensus map."
+[1] "Max.Interval = 43"
+[1] "Consensus map length: 149.76"
+   map  RMSE
+1    1 89.22
+2    2 90.12
+3 mean 89.67
+4   sd  0.63
+[1] "Generating consensus map."
+[1] "Max.Interval = 44"
+[1] "Consensus map length: 149.76"
+   map  RMSE
+1    1 89.22
+2    2 90.12
+3 mean 89.67
+4   sd  0.63
+[1] "Generating consensus map."
+[1] "Max.Interval = 45"
+[1] "Consensus map length: 196.82"
+   map   RMSE
+1    1 136.75
+2    2 125.62
+3 mean 131.19
+4   sd   7.87
+[1] "Generating consensus map."
+[1] "Max.Interval = 46"
+[1] "Consensus map length: 197.26"
+   map   RMSE
+1    1 139.47
+2    2 123.84
+3 mean 131.66
+4   sd  11.05
+[1] "Generating consensus map."
+[1] "Max.Interval = 47"
+[1] "Consensus map length: 198.76"
+   map   RMSE
+1    1 138.32
+2    2 124.89
+3 mean 131.60
+4   sd   9.50
+[1] "Generating consensus map."
+[1] "Max.Interval = 48"
+[1] "Consensus map length: 196.91"
+   map   RMSE
+1    1 135.09
+2    2 120.01
+3 mean 127.55
+4   sd  10.66
+[1] "Generating consensus map."
+[1] "Max.Interval = 49"
+[1] "Consensus map length: 156.35"
+   map  RMSE
+1    1 98.58
+2    2 90.49
+3 mean 94.53
+4   sd  5.72
+[1] "Generating consensus map."
+[1] "Max.Interval = 50"
+[1] "Consensus map length: 157.82"
+   map  RMSE
+1    1 97.38
+2    2 91.00
+3 mean 94.19
+4   sd  4.51
+[1] "Generating consensus map."
+[1] "Max.Interval = 51"
+[1] "Consensus map length: 152.79"
+   map  RMSE
+1    1 95.40
+2    2 86.96
+3 mean 91.18
+4   sd  5.96
+[1] "Generating consensus map."
+[1] "Max.Interval = 52"
+[1] "Consensus map length: 157.12"
+   map  RMSE
+1    1 89.92
+2    2 83.55
+3 mean 86.74
+4   sd  4.50
+[1] "Generating consensus map."
+[1] "Max.Interval = 53"
+[1] "Consensus map length: 149.76"
+   map  RMSE
+1    1 86.17
+2    2 82.16
+3 mean 84.16
+4   sd  2.83
+[1] "Generating consensus map."
+[1] "Max.Interval = 54"
+[1] "Consensus map length: 137.33"
+   map  RMSE
+1    1 79.63
+2    2 77.17
+3 mean 78.40
+4   sd  1.73
+[1] "Generating consensus map."
+[1] "Max.Interval = 55"
+[1] "Consensus map length: 137.33"
+   map  RMSE
+1    1 78.96
+2    2 74.96
+3 mean 76.96
+4   sd  2.83
+[1] "Generating consensus map."
+[1] "Max.Interval = 56"
+[1] "Consensus map length: 137.33"
+   map  RMSE
+1    1 79.07
+2    2 74.89
+3 mean 76.98
+4   sd  2.96
+[1] "Generating consensus map."
+[1] "Max.Interval = 57"
+[1] "Consensus map length: 137.33"
+   map  RMSE
+1    1 78.99
+2    2 74.87
+3 mean 76.93
+4   sd  2.91
+[1] "Generating consensus map."
+[1] "Max.Interval = 58"
+[1] "Consensus map length: 138.88"
+   map  RMSE
+1    1 80.34
+2    2 78.18
+3 mean 79.26
+4   sd  1.53
+[1] "Generating consensus map."
+[1] "Max.Interval = 59"
+[1] "Consensus map length: 137.33"
+   map  RMSE
+1    1 78.91
+2    2 75.47
+3 mean 77.19
+4   sd  2.44
+[1] "Generating consensus map."
+[1] "Max.Interval = 60"
+[1] "Consensus map length: 116.72"
+   map  RMSE
+1    1 58.16
+2    2 55.63
+3 mean 56.90
+4   sd  1.79
+[1] "Generating consensus map."
+[1] "Max.Interval = 61"
+[1] "Consensus map length: 138.74"
+   map  RMSE
+1    1 79.93
+2    2 77.67
+3 mean 78.80
+4   sd  1.60
+[1] "Generating consensus map."
+[1] "Max.Interval = 62"
+[1] "Consensus map length: 137.33"
+   map  RMSE
+1    1 78.89
+2    2 74.38
+3 mean 76.64
+4   sd  3.18
+[1] "Generating consensus map."
+[1] "Max.Interval = 63"
+[1] "Consensus map length: 138.72"
+   map  RMSE
+1    1 80.22
+2    2 74.75
+3 mean 77.48
+4   sd  3.87
+[1] "Generating consensus map."
+[1] "Max.Interval = 64"
+[1] "Consensus map length: 148"
+   map  RMSE
+1    1 79.89
+2    2 79.99
+3 mean 79.94
+4   sd  0.07
+[1] "Generating consensus map."
+[1] "Max.Interval = 65"
+[1] "Consensus map length: 144.32"
+   map  RMSE
+1    1 78.60
+2    2 76.78
+3 mean 77.69
+4   sd  1.29
+[1] "Generating consensus map."
+[1] "Max.Interval = 66"
+[1] "Consensus map length: 128.05"
+   map  RMSE
+1    1 72.93
+2    2 65.19
+3 mean 69.06
+4   sd  5.48
+[1] "Generating consensus map."
+[1] "Max.Interval = 67"
+[1] "Consensus map length: 128.05"
+   map  RMSE
+1    1 72.93
+2    2 67.16
+3 mean 70.05
+4   sd  4.08
+[1] "Generating consensus map."
+[1] "Max.Interval = 68"
+[1] "Consensus map length: 128.05"
+   map  RMSE
+1    1 72.93
+2    2 66.56
+3 mean 69.75
+4   sd  4.51
+[1] "Generating consensus map."
+[1] "Max.Interval = 69"
+[1] "Consensus map length: 145.66"
+   map  RMSE
+1    1 74.17
+2    2 71.92
+3 mean 73.04
+4   sd  1.59
+[1] "Generating consensus map."
+[1] "Max.Interval = 70"
+[1] "Consensus map length: 149.91"
+   map  RMSE
+1    1 81.43
+2    2 68.42
+3 mean 74.93
+4   sd  9.20
+[1] "Generating consensus map."
+[1] "Max.Interval = 71"
+[1] "Consensus map length: 149.76"
+   map  RMSE
+1    1 79.19
+2    2 71.38
+3 mean 75.28
+4   sd  5.52
+[1] "Generating consensus map."
+[1] "Max.Interval = 72"
+[1] "Consensus map length: 146.66"
+   map  RMSE
+1    1 80.69
+2    2 72.46
+3 mean 76.57
+4   sd  5.82
+[1] "Generating consensus map."
+[1] "Max.Interval = 73"
+[1] "Consensus map length: 148.68"
+   map  RMSE
+1    1 81.48
+2    2 69.89
+3 mean 75.69
+4   sd  8.20
+[1] "Generating consensus map."
+[1] "Max.Interval = 74"
+[1] "Consensus map length: 143.75"
+   map  RMSE
+1    1 75.56
+2    2 62.68
+3 mean 69.12
+4   sd  9.11
+[1] "Generating consensus map."
+[1] "Max.Interval = 75"
+[1] "Consensus map length: 131.31"
+   map  RMSE
+1    1 62.37
+2    2 51.38
+3 mean 56.87
+4   sd  7.77
+[1] "Generating consensus map."
+[1] "Max.Interval = 76"
+[1] "Consensus map length: 146.8"
+   map  RMSE
+1    1 77.93
+2    2 65.29
+3 mean 71.61
+4   sd  8.94
+[1] "Generating consensus map."
+[1] "Max.Interval = 77"
+[1] "Consensus map length: 149.67"
+   map  RMSE
+1    1 79.56
+2    2 64.79
+3 mean 72.17
+4   sd 10.45
+[1] "Generating consensus map."
+[1] "Max.Interval = 78"
+[1] "Consensus map length: 130.88"
+   map  RMSE
+1    1 73.36
+2    2 65.07
+3 mean 69.22
+4   sd  5.87
+[1] "Generating consensus map."
+[1] "Max.Interval = 79"
+[1] "Consensus map length: 149.52"
+   map  RMSE
+1    1 78.00
+2    2 66.39
+3 mean 72.20
+4   sd  8.21
+[1] "Generating consensus map."
+[1] "Max.Interval = 80"
+[1] "Consensus map length: 135.05"
+   map  RMSE
+1    1 71.57
+2    2 65.72
+3 mean 68.64
+4   sd  4.14
+[1] "Generating consensus map."
+[1] "Max.Interval = 81"
+[1] "Consensus map length: 130.94"
+   map  RMSE
+1    1 73.71
+2    2 66.11
+3 mean 69.91
+4   sd  5.37
+[1] "Generating consensus map."
+[1] "Max.Interval = 82"
+[1] "Consensus map length: 139.74"
+   map  RMSE
+1    1 72.89
+2    2 64.92
+3 mean 68.91
+4   sd  5.64
+[1] "Generating consensus map."
+[1] "Max.Interval = 83"
+[1] "Consensus map length: 118.59"
+   map  RMSE
+1    1 68.60
+2    2 64.23
+3 mean 66.42
+4   sd  3.09
+[1] "Generating consensus map."
+[1] "Max.Interval = 84"
+[1] "Consensus map length: 123.15"
+   map  RMSE
+1    1 70.19
+2    2 67.37
+3 mean 68.78
+4   sd  2.00
+[1] "Generating consensus map."
+[1] "Max.Interval = 85"
+[1] "Consensus map length: 124.24"
+   map  RMSE
+1    1 64.66
+2    2 63.71
+3 mean 64.18
+4   sd  0.67
+[1] "Generating consensus map."
+[1] "Max.Interval = 86"
+[1] "Consensus map length: 126.99"
+   map  RMSE
+1    1 66.33
+2    2 65.89
+3 mean 66.11
+4   sd  0.31
+[1] "Generating consensus map."
+[1] "Max.Interval = 87"
+[1] "Consensus map length: 124.74"
+   map  RMSE
+1    1 65.21
+2    2 64.02
+3 mean 64.62
+4   sd  0.84
+[1] "Generating consensus map."
+[1] "Max.Interval = 88"
+[1] "Consensus map length: 126.94"
+   map  RMSE
+1    1 66.08
+2    2 65.28
+3 mean 65.68
+4   sd  0.56
+[1] "Generating consensus map."
+[1] "Max.Interval = 89"
+[1] "Consensus map length: 126.94"
+   map  RMSE
+1    1 65.85
+2    2 64.86
+3 mean 65.35
+4   sd  0.70
+[1] "Generating consensus map."
+[1] "Max.Interval = 90"
+[1] "Consensus map length: 127.96"
+   map  RMSE
+1    1 68.32
+2    2 66.45
+3 mean 67.38
+4   sd  1.33
+[1] "Generating consensus map."
+[1] "Max.Interval = 91"
+[1] "Consensus map length: 125.25"
+   map  RMSE
+1    1 66.19
+2    2 65.14
+3 mean 65.67
+4   sd  0.75
+[1] "Generating consensus map."
+[1] "Max.Interval = 92"
+[1] "Consensus map length: 124.24"
+   map  RMSE
+1    1 66.24
+2    2 65.10
+3 mean 65.67
+4   sd  0.81
+[1] "Generating consensus map."
+[1] "Max.Interval = 93"
+[1] "Consensus map length: 124.24"
+   map  RMSE
+1    1 66.27
+2    2 65.10
+3 mean 65.69
+4   sd  0.83
+[1] "Generating consensus map."
+[1] "Max.Interval = 94"
+[1] "Consensus map length: 111.94"
+   map  RMSE
+1    1 56.23
+2    2 55.98
+3 mean 56.11
+4   sd  0.17
+[1] "Generating consensus map."
+[1] "Max.Interval = 95"
+[1] "Consensus map length: 124.91"
+   map  RMSE
+1    1 64.91
+2    2 63.95
+3 mean 64.43
+4   sd  0.68
+[1] "Generating consensus map."
+[1] "Max.Interval = 96"
+[1] "Consensus map length: 127.8"
+   map  RMSE
+1    1 68.34
+2    2 66.72
+3 mean 67.53
+4   sd  1.15
+[1] "Generating consensus map."
+[1] "Max.Interval = 97"
+[1] "Consensus map length: 105.79"
+   map  RMSE
+1    1 67.17
+2    2 65.46
+3 mean 66.32
+4   sd  1.21
+[1] "Generating consensus map."
+[1] "Max.Interval = 98"
+[1] "Consensus map length: 126.94"
+   map  RMSE
+1    1 67.60
+2    2 65.88
+3 mean 66.74
+4   sd  1.22
+[1] "Generating consensus map."
+[1] "Max.Interval = 99"
+[1] "Consensus map length: 103.76"
+   map  RMSE
+1    1 24.77
+2    2 24.67
+3 mean 24.72
+4   sd  0.06
+[1] "Generating consensus map."
+[1] "Max.Interval = 100"
+[1] "Consensus map length: 105.79"
+   map  RMSE
+1    1 62.65
+2    2 62.11
+3 mean 62.38
+4   sd  0.38

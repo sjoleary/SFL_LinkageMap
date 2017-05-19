@@ -1,13 +1,7 @@
 ---
 title: "Comparative Genomics Southern Flounder"
 output:
-  html_notebook:
-    code_folding: hide
-    df_print: paged
-    highlight: kate
-    theme: flatly
-    toc: yes
-  html_document:
+    html_document:
     toc: yes
 ---
 
@@ -1534,7 +1528,7 @@ write.table(FamB.fullmap, "results/FamB-3.fullmap", row.names = FALSE)
 
 ```
 
-# Compare map III
+# Compare family maps after removing and re-mapping markers III
 
 Compare maps afte re-mapping.
 
@@ -1872,17 +1866,17 @@ write.table(temp, "results/shared.markers-4",
 
 # Merge Family maps
 
+## Load files
+
 Load family maps
 
 ```{r}
 
-FamA <- read.delim("data/LINKMAP/FamA.fullmap", 
-                   stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
+FamA <- read.delim("results/FamA_family.map", 
+                   stringsAsFactors = FALSE, sep = "", header = TRUE)
 
-FamB <- read.delim("data/LINKMAP/FamB.fullmap", 
-                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
+FamB <- read.delim("results/FamB_family.map", 
+                   header = TRUE, stringsAsFactors = FALSE, sep = "")
 
 temp <- bind_rows(FamA, FamB)
 
@@ -1909,7 +1903,7 @@ LG1_B <- FamB %>%
 Maps <- list(LG1_A, LG1_B)
 
 # Start writing to an output file
-sink("results/LG1.merge")
+sink("data/LINKMAP/LG1.merge")
 
 # merge
 LG1 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
@@ -1919,9 +1913,102 @@ sink()
 
 ```
 
-Look at stats:
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG1.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
 
 
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG1_A <- FamA %>%
+    filter(LG == 1) %>%
+    select(LOCUS, POSITION)
+
+LG1_B <- FamB %>%
+    filter(LG == 1) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG1_A, LG1_B)
+
+LG1 <- LPmerge(Maps, max.interval = 71, weights = NULL)
+
+LG1[[1]] <- LG1[[1]] %>%
+    mutate(LG = 1)
+
+# choose map
+write.table(LG1[[1]], "results/LG1.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
+
+```
 
 ## Merge maps for LG2:
 
@@ -1932,19 +2019,112 @@ LG2_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG2_B <- FamB %>%
-    filter(LG == 17) %>%
+    filter(LG == 15) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG2_A, LG2_B)
 
 # Start writing to an output file
-sink("results/LG2.merge")
+sink("data/LINKMAP/LG2.merge")
 
 # merge
 LG2 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG2.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG2_A <- FamA %>%
+    filter(LG == 2) %>%
+    select(LOCUS, POSITION)
+
+LG2_B <- FamB %>%
+    filter(LG == 15) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG2_A, LG2_B)
+
+LG2 <- LPmerge(Maps, max.interval = 6, weights = NULL)
+
+# choose map
+write.table(LG2[[1]], "results/LG2.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -1963,13 +2143,106 @@ LG3_B <- FamB %>%
 Maps <- list(LG3_A, LG3_B)
 
 # Start writing to an output file
-sink("results/LG3.merge")
+sink("data/LINKMAP/LG3.merge")
 
 # merge
 LG3 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG3.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+LG3_A <- FamA %>%
+    filter(LG == 3) %>%
+    select(LOCUS, POSITION)
+
+LG3_B <- FamB %>%
+    filter(LG == 8) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG3_A, LG3_B)
+
+LG3 <- LPmerge(Maps, max.interval = 3, weights = NULL)
+
+# choose map
+write.table(LG3[[1]], "results/LG3.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -1988,13 +2261,107 @@ LG4_B <- FamB %>%
 Maps <- list(LG4_A, LG4_B)
 
 # Start writing to an output file
-sink("results/LG4.merge")
+sink("data/LINKMAP/LG4.merge")
 
 # merge
 LG4 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG4.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG4_A <- FamA %>%
+    filter(LG == 4) %>%
+    select(LOCUS, POSITION)
+
+LG4_B <- FamB %>%
+    filter(LG == 2) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG4_A, LG4_B)
+
+LG4 <- LPmerge(Maps, max.interval = 4, weights = NULL)
+
+# choose map
+write.table(LG4[[1]], "results/LG4.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2013,13 +2380,107 @@ LG5_B <- FamB %>%
 Maps <- list(LG5_A, LG5_B)
 
 # Start writing to an output file
-sink("results/LG5.merge")
+sink("data/LINKMAP/LG5.merge")
 
 # merge
 LG5 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG5.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG5_A <- FamA %>%
+    filter(LG == 5) %>%
+    select(LOCUS, POSITION)
+
+LG5_B <- FamB %>%
+    filter(LG == 4) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG5_A, LG5_B)
+
+LG5 <- LPmerge(Maps, max.interval = 19, weights = NULL)
+
+# choose map
+write.table(LG5[[1]], "results/LG5.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2038,13 +2499,107 @@ LG6_B <- FamB %>%
 Maps <- list(LG6_A, LG6_B)
 
 # Start writing to an output file
-sink("results/LG6.merge")
+sink("data/LINKMAP/LG6.merge")
 
 # merge
 LG6 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG6.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG6_A <- FamA %>%
+    filter(LG == 6) %>%
+    select(LOCUS, POSITION)
+
+LG6_B <- FamB %>%
+    filter(LG == 3) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG6_A, LG6_B)
+
+LG6 <- LPmerge(Maps, max.interval = 61, weights = NULL)
+
+# choose map
+write.table(LG6[[1]], "results/LG6.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2057,19 +2612,113 @@ LG7_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG7_B <- FamB %>%
-    filter(LG == 11) %>%
+    filter(LG == 10) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG7_A, LG7_B)
 
 # Start writing to an output file
-sink("results/LG7.merge")
+sink("data/LINKMAP/LG7.merge")
 
 # merge
 LG7 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG7.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG7_A <- FamA %>%
+    filter(LG == 7) %>%
+    select(LOCUS, POSITION)
+
+LG7_B <- FamB %>%
+    filter(LG == 10) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG7_A, LG7_B)
+
+LG7 <- LPmerge(Maps, max.interval = 1, weights = NULL)
+
+# choose map
+write.table(LG7[[1]], "results/LG7.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2082,19 +2731,113 @@ LG8_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG8_B <- FamB %>%
-    filter(LG == 13) %>%
+    filter(LG == 12) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG8_A, LG8_B)
 
 # Start writing to an output file
-sink("results/LG8.merge")
+sink("data/LINKMAP/LG8.merge")
 
 # merge
 LG8 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG8.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG8_A <- FamA %>%
+    filter(LG == 8) %>%
+    select(LOCUS, POSITION)
+
+LG8_B <- FamB %>%
+    filter(LG == 12) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG8_A, LG8_B)
+
+LG8 <- LPmerge(Maps, max.interval = 38, weights = NULL)
+
+# choose map
+write.table(LG8[[1]], "results/LG8.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2113,13 +2856,107 @@ LG9_B <- FamB %>%
 Maps <- list(LG9_A, LG9_B)
 
 # Start writing to an output file
-sink("results/LG9.merge")
+sink("data/LINKMAP/LG9.merge")
 
 # merge
 LG9 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG9.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG9_A <- FamA %>%
+    filter(LG == 9) %>%
+    select(LOCUS, POSITION)
+
+LG9_B <- FamB %>%
+    filter(LG == 6) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG9_A, LG9_B)
+
+LG9 <- LPmerge(Maps, max.interval = 2, weights = NULL)
+
+# choose map
+write.table(LG9[[1]], "results/LG9.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2132,19 +2969,114 @@ LG10_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG10_B <- FamB %>%
-    filter(LG == 23) %>%
+    filter(LG == 21) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG10_A, LG10_B)
 
 # Start writing to an output file
-sink("results/LG10.merge")
+sink("data/LINKMAP/LG10.merge")
 
 # merge
 LG10 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG10.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG10_A <- FamA %>%
+    filter(LG == 10) %>%
+    select(LOCUS, POSITION)
+
+LG10_B <- FamB %>%
+    filter(LG == 21) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG10_A, LG10_B)
+
+LG10 <- LPmerge(Maps, max.interval = 2, weights = NULL)
+
+# choose map
+write.table(LG10[[1]], "results/LG10.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2157,19 +3089,115 @@ LG11_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG11_B <- FamB %>%
-    filter(LG == 16) %>%
+    filter(LG == 24) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG11_A, LG11_B)
 
 # Start writing to an output file
-sink("results/LG11.merge")
+sink("data/LINKMAP/LG11.merge")
 
 # merge
 LG11 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG11.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG11_A <- FamA %>%
+    filter(LG == 11) %>%
+    select(LOCUS, POSITION)
+
+LG11_B <- FamB %>%
+    filter(LG == 24) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG11_A, LG11_B)
+
+LG11 <- LPmerge(Maps, max.interval = 4, weights = NULL)
+
+# choose map
+write.table(LG11[[1]], "results/LG11.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2188,13 +3216,107 @@ LG12_B <- FamB %>%
 Maps <- list(LG12_A, LG12_B)
 
 # Start writing to an output file
-sink("results/LG12.merge")
+sink("data/LINKMAP/LG12.merge")
 
 # merge
 LG12 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG12.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "CAT", "RMSE"), sep = " ") %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG12_A <- FamA %>%
+    filter(LG == 12) %>%
+    select(LOCUS, POSITION)
+
+LG12_B <- FamB %>%
+    filter(LG == 5) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG12_A, LG12_B)
+
+LG12 <- LPmerge(Maps, max.interval = 5, weights = NULL)
+
+# choose map
+write.table(LG12[[1]], "results/LG12.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2207,19 +3329,115 @@ LG13_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG13_B <- FamB %>%
-    filter(LG == 12) %>%
+    filter(LG == 11) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG13_A, LG13_B)
 
 # Start writing to an output file
-sink("results/LG13.merge")
+sink("data/LINKMAP/LG13.merge")
 
 # merge
 LG13 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG13.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG13_A <- FamA %>%
+    filter(LG == 13) %>%
+    select(LOCUS, POSITION)
+
+LG13_B <- FamB %>%
+    filter(LG == 11) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG13_A, LG13_B)
+
+LG13 <- LPmerge(Maps, max.interval = 13, weights = NULL)
+
+# choose map
+write.table(LG13[[1]], "results/LG13.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2232,19 +3450,114 @@ LG14_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG14_B <- FamB %>%
-    filter(LG == 24) %>%
+    filter(LG == 22) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG14_A, LG14_B)
 
 # Start writing to an output file
-sink("results/LG14.merge")
+sink("data/LINKMAP/LG14.merge")
 
 # merge
 LG14 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG14.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG14_A <- FamA %>%
+    filter(LG == 14) %>%
+    select(LOCUS, POSITION)
+
+LG14_B <- FamB %>%
+    filter(LG == 22) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG14_A, LG14_B)
+
+LG14 <- LPmerge(Maps, max.interval = 6, weights = NULL)
+
+# choose map
+write.table(LG14[[1]], "results/LG14.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2257,19 +3570,114 @@ LG15_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG15_B <- FamB %>%
-    filter(LG == 18) %>%
+    filter(LG == 16) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG15_A, LG15_B)
 
 # Start writing to an output file
-sink("results/LG15.merge")
+sink("data/LINKMAP/LG15.merge")
 
 # merge
 LG15 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG15.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG15_A <- FamA %>%
+    filter(LG == 15) %>%
+    select(LOCUS, POSITION)
+
+LG15_B <- FamB %>%
+    filter(LG == 16) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG15_A, LG15_B)
+
+LG15 <- LPmerge(Maps, max.interval = 41, weights = NULL)
+
+# choose map
+write.table(LG15[[1]], "results/LG15.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2282,19 +3690,114 @@ LG16_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG16_B <- FamB %>%
-    filter(LG == 15) %>%
+    filter(LG == 14) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG16_A, LG16_B)
 
 # Start writing to an output file
-sink("results/LG16.merge")
+sink("data/LINKMAP/LG16.merge")
 
 # merge
 LG16 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG16.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG16_A <- FamA %>%
+    filter(LG == 16) %>%
+    select(LOCUS, POSITION)
+
+LG16_B <- FamB %>%
+    filter(LG == 14) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG16_A, LG16_B)
+
+LG16 <- LPmerge(Maps, max.interval = 50, weights = NULL)
+
+# choose map
+write.table(LG16[[1]], "results/LG16.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2307,19 +3810,114 @@ LG17_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG17_B <- FamB %>%
-    filter(LG == 20) %>%
+    filter(LG == 18) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG17_A, LG17_B)
 
 # Start writing to an output file
-sink("results/LG17.merge")
+sink("data/LINKMAP/LG17.merge")
 
 # merge
 LG17 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG17.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG17_A <- FamA %>%
+    filter(LG == 17) %>%
+    select(LOCUS, POSITION)
+
+LG17_B <- FamB %>%
+    filter(LG == 18) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG17_A, LG17_B)
+
+LG17 <- LPmerge(Maps, max.interval = 9, weights = NULL)
+
+# choose map
+write.table(LG17[[1]], "results/LG17.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2332,19 +3930,114 @@ LG18_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG18_B <- FamB %>%
-    filter(LG == 19) %>%
+    filter(LG == 17) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG18_A, LG18_B)
 
 # Start writing to an output file
-sink("results/LG18.merge")
+sink("data/LINKMAP/LG18.merge")
 
 # merge
 LG18 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG18.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG18_A <- FamA %>%
+    filter(LG == 18) %>%
+    select(LOCUS, POSITION)
+
+LG18_B <- FamB %>%
+    filter(LG == 17) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG18_A, LG18_B)
+
+LG18 <- LPmerge(Maps, max.interval = 47, weights = NULL)
+
+# choose map
+write.table(LG18[[1]], "results/LG18.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2357,19 +4050,114 @@ LG19_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG19_B <- FamB %>%
-    filter(LG == 14) %>%
+    filter(LG == 13) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG19_A, LG19_B)
 
 # Start writing to an output file
-sink("results/LG19.merge")
+sink("data/LINKMAP/LG19.merge")
 
 # merge
 LG19 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG19.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG19_A <- FamA %>%
+    filter(LG == 19) %>%
+    select(LOCUS, POSITION)
+
+LG19_B <- FamB %>%
+    filter(LG == 13) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG19_A, LG19_B)
+
+LG19 <- LPmerge(Maps, max.interval = 3, weights = NULL)
+
+# choose map
+write.table(LG19[[1]], "results/LG19.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2388,13 +4176,107 @@ LG20_B <- FamB %>%
 Maps <- list(LG20_A, LG20_B)
 
 # Start writing to an output file
-sink("results/LG20.merge")
+sink("data/LINKMAP/LG20.merge")
 
 # merge
 LG20 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG20.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+LG20_A <- FamA %>%
+    filter(LG == 20) %>%
+    select(LOCUS, POSITION)
+
+LG20_B <- FamB %>%
+    filter(LG == 7) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG20_A, LG20_B)
+
+LG20 <- LPmerge(Maps, max.interval = 1, weights = NULL)
+
+# choose map
+write.table(LG20[[1]], "results/LG20.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2407,19 +4289,114 @@ LG21_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG21_B <- FamB %>%
-    filter(LG == 21) %>%
+    filter(LG == 19) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG21_A, LG21_B)
 
 # Start writing to an output file
-sink("results/LG21.merge")
+sink("data/LINKMAP/LG21.merge")
 
 # merge
 LG21 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG21.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG21_A <- FamA %>%
+    filter(LG == 21) %>%
+    select(LOCUS, POSITION)
+
+LG21_B <- FamB %>%
+    filter(LG == 19) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG21_A, LG21_B)
+
+LG21 <- LPmerge(Maps, max.interval = 2, weights = NULL)
+
+# choose map
+write.table(LG21[[1]], "results/LG21.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2432,19 +4409,114 @@ LG22_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG22_B <- FamB %>%
-    filter(LG == 10) %>%
+    filter(LG == 9) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG22_A, LG22_B)
 
 # Start writing to an output file
-sink("results/LG22.merge")
+sink("data/LINKMAP/LG22.merge")
 
 # merge
 LG22 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG22.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG22_A <- FamA %>%
+    filter(LG == 22) %>%
+    select(LOCUS, POSITION)
+
+LG22_B <- FamB %>%
+    filter(LG == 9) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG22_A, LG22_B)
+
+LG22 <- LPmerge(Maps, max.interval = 1, weights = NULL)
+
+# choose map
+write.table(LG22[[1]], "results/LG22.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2457,19 +4529,114 @@ LG23_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG23_B <- FamB %>%
-    filter(LG == 22) %>%
+    filter(LG == 20) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG23_A, LG23_B)
 
 # Start writing to an output file
-sink("results/LG23.merge")
+sink("data/LINKMAP/LG23.merge")
 
 # merge
 LG23 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 
 # Stop writing to the file
 sink()
+
+```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG23.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG23_A <- FamA %>%
+    filter(LG == 23) %>%
+    select(LOCUS, POSITION)
+
+LG23_B <- FamB %>%
+    filter(LG == 20) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG23_A, LG23_B)
+
+LG23 <- LPmerge(Maps, max.interval = 20, weights = NULL)
+
+# choose map
+write.table(LG23[[1]], "results/LG23.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
 
 ```
 
@@ -2482,13 +4649,13 @@ LG24_A <- FamA %>%
     select(LOCUS, POSITION)
 
 LG24_B <- FamB %>%
-    filter(LG == 9) %>%
+    filter(LG == 23) %>%
     select(LOCUS, POSITION)
 
 Maps <- list(LG24_A, LG24_B)
 
 # Start writing to an output file
-sink("results/LG24.merge")
+sink("data/LINKMAP/LG24.merge")
 
 # merge
 LG24 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
@@ -2497,3 +4664,278 @@ LG24 <- LPmerge(Maps, max.interval = 1:100, weights = NULL)
 sink()
 
 ```
+
+Compare at stats to choose K by minimizing RMSE for each map (mean RMSE, standard deviation):
+
+```{r}
+
+# load file
+merge_stats <- readLines("data/LINKMAP/LG24.merge")
+
+# markers with constraints
+map_extract <- as.data.frame(grep("Map", merge_stats, value = TRUE)) %>%
+  rename(temp = `grep("Map", merge_stats, value = TRUE)`) %>%
+  separate(temp, into = c("x", "y"), sep = "]") %>%
+  separate(y, into = c("MAP", "LOCUS"), sep = ":") %>%
+    select(MAP, LOCUS) %>%
+    mutate(MAP = str_replace(MAP, "\"", " ")) %>%
+    mutate(LOCUS = str_replace(LOCUS, "\"", " ")) %>%
+    arrange(MAP)
+
+# extract all RMSE values
+map_rmse <- as.data.frame(grep("]" , merge_stats, invert = TRUE, value = TRUE)) %>%
+    rename(temp = `grep("]", merge_stats, invert = TRUE, value = TRUE)`) %>%
+    mutate(temp = str_trim(temp)) %>%
+    droplevels()
+
+# RMSE values for mean
+rmse_mean <- map_rmse %>%
+    filter(grepl("mean", temp)) %>%
+    separate(temp, into = c("x", "RMSE"), sep = 2) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = "mean") %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values for SD
+rmse_sd <- map_rmse %>%
+    filter(grepl("sd", temp)) %>%
+    separate(temp, into = c("x", "y"), sep = 4) %>%
+    separate(y, into = c("CAT", "RMSE"), sep = 3) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE) %>%
+    mutate(K = c(1:100))
+
+# RMSE values map 1 & 2
+rmse_map <- map_rmse %>%
+    filter(!grepl("sd | mean", temp)) %>%
+    filter(!grepl("map", temp)) %>%
+    separate(temp, into = c("CAT", "y"), sep = c(1)) %>%
+    separate(y, into = c("y", "RMSE"), sep = -6) %>%
+    mutate(RMSE = parse_number(RMSE)) %>%
+    mutate(CAT = str_trim(CAT)) %>%
+    select(CAT, RMSE)
+
+rmse_map1 <- rmse_map %>%
+    filter(CAT == 1) %>%
+    mutate(K = c(1:100))
+
+rmse_map2 <- rmse_map %>%
+    filter(CAT == 2) %>%
+    mutate(K = c(1:100))
+
+# create data frame with all rmse values
+merge <- bind_rows(rmse_mean, rmse_sd)
+merge <- bind_rows(merge, rmse_map1)
+merge <- bind_rows(merge, rmse_map2)
+
+ggplot(merge, aes(x = K, y = RMSE)) +
+    geom_point() +
+    facet_grid(CAT ~ ., scales = "free") +
+    theme_facet
+
+
+```
+
+Write chosen consensus map to file:
+
+```{r}
+
+# merge map for chosen K value
+LG24_A <- FamA %>%
+    filter(LG == 24) %>%
+    select(LOCUS, POSITION)
+
+LG24_B <- FamB %>%
+    filter(LG == 23) %>%
+    select(LOCUS, POSITION)
+
+Maps <- list(LG24_A, LG24_B)
+
+LG24 <- LPmerge(Maps, max.interval = 3, weights = NULL)
+
+# choose map
+write.table(LG24[[1]], "results/LG24.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+
+```
+
+# Finalize southern flounder linkage map
+
+Import all merged consensus linkage groups.
+
+```{r}
+
+filenames <- list.files(path = "results", pattern = "*.consensus")
+
+# import data
+for (i in filenames){
+  filepath <- file.path("results/", paste(i))
+  assign(i, read.table(filepath, sep = "", header = TRUE))
+  }
+
+
+dflist_consensus <- lapply(ls(pattern = "*.consensus"), get)
+
+for (df in dflist_consensus)
+
+map <- ldply(dflist_consensus, data.frame) %>%
+    select(LOCUS, LG, POS)
+
+write.table(map, "results/SFL.map", col.names = TRUE, quote = FALSE)
+
+```
+
+Number of markers per linkage group:
+
+```{r}
+
+temp <- count(map, LG)
+
+temp
+
+```
+
+Length per linkage group:
+
+```{r}
+
+temp <- map %>%
+    group_by(LG) %>%
+    summarize(length = max(POS))
+
+temp
+
+```
+
+Plot linkage map:
+
+```{r}
+
+# plot with ggplot
+ggplot(map, aes(x = LG, y = POS)) +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "#325d81") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "#edf3f8") +
+  geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
+                ymin = POS-0.025, ymax = POS+0.025),
+            color = "#325d81", fill = "#325d81") +
+  scale_x_continuous(breaks = c(1:24)) +
+  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
+  # scale_fill_manual(name="Marker Type",
+  #                   breaks=c("est", "msat", "snp"),
+  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
+  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
+  labs(x = "\nLinkage Group", y = "Position (cM)\n") +
+  theme_classic() +
+  theme(axis.title = element_text(size = 16),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_blank(),
+        axis.line.y = element_line(color = "black", size = 1),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        
+        legend.position = "bottom",
+        
+        panel.background = element_rect(fill = "white", color = NA), 
+        panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        strip.background = element_rect(fill = "grey95", color = "black"), 
+        strip.text.x = element_text(size = 16),
+        strip.text.y = element_text(size = 16))
+
+```
+
+Linkage map Family A:
+
+```{r}
+
+FamA.map <- read.delim("data/LINKMAP/FamA.fullmap", 
+                   stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LG", "LOCUS", "POSITION"))
+
+# plot with ggplot
+ggplot(FamA.map, aes(x = LG, y = POSITION)) +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "#325d81") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "#edf3f8") +
+  geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
+                ymin = POSITION-0.025, ymax = POSITION+0.025),
+            color = "#325d81", fill = "#325d81") +
+  scale_x_continuous(breaks = c(1:24)) +
+  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
+  # scale_fill_manual(name="Marker Type",
+  #                   breaks=c("est", "msat", "snp"),
+  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
+  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
+  labs(x = "\nLinkage Group", y = "Position (cM)\n") +
+  theme_classic() +
+  theme(axis.title = element_text(size = 16),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_blank(),
+        axis.line.y = element_line(color = "black", size = 1),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        
+        legend.position = "bottom",
+        
+        panel.background = element_rect(fill = "white", color = NA), 
+        panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        strip.background = element_rect(fill = "grey95", color = "black"), 
+        strip.text.x = element_text(size = 16),
+        strip.text.y = element_text(size = 16))
+
+```
+
+Linkage Map Family B:
+
+```{r}
+
+
+FamB.map <- read.delim("data/LINKMAP/FamB.fullmap", 
+                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LG", "LOCUS", "POSITION"))
+
+ggplot(FamB.map, aes(x = LG, y = POSITION)) +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "#325d81") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "#edf3f8") +
+  geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
+                ymin = POSITION-0.025, ymax = POSITION+0.025),
+            color = "#325d81", fill = "#325d81") +
+  scale_x_continuous(breaks = c(1:24)) +
+  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
+  # scale_fill_manual(name="Marker Type",
+  #                   breaks=c("est", "msat", "snp"),
+  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
+  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
+  labs(x = "\nLinkage Group", y = "Position (cM)\n") +
+  theme_classic() +
+  theme(axis.title = element_text(size = 16),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_blank(),
+        axis.line.y = element_line(color = "black", size = 1),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        
+        legend.position = "bottom",
+        
+        panel.background = element_rect(fill = "white", color = NA), 
+        panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        strip.background = element_rect(fill = "grey95", color = "black"), 
+        strip.text.x = element_text(size = 16),
+        strip.text.y = element_text(size = 16))
+
+```
+
