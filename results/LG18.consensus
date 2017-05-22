@@ -1,113 +1,113 @@
-LOCUS POS POS_FamA POS_FamB
-*dDocent_Contig_326223 0 NA 0
-*dDocent_Contig_96260 1.34 0 NA
-*dDocent_Contig_128509 1.34 0 NA
-*dDocent_Contig_82487 1.34 0.16 1.34
-*dDocent_Contig_218579 1.34 NA 1.34
-*dDocent_Contig_32099 1.34 NA 1.34
-*dDocent_Contig_34764 1.34 NA 1.34
-*dDocent_Contig_69341 1.34 NA 1.34
-*dDocent_Contig_9670 1.5 0.16 NA
-*dDocent_Contig_129866 1.65 0.31 NA
-*dDocent_Contig_23646 1.65 0.31 NA
-*dDocent_Contig_40425 2.27 0.93 NA
-*dDocent_Contig_185066 2.27 1.24 2.01
-*dDocent_Contig_113552 2.88 1.54 NA
-*dDocent_Contig_34257 5.67 4.33 NA
-*dDocent_Contig_14167 5.67 4.33 NA
-*dDocent_Contig_21978 5.67 4.33 NA
-*dDocent_Contig_4216 8.34 7 NA
-*dDocent_Contig_29190 9.38000000000001 7 13.08
-*dDocent_Contig_13211 10.72 NA 13.75
-*dDocent_Contig_16253 10.72 NA 13.75
-*dDocent_Contig_11122 10.72 NA 13.75
-*dDocent_Contig_174602 10.72 NA 13.75
-*dDocent_Contig_187802 10.72 NA 13.75
-*dDocent_Contig_206879 10.72 NA 13.75
-*dDocent_Contig_27189 11.39 NA 14.42
-*dDocent_Contig_230190 11.39 NA 14.42
-*dDocent_Contig_102544 13.06 NA 16.09
-*dDocent_Contig_2978 15.87 14.53 NA
-*dDocent_Contig_5942 16.56 NA 19.59
-*dDocent_Contig_150 17.55 16.21 NA
-*dDocent_Contig_5372 18.01 16.67 19.59
-*dDocent_Contig_12495 18.48 17.14 NA
-*dDocent_Contig_23555 22.5 21.16 NA
-*dDocent_Contig_165474 23.11 21.77 NA
-*dDocent_Contig_150190 23.11 22.08 23.73
-*dDocent_Contig_347143 23.11 NA 25.27
-*dDocent_Contig_134963 23.42 22.08 NA
-*dDocent_Contig_89892 25.36 NA 28.39
-*dDocent_Contig_327203 27.45 26.11 NA
-*dDocent_Contig_21697 28.37 27.03 NA
-*dDocent_Contig_50990 28.89 27.55 NA
-*dDocent_Contig_26877 28.94 NA 31.97
-*dDocent_Contig_212866 28.94 NA 31.97
-*dDocent_Contig_115070 29.92 28.58 NA
-*dDocent_Contig_194468 30.57 NA 33.6
-*dDocent_Contig_212830 31.82 NA 34.85
-*dDocent_Contig_163160 33.44 28.58 37.88
-*dDocent_Contig_31240 33.44 31.67 NA
-*dDocent_Contig_245394 33.44 NA 36.8
-*dDocent_Contig_265782 33.44 NA 36.8
-*dDocent_Contig_81415 34.85 NA 37.88
-*dDocent_Contig_4533 35.19 32.6 42.69
-*dDocent_Contig_32458 35.19 32.91 NA
-*dDocent_Contig_23976 35.19 33.85 NA
-*dDocent_Contig_35456 35.19 NA 38.22
-*dDocent_Contig_9980 35.19 NA 38.55
-*dDocent_Contig_29128 35.19 NA 38.55
-*dDocent_Contig_301088 35.81 34.47 NA
-*dDocent_Contig_19709 37.98 36.64 NA
-*dDocent_Contig_363792 39.07 37.73 NA
-*dDocent_Contig_43009 39.07 37.73 NA
-*dDocent_Contig_132994 40.15 38.81 NA
-*dDocent_Contig_330230 41 NA 44.03
-*dDocent_Contig_116123 42.35 NA 45.38
-*dDocent_Contig_11109 43.35 NA 46.38
-*dDocent_Contig_243398 43.52 NA 46.55
-*dDocent_Contig_1092 43.68 NA 46.71
-*dDocent_Contig_19554 44.16 42.82 NA
-*dDocent_Contig_7405 44.35 NA 47.38
-*dDocent_Contig_186096 44.53 43.19 NA
-*dDocent_Contig_10043 45.03 NA 48.06
-*dDocent_Contig_24236 48.22 46.88 NA
-*dDocent_Contig_16344 48.82 NA 51.85
-*dDocent_Contig_37343 50.38 49.04 NA
-*dDocent_Contig_37926 51.93 50.59 NA
-*dDocent_Contig_4245 52.28 NA 55.31
-*dDocent_Contig_346077 52.55 51.21 NA
-*dDocent_Contig_291924 52.55 51.21 NA
-*dDocent_Contig_98348 52.96 NA 55.99
-*dDocent_Contig_122254 53.79 52.45 NA
-*dDocent_Contig_19576 54.1 52.76 NA
-*dDocent_Contig_362081 54.58 53.24 NA
-*dDocent_Contig_90958 54.58 53.24 57.02
-*dDocent_Contig_210753 54.58 53.24 NA
-*dDocent_Contig_9971 54.58 53.24 NA
-*dDocent_Contig_63030 55.03 53.69 NA
-*dDocent_Contig_244229 56.26 54.92 NA
-*dDocent_Contig_66763 56.26 54.92 NA
-*dDocent_Contig_121713 56.57 NA 59.6
-*dDocent_Contig_20883 59.15 NA 62.18
-*dDocent_Contig_57396 64.01 NA 67.04
-*dDocent_Contig_93961 64.53 NA 67.56
-*dDocent_Contig_31457 68.86 NA 71.89
-*dDocent_Contig_414 69.22 NA 72.25
-*dDocent_Contig_165225 69.38 NA 72.41
-*dDocent_Contig_319005 69.38 NA 72.41
-*dDocent_Contig_46150 69.38 NA 72.41
-*dDocent_Contig_3410 69.55 NA 72.58
-*dDocent_Contig_26071 69.89 NA 72.92
-*dDocent_Contig_58685 70.22 NA 73.25
-*dDocent_Contig_27583 71.22 NA 74.25
-*dDocent_Contig_27322 71.22 NA 74.25
-*dDocent_Contig_12068 71.39 NA 74.42
-*dDocent_Contig_200778 71.39 NA 74.42
-*dDocent_Contig_385543 71.39 NA 74.42
-*dDocent_Contig_234405 71.55 54.92 76.59
-*dDocent_Contig_121221 71.55 56.17 NA
-*dDocent_Contig_107013 71.55 NA 74.58
-*dDocent_Contig_166134 71.55 NA 75.25
-*dDocent_Contig_73935 71.55 NA 75.25
-*dDocent_Contig_85927 71.55 NA 75.25
+LOCUS POS POS_FamA POS_FamB LG
+*dDocent_Contig_326223 0 NA 0 18
+*dDocent_Contig_96260 1.34 0 NA 18
+*dDocent_Contig_128509 1.34 0 NA 18
+*dDocent_Contig_82487 1.34 0.16 1.34 18
+*dDocent_Contig_218579 1.34 NA 1.34 18
+*dDocent_Contig_32099 1.34 NA 1.34 18
+*dDocent_Contig_34764 1.34 NA 1.34 18
+*dDocent_Contig_69341 1.34 NA 1.34 18
+*dDocent_Contig_9670 1.5 0.16 NA 18
+*dDocent_Contig_129866 1.65 0.31 NA 18
+*dDocent_Contig_23646 1.65 0.31 NA 18
+*dDocent_Contig_40425 2.27 0.93 NA 18
+*dDocent_Contig_185066 2.27 1.24 2.01 18
+*dDocent_Contig_113552 2.88 1.54 NA 18
+*dDocent_Contig_34257 5.67 4.33 NA 18
+*dDocent_Contig_14167 5.67 4.33 NA 18
+*dDocent_Contig_21978 5.67 4.33 NA 18
+*dDocent_Contig_4216 8.34 7 NA 18
+*dDocent_Contig_29190 9.38000000000001 7 13.08 18
+*dDocent_Contig_13211 10.72 NA 13.75 18
+*dDocent_Contig_16253 10.72 NA 13.75 18
+*dDocent_Contig_11122 10.72 NA 13.75 18
+*dDocent_Contig_174602 10.72 NA 13.75 18
+*dDocent_Contig_187802 10.72 NA 13.75 18
+*dDocent_Contig_206879 10.72 NA 13.75 18
+*dDocent_Contig_27189 11.39 NA 14.42 18
+*dDocent_Contig_230190 11.39 NA 14.42 18
+*dDocent_Contig_102544 13.06 NA 16.09 18
+*dDocent_Contig_2978 15.87 14.53 NA 18
+*dDocent_Contig_5942 16.56 NA 19.59 18
+*dDocent_Contig_150 17.55 16.21 NA 18
+*dDocent_Contig_5372 18.01 16.67 19.59 18
+*dDocent_Contig_12495 18.48 17.14 NA 18
+*dDocent_Contig_23555 22.5 21.16 NA 18
+*dDocent_Contig_165474 23.11 21.77 NA 18
+*dDocent_Contig_150190 23.11 22.08 23.73 18
+*dDocent_Contig_347143 23.11 NA 25.27 18
+*dDocent_Contig_134963 23.42 22.08 NA 18
+*dDocent_Contig_89892 25.36 NA 28.39 18
+*dDocent_Contig_327203 27.45 26.11 NA 18
+*dDocent_Contig_21697 28.37 27.03 NA 18
+*dDocent_Contig_50990 28.89 27.55 NA 18
+*dDocent_Contig_26877 28.94 NA 31.97 18
+*dDocent_Contig_212866 28.94 NA 31.97 18
+*dDocent_Contig_115070 29.92 28.58 NA 18
+*dDocent_Contig_194468 30.57 NA 33.6 18
+*dDocent_Contig_212830 31.82 NA 34.85 18
+*dDocent_Contig_163160 33.44 28.58 37.88 18
+*dDocent_Contig_31240 33.44 31.67 NA 18
+*dDocent_Contig_245394 33.44 NA 36.8 18
+*dDocent_Contig_265782 33.44 NA 36.8 18
+*dDocent_Contig_81415 34.85 NA 37.88 18
+*dDocent_Contig_4533 35.19 32.6 42.69 18
+*dDocent_Contig_32458 35.19 32.91 NA 18
+*dDocent_Contig_23976 35.19 33.85 NA 18
+*dDocent_Contig_35456 35.19 NA 38.22 18
+*dDocent_Contig_9980 35.19 NA 38.55 18
+*dDocent_Contig_29128 35.19 NA 38.55 18
+*dDocent_Contig_301088 35.81 34.47 NA 18
+*dDocent_Contig_19709 37.98 36.64 NA 18
+*dDocent_Contig_363792 39.07 37.73 NA 18
+*dDocent_Contig_43009 39.07 37.73 NA 18
+*dDocent_Contig_132994 40.15 38.81 NA 18
+*dDocent_Contig_330230 41 NA 44.03 18
+*dDocent_Contig_116123 42.35 NA 45.38 18
+*dDocent_Contig_11109 43.35 NA 46.38 18
+*dDocent_Contig_243398 43.52 NA 46.55 18
+*dDocent_Contig_1092 43.68 NA 46.71 18
+*dDocent_Contig_19554 44.16 42.82 NA 18
+*dDocent_Contig_7405 44.35 NA 47.38 18
+*dDocent_Contig_186096 44.53 43.19 NA 18
+*dDocent_Contig_10043 45.03 NA 48.06 18
+*dDocent_Contig_24236 48.22 46.88 NA 18
+*dDocent_Contig_16344 48.82 NA 51.85 18
+*dDocent_Contig_37343 50.38 49.04 NA 18
+*dDocent_Contig_37926 51.93 50.59 NA 18
+*dDocent_Contig_4245 52.28 NA 55.31 18
+*dDocent_Contig_346077 52.55 51.21 NA 18
+*dDocent_Contig_291924 52.55 51.21 NA 18
+*dDocent_Contig_98348 52.96 NA 55.99 18
+*dDocent_Contig_122254 53.79 52.45 NA 18
+*dDocent_Contig_19576 54.1 52.76 NA 18
+*dDocent_Contig_362081 54.58 53.24 NA 18
+*dDocent_Contig_90958 54.58 53.24 57.02 18
+*dDocent_Contig_210753 54.58 53.24 NA 18
+*dDocent_Contig_9971 54.58 53.24 NA 18
+*dDocent_Contig_63030 55.03 53.69 NA 18
+*dDocent_Contig_244229 56.26 54.92 NA 18
+*dDocent_Contig_66763 56.26 54.92 NA 18
+*dDocent_Contig_121713 56.57 NA 59.6 18
+*dDocent_Contig_20883 59.15 NA 62.18 18
+*dDocent_Contig_57396 64.01 NA 67.04 18
+*dDocent_Contig_93961 64.53 NA 67.56 18
+*dDocent_Contig_31457 68.86 NA 71.89 18
+*dDocent_Contig_414 69.22 NA 72.25 18
+*dDocent_Contig_165225 69.38 NA 72.41 18
+*dDocent_Contig_319005 69.38 NA 72.41 18
+*dDocent_Contig_46150 69.38 NA 72.41 18
+*dDocent_Contig_3410 69.55 NA 72.58 18
+*dDocent_Contig_26071 69.89 NA 72.92 18
+*dDocent_Contig_58685 70.22 NA 73.25 18
+*dDocent_Contig_27583 71.22 NA 74.25 18
+*dDocent_Contig_27322 71.22 NA 74.25 18
+*dDocent_Contig_12068 71.39 NA 74.42 18
+*dDocent_Contig_200778 71.39 NA 74.42 18
+*dDocent_Contig_385543 71.39 NA 74.42 18
+*dDocent_Contig_234405 71.55 54.92 76.59 18
+*dDocent_Contig_121221 71.55 56.17 NA 18
+*dDocent_Contig_107013 71.55 NA 74.58 18
+*dDocent_Contig_166134 71.55 NA 75.25 18
+*dDocent_Contig_73935 71.55 NA 75.25 18
+*dDocent_Contig_85927 71.55 NA 75.25 18

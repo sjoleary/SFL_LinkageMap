@@ -2123,8 +2123,11 @@ Maps <- list(LG2_A, LG2_B)
 
 LG2 <- LPmerge(Maps, max.interval = 6, weights = NULL)
 
+LG2[[1]] <- LG2[[1]] %>%
+    mutate(LG = 2)
+
 # choose map
-write.table(LG2[[1]], "results/LG2.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG2[[1]], "results/LG2.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2241,8 +2244,11 @@ Maps <- list(LG3_A, LG3_B)
 
 LG3 <- LPmerge(Maps, max.interval = 3, weights = NULL)
 
+LG3[[1]] <- LG3[[1]] %>%
+    mutate(LG = 3)
+
 # choose map
-write.table(LG3[[1]], "results/LG3.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG3[[1]], "results/LG3.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2360,8 +2366,11 @@ Maps <- list(LG4_A, LG4_B)
 
 LG4 <- LPmerge(Maps, max.interval = 4, weights = NULL)
 
+LG4[[1]] <- LG4[[1]] %>%
+    mutate(LG = 4)
+
 # choose map
-write.table(LG4[[1]], "results/LG4.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG4[[1]], "results/LG4.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2479,8 +2488,11 @@ Maps <- list(LG5_A, LG5_B)
 
 LG5 <- LPmerge(Maps, max.interval = 19, weights = NULL)
 
+LG5[[1]] <- LG5[[1]] %>%
+    mutate(LG = 5)
+
 # choose map
-write.table(LG5[[1]], "results/LG5.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG5[[1]], "results/LG5.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2598,8 +2610,11 @@ Maps <- list(LG6_A, LG6_B)
 
 LG6 <- LPmerge(Maps, max.interval = 61, weights = NULL)
 
+LG6[[1]] <- LG6[[1]] %>%
+    mutate(LG = 6)
+
 # choose map
-write.table(LG6[[1]], "results/LG6.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG6[[1]], "results/LG6.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2717,8 +2732,11 @@ Maps <- list(LG7_A, LG7_B)
 
 LG7 <- LPmerge(Maps, max.interval = 1, weights = NULL)
 
+LG7[[1]] <- LG7[[1]] %>%
+    mutate(LG = 7)
+
 # choose map
-write.table(LG7[[1]], "results/LG7.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG7[[1]], "results/LG7.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2836,8 +2854,11 @@ Maps <- list(LG8_A, LG8_B)
 
 LG8 <- LPmerge(Maps, max.interval = 38, weights = NULL)
 
+LG8[[1]] <- LG8[[1]] %>%
+    mutate(LG = 8)
+
 # choose map
-write.table(LG8[[1]], "results/LG8.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG8[[1]], "results/LG8.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -2955,8 +2976,11 @@ Maps <- list(LG9_A, LG9_B)
 
 LG9 <- LPmerge(Maps, max.interval = 2, weights = NULL)
 
+LG9[[1]] <- LG9[[1]] %>%
+    mutate(LG = 9)
+
 # choose map
-write.table(LG9[[1]], "results/LG9.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG9[[1]], "results/LG9.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3075,8 +3099,11 @@ Maps <- list(LG10_A, LG10_B)
 
 LG10 <- LPmerge(Maps, max.interval = 2, weights = NULL)
 
+LG10[[1]] <- LG10[[1]] %>%
+    mutate(LG = 10)
+
 # choose map
-write.table(LG10[[1]], "results/LG10.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG10[[1]], "results/LG10.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3196,8 +3223,11 @@ Maps <- list(LG11_A, LG11_B)
 
 LG11 <- LPmerge(Maps, max.interval = 4, weights = NULL)
 
+LG11[[1]] <- LG11[[1]] %>%
+    mutate(LG = 11)
+
 # choose map
-write.table(LG11[[1]], "results/LG11.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG11[[1]], "results/LG11.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3315,8 +3345,11 @@ Maps <- list(LG12_A, LG12_B)
 
 LG12 <- LPmerge(Maps, max.interval = 5, weights = NULL)
 
+LG12[[1]] <- LG12[[1]] %>%
+    mutate(LG = 12)
+
 # choose map
-write.table(LG12[[1]], "results/LG12.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG12[[1]], "results/LG12.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3436,8 +3469,11 @@ Maps <- list(LG13_A, LG13_B)
 
 LG13 <- LPmerge(Maps, max.interval = 13, weights = NULL)
 
+LG13[[1]] <- LG13[[1]] %>%
+    mutate(LG = 13)
+
 # choose map
-write.table(LG13[[1]], "results/LG13.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG13[[1]], "results/LG13.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3556,8 +3592,11 @@ Maps <- list(LG14_A, LG14_B)
 
 LG14 <- LPmerge(Maps, max.interval = 6, weights = NULL)
 
+LG14[[1]] <- LG14[[1]] %>%
+    mutate(LG = 14)
+
 # choose map
-write.table(LG14[[1]], "results/LG14.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG14[[1]], "results/LG14.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3676,8 +3715,11 @@ Maps <- list(LG15_A, LG15_B)
 
 LG15 <- LPmerge(Maps, max.interval = 41, weights = NULL)
 
+LG15[[1]] <- LG15[[1]] %>%
+    mutate(LG = 15)
+
 # choose map
-write.table(LG15[[1]], "results/LG15.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG15[[1]], "results/LG15.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3796,8 +3838,11 @@ Maps <- list(LG16_A, LG16_B)
 
 LG16 <- LPmerge(Maps, max.interval = 50, weights = NULL)
 
+LG16[[1]] <- LG16[[1]] %>%
+    mutate(LG = 16)
+
 # choose map
-write.table(LG16[[1]], "results/LG16.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG16[[1]], "results/LG16.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -3916,8 +3961,11 @@ Maps <- list(LG17_A, LG17_B)
 
 LG17 <- LPmerge(Maps, max.interval = 9, weights = NULL)
 
+LG17[[1]] <- LG17[[1]] %>%
+    mutate(LG = 17)
+
 # choose map
-write.table(LG17[[1]], "results/LG17.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG17[[1]], "results/LG17.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4036,8 +4084,11 @@ Maps <- list(LG18_A, LG18_B)
 
 LG18 <- LPmerge(Maps, max.interval = 47, weights = NULL)
 
+LG18[[1]] <- LG18[[1]] %>%
+    mutate(LG = 18)
+
 # choose map
-write.table(LG18[[1]], "results/LG18.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG18[[1]], "results/LG18.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4156,8 +4207,11 @@ Maps <- list(LG19_A, LG19_B)
 
 LG19 <- LPmerge(Maps, max.interval = 3, weights = NULL)
 
+LG19[[1]] <- LG19[[1]] %>%
+    mutate(LG = 19)
+
 # choose map
-write.table(LG19[[1]], "results/LG19.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG19[[1]], "results/LG19.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4275,8 +4329,11 @@ Maps <- list(LG20_A, LG20_B)
 
 LG20 <- LPmerge(Maps, max.interval = 1, weights = NULL)
 
+LG20[[1]] <- LG20[[1]] %>%
+    mutate(LG = 20)
+
 # choose map
-write.table(LG20[[1]], "results/LG20.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG20[[1]], "results/LG20.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4395,8 +4452,11 @@ Maps <- list(LG21_A, LG21_B)
 
 LG21 <- LPmerge(Maps, max.interval = 2, weights = NULL)
 
+LG21[[1]] <- LG21[[1]] %>%
+    mutate(LG = 21)
+
 # choose map
-write.table(LG21[[1]], "results/LG21.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG21[[1]], "results/LG21.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4515,8 +4575,11 @@ Maps <- list(LG22_A, LG22_B)
 
 LG22 <- LPmerge(Maps, max.interval = 1, weights = NULL)
 
+LG22[[1]] <- LG22[[1]] %>%
+    mutate(LG = 22)
+
 # choose map
-write.table(LG22[[1]], "results/LG22.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG22[[1]], "results/LG22.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4635,8 +4698,11 @@ Maps <- list(LG23_A, LG23_B)
 
 LG23 <- LPmerge(Maps, max.interval = 20, weights = NULL)
 
+LG23[[1]] <- LG23[[1]] %>%
+    mutate(LG = 23)
+
 # choose map
-write.table(LG23[[1]], "results/LG23.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG23[[1]], "results/LG23.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
@@ -4755,14 +4821,17 @@ Maps <- list(LG24_A, LG24_B)
 
 LG24 <- LPmerge(Maps, max.interval = 3, weights = NULL)
 
+LG24[[1]] <- LG24[[1]] %>%
+    mutate(LG = 24)
+
 # choose map
-write.table(LG24[[1]], "results/LG24.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB"))
+write.table(LG24[[1]], "results/LG24.consensus", quote = FALSE, row.names = FALSE, col.names = c("LOCUS", "POS", "POS_FamA", "POS_FamB", "LG"))
 
 ```
 
-# Finalize southern flounder linkage map
+## Finalize southern flounder linkage map
 
-Import all merged consensus linkage groups.
+Import all merged consensus linkage groups and combine into one map file.
 
 ```{r}
 
@@ -4782,17 +4851,112 @@ for (df in dflist_consensus)
 map <- ldply(dflist_consensus, data.frame) %>%
     select(LOCUS, LG, POS)
 
-write.table(map, "results/SFL.map", col.names = TRUE, quote = FALSE)
+write.table(map, "results/SFL.map", 
+            col.names = TRUE, row.names = FALSE, sep = "\t", quote = FALSE)
 
 ```
+
+
+# Compare stats for sex-specific, family and consensus linkage maps
+
+Load sex-specific maps:
+
+```{r}
+
+FamA_F.map <- read.delim("results/FamA_F.map", 
+                   stringsAsFactors = FALSE, sep = "",
+                   col.names = c("LOCUS", "LG_FamA_F", "POS"))
+
+FamA_M.map <- read.delim("results/FamA_M.map", 
+                   stringsAsFactors = FALSE, sep = "",
+                   col.names = c("LOCUS", "LG_FamA_M", "POS"))
+
+FamB_F.map <- read.delim("results/FamB_F.map", 
+                   stringsAsFactors = FALSE, sep = "",
+                   col.names = c("LOCUS", "LG_FamB_F", "POS"))
+
+FamB_M.map <- read.delim("results/FamB_M.map", 
+                   stringsAsFactors = FALSE, sep = "",
+                   col.names = c("LOCUS", "LG_FamB_M", "POS"))
+
+```
+
+Load family maps:
+
+```{r}
+
+FamA.map <- read.delim("results/FamA_family.map", 
+                   stringsAsFactors = FALSE, sep = "",
+                   col.names = c("LOCUS", "LG_FamA", "POS")) %>%
+    mutate(LOCUS = str_sub(LOCUS, 2))
+
+FamB.map <- read.delim("results/FamB_family.map", 
+                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LOCUS", "LG_FamB", "POS")) %>%
+    mutate(LOCUS = str_sub(LOCUS, 2))
+
+```
+
+Load consensus map:
+
+```{r}
+
+SFL.map <- read.delim("results/SFL.map", 
+                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
+                   col.names = c("LOCUS", "LG", "POS")) %>%
+    mutate(LOCUS = str_sub(LOCUS, 2))
+
+```
+
+## Identify corresponding LG:
+
+
+```{r}
+
+LGs <- inner_join(FamA_F.map, FamA_M.map, by = "LOCUS")
+
+LGs <- inner_join(FamA.map, LGs, by = "LOCUS")
+
+LGs <- inner_join(FamB_F.map, LGs, by = "LOCUS")
+
+LGs <- inner_join(FamB_M.map, LGs, by = "LOCUS")
+
+LGs <- inner_join(FamB.map, LGs, by = "LOCUS")
+
+LGs <- inner_join(SFL.map, LGs, by = "LOCUS") %>%
+    select(LG, LG_FamB, LG_FamB_F, LG_FamB_M, LG_FamA, LG_FamA_F, LG_FamA_M) %>%
+    distinct(LG, .keep_all = TRUE) %>%
+    add_row(LG = 12, 
+            LG_FamB = 5,
+            LG_FamB_F = 5,
+            LG_FamB_M = 6,
+            LG_FamA = 12,
+            LG_FamA_F = 16,
+            LG_FamA_M = 2)
+
+write.table(LGs, "results/LGs", row.names = FALSE, col.names = TRUE, quote = FALSE)
+
+```
+
+## Compare length and number of loci:
 
 Number of markers per linkage group:
 
 ```{r}
 
-temp <- count(map, LG)
+temp <- count(SFL.map, LG)
 
-temp
+temp <- count(FamA.map, LG_FamA)
+
+temp <- count(FamA_F.map, LG_FamA_F)
+
+temp <- count(FamA_M.map, LG_FamA_M)
+
+temp <- count(FamB.map, LG_FamB)
+
+temp <- count(FamB_F.map, LG_FamB_F)
+
+temp <- count(FamB_M.map, LG_FamB_M)
 
 ```
 
@@ -4800,13 +4964,37 @@ Length per linkage group:
 
 ```{r}
 
-temp <- map %>%
+temp <- SFL.map %>%
     group_by(LG) %>%
     summarize(length = max(POS))
 
-temp
+temp <- FamA.map %>%
+    group_by(LG_FamA) %>%
+    summarize(length = max(POS))
+
+temp <- FamA_F.map %>%
+    group_by(LG_FamA_F) %>%
+    summarize(length = max(POS))
+
+temp <- FamA_M.map %>%
+    group_by(LG_FamA_M) %>%
+    summarize(length = max(POS))
+
+temp <- FamB.map %>%
+    group_by(LG_FamB) %>%
+    summarize(length = max(POS))
+
+temp <- FamB_F.map %>%
+    group_by(LG_FamB_F) %>%
+    summarize(length = max(POS))
+
+temp <- FamB_M.map %>%
+    group_by(LG_FamB_M) %>%
+    summarize(length = max(POS))
 
 ```
+
+## Plot linkage maps
 
 Plot linkage map:
 

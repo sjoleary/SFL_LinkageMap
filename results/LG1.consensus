@@ -1,4 +1,4 @@
-LOCUS LG POS POS_FamA POS_FamB
+LOCUS POS POS_FamA POS_FamB LG
 *dDocent_Contig_307589 0 0 NA 1
 *dDocent_Contig_204687 0.360000000000001 0 0 1
 *dDocent_Contig_5988 1.54 0.62 4.44 1
