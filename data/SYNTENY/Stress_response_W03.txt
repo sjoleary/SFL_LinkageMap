@@ -1,0 +1,21 @@
+CONTIG_ID	ACCESSION	GENE_ID	GO_PROCESS	STUDY	CONTEXT
+ALD-o1	AJ298325	Aldehyde dehydrogenase		Williams_2003	stress_response
+CB5-l21	AJ508535	Dihydropyrimidine dehydrogenase		Williams_2003	stress_response
+COL-o5	AJ300776	EF2		Williams_2003	stress_response
+COX-l4	AJ300777	Transferrin		Williams_2003	stress_response
+CYP-o049	AJ132353	CYP1A		Williams_2003	stress_response
+G78-g1	AJ305218	GRP-78		Williams_2003	stress_response
+H60-l4	AJ306231	a-2HS-glycoprotein		Williams_2003	stress_response
+H60-l4	AJ306231	a-2HS-glycoprotein		Williams_2003	stress_response
+HEM2-l24	AJ508543	Ferritin H/M chain		Williams_2003	stress_response
+ORN-l2	AJ306293	ODC		Williams_2003	stress_response
+PARA-o2	AJ292086	Paraoxonase		Williams_2003	stress_response
+PARA-o2	AJ292086	Paraoxonase		Williams_2003	stress_response
+SHA1E8	AJ508728	Int-6		Williams_2003	stress_response
+SHA2G4	AJ508733	Complement C3		Williams_2003	stress_response
+SOD-o1	AJ291980	Cu/Zn SOD		Williams_2003	stress_response
+SOD-o1	AJ291980	Cu/Zn SOD		Williams_2003	stress_response
+TGF-l1	AJ291984	EF1-delta		Williams_2003	stress_response
+UGT-l3	AJ291986	UDPGT		Williams_2003	stress_response
+UGT-l3	AJ291986	UDPGT		Williams_2003	stress_response
+VTG-1	AJ416327	Vitellogenin		Williams_2003	stress_response

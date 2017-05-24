@@ -1,0 +1,1196 @@
+CONTIG_ID	ACCESSION	GENE_ID	GO_PROCESS	STUDY	CONTEXT
+Contig433	DV568532	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig504	AJ132353	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig22	AJ291833	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig524	AJ291982	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig477	AJ291984	Eukaryotic translation elongation factor 1-delta	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig963	AJ305221	Survival motor neuron domain containing 1	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig422	AJ305222	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig151	AJ306239	Complement component C8 beta chain precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfFMO2-ll0	AJ310420	inter-alpha-trypsin inhibitor heavy chain 2	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig509	AJ310717	NADH Dehydrogenase subunit 1	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig958	AJ508545	similar to putative membrane protein isoform 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig509	AJ508726	NADH Dehydrogenase subunit 1	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig492	AJ508730	c-Fos	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig1018	AJ543333	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig143	AJ543335	"cytochrome P450, family 8, subfamily B, CYP8B1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig143	AJ543339	"cytochrome P450, family 8, subfamily B, CYP8B1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig986	AJ543346	bile salt-activated lipase (BAL)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig516	AJ543351	complement component C3	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig423	AJ543371	calreticulin	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig1018	AJ578001	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig275	AJ578013	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig265	AJ580508	similar to direct IAP binding protein with low PI	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig275	AJ580509	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig425	AJ580740	Swiprosin 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig850	AJ580757	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig899	AJ605121	Hypothetical protein LOC553695	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig793	AJ605122	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig275	AJ605124	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig492	AJ605132	c-Fos	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig465	AJ605133	Cytochrome c	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfBF1C11	AJ605135	Inter-alpha-trypsin inhibitor heavy chain H3 precursor.	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig275	AJ605267	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig724	AJ605271	Cytochrome P450 monooxygenase CYP2K6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig981	AJ605273	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig509	AJ605274	NADH Dehydrogenase subunit 1	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig723	AJ605278	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfCF1D9	AJ605285	Spermidine/spermine N1-acetyltransferase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig323	AJ606079	"Aldehyde dehydrogenase 9 family, member A1 like 1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig641	AM041911	"splicing factor, arginine/serine-rich 2 (SC-35)"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig981	AM041914	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig524	AM041915	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig1093	AM041922	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig524	AM041923	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig524	AM041926	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig850	AM041927	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig606	ay156726	Peroxiredoxin 6	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig440	ay313952	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig981	C379550	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL001C01	DV565301	Apolipoprotein C-I precursor	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig723	DV565308	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565309	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig543	DV565314	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig543	DV565319	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565321	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565323	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig477	DV565328	Eukaryotic translation elongation factor 1-delta	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig723	DV565333	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV565340	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV565341	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig433	DV565345	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig410	DV565349	glutathione peroxidase 1	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig274	DV565358	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV565364	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig723	DV565375	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV565390	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig531	DV565391	60S ribosomal protein L13	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig22	DV565392	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+PfIL006D01	DV565394	formyltetrahydrofolate dehydrogenase isoform a	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig1015	DV565397	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL006E06	DV565404	"solute carrier family 6, member 19"	Transport	Falciani_2008	diff_exp_control_loc
+Contig504	DV565414	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig504	DV565416	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig275	DV565417	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig350	DV565419	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL007A06	DV565430	carboxypeptidase B	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL007B07	DV565434	MHC class II antigen gene cluster	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig850	DV565436	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig647	DV565437	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig723	DV565439	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565443	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565450	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL001E01	DV565451	Cytochrome P450 24A1	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig433	DV565457	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565459	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	DV565465	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig425	DV565472	Swiprosin 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig433	DV565470	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	DV565475	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV565478	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig543	DV565488	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig534	DV565502	Vitronectin	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig422	DV565505	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	DV565516	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig240	DV565517	Phospholipase A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig433	DV565521	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL008C04	DV565523	complement component C9	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig981	DV565528	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV565541	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL009F04	DV565544	Cyclin G1	Cell Cycle	Falciani_2008	diff_exp_control_loc
+Contig723	DV565552	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig39	DV565557	superficial zone protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig22	DV565569	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+PfIL011C04	DV565574	splicing factor arginine/serine-rich 3	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig793	DV565578	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig39	DV565585	superficial zone protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig22	DV565589	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig1093	DV565591	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig275	DV565596	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig1018	DV565602	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	DV565608	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL012C12	DV565613	S100-like calcium binding protein	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig723	DV565615	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL013A02	DV565633	Oligosaccharyl transferase 48 kDa subunit	Protein Modification	Falciani_2008	diff_exp_control_loc
+Contig730	DV565636	urate oxidase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig443	DV565642	"proteasome (prosome, macropain) 26S subunit, non-ATPase, 12"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL013C03	DV565644	3-beta-hydroxysterol delta-24 reductase	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig730	DV565647	urate oxidase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL013F01	DV565655	JFMIP1b pseudogene premature mRNA for  MIP1beta	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig723	DV565657	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig431	DV565667	Probable urocanate hydratase (Urocanase)	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig22	DV565672	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig543	DV565674	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig752	DV565675	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig441	DV565688	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV565689	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig427	DV565703	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV565709	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV565713	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig980	DV565716	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	DV565739	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV565741	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL140C05	DV565742	hypothetical protein similar to KIAA1281	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig441	DV565746	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig723	DV565752	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV565763	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig723	DV565777	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig350	DV565779	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV565780	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL201C01	DV565788	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig274	DV565790	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV565800	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL201G03	DV565807	2-amino-3-carboxymuconate-6-semialdehyde decarboxylase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL201H09	DV565815	B-cell receptor CD22	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig543	DV565820	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig427	DV565822	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig352	DV565825	x-box binding protein 1B	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig440	DV565833	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig422	DV565838	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig423	DV565843	calreticulin	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig813	DV565849	Annexin A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig429	DV565868	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig1018	DV565871	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1093	DV565876	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig476	DV565877	VHSV-induced protein-5	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig814	DV565887	Retinol dehydrogenase type I	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV565888	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV565890	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV565891	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL203B09	DV565899	transmembrane serine protease 7	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig1012	DV565910	Cholesteryl ester transfer protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig22	DV565913	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+PfIL203F12	DV565921	"nuclear factor kappa-B, subunit 1"	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig589	DV565925	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig22	DV565932	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig401	DV565949	sepiapterin reductase	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig955	DV565952	Peripheral-type benzodiazepine receptor	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig589	DV565955	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL205A06	DV565975	FLJ35382 protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL205E02	DV565989	Geminin	Cell Cycle	Falciani_2008	diff_exp_control_loc
+Contig440	DV565995	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL205G11	DV566003	Sodium/potassium ATPase alpha subunit isoform 1	Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV566004	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig57	DV566009	phenylalanine hydroxylase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV566010	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig986	DV566011	bile salt-activated lipase (BAL)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig275	DV566037	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig68	DV566038	Macrophage mannose receptor precursor (MMR) (CD206 antigen)	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig57	DV566042	phenylalanine hydroxylase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig108	DV566049	cytochrome P450 3A45	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig562	DV566053	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig427	DV566059	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig429	DV566062	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig564	DV566068	similar to interleukin 25	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL207E10	DV566070	C1R/C1S subunit of Ca2+-dependent complex	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL208A11	DV566093	stress-associated endoplasmic reticulum protein 1	Protein Modification	Falciani_2008	diff_exp_control_loc
+Contig842	DV566094	60S ribosomal protein L31	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig422	DV566110	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig427	DV566111	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV566125	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig239	DV566145	adipose differentiation-related protein; adipophilin	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig122	DV566149	Diablo	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL209G11	DV566155	MECL1 proteasome	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig298	DV566165	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+PfIL210B04	DV566168	baculoviral IAP repeat-containing 5A; survivin 1	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL210C06	DV566174	component of oligomeric golgi complex 5 (COG5)	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL210C09	DV566175	fumarylacetoacetate hydrolase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL210E01	DV566184	"hydroxyacid oxidase 1, liver; glycolate oxidase 1"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	DV566209	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig850	DV566223	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL212C11	DV566228	Beta-hexosaminidase alpha chain precursor	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig145	DV566251	"3-hydroxyanthranilate 3,4-dioxygenase 3-HAO"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig868	DV566259	40S ribosomal protein S29	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig441	DV566263	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL213G08	DV566274	Vacuolar protein sorting-associated protein 45	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig752	DV566278	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig338	DV566288	Hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig844	DV566301	"Cytochrome c oxidase subunit IV isoform 2, mitochondrial precursor"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig22	DV566330	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig589	DV566335	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL216B11	DV566345	"isocitrate dehydrogenase 2 (NADP+), mitochondrial"	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig146	DV566356	"3-hydroxyanthranilate 3,4-dioxygenase 3-HAO"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig744	DV566359	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig433	DV566381	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL218B01	DV566389	betaine-homocysteine methyltransferase (Bhmt)	Protein Modification	Falciani_2008	diff_exp_control_loc
+PfIL218B01	DV566389	betaine-homocysteine methyltransferase (Bhmt)	Protein Modification	Falciani_2008	Lindane
+PfIL218B01	DV566389	betaine-homocysteine methyltransferase (Bhmt)	Protein Modification	Falciani_2008	Perfluoro-octanoicacid
+PfIL218E11	DV566408	mitochondrial ribosomal protein L14	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL218E11	DV566408	mitochondrial ribosomal protein L14	Protein Synthesis	Falciani_2008	Cadmium
+Contig844	DV566415	"Cytochrome c oxidase subunit IV isoform 2, mitochondrial precursor"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig577	DV566418	"cDNA clone up127 similar to proline permease (sodium/proline symporter),"	Transport	Falciani_2008	diff_exp_control_loc
+Contig744	DV566451	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig723	DV566452	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV566481	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig323	DV566489	"Aldehyde dehydrogenase 9 family, member A1 like 1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV566490	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV566491	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV566495	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV566500	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV566502	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig352	DV566506	x-box binding protein 1B	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig22	DV566510	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+PfIL222F11	DV566527	"coatomer protein complex, subunit beta 1"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig441	DV566532	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL223B05	DV566542	"similar to UNR protein (N-ras upstream gene protein), transcript variant 1"	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL223C05	DV566549	Protective protein for beta-galactosidase	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL223C05	DV566549	Protective protein for beta-galactosidase	Proteases and Protease Inhibitors	Falciani_2008	Methylcholanthrene
+Contig739	DV566551	transmembrane 4 superfamily member 4	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig440	DV566556	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL223D11	DV566557	eukaryotic translation initiation factor 4E binding protein 1	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL223G08	DV566569	similar to transthyretin (4L369)	Transport	Falciani_2008	diff_exp_control_loc
+PfIL223G10	DV566570	Leucine-rich alpha-2-glycoprotein 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig433	DV566574	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig429	DV566575	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig577	DV566582	"cDNA clone up127 similar to proline permease (sodium/proline symporter),"	Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV566583	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig352	DV566593	x-box binding protein 1B	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig723	DV566598	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL224F02	DV566602	ZPAX	Vitellogenesis	Falciani_2008	diff_exp_control_loc
+Contig589	DV566607	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig793	DV566613	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL225B11	DV566624	Transcription factor TZP homolog	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig589	DV566627	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV566632	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL225F02	DV566636	Hyaluronic acid binding protein 2	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig338	DV566638	Hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig146	DV566640	Phospholipase A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig793	DV566646	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig427	DV566649	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig413	DV566657	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig429	DV566659	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig440	DV566661	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV566670	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL226F08	DV566680	Proteasome subunit alpha type 4	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL226G11	DV566685	"Tryptophan 2,3-dioxygenase"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig629	DV566686	prothrombin precursor	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig531	DV566687	60S ribosomal protein L13	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL227A07	DV566692	basigin bsg	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL227B07	DV566697	Coiled-coil domain containing protein 5	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL227C08	DV566701	Butyrate response factor 2	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig752	DV566702	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig593	DV566710	M phase phosphoprotein 6	Cell Cycle	Falciani_2008	diff_exp_control_loc
+Contig593	DV566711	M phase phosphoprotein 6	Cell Cycle	Falciani_2009	diff_exp_control_loc
+PfIL227G02	DV566718	apolipoprotein E	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig440	DV566722	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig457	DV566725	CDA08-B12.y1d-s SHGC-CDA sim to hippocalcin-like 1	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig265	DV566726	similar to direct IAP binding protein with low PI	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig589	DV56673	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig600	DV566738	Aurora-A kinase interacting protein	Protein Modification	Falciani_2008	diff_exp_control_loc
+Contig589	DV566739	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV566743	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig744	DV566752	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig589	DV566754	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig647	DV566759	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig440	DV566760	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL228H02	DV566763	integrin beta 1 isoform 1A precursor	Cell Adhesion	Falciani_2008	diff_exp_control_loc
+Contig275	DV566765	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig752	DV566771	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV566773	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig793	DV566774	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig597	DV566779	alpha-1-microglobulin/bikunin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL229D06	DV566780	anion exchanger 2	Transport	Falciani_2008	diff_exp_control_loc
+Contig119	DV566783	aldehyde dehydrogenase 2	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL229G07	DV566793	ring finger protein 7	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL229G12	DV566796	phosphoethanolamine methyltransferase	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig427	DV566814	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig146	DV566825	Phospholipase A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL230G02	DV566828	alpha-2-macroglobulin	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig600	DV566830	Aurora-A kinase interacting protein	Protein Modification	Falciani_2008	diff_exp_control_loc
+PfIL230G07	DV566831	"SEC22, vesicle trafficking protein-like 1B"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig601	DV566832	"Proteasome (Prosome, macropain) subunit, beta type, 8"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig589	DV566833	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig439	DV566834	Hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig723	DV566838	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV566843	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL231C07	DV566849	Heat shock cognate 71 kDa protein	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig440	DV566854	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL231F07	DV566866	Integrin alpha V subunit	Cell Adhesion	Falciani_2008	diff_exp_control_loc
+PfIL232A05	DV566878	FAST kinase domains 3	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig723	DV566879	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL232B08	DV566885	neutral amino acid transporter	Transport	Falciani_2008	diff_exp_control_loc
+Contig441	DV566894	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig824	DV566898	Immunoglobulin lambda-like polypeptide 1 precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL232G03	DV566912	Nucleophosmin 1	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig298	DV566914	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+PfIL232H02	DV566918	lipocalin-type prostaglandin D synthase-like protein	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV566921	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig415	DV566923	stress-induced-phosphoprotein 1 (Hsp70/Hsp90-organizing protein) XSTI1	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig723	DV566924	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV566925	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL233D05	DV566937	Protein BAT5 (HLA-B-associated transcript 5) (NG26 protein) (G5)  (PP199)	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL233E06	DV566942	growth factor independent 1B	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL233E09	DV566945	40S ribosomal protein S3	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL233F02	DV566948	centromere/kinetochore protein zw10 homolog	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL233F03	DV566949	yellowtail growth hormone like protein-1	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL233F03	DV566949	yellowtail growth hormone like protein-1	Signal Transduction	Falciani_2008	Perfluoro-octanoicacid
+Contig589	DV566959	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV566961	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig134	DV566966	putative complement factor Bf/C2	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig427	DV566984	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL234G05	DV567000	eukaryotic translation initiation factor 5	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig274	DV567009	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig606	DV567025	Peroxiredoxin 6	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig422	DV567031	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL235F11	DV567044	Septin 5	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL235F11	DV567044	Septin 5	Cell Cycle	Falciani_2008	Cadmium
+Contig441	DV567045	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig274	DV567048	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL235H07	DV567052	Thioredoxin-like 1	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+PfIL236A07	DV567057	"DnAJ (Hsp40) homolog, subfamily C, member 1"	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig274	DV567059	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig427	DV567063	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig427	DV567071	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig433	DV567079	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV567091	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig477	DV567092	Eukaryotic translation elongation factor 1-delta	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL237A05	DV567094	MADP-1 protein	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL237A05	DV567094	MADP-1 protein	Nucleic Acid Metabolism	Falciani_2008	Cadmium
+PfIL237A07	DV567095	CCT (chaperonin containing T-complex polypeptide 1) epsilon subunit	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig562	DV567097	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig425	DV56710	Swiprosin 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig875	DV567104	"Capping protein (actin filament) muscle Z-line, beta"	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+PfIL237C04	DV567105	p24 delta1 putative cargo receptor	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL237D07	DV567111	RNA binding motif protein 35A isoform 1	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL237D11	DV567112	Heat shock protein 90 beta	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig814	DV567113	Retinol dehydrogenase type I	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL237F09	DV567122	GC-rich promoter binding protein 1-like 1	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig443	DV567124	"proteasome (prosome, macropain) 26S subunit, non-ATPase, 12"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL237G04	DV567127	cDNA clone up059 similar to transmembrane protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig198	DV567128	"Retinol dehydrogenase 12, like"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL237G06	DV567129	gamma-butyrobetaine hydroxylase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL237G08	DV567130	Endosome-associated protein	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV567132	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig22	DV567134	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig844	DV567135	"Cytochrome c oxidase subunit IV isoform 2, mitochondrial precursor"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig274	DV567145	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig401	DV567153	sepiapterin reductase	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV567157	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig793	DV567163	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL238E11	DV567165	Arrestin domain containing 3	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL238H09	DV567178	Histone H2B	Histones and Histone Modifiers	Falciani_2008	diff_exp_control_loc
+Contig108	DV567187	cytochrome P450 3A45	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL239C04	DV567188	H+ transporting F1 ATP synthase epsilon subunit	Energy Generation	Falciani_2008	diff_exp_control_loc
+PfIL239C07	DV567189	Cathepsin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL240B03	DV567219	GABA(A) receptor-associated protein like 2	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL240C10	DV567229	Fibrinogen gamma chain precursor	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig589	DV567236	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig427	DV567240	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL240F01	DV567242	Malate dehydrogenase	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig793	DV567253	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV567254	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig209	DV567255	C-type lectin receptor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV567263	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV567270	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV567278	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig793	DV567283	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL241D10	DV567289	"arginase, type I; A-I"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig439	DV567292	Hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig868	DV567300	40S ribosomal protein S29	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig305	DV567316	HSPC171 protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig265	DV567320	similar to direct IAP binding protein with low PI	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL242B11	DV567322	hypothetical protein CG3209-PA	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig562	DV567330	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig138	DV567333	alcohol dehydrogenase Class VI	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig134	DV567342	putative complement factor Bf/C2	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL242G10	DV567352	MLN64 N-terminal domain homolog	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig827	DV567357	hypothetical protein XP_701076	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV567361	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL243C02	DV567366	EF hand containing family 1A (Smhs2)	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig623	DV567386	Hypothetical protein DKFZp459B102	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig803	DV567391	Cystatin domain fetuin-like protein	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL243H10	DV567392	hypothetical protein LOC555795	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig117	DV567406	Beta-microseminoprotein precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig440	DV567412	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV567414	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig122	DV567420	Diablo	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig589	DV567421	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1093	DV567441	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig803	DV567443	Cystatin domain fetuin-like protein	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig433	DV567450	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig342	DV567452	Tnfa-induced adipose-related protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig413	DV567457	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig589	DV567463	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig307	DV567466	transmembrane emp24 protein transport domain containing 7 (TMED7)	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig413	DV567472	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig413	DV567475	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig364	DV567482	"Translocon associated protein, gamma subunit"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig350	DV567489	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig875	DV567493	"Capping protein (actin filament) muscle Z-line, beta"	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig509	DV567501	NADH Dehydrogenase subunit 1	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig589	DV567506	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV567508	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL246H02	DV567509	Protein tyrosine phosphatase-like member b	Protein Modification	Falciani_2008	diff_exp_control_loc
+Contig589	DV567512	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig629	DV567519	prothrombin precursor	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig747	DV567525	Myo-inositol monophosphatase	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig413	DV567526	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig364	DV567528	"Translocon associated protein, gamma subunit"	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL247C09	DV567529	Ubiquitin-like 4	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig440	DV567546	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig166	DV567558	Pre-mRNA splicing factor ATP-dependent RNA helicase PRP16	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig647	DV567560	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig589	DV567563	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV567568	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig151	DV567571	Complement component C8 beta chain precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL248F12	DV567581	3 beta-hydroxysteroid dehydrogenase type VII	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV567586	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig457	DV567587	CDA08-B12.y1d-s SHGC-CDA sim to hippocalcin-like 1	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig352	DV567593	x-box binding protein 1B	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig723	DV567600	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	DV567606	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL249C03	DV567613	small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV567618	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig637	DV567622	B-cell receptor-associated protein BAP37	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig458	DV567625	Vitellogenin	Vitellogenesis	Falciani_2008	diff_exp_control_loc
+Contig205	DV567626	NADPH oxidase cytosolic protein p67phox	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig433	DV567635	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV567639	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL249H04	DV567648	V-ATPase A subunit 1	Energy Generation	Falciani_2008	diff_exp_control_loc
+PfIL249H12	DV567651	Sorting nexin-12	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig151	DV567652	Complement component C8 beta chain precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig868	DV567654	40S ribosomal protein S29	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig981	DV567656	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig997	DV567667	SWAN RNA binding motif protein 12	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL250D03	DV567672	acetyl-Coenzyme A acyltransferase 2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL250D12	DV567673	complement component C7	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig641	DV567677	"splicing factor, arginine/serine-rich 2 (SC-35)"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig147	DV567688	"3-hydroxyanthranilate 3,4-dioxygenase 3-HAO"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL250H07	DV567695	BUB3 budding uninhibited by benzimidazoles 3-like protein	Cell Cycle	Falciani_2008	diff_exp_control_loc
+Contig752	DV567697	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig413	DV567699	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig298	DV567701	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig589	DV567709	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV567712	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig147	DV567718	Ubiquitin-conjugating enzyme E2N	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL251E01	DV567724	UXT protein	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig240	DV567728	Phospholipase A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig275	DV567738	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig647	DV567747	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig850	DV567748	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig427	DV567752	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL252C04	DV567763	Muc19 precursor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig980	DV567772	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig454	DV567791	glyoxylate reductase/hydroxypyruvate reductase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig298	DV567792	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig138	DV567797	alcohol dehydrogenase Class VI	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig651	DV567809	Insulin induced gene 1	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV567814	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig350	DV567816	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL253F02	DV567822	cytochrome c oxidase	Energy Generation	Falciani_2008	diff_exp_control_loc
+PfIL253F02	DV567822	cytochrome c oxidase	Energy Generation	Falciani_2008	Perfluoro-octanoicacid
+Contig410	DV567846	glutathione peroxidase 1	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+PfIL254B09	DV567847	Retinoic acid receptor responder	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig294	DV567849	proteolipid protein 2	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV567859	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig350	DV567866	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL254F08	DV567872	Nf-kappa B activator (TANK)	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL254G01	DV567875	transmembrane protein 16D	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL254G05	DV567875	DEAH (Asp-Glu-Ala-His) box polypeptide 38	Other or Unknown	Falciani_2008	Lindane
+Contig166	DV567877	Pre-mRNA splicing factor ATP-dependent RNA helicase PRP16	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL254G11	DV567880	Alcohol dehydrogenase class III	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV567881	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV567884	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig562	DV567888	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL255A01	DV567891	solute carrier family 22	Transport	Falciani_2008	diff_exp_control_loc
+PfIL255B11	DV567899	Similar to glycogen synthase 1	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL255B11	DV567899	Similar to glycogen synthase 1	Carbohydrate Metabolism	Falciani_2008	Methylcholanthrene
+Contig1015	DV567905	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig666	DV567911	Eukaryotic translation elongation factor 1 beta 2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL255E12	DV567919	heat shock protein gp96	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+PfIL255H02	DV567933	Reticulon 1	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig589	DV567960	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL256F09	DV567964	"adaptor-related protein complex 3, sigma 1 subunit"	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig294	DV567966	proteolipid protein 2	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig275	DV567974	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig391	DV567975	Solute carrier family 22 member 7	Transport	Falciani_2008	diff_exp_control_loc
+Contig413	DV567979	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL257A02	DV567980	cDNA clone no520h12 sim to transducin (beta)-like 2	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig440	DV567983	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig433	DV567984	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV567986	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig980	DV567993	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL257D11	DV567998	Vitellogenin	Vitellogenesis	Falciani_2008	diff_exp_control_loc
+PfIL257E02	DV567999	"C-type lectin, superfamily member 9"	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL257G07	DV568013	cDNA clone up050 similar to PTPRJ	Protein Modification	Falciani_2008	diff_exp_control_loc
+PfIL257H03	DV568017	Tnfa-induced adipose-related protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL257H03	DV568017	Tnfa-induced adipose-related protein	Lipid Transport	Falciani_2008	Aroclor
+Contig723	DV568018	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL257H07	DV568019	C-C chemokine receptor 9	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568028	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig453	DV568029	histamine N-methyltransferase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL258B03	DV568031	protein-lysine 6-oxidase	Protein Modification	Falciani_2008	diff_exp_control_loc
+PfIL258B11	DV568036	Inhibitor of DNA binding 2	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig589	DV568037	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig138	DV568050	alcohol dehydrogenase Class VI	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV568051	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig143	DV568052	"cytochrome P450, family 8, subfamily B, CYP8B1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig504	DV568057	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV568065	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig981	DV568066	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL258H08	DV568071	proteasome alpha 1 subunit isoform 2	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL258H08	DV568071	proteasome alpha 1 subunit isoform 2	Protein Degradation	Falciani_2008	Methylcholanthrene
+Contig744	DV568080	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig342	DV568082	Tnfa-induced adipose-related protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL259D05	DV568096	class I helical cytokine receptor number 26	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL259D05	DV568096	class I helical cytokine receptor number 26	Immune Function and Inflammation	Falciani_2008	Perfluoro-octanoicacid
+Contig589	DV568100	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig439	DV568110	Hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568125	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig458	DV568127	Vitellogenin	Vitellogenesis	Falciani_2008	diff_exp_control_loc
+Contig158	DV568134	"novel protein similar to vertebrate RAS-like, estrogen-regulated, growth-inhibitor (RERG)"	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig440	DV568135	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig465	DV568141	Cytochrome c	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig440	DV568146	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig440	DV568148	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL260C08	DV568150	"Glutathione S-transferase, theta 3"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig338	DV568154	Hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig562	DV568156	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL260E09	DV568159	Homeobox protein Hox-C9	Transcription Factors	Falciani_2008	diff_exp_control_loc
+PfIL260E09	DV568159	Homeobox protein Hox-C9	Transcription Factors	Falciani_2008	Cadmium
+Contig138	DV568162	alcohol dehydrogenase Class VI	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL260G06	DV568169	LBP (LPS binding protein)/BPI	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL260G07	DV568170	stomatin (Epb7.2)-like 2	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig589	DV568171	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV568175	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL260H04	DV568176	"cDNA clone no536a07 sim to selenoprotein P, plasma, 1a"	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig159	DV568180	15 kDa selenoprotein precursor	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig453	DV568181	histamine N-methyltransferase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL261B02	DV568185	Probable diphthine synthase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig562	DV568190	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV568194	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1018	DV568204	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig275	DV568211	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig146	DV568217	Phospholipase A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig637	DV568225	B-cell receptor-associated protein BAP37	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig850	DV568236	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV568237	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV568242	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig647	DV568247	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig454	DV568254	glyoxylate reductase/hydroxypyruvate reductase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1046	DV568256	60S acidic ribosomal protein P2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL263A03	DV568263	"poly A binding protein, cytoplasmic 1"	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig597	DV568264	alpha-1-microglobulin/bikunin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig148	DV568279	"3-hydroxyanthranilate 3,4-dioxygenase 3-HAO"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL263E01	DV568288	Oral cancer overexpressed 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV568290	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL263E08	DV568293	"DnAJ (Hsp40) homolog, subfamily B, member 1"	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+PfIL263E09	DV568294	"Nonspecific lipid-transfer protein, mitochondrial"	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig440	DV568301	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig441	DV568307	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig723	DV568309	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig323	DV568325	"Aldehyde dehydrogenase 9 family, member A1 like 1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL264D05	DV568327	LCMR1-like	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig476	DV568328	VHSV-induced protein-5	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig433	DV56834	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV568340	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig275	DV568344	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig214	DV568350	Cytochrome P450 2F2 CYP2F2	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig980	DV568352	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig794	DV568355	RNA polymerase II subunit D	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL265A03	DV568358	Catalase	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+PfIL265A03	DV568358	Catalase	Oxidative Stress	Falciani_2008	Lindane
+Contig734	DV568364	Ku70-binding protein	DNA Repair	Falciani_2008	diff_exp_control_loc
+PfIL265E05	DV568376	"39S ribosomal protein L34, mitochondrial precursor"	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig524	DV568392	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig1018	DV568407	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig793	DV568419	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig413	DV568429	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig413	DV568439	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig180	DV568443	N(4)-(beta-N-acetylglucosaminyl)-L-asparaginase precursor	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig524	DV568446	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig744	DV568453	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+PfIL267D06	DV568458	Complement component C5	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL267D06	DV568458	Complement component C5	Immune Function and Inflammation	Falciani_2008	Cadmium
+Contig723	DV568462	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig181	DV568467	N(4)-(beta-N-acetylglucosaminyl)-L-asparaginase precursor	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1015	DV568475	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL267H12	DV568476	Selenium binding protein 1	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig980	DV568477	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig425	DV568478	Swiprosin 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV568486	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL268D09	DV568489	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL268D09	DV568489	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	Lindane
+Contig504	DV568490	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV568493	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig274	DV568498	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL268G08	DV568506	centrin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig589	DV568513	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig793	DV568521	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig423	DV568522	calreticulin	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig842	DV568533	60S ribosomal protein L31	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig198	DV568542	"Retinol dehydrogenase 12, like"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig275	DV568552	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568591	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL271F10	DV568610	"Eukaryotic translation initiation factor 2 subunit 3, x-linked"	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL271H04	DV568619	Guanylate kinase 1	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig844	DV568625	"Cytochrome c oxidase subunit IV isoform 2, mitochondrial precursor"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568627	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL272D08	DV568629	"proteasome (prosome, macropain) subunit, alpha type 4"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL272D08	DV568629	"proteasome (prosome, macropain) subunit, alpha type 4"	Protein Degradation	Falciani_2008	Perfluoro-octanoicacid
+Contig589	DV568638	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig981	DV568650	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig524	DV568651	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig589	DV568658	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig524	DV568660	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL273E03	DV568677	leprecan-like 1 protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig723	DV568681	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig504	DV568682	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL273H09	DV568691	Hsc70-interacting protein (Hip)	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig589	DV568707	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV568708	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1093	DV568719	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig752	DV568739	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig844	DV568743	"Cytochrome c oxidase subunit IV isoform 2, mitochondrial precursor"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568748	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL275E06	DV568752	Nipsnap homolog 3A	Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV568753	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL275F01	DV568756	Nicotinamide riboside kinase 1	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig298	DV568763	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig147	DV568766	Ubiquitin-conjugating enzyme E2N	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL276D01	DV568784	60S ribosomal protein L13a	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig589	DV568788	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig275	DV568794	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568800	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig357	DV568809	Cystathionine-beta-synthase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV568827	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig562	DV568833	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig793	DV568834	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig214	DV568843	Cytochrome P450 2F2 CYP2F2	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL277H06	DV568851	apolipoprotein A-IV1	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig305	DV568853	HSPC171 protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig159	DV568858	15 kDa selenoprotein precursor	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig712	DV568869	Probable ergosterol biosynthetic protein 28	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL278C09	DV568872	programmed cell death 4; death-upregulated gene	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig589	DV568876	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig712	DV568881	Probable ergosterol biosynthetic protein 28	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV568885	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV568886	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig524	DV568890	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL278G09	DV568896	liver-specific uridine phosphorylase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig151	DV568902	Complement component C8 beta chain precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig524	DV568904	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig440	DV568906	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig1077	DV568913	cDNA clone WE6-4 similar to malate L-lactate dehydrogenase	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig352	DV568914	x-box binding protein 1B	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig589	DV568916	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL279C03	DV568917	Diablo homolog	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig714	DV568919	"proteasome 26S ATPase subunit 5, MSUG1"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568920	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig714	DV568927	"proteasome 26S ATPase subunit 5, MSUG1"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig589	DV568939	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV568941	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL280B08	DV568954	Derlin-2 (Degradation in endoplasmic reticulum protein 2)	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig413	DV568957	MASP protease / haptoglobin	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig364	DV568964	"Translocon associated protein, gamma subunit"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig440	DV568972	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig597	DV568973	alpha-1-microglobulin/bikunin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig850	DV568979	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL282D05	DV568993	Retinoid X receptor beta	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig768	DV568999	apoptosis-related protein PNAS-4	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL282F07	DV569002	Ubiquinol-cytochrome C reductase complex 11 kDa protein	Energy Generation	Falciani_2008	diff_exp_control_loc
+PfIL282H07	DV569011	Cyclin H	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL283B04	DV569019	Dipeptidylpeptidase 3	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig723	DV569021	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig724	DV569025	Cytochrome P450 monooxygenase CYP2K6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL272C08	DV569044	Autophagy protein 12-like (APG12-like)	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig427	DV569046	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL284D09	DV569053	cDNA clone no560c08 sim to mannose receptor C type 1 precursor	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL284D10	DV569054	"Allantoinase, mitochondrial precursor"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV569055	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig794	DV569062	RNA polymerase II subunit D	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL284F09	DV569065	B5 receptor	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL284H08	DV569075	mAJor histocompatibility class I receptor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig440	DV569087	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig465	DV569093	Cytochrome c	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig730	DV569097	urate oxidase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig363	DV569100	"nuclear factor of activated T-cells, cytoplasmic"	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL285E11	DV569102	Transmembrane protein 4 TMEM4	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV569119	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL286A09	DV569120	Mitochondrial ribosomal protein L3	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL286D01	DV569135	Ras-related protein Rab-6A	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL286E01	DV569138	Transcription factor BTF3	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig350	DV569142	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL286H02	DV569151	Replication factor C (Activator 1) 3	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig750	DV569154	Tetraspan 1	Cell Adhesion	Falciani_2008	diff_exp_control_loc
+Contig734	DV569159	Ku70-binding protein	DNA Repair	Falciani_2008	diff_exp_control_loc
+Contig589	DV569160	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1012	DV569165	Cholesteryl ester transfer protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig351	DV569173	triple homeobox 1	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig68	DV569181	Macrophage mannose receptor precursor (MMR) (CD206 antigen)	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig441	DV569185	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV569186	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig647	DV569189	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig441	DV569190	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL288A02	DV569199	hypothetical protein LOC436977	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL288A03	DV569200	Translocase of inner mitochondrial membrane 23 homolog	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig274	DV569201	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1015	DV569206	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV569207	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig868	DV569208	40S ribosomal protein S29	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL288E01	DV569217	cDNA clone OD-081 similar to cytochrome c oxidase subunit Via	Energy Generation	Falciani_2008	diff_exp_control_loc
+PfIL288E01	DV569217	cDNA clone OD-081 similar to cytochrome c oxidase subunit Via	Energy Generation	Falciani_2008	Cadmium
+Contig441	DV569219	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig441	DV569221	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL288F02	DV569222	eukaryotic translation initiation factor 4E binding protein 3	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig850	DV569227	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig117	DV569230	Beta-microseminoprotein precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig158	DV569231	"novel protein similar to vertebrate RAS-like, estrogen-regulated, growth-inhibitor (RERG)"	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig275	DV569234	Small inducible cytokine	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig146	DV569247	Phospholipase A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL289C07	DV569251	Pescadillo	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig739	DV569271	transmembrane 4 superfamily member 4	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL289G06	DV569273	Translocase of outer mitochondrial membrane 40 homolog	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL289G08	DV569275	Myeloid/lymphoid or mixed-lineage leukemia protein 4	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig589	DV569293	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL290D05	DV569295	AT rich interactive domain 1A	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL290E09	DV569301	Myeloid-associated differentiation marker	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL290F05	DV569303	"CCR4-NOT transcription complex, subunit 10"	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig744	DV569304	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig850	DV569310	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL291A06	DV569316	Probable pancreatic secretory proteinase inhibitor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig351	DV569317	triple homeobox 1	Transcription Factors	Falciani_2008	diff_exp_control_loc
+PfIL291B09	DV569321	"cDNA clone no553h11 sim to DnAJ (Hsp40) homolog, subfamily C, member 11"	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig858	DV569324	hypothetical protein XP_693867	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig850	DV569327	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL283F02	DV569328	Rag C (Ras-related GTP binding C)	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL283F02	DV569328	Rag C (Ras-related GTP binding C)	Signal Transduction	Falciani_2008	Perfluoro-octanoicacid
+Contig589	DV569333	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV569339	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig543	DV569344	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig364	DV569353	"Translocon associated protein, gamma subunit"	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL291D10	DV569361	26S protease regulatory subunit S10B	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL291F06	DV569365	T-cell leukemia translocation altered gene TCTA	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL291G08	DV569370	Zinc finger HIT domain containing protein 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL291H04	DV569374	Annexin A13	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL291H07	DV569376	multiple coiled-coil GABABR1-binding protein	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig504	DV569379	CYP1A Cytochrome P450 1A	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL292B10	DV569389	26S protease regulatory subunit S10B	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig747	DV569395	Myo-inositol monophosphatase	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig415	DV569397	stress-induced-phosphoprotein 1 (Hsp70/Hsp90-organizing protein) XSTI1	Chaperones and Heat Shock Proteins	Falciani_2009	diff_exp_control_loc
+Contig793	DV569406	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL292F06	DV569407	"Splicing factor, arginine/serine-rich 11"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV569410	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig476	DV569414	VHSV-induced protein-5	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig201	DV569417	Protein disulfide isomerase related protein	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig730	DV569420	urate oxidase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig750	DV569428	Tetraspan 1	Cell Adhesion	Falciani_2008	diff_exp_control_loc
+Contig427	DV569429	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig427	DV569429	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL293C06	DV569430	solute carrier family 36 member 1; lysosomal amino acid transporter	Transport	Falciani_2008	diff_exp_control_loc
+Contig391	DV569433	Solute carrier family 22 member 7	Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV569436	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig440	DV569437	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig159	DV569451	15 kDa selenoprotein precursor	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig403	DV569453	IgM heavy chain constant region	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL294B01	DV569455	Deleted in azoospermia-associated protein 2	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig752	DV569457	Liver-expressed antimicrobial peptide 2A	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL294C05	DV569461	Intersex-like protein	Transcription Factors	Falciani_2008	diff_exp_control_loc
+PfIL294C08	DV569462	Hsp70 binding protein	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+PfIL294D10	DV569467	ADP-ribosylation factor 5	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig68	DV569475	Macrophage mannose receptor precursor (MMR) (CD206 antigen)	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL294F04	DV569476	Probable ribosome biogenesis protein NEP1 (C2f protein)	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig440	DV569484	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL294H05	DV569488	U6 snRNA-associated Sm-like protein LSm5	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL294H06	DV569489	Heat shock 70 kDa protein 4	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig198	DV569496	"Retinol dehydrogenase 12, like"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV569502	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL295D10	DV569510	Solute carrier family 25 member 3	Transport	Falciani_2008	diff_exp_control_loc
+Contig363	DV569513	"nuclear factor of activated T-cells, cytoplasmic"	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL295F02	DV569516	GTP cyclohydrolase I feedback regulatory protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig441	DV569520	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig373	DV569522	"sulfotransferase family 5A, member 1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig951	DV569528	Src family associated phosphoprotein 2	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL295H10	DV569529	Liver glycogen phosphorylase	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig427	DV569537	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig427	DV569537	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig744	DV569551	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig427	DV569552	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig427	DV569552	hepcidin-like precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig793	DV569561	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig666	DV569570	Eukaryotic translation elongation factor 1 beta 2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig22	DV569573	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig22	DV569578	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+PfIL298B04	DV569594	Alanine-glyoxylate aminotransferase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig433	DV569598	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL298C06	DV569599	Rb1-inducible coiled coil protein 1	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL298C06	DV569599	Rb1-inducible coiled coil protein 1	Cell Cycle	Falciani_2008	Perfluoro-octanoicacid
+PfIL298D09	DV569603	NADH dehydrogenase subunit 2	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig440	DV569637	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV569638	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1009	DV569643	"Translocon-associated protein, delta subunit precursor"	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL299E03	DV569646	"tumor necrosis factor, alpha-induced protein 2"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig589	DV569651	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL299G05	DV569654	"gup1, glycerol uptake/transporter homolog"	Transport	Falciani_2008	diff_exp_control_loc
+Contig357	DV569655	Cystathionine-beta-synthase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV569663	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV569664	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig955	DV569676	Peripheral-type benzodiazepine receptor	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL300E07	DV569684	Biotinidase precursor	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig440	DV569690	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV569692	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig274	DV569695	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL300G11	DV569698	similar to programmed cell death 6	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig422	DV569700	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL300H06	DV569701	proteasome subunit beta 7	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig22	DV569711	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig440	DV569712	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL301B12	DV569713	microsomal stress70 protein ATPase core precursor	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+PfIL301D11	DV569723	"Ubiquinol-cytochrome C reductase complex 11 kDa protein, mitochondrial precursor"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig589	DV569738	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig350	DV569747	muscleblind-like 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig723	DV569748	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig980	DV569749	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	DV569752	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig980	DV569756	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig429	DV569758	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig723	DV569766	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV569774	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV569778	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL304D06	DV569791	"6-phosphofructo-2-kinase/fructose-2,6-biphosphatase 4"	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig524	DV569794	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig391	DV569795	Solute carrier family 22 member 7	Transport	Falciani_2008	diff_exp_control_loc
+Contig429	DV569800	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig765	DV569808	JFMIP1b pseudogene premature mRNA for MIP1beta	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig524	DV569824	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL305B08	DV569825	GATA-binding protein 6	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig723	DV569835	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV569838	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV569851	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig564	DV569854	similar to interleukin 25	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV569858	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig793	DV569860	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig440	DV569864	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL303E02	DV569866	diphthine synthase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV569867	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL303G04	DV569876	ReO_6 protein	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV569879	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig524	DV569885	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig824	DV569890	Immunoglobulin lambda-like polypeptide 1 precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig205	DV569895	NADPH oxidase cytosolic protein p67phox	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL305E06	DV569897	"similar to TIM21-like protein, mitochondrial precursor"	Transport	Falciani_2008	diff_exp_control_loc
+PfIL305E06	DV569897	C18orf55 protein	Transport	Falciani_2008	Lindane
+Contig589	DV569908	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig623	DV569911	Hypothetical protein DKFZp459B102	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig201	DV569925	Protein disulfide isomerase related protein	Chaperones and Heat Shock Proteins	Falciani_2009	diff_exp_control_loc
+Contig440	DV569932	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV569936	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL306F02	DV569943	"phenylalanine-tRNA synthetase-like, alpha subunit"	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL306F04	DV569945	guanine nucleotide binding protein	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig274	DV569961	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL307C08	DV569963	zgc:92447	Transport	Falciani_2008	diff_exp_control_loc
+Contig768	DV569968	apoptosis-related protein PNAS-5	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL307E12	DV569972	Proliferation-inducing gene 17	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig440	DV569975	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig198	DV569983	"Retinol dehydrogenase 12, like"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL307H06	DV569985	Actin-related protein 2/3 complex	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+PfIL307H06	DV569985	Actin-related protein 2/3 complex	Cytoskeleton & Filaments	Falciani_2008	Lindane
+PfIL308C03	DV569996	Annexin A11b	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL308C06	DV569997	Transmembrane 4 superfamily member 7	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL308C10	DV569999	replication factor C (activator 1) 5	DNA Repair	Falciani_2008	diff_exp_control_loc
+Contig589	DV570000	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig796	DV570006	protein tyrosine phosphatase 4a2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig577	DV570021	"cDNA clone up127 similar to proline permease (sodium/proline symporter),"	Transport	Falciani_2008	diff_exp_control_loc
+Contig1009	DV570022	"Translocon-associated protein, delta subunit precursor"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV570026	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV570037	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig744	DV570059	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+PfIL310C04	DV570061	Histone deacetylase 1	Histones and Histone Modifiers	Falciani_2008	diff_exp_control_loc
+PfIL310C04	DV570062	Histone deacetylase 1	Histones and Histone Modifiers	Falciani_2008	Methylcholanthrene
+PfIL310D04	DV570065	Transcobalamin I precursor	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig401	DV570067	sepiapterin reductase	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV570069	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV570075	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL310G05	DV570078	"5'-nucleotidase, cytosolic IB"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig214	DV570081	Cytochrome P450 2F2 CYP2F2	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig423	DV570082	calreticulin	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig440	DV570088	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig723	DV570092	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	DV570101	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV570106	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig298	DV570108	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig589	DV570111	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig813	DV570114	Annexin A2	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig980	DV570119	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig980	DV570120	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	DV570121	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL312F08	DV570125	nucleolin	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV570136	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig198	DV570139	"Retinol dehydrogenase 12, like"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL313B03	DV570144	Peptidyl-prolyl cis-trans isomerase	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+PfIL313C02	DV570149	JFConA835F sim to Ribonuclease-angiogenin inhibitor	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV570159	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig562	DV570160	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig589	DV570169	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV570181	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig606	DV570183	Peroxiredoxin 6	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig589	DV570188	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig980	DV570192	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL311F08	DV570202	Alkylated DNA repair protein alkB	DNA Repair	Falciani_2008	diff_exp_control_loc
+PfIL312E08	DV570202	chymotrypsinogen 2	DNA Repair	Falciani_2008	Cadmium
+Contig589	DV570211	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL314F08	DV570229	"Aprataxin homolog, FHA-HIT"	DNA Repair	Falciani_2008	diff_exp_control_loc
+Contig589	DV570234	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1012	DV570239	Cholesteryl ester transfer protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig589	DV570240	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig209	DV570244	C-type lectin receptor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig274	DV570246	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig868	DV570247	40S ribosomal protein S29	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig22	DV570250	metallothionein	Metal-Interacting Proteins	Falciani_2008	diff_exp_control_loc
+Contig793	DV570256	catechol-O-methyltransferase domain containing 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig794	DV570258	RNA polymerase II subunit D	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig524	DV570259	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig997	DV570263	SWAN RNA binding motif protein 12	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig352	DV570267	x-box binding protein 1B	Transcription Factors	Falciani_2008	diff_exp_control_loc
+PfIL316A02	DV570269	"5'-nucleotidase, cytosolic II"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig298	DV570272	Alpha tubulin	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig765	DV570277	JFMIP1b pseudogene premature mRNA for MIP1beta	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL316D04	DV570284	Sialidase 1 precursor	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL316D10	DV570285	Nuclear factor erythroid 2 related factor	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig268	DV570290	similar to direct IAP binding protein with low PI	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig765	DV570292	JFMIP1b pseudogene premature mRNA for MIP1beta	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV570295	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1011	DV570301	Hypothetical protein LOC550257	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig794	DV570308	RNA polymerase II subunit D	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL317B03	DV570310	"synaptotagmin binding, cytoplasmic RNA interacting protein"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig215	DV570311	histidine ammonia lyase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL317B08	DV570314	RAD21 homolog	DNA Repair	Falciani_2008	diff_exp_control_loc
+Contig383	DV570316	meprin 1 beta	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig797	DV570317	glutamic pyruvate transaminase (alanine aminotransferase) 2	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL317C11	DV570321	similar to F-box only protein 21	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig796	DV570324	protein tyrosine phosphatase 4a2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig797	DV570326	glutamic pyruvate transaminase (alanine aminotransferase) 3	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig422	DV570333	glyceraldehyde-3-phosphate dehydrogenase (GAPDH)	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig274	DV570334	aldehyde reductase (aldose reductase)-like 6	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig204	DV570335	DEAH (Asp-Glu-Ala-His) box polypeptide 29	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL317G03	DV570336	thyroid hormone receptor interactor 13	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig589	DV570361	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig403	DV570362	IgM heavy chain constant region	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	DV570364	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL318C10	DV570365	"procollagen-lysine, 2-oxoglutarate 5-dioxygenase 3"	Protein Modification	Falciani_2008	diff_exp_control_loc
+PfIL318D07	DV570371	vitamin K-dependent gamma-glutamyl carboxylase	Protein Modification	Falciani_2008	diff_exp_control_loc
+PfIL318D11	DV570373	coiled-coil domain containing 23	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL318E04	DV570374	Mitochondrial ribosomal protein S18A-like 1	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL319A08	DV570397	"ATP-binding cassette, sub-family E (OABP), member 1"	Energy Generation	Falciani_2008	diff_exp_control_loc
+PfIL319C07	DV570402	L-lactate dehydrogenase A	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL319C08	DV570403	putative anaphase-promoting complex subunit APC11	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL319C12	DV570405	DEAD box polypeptide 27	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL319D08	DV570407	kelch-like 9	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig429	DV570408	hepcidin precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig440	DV570412	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+Contig453	DV570413	histamine N-methyltransferase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	DV570414	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	DV570418	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig803	DV570419	Cystatin domain fetuin-like protein	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL319H11	DV570423	eukaryotic translation initiation factor 4e 1a	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig364	DV570428	"Translocon associated protein, gamma subunit"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig1015	DV570431	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1034	DV570432	hypothetical protein LOC322350	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL320B09	DV570433	"Induced cAMP early repressor, ICER I"	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig980	DV570442	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig744	DV570444	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+PfIL320F02	DV570453	Coiled-coil-helix-coiled-coil-helix domain containing 7	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL320F05	DV570455	"similar to acyl-Coenzyme A dehydrogenase family, member 8"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig794	DV570463	RNA polymerase II subunit D	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfILCOMA06	DV570468	perforin	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfILCOMA07	DV570469	High density lipoprotein binding protein (vigilin)	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfILCOMC08	DV570478	Galactosylceramidase	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL003B11	EC377560	"fibrinogen, B beta polypeptide"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig606	EC377566	Peroxiredoxin 6	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig651	EC377567	Insulin induced gene 1	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig562	EC377580	hypothetical protein DDB0206057 Similar to Polyubiquitin	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig842	EC377590	60S ribosomal protein L31	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig723	EC377623	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	EC377627	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig647	EC377640	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig204	EC377658	DEAH (Asp-Glu-Ala-His) box polypeptide 29	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL012H08	EC377660	inhibitor of differentiation 1C; Id 6-2	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig723	EC377661	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig887	EC377682	thioredoxin 2	Oxidative Stress	Falciani_2008	diff_exp_control_loc
+Contig1046	EC377692	60S acidic ribosomal protein P2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+PfIL050G06	EC377697	reverse transcriptase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL140F10	EC377710	novel protein similar to human membrane-associated RING-CH protein II (MARCH-II)	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL140H08	EC377713	similar to coagulation factor 10; coagulation factor X	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+Contig1093	EC377733	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig723	EC377763	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL205H01	EC377782	myosin IXB	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+PfIL207F04	EC377812	UDP-N-acetyl-alpha-D-galactosamine:polypeptide N-acetylgalactosaminyltransferase 11 (GalNAc-T11)	Protein Modification	Falciani_2008	diff_exp_control_loc
+Contig723	EC377813	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL207G05	EC377815	similar to eukaryotic translation initiation factor 4 gamma 3	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig723	EC377847	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig898	EC377874	Coiled-coil-helix-coiled-coil-helix domain containing 2-like	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL211C10	EC377879	complement component C5-1	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig122	EC377887	Diablo	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig723	EC377938	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	EC377947	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	EC377948	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1018	EC377960	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	EC377971	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	EC377985	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig858	EC377995	hypothetical protein XP_693867	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig868	EC378005	40S ribosomal protein S29	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig850	EC378040	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig963	EC378051	Survival motor neuron domain containing 2	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378067	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig980	EC378087	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL223D12	EC378088	similar to Kynureninase (L-kynurenine hydrolase)	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	EC378118	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1034	EC378140	hypothetical protein LOC322350	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig647	EC378157	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig119	EC378191	aldehyde dehydrogenase 2	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378195	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL230B02	EC378200	EST0174 cDNA clone SL-0027 similar to ATP-binding cassette transporter 1	Transport	Falciani_2008	diff_exp_control_loc
+Contig723	EC378210	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig524	EC378217	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig647	EC378220	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378249	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig524	EC378252	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig307	EC378254	transmembrane emp24 protein transport domain containing 7 (TMED7)	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL234B07	EC378261	"myeloid differentiaton factor 88, myD88"	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL234C07	EC378265	helicase DDX32	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig543	EC378267	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig1015	EC378284	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL238C11	EC378317	preimplantation protein 3	Transport	Falciani_2008	diff_exp_control_loc
+Contig1046	EC378325	60S acidic ribosomal protein P2	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378349	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig730	EC378357	urate oxidase	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig898	EC378358	Coiled-coil-helix-coiled-coil-helix domain containing 2-like	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL241A03	EC378365	hypothetical protein LOC325979	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378367	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig401	EC378377	sepiapterin reductase	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL242C08	EC378387	F-box and leucine-rich repeat protein 5 isoform 1	Protein Degradation	Falciani_2008	diff_exp_control_loc
+Contig215	EC378397	histidine ammonia lyase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig765	EC378413	JFMIP1b pseudogene premature mRNA for MIP1beta	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL245C07	EC378437	Integrin alpha5	Cell Adhesion	Falciani_2008	diff_exp_control_loc
+Contig454	EC378446	glyoxylate reductase/hydroxypyruvate reductase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL246G07	EC378459	Phosphomannomutase 2	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1077	EC378464	cDNA clone WE6-4 similar to malate L-lactate dehydrogenase	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL247F08	EC378471	similar to programmed cell death 2	Apoptosis	Falciani_2008	diff_exp_control_loc
+PfIL247G01	EC378473	Aspartyl-tRNA synthetase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL248H11	EC378493	novel protein similar to vertebrate tumor suppressor candidate 2 (TUSC2)	Cell Cycle	Falciani_2008	diff_exp_control_loc
+Contig981	EC378530	Microsomal glutathione S-transferase 3	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig994	EC378548	"glyceraldehyde 3-phosphate dehydrogenase, GAPDH"	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+Contig647	EC378549	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL254D02	EC378563	intraflagellar transport protein 20	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+PfIL254D03	EC378563	none	Cytoskeleton & Filaments	Falciani_2008	Cadmium
+PfIL254F05	EC378568	novel protein similar to lactoylglutathione lyase	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig977	EC378576	hypothetical protein LOC563956	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL255E03	EC378586	Programmed cell death 4	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig524	EC378605	40S ribosomal protein S15A	Protein Synthesis	Falciani_2008	diff_exp_control_loc
+Contig534	EC378638	Vitronectin	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL259G06	EC378647	KH-type splicing regulatory protein	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL260F05	EC378659	Hypothetical protein LOC445103	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig383	EC378663	meprin 1 beta	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL261D09	EC378666	WD repeat domain 50	Transport	Falciani_2008	diff_exp_control_loc
+Contig589	EC378673	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig827	EC378687	hypothetical protein XP_701076	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL262G01	EC378693	Trans-golgi network protein 2	Transport	Falciani_2008	diff_exp_control_loc
+Contig431	EC378712	Probable urocanate hydratase (Urocanase)	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1012	EC378722	Cholesteryl ester transfer protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL264F06	EC378723	Vesicle transport protein SFT2A	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig149	EC378743	"3-hydroxyanthranilate 3,4-dioxygenase 3-HAO"	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL266E10	EC378750	hypoxanthine phosphoribosyltransferase 1	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1093	EC378769	"NADH dehydrogenase (Ubiquinone) 1 alpha subcomplex 4, like"	Energy Generation	Falciani_2008	diff_exp_control_loc
+Contig647	EC378794	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378796	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	EC378798	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	EC378834	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	EC378854	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	EC378857	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	EC378858	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig589	EC378861	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig543	EC378893	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	EC378896	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig543	EC378897	Hemoglobin beta A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	EC378904	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig723	EC378906	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL276D08	EC378911	acetyl-Coenzyme A acyltransferase 2 (mitochondrial 3-oxoacyl-Coenzyme A thiolase)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL276F05	EC378916	"processing of precursor 5, ribonuclease P/MRP subunit"	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig151	EC378938	Complement component C8 beta chain precursor	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig589	EC378949	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL278G11	EC378952	urocanase domain containing 1	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig589	EC378961	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL279B10	EC378962	Receptor accessory protein 5	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig955	EC378966	Peripheral-type benzodiazepine receptor	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig1018	EC378972	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig364	EC378983	"Translocon associated protein, gamma subunit"	Protein Transport	Falciani_2008	diff_exp_control_loc
+PfIL280E12	EC378984	Membrane targeting (tandem) C2 domain containing 1	Transport	Falciani_2008	diff_exp_control_loc
+PfIL280E12	EC378984	Membrane targeting (tandem) C2 domain containing 1	Transport	Falciani_2008	Methylcholanthrene
+PfIL280E12	EC378984	Membrane targeting (tandem) C2 domain containing 1	Transport	Falciani_2008	Perfluoro-octanoicacid
+PfIL280H11	EC378995	similar to 3-mercaptopyruvate sulfurtransferase	Transport	Falciani_2008	diff_exp_control_loc
+Contig899	EC379014	Hypothetical protein LOC553695	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig239	EC379017	adipose differentiation-related protein; adipophilin	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig803	EC379021	Cystatin domain fetuin-like protein	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig1011	EC379028	Hypothetical protein LOC550257	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig239	EC379034	adipose differentiation-related protein; adipophilin	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig1018	EC379039	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL284F07	EC379040	similar to RAB5 interacting protein 2	Transcription Factors	Falciani_2008	diff_exp_control_loc
+PfIL284G03	EC379043	B-cell leukemia/lymphoma 3	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig723	EC379049	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig363	EC379051	"nuclear factor of activated T-cells, cytoplasmic"	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL285C08	EC379053	phosphoethanolamine N-methyltransferase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL286A08	EC379061	ghiso	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig1015	EC379091	Cytidine deaminase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL288E08	EC379099	alpha-type globin	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL288G04	EC379101	similar to Ubiquitin carboxyl-terminal hydrolase 21 (Ubiquitin thiolesterase 21) (Ubiquitin-specific processing protease 21) (Deubiquitinating enzyme 21) (NEDD8-specific protease)	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL289F08	EC379116	Hypothetical protein LOC619252	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig739	EC379118	transmembrane 4 superfamily member 4	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL290A05	EC379123	"selenoprotein X 1, methionine R-sulfoxide reductase"	Chaperones and Heat Shock Proteins	Falciani_2008	diff_exp_control_loc
+Contig958	EC379127	similar to putative membrane protein isoform 1	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL290D06	EC379132	cDNA clone Pf_IL_287E05 5' similar to COMM domain containing 3; BUP protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig986	EC379133	bile salt-activated lipase (BAL)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL291C05	EC379142	Programmed cell death 10	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig994	EC379146	"glyceraldehyde 3-phosphate dehydrogenase, GAPDH"	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL291E01	EC379147	chloride channel protein	Transport	Falciani_2008	diff_exp_control_loc
+Contig747	EC379163	Myo-inositol monophosphatase	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig994	EC379164	"glyceraldehyde 3-phosphate dehydrogenase, GAPDH"	Carbohydrate Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL292E02	EC379167	Postsynaptic protein Cript	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL292E06	EC379169	Cut-like 1	Transcription Factors	Falciani_2008	diff_exp_control_loc
+Contig647	EC379177	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig198	EC379179	"Retinol dehydrogenase 12, like"	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL295B01	EC379211	cDNA clone down057 similar to 3-pass transmembrane protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL295C01	EC379213	hypothetical protein LOC552925	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig373	EC379217	"sulfotransferase family 5A, member 1"	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+Contig951	EC379221	Src family associated phosphoprotein 2	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig647	EC379230	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig589	EC379246	Hemoglobin alpha-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL299E06	EC379274	Toll-like receptor5	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL299E09	EC379275	fertilization envelope outer layer protein	Signal Transduction	Falciani_2008	Cadmium
+PfIL299F02	EC379278	nonspecific cytotoxic cell receptor protein-1	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig1018	EC379279	Prostaglandin D synthase	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL300F06	EC379296	dihydrofolate reductase	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL301B07	EC379305	mesenchymal stem cell protein DSCD75	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig647	EC379311	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+Contig797	EC379316	glutamic pyruvate transaminase (alanine aminotransferase) 4	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL304G09	EC379358	"Ras homolog gene family, member A"	Signal Transduction	Falciani_2008	diff_exp_control_loc
+PfIL304H03	EC379360	microsomal glutathione S-transferase 1	Phase I and II Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL305A06	EC379362	Down syndrome critical region gene 2	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig647	EC379366	angiotensinogen precursor	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL306B02	EC379378	S-adenosylhomocysteine hydrolase-like 1	Amino Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig744	EC379381	"cDNA clone CR729877 sim to fibrinogen, alpha chain isoform alpha-E preproprotein"	Blood Coagulation	Falciani_2008	diff_exp_control_loc
+PfIL307E02	EC379405	similar to EH-domain containing 4	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL309A02	EC379430	Kinesin light chain 2	Cytoskeleton & Filaments	Falciani_2008	diff_exp_control_loc
+Contig850	EC379442	intrinsic factor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL310A07	EC379450	telomerase-associated protein 1	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig723	EC379490	Hemoglobin alpha chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+PfIL313E01	EC379518	fizzy-related protein	Cell Cycle	Falciani_2008	diff_exp_control_loc
+PfIL313E10	EC379518	cDNA clone Pf_IL_313E11	Cell Cycle	Falciani_2008	Methylcholanthrene
+Contig955	EC379520	Peripheral-type benzodiazepine receptor	Signal Transduction	Falciani_2008	diff_exp_control_loc
+Contig997	EC379524	SWAN RNA binding motif protein 12	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL314B08	EC379538	"Histone 2, H2a"	Histones and Histone Modifiers	Falciani_2008	diff_exp_control_loc
+Contig440	EC379541	fatty acid-binding protein	Lipid Transport	Falciani_2008	diff_exp_control_loc
+PfIL315B06	EC379555	guanylin precursor	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig980	EC379568	Acyl-CoA-binding protein homolog (ACBP)	Lipid and Fatty Acid Metabolism	Falciani_2008	diff_exp_control_loc
+PfIL316F06	EC379579	atrophin-1 like protein	Transcription Factors	Falciani_2008	diff_exp_control_loc
+PfIL317A07	EC379585	MIP1alpha	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+Contig1034	EC379594	hypothetical protein LOC322350	Proteases and Protease Inhibitors	Falciani_2008	diff_exp_control_loc
+PfIL318E02	EC379604	interferon regulatory factor 8	Immune Function and Inflammation	Falciani_2008	diff_exp_control_loc
+PfIL318E03	EC379605	righton	Transport	Falciani_2008	diff_exp_control_loc
+PfIL319B04	EC379620	similar to PH domain-containing protein	Other or Unknown	Falciani_2008	diff_exp_control_loc
+PfIL319B08	EC379623	epithelial membrane protein 3	Apoptosis	Falciani_2008	diff_exp_control_loc
+Contig1009	EC379632	"Translocon-associated protein, delta subunit precursor"	Protein Transport	Falciani_2008	diff_exp_control_loc
+Contig977	EC379633	hypothetical protein LOC563956	Other or Unknown	Falciani_2008	diff_exp_control_loc
+Contig601	EC379636	"Proteasome (Prosome, macropain) subunit, beta type, 8"	Protein Degradation	Falciani_2008	diff_exp_control_loc
+PfIL319G08	EC379638	Origin recognition complex subunit 5	Nucleic Acid Metabolism	Falciani_2008	diff_exp_control_loc
+Contig433	DV567631	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc
+Contig433	DV570083	Hemoglobin beta-A chain	Haem and Hemoglobins	Falciani_2008	diff_exp_control_loc

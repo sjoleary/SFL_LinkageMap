@@ -58,7 +58,7 @@ write.table(map, "data/SYNTENY/map.tab",
 
 ### Blast configurations (`blast_args`)
 
-The BLAST+ arguments and their associated settings are specified in the `blast_args` configuration file. The pipeline will perform an `blastn`, i.e. a standard nucleotide blast aligning nucleotides to nucleotides. THe recommended algorithm is discontiguous megablast, though this can be changed in the configuration file.
+The BLAST+ arguments and their associated settings are specified in the `blast_args` configuration file. The pipeline will perform an `blastn`, i.e. a standard nucleotide blast aligning nucleotides to nucleotides. The recommended algorithm is discontiguous megablast, though this can be changed in the configuration file.
 
 ```{r format blast_args}
 
@@ -80,7 +80,7 @@ In order to blast the mapped loci their sequences must be specified in `fasta`-f
 
 The perl script `filter_fasta_by_map.pl` will use the `map.tab` file to filter the `fasta` file for the *de novo* reference used to map reads during the SNP calling process to create a `fasta`-file containing only the mapped loci for the linkage map.
 
-Execute the perl script from within the directory with the *de novo* reference and the perl script.
+Execute the perl script from within the directory with the *de novo* reference and the perl script (on deepthought).
 
     cd FLOUNDER/Synteny/
     perl filter_fasta_by_map.pl map.tab reference.fasta
@@ -98,41 +98,6 @@ If provided the pipeline will attempt to map these loci by blasting them to the 
 The additional `fasta`-file is defined using the `synteny_map_loci` setting in the configuration file.
 
 ```{r}
-
-# ----- CREATE FASTA FILE OF GENES FROM ACCESSION NUMBERS TO SYNENTY MAP --------------
-
-# create fasta file of accession numbers (assumes dataframe has column called "ACCESSION")
-# file cannot have have any Na values
-download.fasta <- function(inputfile, outputfile){
-  
-  # import data frames with loci to map
-  dat <- read.delim(inputfile, stringsAsFactors = FALSE, header = TRUE)
-  
-  # create list of accession numbers
-  acc <- as.character(dat$ACCESSION)
-  
-  # download sequences from genbank
-  gen <-read.GenBank(acc)
-  
-  #export as fasta file
-  write.dna(gen, outputfile, format = "fasta")
-}
-
-# Williams et al 2003 stress resonse
-# download.fasta("data/SYNTENY/Stress_response_W03.txt", "data/SYNTENY/Loci_stress.fasta")
-
-# Williams et al. 2007 gene expression exposed to estradiol
-# download.fasta("data/SYNTENY/Estradiol_response_W07.txt", "data/SYNTENY/Loci_estradiol.fasta")
-
-# Larsen et al. 2007 gene expression salinity differences
-# download.fasta("data/SYNTENY/Salinity_response_L07.csv", "data/SYNTENY/Salinity_response.fasta")
-
-# Faciani et al. 2008 gene expression exposed to pollutants (lab and wild populations)
-# download.fasta("data/SYNTENY/Pollutants_response_F08.txt", "data/SYNTENY/Loci_pollutants.fasta")
-
-# microsatellite in linkage map (Japanese flounder)
-# download.fasta("data/SYNTENY/LinkMapI.txt", "data/SYNTENY/Loci_JapFl1.fasta")
-# download.fasta("data/SYNTENY/LinkMapII.txt", "data/SYNTENY/Loci_JapFl2.fasta")
 
 # ----- IMPORT INFORMATION ON LOCI TO SYNTENY MAP ------------------------------------
 
@@ -207,12 +172,9 @@ flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", heade
   separate(ACCESSION, c("ACCESSION", "temp"), sep = -3) %>%
   select(LOCUS, ACCESSION)
 
-
-
 ```
 
-
-## Configuration file (`config.txt`)
+## Create configuration file (`config.txt`)
 
 The specification for the pipeline are listed in a configuration file.
 
@@ -237,13 +199,13 @@ Next, the location of the local blast database is defined, and the input files a
 
 ```{r format config file II}
 
-# determine settings
-Synt_settings <- data.frame(Option = c("db_dir", "fasta_file", "map_file", "blast_args", "min_hit_length"),
-                            Setting = c("/home/blast/db", "mapped.fasta", "map.tab", "blast_args.txt", "50")) 
+# # determine settings
+# Synt_settings <- data.frame(Option = c("db_dir", "fasta_file", "map_file", "blast_args", "min_hit_length"),
+#                             Setting = c("/home/blast/db", "mapped.fasta", "map.tab", "blast_args.txt", "50")) 
 
-# # if additional unmapped files being mapped
-# Synt_settings <- data.frame(Option = c("db_dir", "fasta_file", "map_file", "synteny_map_loci", "blast_args", "min_hit_length", "error_rate"),
-#                             Setting = c("/home/blast/db", "mapped.fasta", "map.tab", "flounderloci.fasta", "blast_args.txt", "50", "0.025"))
+# if additional unmapped files being mapped
+Synt_settings <- data.frame(Option = c("db_dir", "fasta_file", "map_file", "synteny_map_loci", "blast_args", "min_hit_length", "error_rate"),
+                            Setting = c("/home/blast/db", "mapped.fasta", "map.tab", "flounderloci.fasta", "blast_args.txt", "50", "0.025"))
 
 # write configuration file
 con <- file("data/SYNTENY/config.txt", open = "wt")
@@ -298,3 +260,302 @@ Synteny mapper will create a set of output files located in a subdirectory (`res
 `*.synteny.log` is a log file documenting the process of organizing loci mapped to a species genome into synteny blocks.
 
 `*.synteny.sum` follows a similar format to `all.blocks.tab`, with the difference being that the first column consists of all the loci in a given synteny block (separated by `,`).
+
+# Analyze synteny output
+
+## Exploratory analysis
+
+Create function to import `*.synteny.stats` output file.
+
+```{r}
+
+# function to read in *synteny.stats files 
+read.synteny.stats <- function(dir, species) { 
+  temp <- lapply(species, function(sp){ 
+    filename <- paste(sp, ".synteny.stats", sep = "") 
+    path <- file.path(dir, filename) 
+    synteny.stats <- read.table(path, header = FALSE, sep = ":", 
+                                col.names = c("STAT", "species")) 
+    synteny.stats <- setNames(data.frame(t(synteny.stats[, -1])), synteny.stats[,1]) %>% 
+      mutate(SPECIES = sp) %>% 
+      select(SPECIES, 1:13) 
+  }) 
+  ldply(temp, rbind) %>% 
+    dplyr::rename(N_LOCI = `Total Loci in Blocks`, 
+                  N_BLOCKS = `Total Blocks`, 
+                  MEAN_LOCI = `Mean loci per block`, 
+                  MIN_LOCI = `Min loci per block`, 
+                  MAX_LOCI = `Max loci per block`, 
+                  TOTAL_BP = `Total Comp Block Size (bp)`, 
+                  MEAN_BP = `Mean Comp Block Size (bp)`, 
+                  MIN_BP = `Min Comp Block Size (bp)`, 
+                  MAX_BP = `Max Comp Block Size (bp)`, 
+                  TOTAL_cM = `Total Map Block Size (cM)`, 
+                  MEAN_cM = `Mean Map Block Size (cM)`, 
+                  MIN_cM = `Min Map Block Size (cM)`, 
+                  MAX_cM = `Max Map Block Size (cM)`) 
+}   
+
+```
+
+Read in `*.synteny.stats` file and plot overview.
+
+```{r}
+
+# Synteny results overview 
+species <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
+
+synteny_stats <- read.synteny.stats("data/SYNTENY", species) 
+
+# plot synteny mapping results 
+plot.synteny.stats <- function(synteny_stats) { 
+  tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) 
+  ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+    geom_bar(color = "black", stat = "identity") + 
+    facet_wrap( ~ STAT, scales = "free") +
+      theme_facet
+} 
+
+plot.synteny.stats(synteny_stats) 
+
+```
+
+Plot overview total number of loci, number of blocks and total length (cM/bp)
+
+```{r}
+
+# plot overview
+plot.synteny.total <- function(synteny_stats) { 
+  
+  # Format data set
+  tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) %>%
+    filter(STAT %in% c("N_LOCI", "N_BLOCKS", "TOTAL_BP", "TOTAL_cM"))
+  
+  # plot
+  ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+    geom_bar(stat = "identity",
+             color = "black", size = 1, fill = "grey75" ) +
+    labs(x = "\nComparison Species Genome", y = "Total Number/Length\n") +
+    facet_wrap(~ STAT, scales = "free") +
+    theme_facet
+} 
+
+plot.synteny.total(synteny_stats)
+
+```
+
+Plot mean number of loci, mean number of blocks, and mean length (cM/bp):
+
+```{r}
+
+# plot overview
+plot.synteny.mean <- function(synteny_stats) { 
+  
+  # Format data set
+  tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) %>%
+    filter(STAT %in% c("N_BLOCKS", "MEAN_LOCI", "MEAN_BP", "MEAN_cM"))
+  
+  # plot
+  ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+    geom_bar(stat = "identity",
+             color = "#325d81", size = 1, fill = "#edf3f8" ) +
+    labs(x = "\nComparison Species Genome", y = "Total Number/Length\n") +
+    facet_wrap(~ STAT, scales = "free") +
+    theme_standard 
+} 
+
+plot.synteny.mean(synteny_stats)
+
+```
+
+Plot mean number of loci (max/min) per synteny block per species.
+
+```{r}
+
+# plot loci overview
+plot.synteny.loci <- function(synteny_stats) { 
+  
+  # Format data set
+  tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) %>%
+    filter(STAT %in% c("MEAN_LOCI", "MIN_LOCI", "MAX_LOCI"))
+
+  # plot
+  ggplot(tidy, aes(x = SPECIES, y = RESULT)) + 
+    geom_point(data = filter(tidy, STAT == "MEAN_LOCI"),
+             shape = 23, size = 3, fill = "black") +
+    geom_point(data = filter(tidy, STAT == "MIN_LOCI"),
+               shape = 21, size = 2, fill = "black") +
+    geom_point(data = filter(tidy, STAT == "MAX_LOCI"),
+               shape = 21, size = 2, fill = "black") +
+    labs(x = "Species genome", y = "Mean number of loci (Max/Min)") +
+    theme_standard
+} 
+
+plot.synteny.loci(synteny_stats)
+
+```
+
+Plot mean, min and max length of synteny blocks per species.
+
+```{r}
+
+# plot bp overview
+plot.synteny.bp <- function(synteny_stats) { 
+  
+  # Format data set
+  tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) %>%
+    filter(STAT %in% c("MEAN_BP", "MIN_BP", "MAX_BP"))
+  
+  # plot
+  ggplot(tidy, aes(x = SPECIES, y = RESULT)) + 
+    geom_point(data = filter(tidy, STAT == "MEAN_BP"),
+             shape = 23, size = 3, fill = "black") +
+    geom_point(data = filter(tidy, STAT == "MIN_BP"),
+               shape = 21, size = 2, fill = "black") +
+    geom_point(data = filter(tidy, STAT == "MAX_BP"),
+               shape = 21, size = 2, fill = "black") +
+    labs(x = "Species genome", y = "Mean length blocks (Max/Min) in bp") +
+    theme_standard
+} 
+
+plot.synteny.bp(synteny_stats)
+
+```
+
+
+```{r}
+
+# plot cM overview
+plot.synteny.cM <- function(synteny_stats) { 
+  
+  # Format data set
+  tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) %>%
+    filter(STAT %in% c("MEAN_cM", "MIN_cM", "MAX_cM"))
+  
+  # plot
+  ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+    geom_point(data = filter(tidy, STAT == "MEAN_cM"),
+             shape = 23, size = 3, fill = "black") +
+    geom_point(data = filter(tidy, STAT == "MIN_cM"),
+               shape = 21, size = 2, fill = "black") +
+    geom_point(data = filter(tidy, STAT == "MAX_cM"),
+               shape = 21, size = 2, fill = "black") +
+    labs(x = "Species genome", y = "Mean length blocks in cM (Max/Min)") +
+    theme_standard
+} 
+
+plot.synteny.cM(synteny_stats)
+
+```
+
+## Determine homologous chromosomes
+
+```{r}
+
+# read in synteny block overview
+read.all.blocks <- function(dir) { 
+  path <- file.path(dir, "all.blocks.tab") 
+  synt_blocks <- read.table(path, header = TRUE,
+                            colClasses = c("factor", "factor", "factor", "numeric", 
+                                           "factor", "integer", "integer", "integer",
+                                           "factor", "numeric", "numeric", "numeric"))
+}   
+
+synt_blocks <- read.all.blocks("data/SYNTENY")
+
+# write data frame with homologous linkage groups (all species)
+LG.Homologs <- function(synteny_blocks){
+  synt_blocks %>%
+    select(COMP_SPECIES, MAP_LG, COMP_CHR) %>%
+    unite(HOMOLOG, 1:3, sep = ">") %>%
+    distinct() %>%
+    separate(HOMOLOG, into = c("COMP_SPECIES", "MAP_LG", "COMP_CHR"), sep = ">") %>%
+    arrange(COMP_SPECIES)
+}
+
+Homologs <- LG.Homologs(synt_blocks)
+
+```
+
+## Create oxford bubble plots:
+
+```{r}
+
+# plot oxford bubble plot
+# arguments 
+# synt_blocks = data.frame in format all.blocks.tab
+# species = vector of species to be plotted
+
+plot.oxford <- function(synt_blocks, species) {
+
+  lapply(species, function(species){
+    
+    # set factor levels for LG order
+    LG <- c("1", "2", "3", "4", "5", "6", "7", "8", 
+            "9", "10", "11", "12", "13", "14", "15", "16",
+            "17", "18", "19", "20", "21", "22", "23", "24")
+    
+    # identify order of Chromosomes according to LG order
+    CHR <- synt_blocks %>%
+      filter(COMP_SPECIES %in% species) %>%
+      select(COMP_SPECIES, MAP_LG, COMP_CHR) %>%
+      distinct(MAP_LG, .keep_all = TRUE)
+    
+    CHR <- droplevels(CHR)
+    CHR$MAP_LG <- factor(CHR$MAP_LG, levels = LG)
+    CHR <- arrange(CHR, MAP_LG)
+    
+    CHR <- as.character(CHR$COMP_CHR)
+    
+    # determine number of blocks per chromosome/linkage group combinations
+    plot <- synt_blocks %>%
+      filter(COMP_SPECIES %in% species) %>%
+      select(COMP_SPECIES, MAP_LG, COMP_CHR) %>%
+      group_by(MAP_LG, COMP_CHR) %>%
+      count() %>%
+      filter(!is.na(COMP_CHR))
+    
+    # order LG and CHR on x and y axis
+    plot$COMP_CHR <- factor(plot$COMP_CHR, levels = unique(CHR))
+    plot$MAP_LG <- factor(plot$MAP_LG, levels = LG)
+    
+    # plot LG vs CHR and number of blocks
+    ggplot(plot, aes(x = MAP_LG, y = COMP_CHR)) +
+      geom_point(aes(size = n), 
+                 shape = 21, stroke = 1.1, color = "#325d81", fill = "#edf3f8") +
+      scale_size_continuous(range = c(2,15),
+                            breaks = c(1, 5, 10)) +
+      scale_x_discrete(expand = c(0, 1)) +
+      scale_y_discrete(expand = c(0, 1)) +
+      scale_fill_discrete("Number of Syntenic Blocks", 
+                          breaks=c(1, 5, 10), 
+                          labels=c("1", "5", "10")) +
+      labs(x = "\nLinkage Group Southern Flounder", y = paste("Chromosome", species, "\n")) +
+      theme_classic() +
+      theme(
+        axis.title = element_text(size = 26),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_line(color = "black", size = 0.5),
+        axis.line.y = element_line(color = "black", size = 0.5),
+        axis.ticks.x = element_line(color = "black", size = 1),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 18),
+        axis.text.y = element_text(size = 18),
+        
+        legend.position = "bottom",
+        legend.text = element_text(size = 18),
+        legend.title = element_text(size = 18))
+  })
+}
+
+plot.oxford(synt_blocks, c("dlab", "lcal", "gacu", "onil", "tnig", "trub"))
+
+```
+

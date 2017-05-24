@@ -10,5 +10,7 @@ dlab TRUE
 db_dir /home/blast/db
 fasta_file mapped.fasta
 map_file map.tab
+synteny_map_loci flounderloci.fasta
 blast_args blast_args.txt
 min_hit_length 50
+error_rate 0.025

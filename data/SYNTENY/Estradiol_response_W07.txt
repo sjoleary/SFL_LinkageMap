@@ -1,0 +1,174 @@
+CONTIG_ID	ACCESSION	GENE_ID	GO_PROCESS	STUDY	CONTEXT
+Contig365	AJ291834	NADP-menadione oxidoreductase		Williams_2007	downregulated_estradiol
+PfFMO2-ll0	AJ310420	ITI H chain/SHAP		Williams_2007	downregulated_estradiol
+Contig1032	AJ310422	Polymerase (RNA) III (DNA directed) polypeptide K		Williams_2007	upregulated_estradiol
+Contig485	AJ508728	"Eukaryotic translation initiation factor 3, subunit 6"		Williams_2007	upregulated_estradiol
+PfSHA2G1	AJ508732	Keratin (K18 Type I)		Williams_2007	downregulated_estradiol
+PfBR2E8	AJ578047	Organic anion transporting polypeptide 1b4		Williams_2007	upregulated_estradiol
+Contig334	AJ586237	FLAP—5-lipoxygenase activating protein		Williams_2007	upregulated_estradiol
+PfCF1D9	AJ605285	Spermidine/spermine N1-acetyltransferase		Williams_2007	upregulated_estradiol
+Contig641	AM041911	"Splicing factor, arginine/serine-rich 2 (SC-35)"		Williams_2007	upregulated_estradiol
+Contig697	DV565376	Protein transport protein Sec61 alpha subunit		Williams_2007	upregulated_estradiol
+PfIL007A06	DV565430	Carboxypeptidase B		Williams_2007	upregulated_estradiol
+Contig873	DV565433	Mitochondrial 28S ribosomal protein S6 (S6 mt) (MRP-S6)		Williams_2007	upregulated_estradiol
+Contig761	DV565464	ATP synthase subunit B		Williams_2007	upregulated_estradiol
+PfIL001H03	DV565467	Bromodomain-containing 3		Williams_2007	upregulated_estradiol
+Contig627	DV565484	"Dynein light chain 2, cytoplasmic"		Williams_2007	upregulated_estradiol
+PfIL009F04	DV565544	Cyclin G1		Williams_2007	upregulated_estradiol
+Contig226	DV565551	VHSV-induced protein-5		Williams_2007	upregulated_estradiol
+PfIL009H04	DV565558	Chaperonin subunit 7		Williams_2007	upregulated_estradiol
+PfIL012A11	DV565603	Additional sex combs like 1 (Asxl1)		Williams_2007	downregulated_estradiol
+PfIL012C12	DV565613	S100-like calcium binding protein		Williams_2007	downregulated_estradiol
+PfIL012E02	DV565618	"DnaJ (Hsp40) homolog, subfamily B, member 1"		Williams_2007	downregulated_estradiol
+PfIL012E07	DV565623	Similar to lysophosphatidic acid acyltransferase (69.9 kD)		Williams_2007	downregulated_estradiol
+PfIL013A02	DV565633	Oligosaccharyl transferase 48 kDa subunit		Williams_2007	downregulated_estradiol
+PfIL013B10	DV565641	Zinc finger and BTB domain containing 5		Williams_2007	downregulated_estradiol
+PfIL013B12	DV565643	Dynein 2 light intermediate chain		Williams_2007	downregulated_estradiol
+Contig246	DV565725	18S rRNA		Williams_2007	downregulated_estradiol
+PfIL050H09	DV565732	Rtp12.5		Williams_2007	downregulated_estradiol
+PfIL140C05	DV565742	Novel protein similar to human KIAA1281 and KIAA0295		Williams_2007	downregulated_estradiol
+Contig27	DV565768	Chemokine (C-X-C motif) ligand 12a		Williams_2007	downregulated_estradiol
+Contig549	DV565792	Mitochondrial glycine cleavage system H protein		Williams_2007	upregulated_estradiol
+Contig58	DV565797	"Selenoprotein P, plasma, 1b"		Williams_2007	upregulated_estradiol
+PfIL201H09	DV565815	B-cell receptor CD22		Williams_2007	downregulated_estradiol
+Contig429	DV565868	Hepcidin precursor		Williams_2007	downregulated_estradiol
+Contig6	DV565884	"SPC18 protein, signal peptidase complex"		Williams_2007	upregulated_estradiol
+Contig1012	DV565910	Cholesteryl ester transfer protein		Williams_2007	upregulated_estradiol
+Contig398	DV565941	Choriogenin L		Williams_2007	upregulated_estradiol
+PfIL205E02	DV565989	Geminin		Williams_2007	downregulated_estradiol
+PfIL206B09	DV566017	Ubiquitin fusion degradation protein 1		Williams_2007	downregulated_estradiol
+Contig68	DV566038	Macrophage mannose receptor precursor (MMR) (CD206 antigen)		Williams_2007	downregulated_estradiol
+PfIL206G11	DV566041	Haloacid dehalogenase-like hydrolase domain containing 1A		Williams_2007	downregulated_estradiol
+PfIL207C10	DV566060	Annexin max3		Williams_2007	downregulated_estradiol
+Contig564	DV566068	Similar to interleukin 25		Williams_2007	upregulated_estradiol
+Contig842	DV566094	60S ribosomal protein L31		Williams_2007	upregulated_estradiol
+Contig399	DV566148	Hepcidin-like precursor		Williams_2007	downregulated_estradiol
+PfIL209G11	DV566155	MECL1 proteasome		Williams_2007	downregulated_estradiol
+PfIL209H11	DV566160	Survivin 1		Williams_2007	downregulated_estradiol
+PfIL210B04	DV566168	Baculoviral IAP repeat-containing 5A; survivin 1		Williams_2007	downregulated_estradiol
+PfIL210C09	DV566175	Fumarylacetoacetate hydrolase		Williams_2007	downregulated_estradiol
+Contig817	DV566198	Chloride intracellular channel protein		Williams_2007	upregulated_estradiol
+PfIL211H04	DV566215	Similar to S-phase kinase-associated protein 1A isofrom b		Williams_2007	upregulated_estradiol
+Contig699	DV566291	Trafficking protein particle complex subunit 1		Williams_2007	upregulated_estradiol
+PfIL216H09	DV566358	"Clathrin, heavy polypeptide (Hc)"		Williams_2007	upregulated_estradiol
+Contig123	DV566428	Calmodulin 1		Williams_2007	downregulated_estradiol
+PfIL220C05	DV566444	Cytochrome c oxidase subunit Vb		Williams_2007	upregulated_estradiol
+PfIL223A02	DV566533	Choriogenin H minor		Williams_2007	downregulated_estradiol
+PfIL223A09	DV566536	P53-related protein kinase TP53RK (Nori-2)		Williams_2007	downregulated_estradiol
+PfIL223B05	DV566542	Similar to UNR protein (N-ras upstream gene protein)		Williams_2007	downregulated_estradiol
+Contig124	DV566544	Topoisomerase (DNA) III beta		Williams_2007	downregulated_estradiol
+PfIL223G02	DV566567	NADH-ubiquinone oxidoreductase B14 subunit		Williams_2007	downregulated_estradiol
+PfIL223G08	DV566569	Similar to transthyretin (4L369)		Williams_2007	downregulated_estradiol
+PfIL224F02	DV566602	ZPAX		Williams_2007	downregulated_estradiol
+Contig590	DV566635	Peptidyl-prolyl cis-trans isomerase B precursor		Williams_2007	upregulated_estradiol
+PfIL225F02	DV566636	Hyaluronic acid binding protein 2		Williams_2007	downregulated_estradiol
+Contig146	DV566640	Phospholipase A2		Williams_2007	downregulated_estradiol
+PfIL226A05	DV566648	"IK cytokine, down-regulator of HLA II"		Williams_2007	downregulated_estradiol
+PfIL226F06	DV566678	N-type ATP pyrophosphatase-like		Williams_2007	downregulated_estradiol
+PfIL226G02	DV566682	"Carboxypeptidase N, polypeptide 1, 50 kD precursor"		Williams_2007	downregulated_estradiol
+PfIL227D12	DV566707	Allograft inflammatory factor-1		Williams_2007	downregulated_estradiol
+PfIL228G03	DV566755	SAC1 (supressor of actin mutations 1)		Williams_2007	downregulated_estradiol
+Contig689	DV566758	Small nuclear ribonucleoprotein G		Williams_2007	upregulated_estradiol
+PfIL230G02	DV566828	Alpha-2-macroglobulin		Williams_2007	downregulated_estradiol
+Contig439	DV566834	Hepcidin precursor		Williams_2007	downregulated_estradiol
+PfIL231A02	DV566839	Adducin 3 (gamma)		Williams_2007	downregulated_estradiol
+Contig250	DV566865	Proteasome subunit N3		Williams_2007	downregulated_estradiol
+PfIL232B04	DV566883	Mitogen-activated protein kinase 2-associated protein 1r		Williams_2007	downregulated_estradiol
+PfIL233D05	DV566937	Protein BAT5 (HLA-B-associated transcript 5)		Williams_2007	downregulated_estradiol
+PfIL233F03	DV566949	Yellowtail growth hormone like protein-1		Williams_2007	downregulated_estradiol
+Contig256	DV567021	Mibp beta 1 integrin binding protein 2		Williams_2007	upregulated_estradiol
+PfIL235F11	DV567044	Septin 5		Williams_2007	downregulated_estradiol
+PfIL237G08	DV567130	Endosome-associated protein		Williams_2007	downregulated_estradiol
+Contig341	DV567140	Proteasome delta		Williams_2007	upregulated_estradiol
+Contig859	DV567227	"39S ribosomal protein L32, mitochondrial precursor"		Williams_2007	upregulated_estradiol
+Contig736	DV567324	Manganese superoxide dismutase		Williams_2007	upregulated_estradiol
+PfIL242G10	DV567352	MLN64 N-terminal domain homolog		Williams_2007	upregulated_estradiol
+PfIL243A10	DV567359	"Proteasome (Prosome, macropain) subunit, beta type, 5"		Williams_2007	upregulated_estradiol
+PfIL243B10	DV567365	SET domain and mariner transposase fusion gene		Williams_2007	downregulated_estradiol
+PfIL243C02	DV567366	EF hand containing family 1A (Smhs2)		Williams_2007	upregulated_estradiol
+PfIL244C08	DV567410	Fatty acid-binding protein		Williams_2007	downregulated_estradiol
+PfIL244H11	DV567440	Similar to Poly ADP-ribose polymerase PARP9		Williams_2007	downregulated_estradiol
+PfIL246B11	DV567485	"Hydroxymethylglutaryl-CoA synthase, cytoplasmic"		Williams_2007	upregulated_estradiol
+PfIL246F02	DV567498	Nitrilase homolog 1		Williams_2007	upregulated_estradiol
+Contig166	DV567558	Pre-mRNA splicing factor ATP-dependent RNA helicase PRP16		Williams_2007	upregulated_estradiol
+PfIL249C03	DV567613	Small inducible cytokine		Williams_2007	downregulated_estradiol
+Contig297	DV567619	Similar to transient receptor potential cation channel		Williams_2007	downregulated_estradiol
+Contig458	DV567625	Vitellogenin A		Williams_2007	upregulated_estradiol
+PfIL249H12	DV567651	Sorting nexin-12		Williams_2007	downregulated_estradiol
+PfIL250A02	DV567653	Triadin		Williams_2007	downregulated_estradiol
+PfIL250D12	DV567673	Complement component C7		Williams_2007	downregulated_estradiol
+PfIL253B10	DV567808	Copper/zinc superoxide dismutase		Williams_2007	downregulated_estradiol
+PfIL253F02	DV567822	Cytochrome c oxidase		Williams_2007	downregulated_estradiol
+PfIL254D11	DV567862	Zinc finger protein		Williams_2007	downregulated_estradiol
+Contig833	DV567868	S100 calcium-binding protein A14 (S114)		Williams_2007	upregulated_estradiol
+PfIL254F08	DV567872	Nf-kappa B activator (TANK)		Williams_2007	downregulated_estradiol
+PfIL254G11	DV567880	Alcohol dehydrogenase class III		Williams_2007	downregulated_estradiol
+Contig299	DV567908	Protein phosphatase I alpha subunit (PPPIA)		Williams_2007	upregulated_estradiol
+PfIL255G11	DV567931	"Acid phosphatase 5, tartrate resistant"		Williams_2007	downregulated_estradiol
+PfIL255H02	DV567933	Reticulon 1		Williams_2007	upregulated_estradiol
+PfIL256D11	DV567956	Selenide water dikinase 2		Williams_2007	upregulated_estradiol
+PfIL257B11	DV567987	"Mannosidase, alpha, class 1C, member 1"		Williams_2007	downregulated_estradiol
+PfIL257D11	DV567998	Vitellogenin A		Williams_2007	upregulated_estradiol
+PfIL258B03	DV568031	Protein-lysine 6-oxidase		Williams_2007	downregulated_estradiol
+PfIL259D05	DV568096	Class I helical cytokine receptor number 26		Williams_2007	downregulated_estradiol
+Contig158	DV568134	"Similar to vertebrate RAS-like, estrogen-regulated, growth-inhibitor"		Williams_2007	downregulated_estradiol
+PfIL260C01	DV568145	Nuclear transport factor 2		Williams_2007	downregulated_estradiol
+PfIL260G06	DV568169	LBP (LPS binding protein)/BPI		Williams_2007	downregulated_estradiol
+Contig214	DV568350	Cytochrome P450 2F2 CYP2F2		Williams_2007	upregulated_estradiol
+PfIL271D03	DV568602	Splicing factor 3 subunit 1		Williams_2007	upregulated_estradiol
+PfIL272G01	DV568641	GTP cyclohydrolase 1		Williams_2007	upregulated_estradiol
+PfIL273D04	DV568672	Proteasome beta-subunit C5		Williams_2007	upregulated_estradiol
+Contig450	DV568698	Vitellogenin A		Williams_2007	upregulated_estradiol
+Contig728	DV568704	SEC63-like		Williams_2007	upregulated_estradiol
+PfIL276D01	DV568784	60S ribosomal protein L13a		Williams_2007	upregulated_estradiol
+PfIL277F10	DV568841	G1 to S phase transition 1		Williams_2007	upregulated_estradiol
+PfIL278C09	DV568872	Programmed cell death 4		Williams_2007	upregulated_estradiol
+Contig847	DV568929	Coiled-coil-helix-coiled-coil-helix domain containing 3		Williams_2007	upregulated_estradiol
+PfIL283B04	DV569019	Dipeptidylpeptidase 3		Williams_2007	downregulated_estradiol
+PfIL286E01	DV569138	Transcription factor BTF3		Williams_2007	upregulated_estradiol
+PfIL289G08	DV569275	Myeloid/lymphoid or mixed-lineage leukemia protein 4		Williams_2007	downregulated_estradiol
+PfIL284B05	DV569348	Beta-2 microglobulin		Williams_2007	downregulated_estradiol
+PfIL291D10	DV569361	26S protease regulatory subunit S10B		Williams_2007	downregulated_estradiol
+Contig201	DV569417	Protein disulfide isomerase related protein		Williams_2007	upregulated_estradiol
+PfIL294G11	DV569485	Leukotriene B4 12-hydroxydehydrogenase		Williams_2007	downregulated_estradiol
+PfIL295F02	DV569516	GTP cyclohydrolase I feedback regulatory protein		Williams_2007	downregulated_estradiol
+PfIL295H10	DV569529	Liver glycogen phosphorylase		Williams_2007	downregulated_estradiol
+Contig1059	DV569534	RACK—Guanine nucleotide-binding protein beta subunit 2-like 1		Williams_2007	upregulated_estradiol
+PfIL298B04	DV569594	Alanine-glyoxylate aminotransferase		Williams_2007	upregulated_estradiol
+PfIL300E07	DV569684	Biotinidase precursor		Williams_2007	upregulated_estradiol
+Contig377	DV569697	40S ribosomal protein S15A		Williams_2007	upregulated_estradiol
+PfIL301E07	DV569726	Mitochondrial import inner membrane translocase subunit TIM8 A		Williams_2007	upregulated_estradiol
+PfIL308C10	DV569999	Replication factor C (activator 1) 5		Williams_2007	downregulated_estradiol
+PfIL308H12	DV570017	Class I helical cytokine receptor number 25		Williams_2007	downregulated_estradiol
+PfIL309H12	DV570048	MHC class II alpha		Williams_2007	downregulated_estradiol
+Contig778	DV570076	Ubiquitin-like protein SMT3B precursor		Williams_2007	downregulated_estradiol
+PfIL313B03	DV570144	Peptidyl-prolyl cis-trans isomerase		Williams_2007	downregulated_estradiol
+PfIL311G11	DV570209	Fumarylacetoacetate hydrolase domain containing 2A		Williams_2007	downregulated_estradiol
+PfIL316A02	DV570269	"5 -nucleotidase, cytosolic II"		Williams_2007	downregulated_estradiol
+PfIL316A06	DV570271	Syndecan 2		Williams_2007	upregulated_estradiol
+PfIL317C11	DV570321	Similar to F-box only protein 21		Williams_2007	upregulated_estradiol
+PfIL319A08	DV570397	"ATP-binding cassette, sub-family E (OABP), member 1"		Williams_2007	upregulated_estradiol
+PfIL320B11	DV570435	"Sucose transporter protein 10, 11"		Williams_2007	downregulated_estradiol
+PfIL320F05	DV570455	"Similar to acyl-Coenzyme A dehydrogenase family, member 8"		Williams_2007	downregulated_estradiol
+PfIL003B11	EC377560	"Fibrinogen, B beta polypeptide"		Williams_2007	upregulated_estradiol
+PfIL009F05	EC377625	Pescadillo		Williams_2007	upregulated_estradiol
+PfIL140H08	EC377713	Similar to coagulation factor 10		Williams_2007	downregulated_estradiol
+PfIL206B05	EC377789	Similar to sushi domain containing 1		Williams_2007	downregulated_estradiol
+Contig929	EC377954	Small GTPase RhoA		Williams_2007	upregulated_estradiol
+PfIL223D12	EC378088	Similar to Kynureninase (l-kynurenine hydrolase)		Williams_2007	downregulated_estradiol
+Contig1064	EC378136	Ubiquinol-cytochrome c reductase (6.4 kD) subunit		Williams_2007	downregulated_estradiol
+PfIL227F02	EC378154	Complement component 1 q subcomponent		Williams_2007	downregulated_estradiol
+PfIL228A07	EC378166	Complement component c3		Williams_2007	downregulated_estradiol
+PfIL231D09	EC378226	Similar to CDC28 protein kinase regulatory subunit 2 isoform 2		Williams_2007	downregulated_estradiol
+PfIL231F08	EC378228	Similar to Translation initiation factor eIF-2B gamma subunit		Williams_2007	downregulated_estradiol
+PfIL244D09	EC378419	Programmed cell death 10		Williams_2007	upregulated_estradiol
+PfIL247G01	EC378473	Aspartyl-tRNA synthetase		Williams_2007	upregulated_estradiol
+PfIL262C12	EC378685	Similar to abnormal spindle		Williams_2007	upregulated_estradiol
+PfIL280H11	EC378995	Similar to 3-mercaptopyruvate sulfurtransferase		Williams_2007	upregulated_estradiol
+PfIL285C08	EC379053	Phosphoethanolamine N-methyltransferase		Williams_2007	upregulated_estradiol
+PfIL289H10	EC379120	JAK3 tyrosine kinase		Williams_2007	downregulated_estradiol
+PfIL299H03	EC379283	Cell division cycle 45-like		Williams_2007	upregulated_estradiol
+PfIL302C11	EC379322	MAP3K12 binding inhibitory protein 1		Williams_2007	downregulated_estradiol
+PfIL309A02	EC379430	Kinesin light chain 2		Williams_2007	downregulated_estradiol
+PfIL315B06	EC379555	Guanylin precursor		Williams_2007	downregulated_estradiol
+PfIL319B04	EC379620	Similar to PH domain-containing protein		Williams_2007	downregulated_estradiol
