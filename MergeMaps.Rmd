@@ -5001,12 +5001,12 @@ Plot linkage map:
 ```{r}
 
 # plot with ggplot
-ggplot(map, aes(x = LG, y = POS)) +
-  geom_path(aes(group = LG), size = 9, lineend = "round", col = "#325d81") +
-  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "#edf3f8") +
+ggplot(SFL.map, aes(x = LG, y = POS)) +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "black") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
   geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
                 ymin = POS-0.025, ymax = POS+0.025),
-            color = "#325d81", fill = "#325d81") +
+            color = "black", fill = "black") +
   scale_x_continuous(breaks = c(1:24)) +
   scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
   # scale_fill_manual(name="Marker Type",
@@ -5047,11 +5047,11 @@ FamA.map <- read.delim("data/LINKMAP/FamA.fullmap",
 
 # plot with ggplot
 ggplot(FamA.map, aes(x = LG, y = POSITION)) +
-  geom_path(aes(group = LG), size = 9, lineend = "round", col = "#325d81") +
-  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "#edf3f8") +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "black") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
   geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
                 ymin = POSITION-0.025, ymax = POSITION+0.025),
-            color = "#325d81", fill = "#325d81") +
+            color = "black", fill = "black") +
   scale_x_continuous(breaks = c(1:24)) +
   scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
   # scale_fill_manual(name="Marker Type",
@@ -5092,11 +5092,11 @@ FamB.map <- read.delim("data/LINKMAP/FamB.fullmap",
                    col.names = c("LG", "LOCUS", "POSITION"))
 
 ggplot(FamB.map, aes(x = LG, y = POSITION)) +
-  geom_path(aes(group = LG), size = 9, lineend = "round", col = "#325d81") +
-  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "#edf3f8") +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "black") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
   geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
                 ymin = POSITION-0.025, ymax = POSITION+0.025),
-            color = "#325d81", fill = "#325d81") +
+            color = "black", fill = "black") +
   scale_x_continuous(breaks = c(1:24)) +
   scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
   # scale_fill_manual(name="Marker Type",
