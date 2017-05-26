@@ -1,0 +1,54 @@
+chr	-	6	6	0	28185029	grey
+chr	-	22-25	22-25	0	26439989	grey
+chr	-	9	9	0	22362490	grey
+chr	-	24	24	0	13918872	grey
+chr	-	5	5	0	32612477	grey
+chr	-	8	8	0	23067096	grey
+chr	-	x	x	0	17779090	grey
+chr	-	3	3	0	13451259	grey
+chr	-	16	16	0	25821574	grey
+chr	-	1B	1B	0	17995764	grey
+chr	-	19	19	0	23202889	grey
+chr	-	15	15	0	25566315	grey
+chr	-	4	4	0	27569954	grey
+chr	-	17	17	0	22893611	grey
+chr	-	10	10	0	24053896	grey
+chr	-	14	14	0	28395245	grey
+chr	-	12	12	0	23234908	grey
+chr	-	18-21	18-21	0	16453912	grey
+chr	-	20	20	0	28398722	grey
+chr	-	2	2	0	26218737	grey
+chr	-	7	7	0	28480941	grey
+chr	-	13	13	0	27622843	grey
+chr	-	11	11	0	26215200	grey
+chr	-	1A	1A	0	29036788	grey
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

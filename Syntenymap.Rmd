@@ -20,7 +20,7 @@ source("lib/ggplot.R")
 
 ```
 
-# Synteny mapped loci
+# Load data
 
 Output from synteny mapper `all.synteny.mapped.out`.
 
@@ -28,9 +28,6 @@ Output from synteny mapper `all.synteny.mapped.out`.
 
 # load map data
 map <- read.table("data/SYNTENY/map.tab", header = TRUE)
-
-# load synteny data
-data <- read.table("data/SYNTENY/all.blocks.tab", header=TRUE)
 
 # chrom lengths fish genomes
 chrom <- read.table("data/SYNTENY/chr_lengths.txt", header = TRUE, stringsAsFactors = FALSE)
@@ -43,7 +40,9 @@ syn_loci <- read.table("data/SYNTENY/all.synteny.mapped.out", header=TRUE)
 
 ```
 
-# write Karyotype files
+# Write input files
+
+## Karyotype files
 
 Create karyotype file for southern flounder consensus map.
 
@@ -51,105 +50,32 @@ Create karyotype file for southern flounder consensus map.
 
 # determine length of each LG
 by_lg <- group_by(map, LG) %>%
-  top_n(1, POSITION)
+  top_n(1, POS)
 
 # format karyotype file
 kary <- ungroup(by_lg) %>%
-  select(LG, POSITION) %>%
-  unique() %>% # not sure why some LGs are duplicates?
-  mutate(COLOR = "black") %>%
-  mutate(id = paste("lg", LG, sep=''), 
-         label = paste("LG", LG, sep=''),
-         chr = "chr", 
-         dash = "-", 
-         start = "0", 
-         end = as.integer(POSITION * 500000), 
-         color = "grey") %>%
-  select(chr, dash, id, label, start, end, COLOR)
+    select(LG, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG, sep=''), 
+           label = paste("LG", LG, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "grey") %>%
+    select(chr, dash, id, label, start, end, COLOR)
 
 # output karyotype data file
-write.table(kary, file = "scr/CIRCOS/SFL_karyotype.txt", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+write.table(kary, file = "data/SYNTENY/SFL_karyotype.txt", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
 
 ```
 
-Write markers file (loci positions):
+Create karyotype file for European seabass genome.
 
 ```{r}
-
-# ----- WRITE MARKERS FILE -------------------------------------------------------------
-
-markers <- mutate(map, chr = paste("soc", lg, sep=''), start = as.integer(pos * 500000), end = as.integer(pos * 500000))
-markers_final <- markers[,c(4, 5, 6, 1)]
-
-write.table(markers_final, file = "data/circos/markers.txt", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-```
-
-Write tile track file
-
-```{r}
-
-# Get a list of the comparison species
-
-species <- as.vector(unique(data$COMP_SPECIES))
-
-for (i in 1:length(species)) {
-  spec <- filter(data, COMP_SPECIES == species[i])
-  spec <- mutate(spec, chr = paste("lg", MAP_LG, sep=''), start = as.integer(MAP_START * 500000), end = as.integer(MAP_STOP * 500000))
-  tiles <- select(spec, chr, start, end)
-  write.table(tiles, file = paste("scr/CIRCOS/data/", species[i], ".txt", sep = ''), sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-}
-
-# Write a tile file for the synteny mapped loci
-
-syn_loci <- mutate(syn, chr = paste("lg", LG, sep=''), start = as.integer(LEFT_POS * 500000), end = as.integer(RIGHT_POS * 500000))
-loci <- select(syn_loci, chr, start, end)
-write.table(loci, file = "data/circos/syn_loci.txt", sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-```
-
-Run circos to plot:
-
-```{r}
-
-system('perl "C:\Program Files\Circos\circos-0.69-2\bin\circos" -conf data\circos\circos.conf -outputdir fig -outputfile fig2')
-
-```
-
-# Create input files
-
-```{r}
-
-# --- Southern Flounder Linkage map -----------------------------------------------------
-
-# determine length of each LG
-by_lg <- group_by(map, LG) %>%
-  top_n(1, POSITION)
-
-# format karyotype file
-kary <- ungroup(by_lg) %>%
-  select(LG, POSITION) %>%
-  unique() %>% # not sure why some LGs are duplicates?
-  mutate(id = paste("lg", LG, sep=''),
-         label = paste("LG", LG, sep=''),
-         chr = "chr",
-         dash = "-",
-         start = "0",
-         end = as.integer(POSITION * 500000),
-         color = "grey") %>%
-  select(chr, dash, id, label, start, end, color)
-
-# output karyotype data file
-write.table(kary, file = "scr/CIRCOS/SFL_karyotype.txt", 
-            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-```
-
-
-
-```{r}
-
-# --- European Seabass (dlab) ------------------------------------------------------------
 
 # format file
 kary <- chrom %>%
@@ -164,16 +90,14 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "scr/CIRCOS/dlab_karyotype.txt",
+write.table(kary, "data/SYNTENY/dlab_karyotype.txt",
               sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
 
 ```
 
-
+Create karyotype file for stickleback (gacu):
 
 ```{r}
-# --- Stickleback (gacu) -------------------------------------------------------------
 
 # create data frame with chromosome lengths
 kary <- chrom %>%
@@ -188,16 +112,14 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "scr/CIRCOS/gacu_karyotype.txt",
+write.table(kary, "data/SYNTENY/gacu_karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
   
-
 ```
 
-
+Asian Seabass (lcal)
 
 ```{r}
-# --- Asian Seabass (lcal) -------------------------------------------------------------
 
 # create data frame with chromosome lengths
 kary <- chrom %>%
@@ -212,15 +134,14 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "scr/CIRCOS/lcal_karyotype.txt",
+write.table(kary, "data/SYNTENY/lcal_karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
-
+Nile tilapia (onil)
 
 ```{r}
-# --- Nile tilapia (onil) -------------------------------------------------------------
 
 # create data frame with chromosome lengths
 kary <- chrom %>%
@@ -235,15 +156,14 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "scr/CIRCOS/onil_karyotype.txt",
+write.table(kary, "data/SYNTENY/onil_karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
-
+spotted green puffer (tnig)
 
 ```{r}
-# --- spotted green puffer (tnig) -------------------------------------------------------------
 
 # create data frame with chromosome lengths
 kary <- chrom %>%
@@ -258,16 +178,15 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "scr/CIRCOS/tnig_karyotype.txt",
+write.table(kary, "data/SYNTENY/tnig_karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
-
+Fugu (trub)
 
 ```{r}
-# --- Fugu (trub) -------------------------------------------------------------
-  
+
 # create data frame with chromosome lengths
 kary <- chrom %>%
   filter(species == "trub") %>%
@@ -281,117 +200,80 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "scr/CIRCOS/trub_karyotype.txt",
+write.table(kary, "data/SYNTENY/trub_karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
+## Tile track file
 
-
-```{r}
-# --- Zebrafish (drer) -------------------------------------------------------------
-
-# create data frame with chromosome lengths
-kary <- chrom %>%
-  filter(species == "drer") %>%
-  mutate(chr = "chr",
-         dash = "-",
-         id = chrom,
-         label = chrom,
-         start = "0", 
-         end = length,
-         color = "grey") %>%
-  select(chr, dash, id, label, start, end, color)
-
-# write karyotype track file
-write.table(kary, "scr/CIRCOS/drer_karyotype.txt",
-            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-```
-
-
+Create markers file with positions of mapped loci on each linkage group (chromosome).
 
 ```{r}
-# ----- WRITE LOCUS TRACK FILES -----------------------------------------------------
 
-# format SNP locus track file (use for highlight plot blocks)
-SNPloci <- map %>%
-  mutate(chr = paste("LG", LG, sep=''), 
-         start = as.integer(POSITION * 500000), 
-         end = as.integer(POSITION * 500000),
-         color = "black") %>%
-  select(chr, start, end, color)
-
-# write input file
-write.table(SNPloci, file = "scr/CIRCOS/SNPloci.txt", 
-            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
-
-```
-
-
-
-```{r}
-# ----- WRITE SYNTENY BLOCK TILE TRACK FILES ---------------------------------------------
-
-tiles-a <- synblocks %>%
-  filter(MAP_START < MAP_STOP) %>%
-  mutate(start = MAP_START*500000,
-         end = MAP_STOP*500000)
-
-tiles-b <- synblocks %>%
-  filter(MAP_START > MAP_STOP) %>%
-  mutate(start = MAP_STOP*500000,
-         end = MAP_START*500000)
-
-tiles <- bind_rows()
-
-
-# Get a list of the comparison species
-species <- as.vector(unique(synblocks$COMP_SPECIES))
-
-# write tile track file for synteny blocks for each species
-for (i in 1:length(species)) {
-  # create data frame with synteny blocks
-  tiles <- synblocks %>%
-    filter(COMP_SPECIES == species[i]) %>%
-    mutate(chr = paste("LG", MAP_LG, sep=''), 
-           start = as.integer(MAP_START * 500000), 
-           end = as.integer(MAP_STOP * 500000)) %>%
+markers <- map %>%
+    mutate(chr = paste("lg", LG, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
     select(chr, start, end)
-  # write tile track file
-  write.table(tiles, file = paste("scr/CIRCOS/", species[i], "_synt_blocks.txt", sep = ''), 
-              sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+write.table(markers, file = "data/SYNTENY/markers.txt", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+```
+
+Write tile track files for synteny blocks:
+
+```{r}
+
+# write tile track for synteny blocks for each species
+
+species <- as.vector(unique(syn_blocks$COMP_SPECIES))
+
+for (i in 1:length(species)) {
+  
+    tiles <- syn_blocks %>%
+        filter(COMP_SPECIES == species[i]) %>%
+        mutate(chr = paste("lg", MAP_LG, sep=''), 
+               start = as.integer(MAP_START * 500000), 
+               end = as.integer(MAP_STOP * 500000)) %>%
+        select(chr, start, end)
+    
+    write.table(tiles, file = paste("data/SYNTENY/", species[i], ".txt", sep = ''), 
+                sep = "\t", quote = FALSE, 
+                row.names = FALSE, col.names = FALSE)
 }
 
-```
 
-
-
-```{r}
-# Write a tile track files for the synteny mapped loci
-
-# create one files with all information and then split (same as species?)
-
-# Format files
-# syn_loci <- syn_loci %>%
-#   mutate(chr = paste("lg", LG, sep=''), 
-#          start = as.integer(LEFT_POS * 500000),
-#          end = as.integer(RIGHT_POS * 500000)) %>%
-#   select(chr, start, end)
-
-# write outputfile
-# write.table(loci, file = "data/circos/syn_loci.txt", 
-#             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
-
+Write tile track files for synteny mapped loci:
 
 ```{r}
-# ----- WRITE LINK FILES ---------------------------------------------
+# Write a tile file for the synteny mapped loci
+
+syn_loci <- syn_loci %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+
+write.table(syn_loci, file = "data/SYNTENY/syn_loci.txt", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+```
+
+## Write link files
+
+Link file for synteny blocks dlab and SFL.
+
+```{r}
 
 # Format file
-dlab_synblocks <- synt_blocks %>%
+dlab_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "dlab") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -401,33 +283,44 @@ dlab_synblocks <- synt_blocks %>%
          chrend = COMP_END) %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend)
 
-write.table(dlab_synblocks, file = "scr/CIRCOS/dlab_synteny.txt", 
+write.table(dlab_synblocks, file = "data/SYNTENY/dlab_synteny.txt", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
-# Run circos
+
+# Run circos:
+
+Plot synteny blocks (inside) and SNP loci (outside):
 
 ```{r}
 
-# ----- RUN CIRCOS ---------------------------------------------------------------------
-# run from within R 
-# figures end up in R working directory, png and svg format; same name as main configuration file
-system('perl "C:/Program Files/Circos/circos-0.69-2/bin/circos" -conf scr/CIRCOS/circos.conf')
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_blocks.conf -outputdir fig -outputfile synteny-blocks')
 
-# create basic ideogram
-system('perl "C:/Program Files/Circos/circos-0.69-2/bin/circos" -conf scr/CIRCOS/circos_ideogram_basic.conf')
+```
 
-# create ideogram with SNPs (highlight block)
-system('perl "C:/Program Files/Circos/circos-0.69-2/bin/circos" -conf scr/CIRCOS/circos_ideogram_SNPs.conf')
+Plot comparison location of synteny blocks dlab vs SFL
 
-# create ideogram with tile tracks for synteny blocks
-system('perl "C:/Program Files/Circos/circos-0.69-2/bin/circos" -conf scr/CIRCOS/circos_tiles_syntenyblocks.conf')
+```{r}
 
-# create ideogram with link tracks for synteny blocks
-system('perl "C:/Program Files/Circos/circos-0.69-2/bin/circos" -conf scr/CIRCOS/circos_links_syntenyblocks.conf')
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_comp.conf -outputdir fig -outputfile synteny-comp')
 
-system('perl "C:/Program Files/Circos/circos-0.69-2/bin/circos" -conf scr/CIRCOS/chris.conf')
+```
+
+Plot synteny mapped loci (linkage maps):
+
+```{r}
+
+
+
+```
+
+
+Plot synteny mapped loci (exposure studies):
+
+```{r}
+
+
 
 ```
 
