@@ -25,16 +25,20 @@ source("lib/ggplot.R")
 ```{r}
 
 # load map data
-map <- read.table("data/SYNTENY/map.tab", header = TRUE)
+map <- read.table("data/SYNTENY/map.tab", 
+                  header=TRUE, stringsAsFactors = FALSE)
 
 # chrom lengths fish genomes
-chrom <- read.table("data/SYNTENY/chr_lengths.txt", header = TRUE, stringsAsFactors = FALSE)
+chrom <- read.table("data/SYNTENY/chr_lengths.txt", 
+                    header = TRUE, stringsAsFactors = FALSE)
 
 # load synteny data
-syn_blocks <- read.table("data/SYNTENY/all.blocks.tab", header=TRUE)
+syn_blocks <- read.table("data/SYNTENY/all.blocks.tab", 
+                         header=TRUE, stringsAsFactors = FALSE)
 
 # load synteny mapped loci
-syn_loci <- read.table("data/SYNTENY/all.synteny.mapped.out", header=TRUE)
+syn_loci <- read.table("data/SYNTENY/all.synteny.mapped.out",
+                       header=TRUE, stringsAsFactors = FALSE)
 
 ```
 
@@ -42,7 +46,7 @@ syn_loci <- read.table("data/SYNTENY/all.synteny.mapped.out", header=TRUE)
 
 ## Karyotype files
 
-Create karyotype file for southern flounder consensus map.
+Create karyotype file for southern flounder consensus map:
 
 ```{r}
 
@@ -61,7 +65,7 @@ kary <- ungroup(by_lg) %>%
            dash = "-", 
            start = "0", 
            end = as.integer(POS*500000), 
-           color = "grey") %>%
+           color = "black") %>%
     select(chr, dash, id, label, start, end, COLOR)
 
 # output karyotype data file
@@ -71,7 +75,7 @@ write.table(kary, file = "data/SYNTENY/SFL.karyotype.txt",
 
 ```
 
-Create karyotype file for European seabass genome.
+Create karyotype file for European seabass genome:
 
 ```{r}
 
@@ -84,7 +88,7 @@ kary <- chrom %>%
          label = chrom,
          start = "0", 
          end = length,
-         color = "grey") %>%
+         color = "black") %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
@@ -106,7 +110,7 @@ kary <- chrom %>%
          label = chrom,
          start = "0", 
          end = length,
-         color = "grey") %>%
+         color = "black") %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
@@ -115,7 +119,7 @@ write.table(kary, "data/SYNTENY/gacu.karyotype.txt",
   
 ```
 
-Asian Seabass (lcal)
+Create karyotype file for Asian seabass (lcal):
 
 ```{r}
 
@@ -128,7 +132,7 @@ kary <- chrom %>%
          label = chrom,
          start = "0", 
          end = length,
-         color = "grey") %>%
+         color = "black") %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
@@ -137,7 +141,7 @@ write.table(kary, "data/SYNTENY/lcal.karyotype.txt",
 
 ```
 
-Nile tilapia (onil)
+Create karyotype file for Nile tilapia (onil):
 
 ```{r}
 
@@ -150,7 +154,7 @@ kary <- chrom %>%
          label = chrom,
          start = "0", 
          end = length,
-         color = "grey") %>%
+         color = "black") %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
@@ -159,7 +163,7 @@ write.table(kary, "data/SYNTENY/onil.karyotype.txt",
 
 ```
 
-spotted green puffer (tnig)
+Create karyotype file for spotted green puffer (tnig):
 
 ```{r}
 
@@ -172,7 +176,7 @@ kary <- chrom %>%
          label = chrom,
          start = "0", 
          end = length,
-         color = "grey") %>%
+         color = "black") %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
@@ -181,7 +185,7 @@ write.table(kary, "data/SYNTENY/tnig.karyotype.txt",
 
 ```
 
-Fugu (trub)
+Create karyotype file for fugu (trub):
 
 ```{r}
 
@@ -194,7 +198,7 @@ kary <- chrom %>%
          label = chrom,
          start = "0", 
          end = length,
-         color = "grey") %>%
+         color = "black") %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
@@ -203,9 +207,9 @@ write.table(kary, "data/SYNTENY/trub.karyotype.txt",
 
 ```
 
-## Tile track file
+## Tile track files
 
-Create markers file with positions of mapped loci on each linkage group (chromosome).
+### Create markers file with positions of mapped loci on each linkage group (chromosome).
 
 ```{r}
 
@@ -221,7 +225,7 @@ write.table(markers, file = "data/SYNTENY/markers.txt",
 
 ```
 
-Write tile track files for synteny blocks:
+### Write tile track files for synteny blocks:
 
 ```{r}
 
@@ -243,23 +247,208 @@ for (i in 1:length(species)) {
                 row.names = FALSE, col.names = FALSE)
 }
 
+<<<<<<< Updated upstream
+=======
 ```
 
-Write tile track files for synteny mapped loci:
+### Write tile track files for synteny mapped loci
+
+Format dataframe with information on synteny mapped loci to be able to filter individuals data sets.
 
 ```{r}
-# Write a tile file for the synteny mapped loci
 
-syn_loci <- syn_loci %>%
+# fix formating of locus names
+temp <- filter(syn_loci, grepl("gi*", LOCUS)) %>%
+  separate(LOCUS, c("A", "B", "C", "D"), sep = "\\|") %>%
+  rename(LOCUS = B) %>%
+  select(-A, -C, -D)
+
+# add back into synteny mapped loci data frame
+syn_loci <- filter(syn_loci, !grepl("gi*", LOCUS))
+syn_loci <- bind_rows(syn_loci, temp)
+
+# # create dataframe with LOCUS and ACCESSION No. from FASTA file
+# flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", header = FALSE) %>%
+#   rename(LOCUS = V2, ACCESSION = V4) %>%
+#   separate(ACCESSION, c("ACCESSION", "temp"), sep = -3) %>%
+#   select(LOCUS, ACCESSION)
+
+flounderloci_IDs$LOCUS <- as.character(flounderloci_IDs$LOCUS)
+
+# add accession numbers
+syn_loci <- left_join(syn_loci, flounderloci_IDs)
+
+```
+
+**Williams et al 2003: Stress response in European flounder**
+
+```{r}
+
+# Williams et al 2003 stress resonse
+# stress_response <- read.delim("data/SYNTENY/Stress_response_W03.txt",
+#                              header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info
+stress_response <- left_join(stress_response, syn_loci)
+
+# write results
+write.table(stress_response, "results/stress_response.loci")
+
+# Write a tile file for the synteny mapped loci
+stress_response <- stress_response %>%
+    filter(!is.na(LOCUS)) %>%
     mutate(chr = paste("lg", LG, sep=''), 
            start = as.integer(LEFT_POS * 500000), 
            end = as.integer(RIGHT_POS * 500000)) %>%
     select(chr, start, end)
 
-
-write.table(syn_loci, file = "data/SYNTENY/all.synloci", 
+write.table(stress_response, file = "data/SYNTENY/stress_response.syn", 
             sep = "\t", quote = FALSE, 
             row.names = FALSE, col.names = FALSE)
+```
+
+**Williams et al. 2007 Estradiol exposure resonse** 
+
+```{r}
+
+# Williams et al. 2007 gene expression exposed to estradiol
+# estradiol_response <- read.delim("data/SYNTENY/Estradiol_response_W07.txt",
+#                                  header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info
+estradiol_response <- left_join(estradiol_response, syn_loci)
+
+# write results
+write.table(estradiol_response, "results/estradiol_response.loci")
+
+# Write a tile file for the synteny mapped loci
+estradiol_response <- estradiol_response %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(estradiol_response, file = "data/SYNTENY/estradiol_response.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+```
+
+**Larsen et al. 2007 Salinity differences**
+
+```{r}
+
+# Larsen et al. 2007 gene expression salinity differences
+# salinity_response <- read.delim("data/SYNTENY/Salinity_response_L07.txt",
+#                                 header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info
+salinity_response <- left_join(salinity_response, syn_loci)
+
+# write results
+write.table(salinity_response, "results/salinity_response.loci")
+
+# Write a tile file for the synteny mapped loci
+salinity_response <- salinity_response %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(salinity_response, file = "data/SYNTENY/salinity_response.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+>>>>>>> Stashed changes
+```
+
+**Falciani et al. 2008 Pollutants response**
+
+```{r}
+
+# # Faciani et al. 2008 gene expression exposed to pollutants (lab and wild populations)
+# pollutants_response <- read.delim("data/SYNTENY/Pollutants_response_F08.txt",
+#                                   header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info
+pollutants_response <- left_join(pollutants_response, syn_loci)
+
+# write results
+write.table(pollutants_response, "results/pollutants_response.loci")
+
+# Write a tile file for the synteny mapped loci
+pollutants_response <- pollutants_response %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(pollutants_response, file = "data/SYNTENY/pollutants_response.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+```
+
+**Song et al 2012. Linkage map japanese flounder**
+
+```{r}
+
+# microsatellite in linkage map (Japanese flounder)
+# Japfl_linkmapI <- read.delim("data/SYNTENY/LinkMapI.txt",
+#                             header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info
+Japfl_linkmapI <- left_join(Japfl_linkmapI, syn_loci)
+
+# write results
+write.table(Japfl_linkmapI, "results/Japfl_linkmapI.loci")
+
+# Write a tile file for the synteny mapped loci
+Japfl_linkmapI <- Japfl_linkmapI %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(Japfl_linkmapI, file = "data/SYNTENY/Japfl_linkmapI.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+```
+
+**Castano-Sanchez et al. 2010 Linkage map japanese flounder**
+
+```{r}
+
+# Japfl_linkmapII <- read.delim("data/SYNTENY/LinkMapII.txt",
+#                                header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info
+Japfl_linkmapII <- left_join(Japfl_linkmapII, syn_loci)
+
+# write results
+write.table(Japfl_linkmapII, "results/Japfl_linkmapII.loci")
+
+# Write a tile file for the synteny mapped loci
+Japfl_linkmapII <- Japfl_linkmapII %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+<<<<<<< Updated upstream
+write.table(syn_loci, file = "data/SYNTENY/all.synloci", 
+=======
+write.table(Japfl_linkmapII, file = "data/SYNTENY/Japfl_linkmapII.syn", 
+>>>>>>> Stashed changes
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
 ```
 
 ## Write link files
@@ -448,6 +637,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_tnig.co
 
 ```
 
+<<<<<<< Updated upstream
 Plot comparison location of synteny blocks trub vs SFL
 
 ```{r}
@@ -458,19 +648,21 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_trub.co
 
 
 Plot synteny mapped loci (linkage maps):
-
-```{r}
-
-
-
-```
-
-
+=======
 Plot synteny mapped loci (exposure studies):
+>>>>>>> Stashed changes
 
 ```{r}
 
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-1.conf -outputdir fig -outputfile synteny-lociexp')
 
 
 ```
 
+Plot synteny mapped loci (linkage maps):
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-2.conf -outputdir fig -outputfile synteny-comp')
+
+```

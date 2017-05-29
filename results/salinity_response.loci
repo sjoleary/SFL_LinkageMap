@@ -1,0 +1,818 @@
+"CONTIG_ID" "ACCESSION" "GENE_ID" "GO_PROCESS" "STUDY" "CONTEXT" "LOCUS" "LEFT_LOCUS" "RIGHT_LOCUS" "LEFT_POS" "RIGHT_POS" "SUPPORT" "INTERVAL_SIZE" "LG"
+"1" "Contig525" "AJ291986" "UDP-glucuronosyltransferase (UGT3 gene)" "" "Larsen_2007" "HIGH_LOW_SALINITY" "12733953" "dDocent_Contig_46846" "dDocent_Contig_79522" 20.09 19.47 "gacu,lcal,tnig,dlab" 0.620000000000001 13
+"2" "Contig1061" "AJ292042" "Glutathione peroxidase" "" "Larsen_2007" "NTHSEA_BALTIC" "12584597" "dDocent_Contig_15153" "dDocent_Contig_86268" 30.97 30.97 "lcal,trub,tnig,onil" 0 1
+"3" "PfPARA-o2" "AJ292086" "Paraoxonase 2" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"4" "PfPARP-o4" "AJ292087" "ARD-1 N-acetyltransferase" "DNA packaging; N-terminal protein amino acid acetylation; chromosome organization and biogenesis (sensu Eukaryota); internal protein amino acid acetylation; acyl-carrier protein biosynthesis;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"5" "Contig621" "AJ300776" "Eukaryotic translation elongation factor 2" "regulation of translational elongation;" "Larsen_2007" "NTHSEA_BALTIC" "12329993" "dDocent_Contig_55010" "dDocent_Contig_34141" 16.08 22.33 "trub,tnig" 6.25 12
+"6" "Contig1013" "AJ300777" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"7" "PfALAS-l6" "AJ302076" "5-aminolevulinic acid synthase" "heme biosynthesis; glycine metabolism; L-serine metabolism; threonine metabolism; acyl-carrier protein biosynthesis;" "Larsen_2007" "NTHSEA_BALTIC" "12275202" "dDocent_Contig_1849" "dDocent_Contig_336869" 35.77 41.29 "onil" 5.52 23
+"8" "Contig964" "AJ306231" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" "12641724" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"9" "Contig964" "AJ306231" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "12641724" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"10" "Contig776" "AJ306234" "heat shock protein 90 beta" "biological_process;" "Larsen_2007" "NTHSEA_HILOW" "12641730" "dDocent_Contig_190056" "dDocent_Contig_2583" 44.22 44.61 "lcal,trub,tnig,dlab" 0.390000000000001 11
+"11" "Contig480" "AJ310423" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "12580929" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"12" "Contig480" "AJ310423" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "12580929" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"13" "PfGRX-l4" "AJ310512" "None" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"14" "Contig509" "AJ310717" "NADH Dehydrogenase subunit 1" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"15" "Contig774" "AJ508542" "MHC II invariant chain" "cellular metabolism; regulation of cellular physiological process; primary metabolism; immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"16" "Contig417" "AJ508543" "ferritin H-1" "negative regulation of cell proliferation; immune response;" "Larsen_2007" "NTHSEA_BALTIC" "23645339" "dDocent_Contig_85881" "dDocent_Contig_137743" 48.97 51.67 "trub,onil" 2.7 19
+"17" "Contig509" "AJ508726" "NADH Dehydrogenase subunit 1" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"18" "PfBR2E8" "AJ508747" "organic anion transporting polypeptide 1b4 (cDNA clone pfbaxo4)" "organic anion transport;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"19" "Contig1018" "AJ543333" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"20" "Contig1095" "AJ543354" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"21" "Contig1018" "AJ578001" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"22" "Contig480" "AJ578021" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "33437852" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"23" "Contig480" "AJ578021" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "33437852" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"24" "Contig480" "AJ578022" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "33437853" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"25" "Contig480" "AJ578022" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "33437853" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"26" "PfBR2B9" "AJ578025" "cDNA clone LG 3(6)." "" "Larsen_2007" "HIGH_LOW_SALINITY" "33437856" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"27" "PfBR2B9" "AJ578025" "cDNA clone LG 3(6)." "" "Larsen_2007" "NTHSEA_HILOW" "33437856" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"28" "PfBF2D6" "AJ580510" "None" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"29" "PfBR1C6" "AJ580587" "Q motif containing GTPase activating protein 2 (IQGAP2)" "negative regulation of Ras protein signal transduction;" "Larsen_2007" "NTHSEA_BALTIC" "34022055" "dDocent_Contig_13705" "dDocent_Contig_386286" 32.38 33.31 "gacu,dlab" 0.93 6
+"30" "Contig480" "AJ605134" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "38196329" "dDocent_Contig_55010" "dDocent_Contig_34141" 16.08 22.33 "tnig" 6.25 12
+"31" "Contig480" "AJ605134" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "38196329" "dDocent_Contig_55010" "dDocent_Contig_34141" 16.08 22.33 "tnig" 6.25 12
+"32" "Contig559" "AJ605263" "60S ribosomal protein L3" "" "Larsen_2007" "NTHSEA_BALTIC" "38196334" "dDocent_Contig_153620" "dDocent_Contig_59623" 9.64999999999999 10.78 "lcal,onil,dlab" 1.13000000000001 19
+"33" "Contig775" "AJ605270" "Proteasome (Prosome, macropain) 26S subunit, non-ATPase, 12" "" "Larsen_2007" "NTHSEA_BALTIC" "38196339" "dDocent_Contig_173" "dDocent_Contig_53339" 26.77 25.22 "gacu,lcal,tnig,onil,dlab" 1.55 4
+"34" "Contig509" "AJ605274" "NADH Dehydrogenase subunit 1" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"35" "Contig480" "AJ605276" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "38196341" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"36" "Contig480" "AJ605276" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "38196341" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"37" "Contig641" "AM041911" "splicing factor, arginine/serine-rich 2 (SC-35)" "" "Larsen_2007" "BALTIC_HILOW" "75976384" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "tnig" 0.93 15
+"38" "Contig1110" "C378643" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"39" "Contig1006" "C379086" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"40" "Contig19" "DV565312" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"41" "Contig19" "DV565312" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"42" "Contig41" "DV565315" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"43" "Contig41" "DV565322" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"44" "Contig776" "DV565338" "heat shock protein 90 beta" "biological_process;" "Larsen_2007" "NTHSEA_HILOW" "78225379" "dDocent_Contig_190056" "dDocent_Contig_2583" 44.22 44.61 "lcal,trub,tnig,dlab" 0.390000000000001 11
+"45" "Contig1006" "DV565342" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "78225383" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"46" "Contig442" "DV565346" "glutamate carboxypeptidase (Darmin)" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"47" "PfIL003B10" "DV565350" "Lectin, mannose-binding, 1" "protein folding; ER to Golgi transport; blood coagulation;" "Larsen_2007" "NTHSEA_BALTIC" "78225391" "dDocent_Contig_301600" "dDocent_Contig_13057" 16.82 18.53 "gacu,lcal,trub,tnig,onil,dlab" 1.71 14
+"48" "Contig662" "DV565354" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78225395" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal" 0 16
+"49" "PfIL006A05" "DV565379" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78225420" "dDocent_Contig_48972" "dDocent_Contig_289693" 41.96 44.17 "dlab" 2.21 4
+"50" "Contig563" "DV565399" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"51" "Contig867" "DV565409" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78225450" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"52" "Contig1013" "DV565415" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"53" "Contig683" "DV565427" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78225468" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"54" "Contig19" "DV565428" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"55" "Contig19" "DV565428" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"56" "Contig533" "DV565432" "complement component C9" "cytolysis;" "Larsen_2007" "NTHSEA_BALTIC" "78225473" "dDocent_Contig_30074" "dDocent_Contig_23998" 6.81 7.26999999999999 "gacu,lcal,trub,tnig,onil,dlab" 0.459999999999989 14
+"57" "Contig647" "DV565437" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"58" "Contig647" "DV565437" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"59" "PfIL007D09" "DV565448" "Mitochondrial ATP synthase c-subunit (P3)" "ATP synthesis coupled proton transport;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"60" "Contig41" "DV565449" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"61" "PfIL001E01" "DV565451" "Cytochrome P450 24A1" "electron transport;" "Larsen_2007" "NTHSEA_HILOW" "78225310" "dDocent_Contig_10881" "dDocent_Contig_24578" 39.79 39.79 "tnig,onil" 0 1
+"62" "Contig1082" "DV565453" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"63" "PfIL001H03" "DV565467" "bromodomain-containing 3" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"64" "Contig662" "DV565483" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78225342" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub" 0 16
+"65" "Contig409" "DV565487" "hypothetical protein LOC57128" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"66" "PfIL007H03" "DV565508" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"67" "PfIL007H03" "DV565508" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"68" "Contig619" "DV565514" "cDNA clone clone WE3-5 sim to PADI-H protein" "" "Larsen_2007" "BALTIC_HILOW" "78225515" "dDocent_Contig_22346" "dDocent_Contig_74477" 32.54 32.81 "lcal,trub,onil,dlab" 0.270000000000003 10
+"69" "PfIL008C04" "DV565523" "complement component C9" "" "Larsen_2007" "NTHSEA_BALTIC" "78225524" "dDocent_Contig_30074" "dDocent_Contig_23998" 6.81 7.26999999999999 "gacu,lcal,trub,tnig,onil,dlab" 0.459999999999989 14
+"70" "Contig480" "DV56553" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"71" "Contig1013" "DV565535" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"72" "Contig480" "DV565538" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78225353" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"73" "Contig442" "DV565571" "glutamate carboxypeptidase (Darmin)" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"74" "Contig1006" "DV565573" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "78225601" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"75" "Contig1018" "DV565602" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"76" "Contig41" "DV565616" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"77" "Contig563" "DV565620" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"78" "Contig237" "DV565624" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"79" "Contig237" "DV565624" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"80" "Contig167" "DV565628" "cDNA clone CNB74-B11" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"81" "PfIL013A10" "DV565635" "putative transmembrane 4 superfamily member protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"82" "PfIL013B08" "DV565640" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78225668" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,onil" 0 16
+"83" "Contig662" "DV565658" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78225686" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub" 0 16
+"84" "PfIL020B09" "DV565673" "LOC495096 protein" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78225701" "dDocent_Contig_84428" "dDocent_Contig_252480" 31.31 31.31 "gacu,lcal,tnig,onil" 0 8
+"85" "PfIL020B09" "DV565673" "LOC495096 protein" "" "Larsen_2007" "BALTIC_HILOW" "78225701" "dDocent_Contig_84428" "dDocent_Contig_252480" 31.31 31.31 "gacu,lcal,tnig,onil" 0 8
+"86" "Contig752" "DV565675" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78225703" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"87" "Contig41" "DV565695" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"88" "Contig683" "DV565710" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78225738" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"89" "Contig19" "DV565722" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"90" "Contig19" "DV565722" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"91" "PfIL201B04" "DV565785" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"92" "PfIL201C02" "DV565789" "Prothrombin (EC 3.4.21.5)" "evasion of host defense response; blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78225817" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"93" "PfIL201C02" "DV565789" "Prothrombin (EC 3.4.21.5)" "evasion of host defense response; blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78225817" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"94" "Contig563" "DV565798" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"95" "Contig63" "DV565801" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"96" "Contig1006" "DV565805" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "78225833" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"97" "PfIL201H09" "DV565815" "B-cell receptor CD22" "" "Larsen_2007" "NTHSEA_BALTIC" "78225843" "dDocent_Contig_155556" "dDocent_Contig_204278" 11.33 13.27 "dlab" 1.94 16
+"98" "Contig621" "DV565819" "Eukaryotic translation elongation factor 2" "regulation of translational elongation;" "Larsen_2007" "NTHSEA_BALTIC" "78225847" "dDocent_Contig_55010" "dDocent_Contig_34141" 16.08 22.33 "trub,tnig" 6.25 12
+"99" "Contig167" "DV565823" "cDNA clone CNB74-B11" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"100" "PfIL202F05" "DV565845" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78225873" "dDocent_Contig_6448" "dDocent_Contig_78852" 20.05 19.81 "lcal" 0.240000000000002 6
+"101" "Contig911" "DV565850" "ferritin heavy subunit; ferritin H" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"102" "Contig964" "DV565854" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"103" "Contig964" "DV565854" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"104" "Contig19" "DV565862" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"105" "Contig19" "DV565862" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"106" "Contig630" "DV565867" "cDNA clone OD-006" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"107" "Contig1018" "DV565871" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "78225553" "dDocent_Contig_75804" "dDocent_Contig_84428" 30.65 31.31 "lcal,onil,dlab" 0.66 8
+"108" "Contig1096" "DV565892" "40S ribosomal protein S27" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"109" "Contig662" "DV565906" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78225901" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub" 0 16
+"110" "Contig563" "DV565918" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"111" "Contig112" "DV565919" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78225914" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"112" "Contig53" "DV565945" "Poly A binding protein, cytoplasmic 1 (pabpc1)" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"113" "Contig1013" "DV565963" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"114" "Contig1006" "DV565974" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "78225969" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"115" "Contig41" "DV565979" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"116" "Contig669" "DV565988" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"117" "Contig559" "DV566025" "60S ribosomal protein L3" "" "Larsen_2007" "NTHSEA_BALTIC" "78226020" "dDocent_Contig_59623" "dDocent_Contig_153620" 10.78 9.64999999999999 "onil,dlab" 1.13000000000001 19
+"118" "Contig925" "DV566027" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226022" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"119" "Contig925" "DV566027" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" "78226022" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"120" "Contig563" "DV566054" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"121" "PfIL207D05" "DV566063" "Calpain small subunit 1 (CSS1)" "positive regulation of cell proliferation; proteolysis and peptidolysis;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"122" "Contig75" "DV566072" "hypothetical protein XP_679282" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"123" "Contig815" "DV566082" "cDNA clone CR730599" "" "Larsen_2007" "NTHSEA_HILOW" "78226077" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"124" "Contig939" "DV566104" "cDNA clone SL3-0203 sim to Transferrin receptor" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"125" "Contig683" "DV566126" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78226121" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"126" "Contig145" "DV566251" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"127" "Contig145" "DV566251" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"128" "Contig480" "DV566265" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78226260" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"129" "Contig480" "DV566265" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78226260" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"130" "Contig752" "DV566278" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78226273" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"131" "Contig338" "DV566288" "Hepcidin precursor" "" "Larsen_2007" "NTHSEA_BALTIC" "78226283" "dDocent_Contig_115366" "dDocent_Contig_183123" 47.84 43.43 "lcal,dlab" 4.41 16
+"132" "Contig338" "DV566288" "Hepcidin precursor" "" "Larsen_2007" "NTHSEA_HILOW" "78226283" "dDocent_Contig_115366" "dDocent_Contig_183123" 47.84 43.43 "lcal,dlab" 4.41 16
+"133" "PfIL214C11" "DV566292" "cDNA clone CLJ65-H08" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226287" "dDocent_Contig_17977" "dDocent_Contig_153650" 43.11 40.92 "onil" 2.19 20
+"134" "Contig683" "DV566294" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78226289" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"135" "PfIL214D10" "DV566296" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78226291" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "onil" 4.87 10
+"136" "Contig445" "DV566297" "cDNA clone JFConA705F" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"137" "Contig16" "DV566315" "phospholipid hydroperoxide glutathione peroxidase A" "phospholipid metabolism; glutathione metabolism; peroxidase reaction; response to oxidative stress;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"138" "PfIL215F05" "DV566328" "prostaglandin D synthase homolog" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"139" "Contig964" "DV566334" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"140" "Contig964" "DV566334" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"141" "Contig145" "DV566356" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226351" "dDocent_Contig_21388" "dDocent_Contig_21407" 10.23 5.88 "dlab" 4.35 2
+"142" "Contig145" "DV566356" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "NTHSEA_HILOW" "78226351" "dDocent_Contig_21388" "dDocent_Contig_21407" 10.23 5.88 "dlab" 4.35 2
+"143" "Contig332" "DV566382" "cDNA clone BR2E8" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"144" "Contig112" "DV566390" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"145" "Contig41" "DV566401" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"146" "Contig1085" "DV566427" "Cell death activator CIDE-B" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226422" "dDocent_Contig_182167" "dDocent_Contig_16645" 46.54 46.94 "gacu,dlab" 0.399999999999999 17
+"147" "PfIL220A01" "DV566438" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78226433" "dDocent_Contig_307589" "dDocent_Contig_18848" 0 1.54 "onil,dlab" 1.54 1
+"148" "Contig1110" "DV566442" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78226437" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,onil" 0 16
+"149" "PfIL220C05" "DV566444" "Cytochrome c oxidase subunit Vb" "respiratory gaseous exchange; mitochondrial electron transport, cytochrome c to oxygen; proton transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78226439" "dDocent_Contig_17099" "dDocent_Contig_9469" 13 13.65 "gacu,onil" 0.65 2
+"150" "PfIL220G03" "DV566457" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78226452" "dDocent_Contig_165136" "dDocent_Contig_157446" 28.89 29.56 "dlab" 0.669999999999998 13
+"151" "PfIL220G09" "DV566459" "Methylmalonyl-CoA epimerase, mitochondrial precursor" "L-methylmalonyl-CoA metabolism; isoleucine catabolism; leucine catabolism; valine catabolism;" "Larsen_2007" "NTHSEA_BALTIC" "78226454" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"152" "Contig112" "DV566465" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78226460" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"153" "Contig683" "DV566473" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78226468" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"154" "PfIL221G07" "DV566492" "cDNA clone CR672125" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"155" "Contig815" "DV566493" "cDNA clone CR730599" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"156" "PfIL222C06" "DV566509" "cDNA clone no1e06" "" "Larsen_2007" "NTHSEA_BALTIC" "78226504" "dDocent_Contig_154408" "dDocent_Contig_164687" 13.88 13.88 "lcal,onil,dlab" 0 1
+"157" "Contig646" "DV566521" "unnamed protein product CAG02268" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"158" "PfIL223A09" "DV566536" "p53-related protein kinase TP53RK (Nori-2)" "protein amino acid phosphorylation; serine family amino acid metabolism;" "Larsen_2007" "NTHSEA_BALTIC" "78226531" "dDocent_Contig_307589" "dDocent_Contig_101087" 0 1.54 "lcal,dlab" 1.54 1
+"159" "PfIL223B04" "DV566541" "Delta-aminolevulinic acid synthase" "heme biosynthesis; glycine metabolism; L-serine metabolism; threonine metabolism; acyl-carrier protein biosynthesis;" "Larsen_2007" "NTHSEA_BALTIC" "78226536" "dDocent_Contig_5819" "dDocent_Contig_1291" 30.97 30.97 "gacu" 0 1
+"160" "Contig112" "DV566562" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78226557" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"161" "PfIL224F02" "DV566602" "ZPAX" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226597" "dDocent_Contig_100040" "dDocent_Contig_272119" 42.78 44.61 "trub,onil" 1.83 11
+"162" "Contig925" "DV566603" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226598" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"163" "Contig925" "DV566603" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" "78226598" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"164" "PfIL224G05" "DV566611" "nucleoporin 98kD isoform 1" "" "Larsen_2007" "NTHSEA_BALTIC" "78226606" "dDocent_Contig_42416" "dDocent_Contig_40313" 41.08 64.01 "tnig" 22.93 9
+"165" "PfIL225B11" "DV566624" "Transcription factor TZP homolog" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"166" "Contig395" "DV566631" "NADH dehydrogenase (ubiquinone) 1 alpha subcomplex, 7 (B14.5a)" "" "Larsen_2007" "NTHSEA_BALTIC" "78226626" "dDocent_Contig_3765" "dDocent_Contig_25389" 37.97 38.05 "gacu,lcal,trub,tnig" 0.0799999999999983 12
+"167" "Contig983" "DV566637" "eukaryotic translation elongation factor 1 gamma" "protein biosynthesis;" "Larsen_2007" "NTHSEA_BALTIC" "78226632" "dDocent_Contig_18636" "dDocent_Contig_72018" 26.62 27.28 "gacu,trub,onil,dlab" 0.66 5
+"168" "Contig338" "DV566638" "Hepcidin precursor" "" "Larsen_2007" "NTHSEA_BALTIC" "78226633" "dDocent_Contig_115366" "dDocent_Contig_183123" 47.84 43.43 "lcal,dlab" 4.41 16
+"169" "Contig338" "DV566638" "Hepcidin precursor" "" "Larsen_2007" "NTHSEA_HILOW" "78226633" "dDocent_Contig_115366" "dDocent_Contig_183123" 47.84 43.43 "lcal,dlab" 4.41 16
+"170" "Contig396" "DV566645" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"171" "Contig413" "DV566657" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78226652" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"172" "PfIL226D06" "DV566669" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"173" "Contig112" "DV566681" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"174" "PfIL226G02" "DV566682" "carboxypeptidase N, polypeptide 1, 50kD precursor" "proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"175" "Contig112" "DV566683" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78226678" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"176" "PfIL227C08" "DV566701" "Hypothetical protein zgc:76924" "" "Larsen_2007" "NTHSEA_BALTIC" "78226696" "dDocent_Contig_21407" "dDocent_Contig_111156" 5.88 6.81 "onil,dlab" 0.930000000000001 2
+"177" "Contig752" "DV566702" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78226697" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"178" "Contig480" "DV566748" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78226743" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"179" "Contig480" "DV566748" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78226743" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"180" "Contig647" "DV566759" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"181" "Contig647" "DV566759" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"182" "PfIL228H02" "DV566763" "unamed protein product with integrin beta subunits" "cell adhesion;" "Larsen_2007" "NTHSEA_HILOW" "78226758" "dDocent_Contig_10873" "dDocent_Contig_97611" 22.75 22.92 "lcal,trub" 0.170000000000002 16
+"183" "Contig752" "DV566771" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78226766" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"184" "Contig112" "DV566807" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"185" "PfIL230C06" "DV566811" "Cytochrome c oxidase polypeptide VIIa-liver/heart mitochondrial precursor" "mitochondrial electron transport, cytochrome c to oxygen; proton transport;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"186" "Contig41" "DV566813" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"187" "Contig41" "DV566815" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"188" "Contig41" "DV566816" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"189" "Contig601" "DV566832" "Proteasome (Prosome, macropain) subunit, beta type, 8" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"190" "Contig1013" "DV566869" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"191" "Contig1056" "DV566873" "Synaptotagmin-15" "" "Larsen_2007" "NTHSEA_BALTIC" "78226868" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"192" "PfIL231H10" "DV566875" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78226870" "dDocent_Contig_193333" "dDocent_Contig_129880" 25.18 24.95 "gacu,lcal,onil,dlab" 0.23 2
+"193" "PfIL232E11" "DV566903" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"194" "PfIL232G03" "DV566912" "Nucleophosmin 1" "intracellular transport;" "Larsen_2007" "NTHSEA_BALTIC" "78226907" "dDocent_Contig_59426" "dDocent_Contig_244551" 23.57 21.55 "gacu,trub,tnig,onil" 2.02 9
+"195" "Contig237" "DV566936" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"196" "Contig237" "DV566936" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"197" "Contig905" "DV566947" "nucleolin" "" "Larsen_2007" "NTHSEA_BALTIC" "78226942" "dDocent_Contig_23306" "dDocent_Contig_46225" 37.97 38.05 "lcal,trub" 0.0799999999999983 12
+"198" "PfIL233F03" "DV566949" "yellowtail growth hormone like protein-1" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"199" "PfIL233F03" "DV566949" "yellowtail growth hormone like protein-1" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"200" "Contig134" "DV566966" "putative complement factor Bf/C2" "" "Larsen_2007" "NTHSEA_BALTIC" "78226961" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal,tnig,onil,dlab" 2.16 9
+"201" "Contig683" "DV566977" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78226972" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"202" "PfIL234F05" "DV566996" "Ceruloplasmin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"203" "Contig428" "DV566999" "cDNA clone PfBAX-o4" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"204" "Contig202" "DV567002" "similar to onzin" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78226997" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"205" "Contig202" "DV567002" "similar to onzin" "" "Larsen_2007" "NTHSEA_HILOW" "78226997" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"206" "Contig867" "DV567015" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78227010" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"207" "Contig939" "DV567024" "cDNA clone SL3-0203 sim to Transferrin receptor" "" "Larsen_2007" "NTHSEA_BALTIC" "78227019" "dDocent_Contig_172285" "dDocent_Contig_48611" 23.27 20.59 "gacu,dlab" 2.68 10
+"208" "Contig670" "DV567036" "Ependymin" "" "Larsen_2007" "NTHSEA_BALTIC" "78227031" "dDocent_Contig_19203" "dDocent_Contig_8704" 8.44 13.38 "onil" 4.94 17
+"209" "Contig112" "DV567054" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78227049" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"210" "Contig41" "DV567055" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"211" "Contig694" "DV567061" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227056" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"212" "Contig694" "DV567061" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78227056" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"213" "Contig16" "DV567093" "phospholipid hydroperoxide glutathione peroxidase A" "phospholipid metabolism; glutathione metabolism; peroxidase reaction; response to oxidative stress;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"214" "Contig925" "DV567115" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"215" "Contig925" "DV567115" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"216" "Contig1039" "DV567138" "5'-nucleotidase, cytosolic III" "" "Larsen_2007" "NTHSEA_BALTIC" "78227133" "dDocent_Contig_2040" "dDocent_Contig_12143" 25.68 29.7 "gacu,dlab" 4.02 15
+"217" "Contig41" "DV567158" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"218" "PfIL239C04" "DV567188" "H+ transporting F1 ATP synthase epsilon subunit" "ATP synthesis coupled proton transport;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"219" "Contig925" "DV567196" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"220" "Contig925" "DV567196" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"221" "Contig964" "DV567220" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227215" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"222" "Contig964" "DV567220" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227215" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"223" "Contig112" "DV567244" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78227239" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"224" "Contig923" "DV567264" "cDNA clone HKC069" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"225" "Contig683" "DV567266" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78227261" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"226" "Contig1092" "DV567277" "Cytochrome c oxidase polypeptide VIII-heart, mitochondrial precursor" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"227" "PfIL241E09" "DV567296" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78227291" "dDocent_Contig_17168" "dDocent_Contig_14875" 50.33 50.33 "onil" 0 7
+"228" "Contig202" "DV567307" "similar to onzin" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227302" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"229" "Contig202" "DV567307" "similar to onzin" "" "Larsen_2007" "NTHSEA_HILOW" "78227302" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"230" "Contig694" "DV567332" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227327" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"231" "Contig694" "DV567332" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78227327" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"232" "Contig619" "DV567338" "cDNA clone clone WE3-5 sim to PADI-H protein" "" "Larsen_2007" "BALTIC_HILOW" "78227333" "dDocent_Contig_22346" "dDocent_Contig_74477" 32.54 32.81 "lcal,trub,onil,dlab" 0.270000000000003 10
+"233" "Contig134" "DV567342" "putative complement factor Bf/C2" "" "Larsen_2007" "NTHSEA_BALTIC" "78227337" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal,tnig,onil,dlab" 2.16 9
+"234" "PfIL242G10" "DV567352" "MLN64 N-terminal domain homolog" "steroid biosynthesis; cholesterol transport;" "Larsen_2007" "NTHSEA_BALTIC" "78227347" "dDocent_Contig_127992" "dDocent_Contig_3187" 53.56 58.07 "trub,tnig" 4.51 10
+"235" "PfIL243C02" "DV567366" "EF hand containing family 1A (Smhs2)" "" "Larsen_2007" "NTHSEA_HILOW" "78227361" "dDocent_Contig_66352" "dDocent_Contig_145912" 10.33 10.33 "gacu,dlab" 0 9
+"236" "Contig621" "DV567367" "Eukaryotic translation elongation factor 2" "regulation of translational elongation;" "Larsen_2007" "NTHSEA_BALTIC" "78227362" "dDocent_Contig_55010" "dDocent_Contig_34141" 16.08 22.33 "trub,tnig" 6.25 12
+"237" "Contig803" "DV567391" "Cystatin domain fetuin-like protein" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227386" "dDocent_Contig_67109" "dDocent_Contig_126711" 67.07 66.91 "gacu,lcal" 0.159999999999997 12
+"238" "PfIL244B02" "DV567399" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"239" "Contig670" "DV567413" "Ependymin" "" "Larsen_2007" "NTHSEA_BALTIC" "78227408" "dDocent_Contig_19203" "dDocent_Contig_8704" 8.44 13.38 "onil" 4.94 17
+"240" "PfIL244D06" "DV567417" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78227412" "dDocent_Contig_92660" "dDocent_Contig_17991" 30.33 30.33 "lcal,onil,dlab" 0 20
+"241" "Contig762" "DV567426" "ubiquitin" "cellular protein metabolism;" "Larsen_2007" "NTHSEA_HILOW" "78227421" "dDocent_Contig_9044" "dDocent_Contig_91723" 39.27 46.39 "trub,tnig" 7.12 12
+"242" "Contig396" "DV567434" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"243" "Contig803" "DV567443" "Cystatin domain fetuin-like protein" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227438" "dDocent_Contig_67109" "dDocent_Contig_126711" 67.07 66.91 "gacu,lcal" 0.159999999999997 12
+"244" "Contig342" "DV567452" "Tnfa-induced adipose-related protein" "" "Larsen_2007" "NTHSEA_BALTIC" "78227447" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"245" "PfIL245D01" "DV567453" "cDNA clone JFConA371F" "" "Larsen_2007" "NTHSEA_HILOW" "78227448" "dDocent_Contig_11158" "dDocent_Contig_69050" 64.35 62.33 "gacu" 2.02 13
+"246" "Contig413" "DV567457" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227452" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"247" "Contig307" "DV567466" "transmembrane emp24 protein transport domain containing 7 (TMED7)" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"248" "Contig939" "DV567468" "cDNA clone SL3-0203 sim to Transferrin receptor" "" "Larsen_2007" "NTHSEA_BALTIC" "78227463" "dDocent_Contig_172285" "dDocent_Contig_48611" 23.27 20.59 "gacu,dlab" 2.68 10
+"249" "Contig413" "DV567472" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227467" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"250" "Contig413" "DV567475" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227470" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"251" "Contig112" "DV567477" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78227472" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"252" "Contig364" "DV567482" "Translocon associated protein, gamma subunit" "cotranslational protein-membrane targeting;" "Larsen_2007" "NTHSEA_BALTIC" "78227477" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"253" "PfIL246B09" "DV567484" "cDNA clone tcbi0024c.p.16 sim to malate dehydrogenase" "" "Larsen_2007" "NTHSEA_BALTIC" "78227479" "dDocent_Contig_1512" "dDocent_Contig_155556" 13.27 11.33 "gacu,dlab" 1.94 16
+"254" "Contig925" "DV567491" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227486" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"255" "Contig925" "DV567491" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" "78227486" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"256" "PfIL246D10" "DV567494" "NOD3 protein; CARD15-like" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"257" "Contig509" "DV567501" "NADH Dehydrogenase subunit 1" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"258" "Contig480" "DV567505" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227500" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"259" "Contig480" "DV567505" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78227500" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"260" "Contig694" "DV567510" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227505" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"261" "Contig694" "DV567510" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78227505" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"262" "Contig413" "DV567526" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227521" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "trub,onil" 0 20
+"263" "Contig953" "DV567527" "Putative complement factor Bf/C2" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"264" "Contig953" "DV567527" "Putative complement factor Bf/C2" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"265" "Contig364" "DV567528" "Translocon associated protein, gamma subunit" "cotranslational protein-membrane targeting;" "Larsen_2007" "NTHSEA_BALTIC" "78227523" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"266" "Contig41" "DV567535" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"267" "Contig1013" "DV567537" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"268" "Contig630" "DV567539" "cDNA clone OD-006" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"269" "Contig167" "DV567550" "cDNA clone CNB74-B11" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"270" "Contig480" "DV567552" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227547" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"271" "Contig480" "DV567552" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78227547" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"272" "Contig647" "DV567560" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"273" "Contig647" "DV567560" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"274" "Contig75" "DV567588" "hypothetical protein XP_679282" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"275" "PfIL249C03" "DV567613" "small inducible cytokine" "immune response; chemotaxis; signal transduction;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"276" "PfIL249C05" "DV567614" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"277" "Contig480" "DV567620" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227615" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"278" "Contig480" "DV567620" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78227615" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"279" "PfIL249F10" "DV567640" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78227635" "dDocent_Contig_2268" "dDocent_Contig_52162" 18.4 15.8 "lcal,dlab" 2.6 1
+"280" "PfIL249H11" "DV567650" "RIKEN cDNA 3930401E15 sim to transmembrane emp24 protein transport domain containing 7" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"281" "Contig964" "DV567660" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"282" "Contig964" "DV567660" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"283" "PfIL250C06" "DV567665" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227660" "dDocent_Contig_104302" "dDocent_Contig_75304" 52.43 52.24 "lcal" 0.189999999999998 2
+"284" "PfIL250C06" "DV567665" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78227660" "dDocent_Contig_104302" "dDocent_Contig_75304" 52.43 52.24 "lcal" 0.189999999999998 2
+"285" "Contig997" "DV567667" "SWAN RNA binding motif protein 12" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"286" "Contig641" "DV567677" "splicing factor, arginine/serine-rich 2 (SC-35)" "" "Larsen_2007" "BALTIC_HILOW" "78227672" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "tnig" 0.93 15
+"287" "PfIL250G01" "DV567686" "HsKin17 protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"288" "Contig145" "DV567688" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227683" "dDocent_Contig_21407" "dDocent_Contig_111156" 5.88 6.81 "onil,dlab" 0.930000000000001 2
+"289" "Contig145" "DV567688" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "NTHSEA_HILOW" "78227683" "dDocent_Contig_21407" "dDocent_Contig_111156" 5.88 6.81 "onil,dlab" 0.930000000000001 2
+"290" "PfIL250H05" "DV567694" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78227689" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal" 2.16 9
+"291" "Contig752" "DV567697" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78227692" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"292" "Contig413" "DV567699" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227694" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"293" "Contig925" "DV567704" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227699" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"294" "Contig925" "DV567704" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" "78227699" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"295" "PfIL251B08" "DV567707" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78227702" "dDocent_Contig_330040" "dDocent_Contig_67109" 67.24 67.07 "gacu,lcal,dlab" 0.170000000000002 12
+"296" "Contig16" "DV567720" "phospholipid hydroperoxide glutathione peroxidase A" "phospholipid metabolism; glutathione metabolism; peroxidase reaction; response to oxidative stress;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"297" "PfIL251E01" "DV567724" "UXT protein" "protein folding;" "Larsen_2007" "NTHSEA_BALTIC" "78227719" "dDocent_Contig_2375" "dDocent_Contig_74727" 10.04 10.04 "lcal" 0 23
+"298" "Contig284" "DV567731" "Eukaryotic translation initiation factor 4A" "" "Larsen_2007" "NTHSEA_BALTIC" "78227726" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"299" "PfIL251G11" "DV567743" "Alpha-N-acetylgalactosaminidase" "globoside metabolism; carbohydrate metabolism;" "Larsen_2007" "NTHSEA_BALTIC" "78227738" "dDocent_Contig_61696" "dDocent_Contig_325604" 33.66 37.02 "trub,tnig,onil" 3.36000000000001 5
+"300" "PfIL251G11" "DV567743" "Alpha-N-acetylgalactosaminidase" "globoside metabolism; carbohydrate metabolism;" "Larsen_2007" "NTHSEA_HILOW" "78227738" "dDocent_Contig_61696" "dDocent_Contig_325604" 33.66 37.02 "trub,tnig,onil" 3.36000000000001 5
+"301" "Contig646" "DV567745" "unnamed protein product CAG02268" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"302" "Contig647" "DV567747" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"303" "Contig647" "DV567747" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"304" "Contig905" "DV567753" "nucleolin" "" "Larsen_2007" "NTHSEA_BALTIC" "78227748" "dDocent_Contig_25389" "dDocent_Contig_23306" 38.05 37.97 "gacu,lcal,trub" 0.0799999999999983 12
+"305" "Contig669" "DV567777" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227772" "dDocent_Contig_347143" "dDocent_Contig_165474" 23.11 23.11 "lcal,dlab" 0 18
+"306" "Contig694" "DV567780" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227775" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"307" "Contig694" "DV567780" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78227775" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"308" "Contig1110" "DV567788" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"309" "Contig1013" "DV567793" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"310" "PfIL253C06" "DV567810" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78227805" "dDocent_Contig_9976" "dDocent_Contig_374147" 40.71 41.33 "gacu,onil" 0.619999999999997 19
+"311" "Contig653" "DV567820" "Chronic myelogenous leukemia tumor antigen 66" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"312" "Contig694" "DV567835" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78227830" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"313" "Contig694" "DV567835" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78227830" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"314" "PfIL253H06" "DV567836" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"315" "PfIL254F12" "DV567874" "Microsomal glutathione S-transferase 1" "glutathione metabolism; glutathione conjugation reaction;" "Larsen_2007" "NTHSEA_BALTIC" "78227869" "dDocent_Contig_374147" "dDocent_Contig_9976" 41.33 40.71 "gacu,onil" 0.619999999999997 19
+"316" "Contig662" "DV567896" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78227891" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub,dlab" 0 16
+"317" "Contig653" "DV567912" "Chronic myelogenous leukemia tumor antigen 66" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"318" "Contig41" "DV567913" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"319" "Contig343" "DV567917" "mitochondrial ribosomal protein S18C" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"320" "PfIL255F08" "DV567922" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78227917" "dDocent_Contig_44482" "dDocent_Contig_24665" 21.11 19.25 "lcal" 1.86 23
+"321" "Contig112" "DV567940" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"322" "Contig669" "DV567953" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"323" "Contig670" "DV567958" "Ependymin" "" "Larsen_2007" "NTHSEA_BALTIC" "78227953" "dDocent_Contig_19203" "dDocent_Contig_8704" 8.44 13.38 "onil" 4.94 17
+"324" "Contig836" "DV567967" "JFConA942Fsimilar to mouse Sulfated glycoprotein" "" "Larsen_2007" "NTHSEA_HILOW" "78227962" "dDocent_Contig_28647" "dDocent_Contig_26733" 18.96 20.2 "lcal,dlab" 1.24 2
+"325" "Contig925" "DV567970" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78227965" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"326" "Contig925" "DV567970" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" "78227965" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"327" "Contig396" "DV567978" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"328" "Contig413" "DV567979" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78227974" "dDocent_Contig_13865" "dDocent_Contig_42055" 39.29 37.44 "onil" 1.85 20
+"329" "PfIL257A11" "DV567982" "Siah-interacting protein (Sip-prov)" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"330" "Contig670" "DV568001" "Ependymin" "" "Larsen_2007" "NTHSEA_BALTIC" "78227996" "dDocent_Contig_19203" "dDocent_Contig_8704" 8.44 13.38 "onil" 4.94 17
+"331" "Contig480" "DV568006" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78228001" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"332" "Contig480" "DV568006" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78228001" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"333" "PfIL257G07" "DV568013" "up050 similar to PTPRJ" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"334" "PfIL257H03" "DV568017" "Tnfa-induced adipose-related protein" "fat cell differentiation; electron transport;" "Larsen_2007" "NTHSEA_BALTIC" "78228012" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"335" "PfIL258B11" "DV568036" "Inhibitor of DNA binding 2" "negative regulation of transcription factor activity; development; negative regulation of transcription;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"336" "Contig167" "DV568047" "cDNA clone CNB74-B11" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"337" "Contig284" "DV568053" "Eukaryotic translation initiation factor 4A" "" "Larsen_2007" "NTHSEA_BALTIC" "78228048" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"338" "Contig428" "DV568055" "cDNA clone PfBAX-o4" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"339" "Contig893" "DV568068" "Fatty acyl-CoA hydrolase precursor, medium chain" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"340" "Contig662" "DV568077" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78228072" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub" 0 16
+"341" "Contig342" "DV568082" "Tnfa-induced adipose-related protein" "" "Larsen_2007" "NTHSEA_BALTIC" "78228077" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"342" "Contig662" "DV568092" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78228087" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub,dlab" 0 16
+"343" "PfIL259C12" "DV568093" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"344" "Contig41" "DV568102" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"345" "PfIL259F08" "DV568113" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"346" "Contig343" "DV568116" "mitochondrial ribosomal protein S18C" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"347" "Contig867" "DV568119" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78228114" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"348" "Contig964" "DV568131" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"349" "Contig964" "DV568131" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"350" "Contig112" "DV568143" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78228138" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"351" "PfIL260C08" "DV568150" "Glutathione S-transferase, theta 3" "glutathione metabolism; glutathione conjugation reaction;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"352" "Contig683" "DV568153" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78228148" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"353" "Contig338" "DV568154" "Hepcidin precursor" "" "Larsen_2007" "NTHSEA_BALTIC" "78228149" "dDocent_Contig_115366" "dDocent_Contig_183123" 47.84 43.43 "lcal,dlab" 4.41 16
+"354" "Contig338" "DV568154" "Hepcidin precursor" "" "Larsen_2007" "NTHSEA_HILOW" "78228149" "dDocent_Contig_115366" "dDocent_Contig_183123" 47.84 43.43 "lcal,dlab" 4.41 16
+"355" "PfIL260F08" "DV568161" "Zgc:73247 protein" "" "Larsen_2007" "NTHSEA_BALTIC" "78228156" "dDocent_Contig_156793" "dDocent_Contig_87663" 31.35 29.44 "gacu,lcal,dlab" 1.91 14
+"356" "PfIL260H04" "DV568176" "cDNA clone no536a07 sim to selenoprotein P, plasma, 1a" "" "Larsen_2007" "NTHSEA_BALTIC" "78228171" "dDocent_Contig_3528" "dDocent_Contig_23746" 40.3 38.89 "gacu,lcal,tnig,onil,dlab" 1.41 6
+"357" "Contig1018" "DV568204" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "78228199" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"358" "Contig683" "DV568243" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78228238" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"359" "Contig647" "DV568247" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"360" "Contig647" "DV568247" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"361" "Contig525" "DV568249" "UDP-glucuronosyltransferase (UGT3 gene)" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78228244" "dDocent_Contig_79522" "dDocent_Contig_46846" 19.47 20.09 "lcal,trub,tnig,dlab" 0.620000000000001 13
+"362" "Contig923" "DV568265" "cDNA clone HKC069" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"363" "PfIL263B08" "DV568273" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78228268" "dDocent_Contig_14595" "dDocent_Contig_232983" 44.63 47.1 "gacu,lcal,dlab" 2.47 7
+"364" "Contig749" "DV568276" "Translocon-associated protein beta" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"365" "Contig145" "DV568279" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"366" "Contig145" "DV568279" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"367" "PfIL264C06" "DV568323" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"368" "Contig953" "DV568357" "Putative complement factor Bf/C2" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78228352" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal,dlab" 2.16 9
+"369" "Contig953" "DV568357" "Putative complement factor Bf/C2" "" "Larsen_2007" "NTHSEA_HILOW" "78228352" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal,dlab" 2.16 9
+"370" "Contig1018" "DV568407" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "78228402" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"371" "Contig41" "DV568410" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"372" "Contig413" "DV568429" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78228424" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "trub,onil" 0 20
+"373" "Contig413" "DV568439" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78228434" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"374" "PfIL267D02" "DV568456" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"375" "Contig694" "DV568457" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78228452" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"376" "Contig694" "DV568457" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78228452" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"377" "Contig1013" "DV568472" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"378" "PfIL268B07" "DV568482" "60S acidic ribosomal protein P0 (L10E)" "ribosome biogenesis and assembly; translational elongation;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"379" "Contig480" "DV568516" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"380" "Contig480" "DV568516" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"381" "Contig878" "DV568539" "gamma-filamin" "" "Larsen_2007" "NTHSEA_BALTIC" "78228534" "dDocent_Contig_40683" "dDocent_Contig_69223" 29.43 28.43 "tnig" 1 24
+"382" "Contig1013" "DV568573" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"383" "PfIL271G06" "DV568614" "cDNA clone OU-122" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78228609" "dDocent_Contig_2844" "dDocent_Contig_125713" 11.48 13.87 "lcal" 2.39 19
+"384" "PfIL271G06" "DV568614" "cDNA clone OU-122" "" "Larsen_2007" "NTHSEA_HILOW" "78228609" "dDocent_Contig_2844" "dDocent_Contig_125713" 11.48 13.87 "lcal" 2.39 19
+"385" "Contig756" "DV568642" "D-dopachrome tautomerase" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"386" "PfIL272G08" "DV568644" "cDNA clone HKC065" "" "Larsen_2007" "NTHSEA_BALTIC" "78228651" "dDocent_Contig_5320" "dDocent_Contig_6648" 22.92 14.45 "trub" 8.47 5
+"387" "Contig19" "DV568659" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"388" "Contig19" "DV568659" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"389" "Contig19" "DV568676" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"390" "Contig19" "DV568676" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"391" "Contig332" "DV568688" "cDNA clone BR2E8" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"392" "Contig409" "DV568702" "hypothetical protein LOC57128" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"393" "PfIL274C08" "DV568709" "none" "" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"394" "Contig112" "DV568711" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78228718" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"395" "Contig774" "DV568715" "MHC II invariant chain" "cellular metabolism; regulation of cellular physiological process; primary metabolism; immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78228722" "dDocent_Contig_17517" "dDocent_Contig_17343" 27.95 28.96 "lcal,onil" 1.01 5
+"396" "Contig480" "DV568729" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78228736" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"397" "Contig480" "DV568729" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78228736" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"398" "Contig752" "DV568739" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78228746" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"399" "PfIL275E06" "DV568752" "Nipsnap homolog 3A" "" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"400" "Contig63" "DV568773" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"401" "Contig533" "DV568783" "complement component C9" "cytolysis;" "Larsen_2007" "NTHSEA_BALTIC" "78228790" "dDocent_Contig_30074" "dDocent_Contig_23998" 6.81 7.26999999999999 "gacu,lcal,trub,tnig,onil,dlab" 0.459999999999989 14
+"402" "PfIL277F08" "DV568839" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"403" "Contig112" "DV568854" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78228861" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"404" "Contig877" "DV568874" "biliverdin reductase B (flavin reductase (NADPH))" "chlorophyll metabolism;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"405" "Contig670" "DV568921" "Ependymin" "" "Larsen_2007" "NTHSEA_BALTIC" "78228928" "dDocent_Contig_19203" "dDocent_Contig_8704" 8.44 13.38 "onil" 4.94 17
+"406" "Contig19" "DV568938" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"407" "Contig19" "DV568938" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"408" "Contig413" "DV568957" "MASP protease / haptoglobin" "physiological process;" "Larsen_2007" "NTHSEA_HILOW" "78228964" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub,onil" 0 20
+"409" "Contig364" "DV568964" "Translocon associated protein, gamma subunit" "cotranslational protein-membrane targeting;" "Larsen_2007" "NTHSEA_BALTIC" "78228971" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"410" "Contig445" "DV569015" "cDNA clone JFConA705F" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"411" "Contig1013" "DV569018" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"412" "Contig41" "DV569038" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"413" "PfIL272D02" "DV569048" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78228633" "dDocent_Contig_34141" "dDocent_Contig_15924" 22.33 22.64 "lcal,onil,dlab" 0.310000000000002 12
+"414" "PfIL272D02" "DV569048" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78228633" "dDocent_Contig_34141" "dDocent_Contig_15924" 22.33 22.64 "lcal,onil,dlab" 0.310000000000002 12
+"415" "PfIL284E07" "DV569058" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78229081" "dDocent_Contig_20883" "dDocent_Contig_93961" 59.15 64.53 "lcal" 5.38 18
+"416" "PfIL284H08" "DV569075" "mAJor histocompatibility class I receptor" "signal transduction; antigen presentation, endogenous antigen; antigen processing, endogenous antigen via MHC class I;" "Larsen_2007" "NTHSEA_BALTIC" "78229098" "dDocent_Contig_311699" "dDocent_Contig_56126" 56.43 59.13 "gacu" 2.7 22
+"417" "Contig480" "DV569118" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229141" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"418" "Contig480" "DV569118" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78229141" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"419" "PfIL286A09" "DV569120" "Mitochondrial ribosomal protein L3" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229143" "dDocent_Contig_98386" "dDocent_Contig_25536" 35.11 38 "lcal,dlab" 2.89 22
+"420" "PfIL286E08" "DV569141" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78229164" "dDocent_Contig_52162" "dDocent_Contig_33316" 15.8 14.56 "onil" 1.24 1
+"421" "PfIL286H12" "DV569156" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"422" "Contig112" "DV569158" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"423" "Contig683" "DV569162" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78229185" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"424" "Contig647" "DV569189" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"425" "Contig647" "DV569189" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"426" "Contig445" "DV569211" "cDNA clone JFConA705F" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"427" "PfIL288E01" "DV569217" "cDNA clone OD-081 similar to cytochrome c oxidase subunit Via" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78229240" "dDocent_Contig_2844" "dDocent_Contig_125713" 11.48 13.87 "gacu,lcal" 2.39 19
+"428" "PfIL288E01" "DV569217" "cDNA clone OD-081 similar to cytochrome c oxidase subunit Via" "" "Larsen_2007" "NTHSEA_HILOW" "78229240" "dDocent_Contig_2844" "dDocent_Contig_125713" 11.48 13.87 "gacu,lcal" 2.39 19
+"429" "Contig202" "DV569224" "similar to onzin" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78229247" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"430" "Contig202" "DV569224" "similar to onzin" "" "Larsen_2007" "NTHSEA_HILOW" "78229247" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"431" "Contig964" "DV569229" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"432" "Contig964" "DV569229" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"433" "PfIL289A07" "DV569241" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"434" "Contig41" "DV569255" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"435" "PfIL289F06" "DV569265" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78229288" "dDocent_Contig_223192" "dDocent_Contig_120494" 26.94 28.97 "lcal" 2.03 9
+"436" "Contig1013" "DV569285" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"437" "PfIL290B02" "DV569287" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"438" "PfIL290D07" "DV569296" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"439" "Contig867" "DV569325" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78229348" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"440" "Contig364" "DV569353" "Translocon associated protein, gamma subunit" "cotranslational protein-membrane targeting;" "Larsen_2007" "NTHSEA_BALTIC" "78229070" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"441" "Contig683" "DV569363" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78229358" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"442" "Contig1013" "DV569368" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"443" "PfIL292C11" "DV569393" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"444" "Contig911" "DV569404" "ferritin heavy subunit; ferritin H" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78229399" "dDocent_Contig_121559" "dDocent_Contig_288916" 37.13 37.13 "gacu,trub" 0 20
+"445" "Contig749" "DV569405" "Translocon-associated protein beta" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"446" "Contig749" "DV569419" "Translocon-associated protein beta" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"447" "Contig749" "DV569425" "Translocon-associated protein beta" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"448" "Contig41" "DV569438" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"449" "Contig782" "DV569456" "Phosphotriesterase related protein" "" "Larsen_2007" "NTHSEA_BALTIC" "78229451" "dDocent_Contig_51099" "dDocent_Contig_24473" 43.81 43.45 "gacu,onil,dlab" 0.359999999999999 10
+"450" "Contig752" "DV569457" "Liver-expressed antimicrobial peptide 2A" "" "Larsen_2007" "NTHSEA_HILOW" "78229452" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"451" "Contig1071" "DV569460" "Mitochondrial ribosomal protein L47" "" "Larsen_2007" "NTHSEA_BALTIC" "78229455" "dDocent_Contig_257318" "dDocent_Contig_10414" 30.94 26.15 "gacu" 4.79 12
+"452" "Contig683" "DV569474" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78229469" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"453" "PfIL294H05" "DV569488" "U6 snRNA-associated Sm-like protein LSm5" "nuclear mRNA splicing, via spliceosome;" "Larsen_2007" "NTHSEA_BALTIC" "78229483" "dDocent_Contig_326304" "dDocent_Contig_16583" 62.35 66.13 "gacu,trub,dlab" 3.77999999999999 8
+"454" "Contig354" "DV569499" "Chaperonin containing TCP1, subunit 6A (zeta 1)" "cellular protein metabolism;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"455" "Contig662" "DV569500" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78229495" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,dlab" 0 16
+"456" "Contig683" "DV569521" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78229516" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"457" "Contig951" "DV569528" "Src family associated phosphoprotein 2" "" "Larsen_2007" "NTHSEA_BALTIC" "78229523" "dDocent_Contig_52143" "dDocent_Contig_53396" 28.59 27.87 "gacu,lcal,trub,tnig,onil,dlab" 0.719999999999999 16
+"458" "Contig533" "DV569533" "complement component C9" "cytolysis;" "Larsen_2007" "NTHSEA_BALTIC" "78229528" "dDocent_Contig_30074" "dDocent_Contig_23998" 6.81 7.26999999999999 "gacu,lcal,trub,tnig,onil,dlab" 0.459999999999989 14
+"459" "Contig19" "DV569543" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"460" "Contig19" "DV569543" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"461" "Contig756" "DV569601" "D-dopachrome tautomerase" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"462" "Contig237" "DV569610" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"463" "Contig237" "DV569610" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"464" "Contig480" "DV569622" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229617" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"465" "Contig480" "DV569622" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78229617" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"466" "Contig1098" "DV569631" "family-2 cystatin" "" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"467" "Contig445" "DV569635" "cDNA clone JFConA705F" "" "Larsen_2007" "NTHSEA_BALTIC" "78229630" "dDocent_Contig_69859" "dDocent_Contig_69050" 60.31 62.33 "dlab" 2.02 13
+"468" "PfIL299E03" "DV569646" "tumor necrosis factor, alpha-induced protein 2" "" "Larsen_2007" "NTHSEA_BALTIC" "78229641" "dDocent_Contig_12034" "dDocent_Contig_175067" 47.72 49.56 "lcal,trub,dlab" 1.84 7
+"469" "Contig662" "DV569649" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "78229644" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub,dlab" 0 16
+"470" "PfIL299G03" "DV569653" "Abhydrolase domain containing 6" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"471" "PfIL299H10" "DV569660" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"472" "PfIL300C10" "DV569675" "cDNA clone CLJ93-G06" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78229670" "dDocent_Contig_105948" "dDocent_Contig_58288" 33.8 33.8 "onil" 0 16
+"473" "PfIL300E07" "DV569684" "Biotinidase precursor" "central nervous system development; nitrogen compound metabolism; epidermis development; fatty acid biosynthesis; biotin metabolism;" "Larsen_2007" "NTHSEA_BALTIC" "78229679" "dDocent_Contig_98386" "dDocent_Contig_25536" 35.11 38 "lcal" 2.89 22
+"474" "PfIL301F10" "DV569734" "cDNA clone JFConA954F similar to Transcription factor BTF3" "" "Larsen_2007" "NTHSEA_BALTIC" "78229729" "dDocent_Contig_169742" "dDocent_Contig_13506" 47.17 47.61 "dlab" 0.439999999999998 6
+"475" "Contig480" "DV569740" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229735" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"476" "Contig480" "DV569740" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78229735" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"477" "Contig480" "DV569775" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229770" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"478" "Contig480" "DV569775" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78229770" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"479" "Contig1013" "DV569784" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"480" "PfIL304D02" "DV569788" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78229840" "dDocent_Contig_99714" "dDocent_Contig_178579" 65.98 65.67 "lcal,dlab" 0.310000000000002 20
+"481" "PfIL304D02" "DV569788" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78229840" "dDocent_Contig_99714" "dDocent_Contig_178579" 65.98 65.67 "lcal,dlab" 0.310000000000002 20
+"482" "PfIL304D06" "DV569791" "6-phosphofructo-2-kinase/fructose-2,6-biphosphatase 4" "fructose 2,6-bisphosphate metabolism; glycolysis; gluconeogenesis; mannose metabolism;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"483" "PfIL304F10" "DV569805" "genomic clone DKEY-24F15" "" "Larsen_2007" "NTHSEA_HILOW" "78229857" "dDocent_Contig_154408" "dDocent_Contig_164687" 13.88 13.88 "onil,dlab" 0 1
+"484" "Contig480" "DV569831" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229779" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"485" "Contig480" "DV569831" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78229779" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"486" "Contig762" "DV569839" "ubiquitin" "cellular protein metabolism;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"487" "Contig1061" "DV569841" "Glutathione peroxidase" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"488" "Contig1013" "DV569855" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"489" "Contig480" "DV569859" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78229807" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"490" "Contig480" "DV569859" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78229807" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"491" "Contig417" "DV569871" "ferritin H-1" "negative regulation of cell proliferation; immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78229819" "dDocent_Contig_85881" "dDocent_Contig_137743" 48.97 51.67 "trub,onil" 2.7 19
+"492" "Contig774" "DV569903" "MHC II invariant chain" "cellular metabolism; regulation of cellular physiological process; primary metabolism; immune response;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"493" "PfIL305H09" "DV569913" "none" "" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"494" "PfIL306B09" "DV569924" "CCAAT/enhancer binding protein alpha" "myeloid cell differentiation; cytokine and chemokine mediated signaling pathway; generation of precursor metabolites and energy; regulation of transcription from RNA polymerase II promoter;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"495" "PfIL306G02" "DV569949" "cDNA clone CDA76-G09.y1d-s" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"496" "Contig19" "DV569974" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"497" "Contig19" "DV569974" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"498" "Contig893" "DV569988" "Fatty acyl-CoA hydrolase precursor, medium chain" "" "Larsen_2007" "NTHSEA_BALTIC" "78229983" "dDocent_Contig_103135" "dDocent_Contig_20111" 0 0 "gacu,lcal,onil,dlab" 0 24
+"499" "Contig867" "DV569990" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78229985" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"500" "Contig774" "DV570016" "MHC II invariant chain" "cellular metabolism; regulation of cellular physiological process; primary metabolism; immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78230011" "dDocent_Contig_17517" "dDocent_Contig_17343" 27.95 28.96 "lcal,onil" 1.01 5
+"501" "Contig775" "DV570023" "Proteasome (Prosome, macropain) 26S subunit, non-ATPase, 12" "" "Larsen_2007" "NTHSEA_BALTIC" "78230018" "dDocent_Contig_173" "dDocent_Contig_53339" 26.77 25.22 "gacu,lcal,tnig,onil,dlab" 1.55 4
+"502" "Contig670" "DV570035" "Ependymin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"503" "Contig776" "DV570042" "heat shock protein 90 beta" "biological_process;" "Larsen_2007" "NTHSEA_HILOW" "78230037" "dDocent_Contig_190056" "dDocent_Contig_2583" 44.22 44.61 "lcal,trub,tnig,dlab" 0.390000000000001 11
+"504" "Contig41" "DV570053" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"505" "PfIL310B08" "DV570055" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"506" "Contig778" "DV570076" "Ubiquitin-like protein SMT3B precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"507" "Contig1006" "DV570080" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "78230075" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"508" "Contig683" "DV570084" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78230079" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"509" "Contig41" "DV570087" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"510" "Contig1013" "DV570102" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"511" "Contig782" "DV570115" "Phosphotriesterase related protein" "" "Larsen_2007" "NTHSEA_BALTIC" "78230137" "dDocent_Contig_51099" "dDocent_Contig_24473" 43.81 43.45 "gacu,onil,dlab" 0.359999999999999 10
+"512" "Contig783" "DV570124" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"513" "Contig867" "DV570129" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78230151" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"514" "Contig112" "DV570135" "beta-2 microglobulin" "immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78230157" "dDocent_Contig_102544" "dDocent_Contig_187802" 13.06 10.72 "gacu,lcal" 2.34 18
+"515" "Contig619" "DV570153" "cDNA clone clone WE3-5 sim to PADI-H protein" "" "Larsen_2007" "BALTIC_HILOW" "78230175" "dDocent_Contig_22346" "dDocent_Contig_74477" 32.54 32.81 "lcal,trub,onil,dlab" 0.270000000000003 10
+"516" "Contig41" "DV570163" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"517" "Contig778" "DV570203" "Ubiquitin-like protein SMT3B precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"518" "Contig867" "DV570208" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78230113" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"519" "Contig683" "DV570215" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "78230120" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"520" "Contig1096" "DV570220" "40S ribosomal protein S27" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"521" "Contig41" "DV570225" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"522" "Contig202" "DV570262" "similar to onzin" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78230257" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal" 2.16 17
+"523" "Contig202" "DV570262" "similar to onzin" "" "Larsen_2007" "NTHSEA_HILOW" "78230257" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal" 2.16 17
+"524" "Contig997" "DV570263" "SWAN RNA binding motif protein 12" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"525" "Contig417" "DV570275" "ferritin H-1" "negative regulation of cell proliferation; immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78230270" "dDocent_Contig_137743" "dDocent_Contig_13393" 51.67 37.71 "trub" 13.96 19
+"526" "Contig417" "DV570298" "ferritin H-1" "negative regulation of cell proliferation; immune response;" "Larsen_2007" "NTHSEA_BALTIC" "78230293" "dDocent_Contig_137743" "dDocent_Contig_13393" 51.67 37.71 "trub" 13.96 19
+"527" "Contig385" "DV570302" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78230297" "dDocent_Contig_35702" "dDocent_Contig_16925" 60.77 60.77 "onil" 0 15
+"528" "Contig1013" "DV570323" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"529" "PfIL317H03" "DV570345" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"530" "PfIL318C11" "DV570366" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "78230361" "dDocent_Contig_223802" "dDocent_Contig_3933" 31.28 32.12 "dlab" 0.839999999999996 11
+"531" "PfIL318D07" "DV570371" "vitamin K-dependent gamma-glutamyl carboxylase" "blood coagulation; peptidyl-glutamic acid carboxylation;" "Larsen_2007" "HIGH_LOW_SALINITY" "78230366" "dDocent_Contig_156793" "dDocent_Contig_87663" 31.35 29.44 "gacu,lcal,dlab" 1.91 14
+"532" "PfIL318D07" "DV570371" "vitamin K-dependent gamma-glutamyl carboxylase" "blood coagulation; peptidyl-glutamic acid carboxylation;" "Larsen_2007" "NTHSEA_HILOW" "78230366" "dDocent_Contig_156793" "dDocent_Contig_87663" 31.35 29.44 "gacu,lcal,dlab" 1.91 14
+"533" "Contig905" "DV570375" "nucleolin" "" "Larsen_2007" "NTHSEA_BALTIC" "78230370" "dDocent_Contig_25389" "dDocent_Contig_23306" 38.05 37.97 "gacu,lcal,trub" 0.0799999999999983 12
+"534" "Contig202" "DV570400" "similar to onzin" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78230395" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"535" "Contig202" "DV570400" "similar to onzin" "" "Larsen_2007" "NTHSEA_HILOW" "78230395" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"536" "PfIL319C08" "DV570403" "putative anaphase-promoting complex subunit APC11" "mitosis; protein ubiquitination; cell division;" "Larsen_2007" "NTHSEA_BALTIC" "78230398" "dDocent_Contig_36898" "dDocent_Contig_7358" 6.5 4.9 "tnig,onil" 1.6 4
+"537" "Contig803" "DV570419" "Cystatin domain fetuin-like protein" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78230414" "dDocent_Contig_67109" "dDocent_Contig_126711" 67.07 66.91 "gacu,lcal" 0.159999999999997 12
+"538" "Contig364" "DV570428" "Translocon associated protein, gamma subunit" "cotranslational protein-membrane targeting;" "Larsen_2007" "NTHSEA_BALTIC" "78230423" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"539" "Contig877" "DV570439" "biliverdin reductase B (flavin reductase (NADPH))" "chlorophyll metabolism;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"540" "Contig480" "DV570447" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "78230442" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"541" "Contig480" "DV570447" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "78230442" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"542" "Contig694" "DV570448" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "78230443" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"543" "Contig694" "DV570448" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "78230443" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"544" "PfIL320H04" "DV570464" "none" "" "Larsen_2007" "NTHSEA_HILOW" "78230459" "dDocent_Contig_30025" "dDocent_Contig_5386" 56.44 60.19 "dlab" 3.75 17
+"545" "Contig559" "DV570466" "60S ribosomal protein L3" "" "Larsen_2007" "NTHSEA_BALTIC" "78230461" "dDocent_Contig_153620" "dDocent_Contig_59623" 9.64999999999999 10.78 "lcal,onil,dlab" 1.13000000000001 19
+"546" "Contig395" "DV570470" "NADH dehydrogenase (ubiquinone) 1 alpha subcomplex, 7 (B14.5a)" "" "Larsen_2007" "NTHSEA_BALTIC" "78230465" "dDocent_Contig_3765" "dDocent_Contig_25389" 37.97 38.05 "gacu,lcal,trub,tnig" 0.0799999999999983 12
+"547" "Contig396" "DV570479" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"548" "Contig983" "DV570491" "eukaryotic translation elongation factor 1 gamma" "protein biosynthesis;" "Larsen_2007" "NTHSEA_BALTIC" "78230486" "dDocent_Contig_18636" "dDocent_Contig_72018" 26.62 27.28 "gacu,onil,dlab" 0.66 5
+"549" "Contig202" "DV570492" "similar to onzin" "" "Larsen_2007" "HIGH_LOW_SALINITY" "78230487" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"550" "Contig202" "DV570492" "similar to onzin" "" "Larsen_2007" "NTHSEA_HILOW" "78230487" "dDocent_Contig_5360" "dDocent_Contig_19188" 45 42.84 "lcal,onil" 2.16 17
+"551" "PfIL003C07" "EC377562" "CNS0GKW2Tetraodon nigroviridis full-length cDNA" "" "Larsen_2007" "NTHSEA_BALTIC" "109174782" "dDocent_Contig_1291" "dDocent_Contig_339848" 30.97 30.97 "lcal,dlab" 0 1
+"552" "Contig894" "EC377563" "cDNA clone lk_hhL1_0002c23.pDNRF2" "" "Larsen_2007" "NTHSEA_BALTIC" "109174784" "dDocent_Contig_20987" "dDocent_Contig_376782" 28.32 28.17 "lcal,dlab" 0.149999999999999 20
+"553" "Contig683" "EC377574" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "109174808" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"554" "Contig1006" "EC377581" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109174821" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"555" "Contig889" "EC377585" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"556" "PfIL007E06" "EC377591" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"557" "Contig41" "EC377598" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"558" "PfIL008E09" "EC377605" "S-adenosylhomocysteine hydrolase-like 2" "one-carbon compound metabolism; methionine metabolism;" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"559" "PfIL011F04" "EC377634" "cDNA clone lk_hhlvxxxx_0002o18.pDNRF2." "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"560" "Contig647" "EC377640" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"561" "Contig647" "EC377640" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"562" "PfIL012D11" "EC377646" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109174956" "dDocent_Contig_43221" "dDocent_Contig_36090" 44.58 44.58 "lcal,onil,dlab" 0 23
+"563" "Contig925" "EC377648" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"564" "Contig925" "EC377648" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"565" "Contig662" "EC377655" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"566" "Contig762" "EC377677" "ubiquitin" "cellular protein metabolism;" "Larsen_2007" "NTHSEA_HILOW" "109175020" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,tnig,onil" 4.87 10
+"567" "Contig41" "EC377679" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"568" "PfIL020H10" "EC377685" "STEAP family member 4" "fat cell differentiation;" "Larsen_2007" "NTHSEA_BALTIC" "109175029" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"569" "Contig776" "EC377709" "heat shock protein 90 beta" "biological_process;" "Larsen_2007" "NTHSEA_HILOW" "109175080" "dDocent_Contig_190056" "dDocent_Contig_2583" 44.22 44.61 "lcal,tnig,dlab" 0.390000000000001 11
+"570" "PfIL140H08" "EC377713" "similar to coagulation factor 10; coagulation factor X" "physiological process;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"571" "PfIL201A05" "EC377714" "AFG3(ATPase family gene 3)-like 1" "proteolysis and peptidolysis; protein catabolism;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"572" "PfIL201A05" "EC377714" "AFG3(ATPase family gene 3)-like 1" "proteolysis and peptidolysis; protein catabolism;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"573" "Contig1110" "EC377716" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109175094" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"574" "Contig1006" "EC377756" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109175163" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"575" "Contig1096" "EC377757" "40S ribosomal protein S27" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"576" "Contig749" "EC377765" "Translocon-associated protein beta" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"577" "PfIL205A07" "EC377767" "cDNA clone JFL1-188 similar to eukaryotic translation initiation factor 3, subunit 8" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"578" "Contig53" "EC377779" "Poly A binding protein, cytoplasmic 1 (pabpc1)" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"579" "Contig889" "EC377798" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"580" "Contig1006" "EC377810" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109175272" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"581" "Contig1096" "EC377822" "40S ribosomal protein S27" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"582" "PfIL209H10" "EC377855" "18S rRNA gene" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"583" "PfIL209H10" "EC377855" "18S rRNA gene" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"584" "Contig867" "EC377858" "60S ribosomal protein L38" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "109175363" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"585" "Contig1095" "EC377860" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109175366" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"586" "Contig917" "EC377907" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109175454" "dDocent_Contig_14848" "dDocent_Contig_13393" 36.43 37.71 "dlab" 1.28 19
+"587" "Contig354" "EC377932" "Chaperonin containing TCP1, subunit 6A (zeta 1)" "cellular protein metabolism;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"588" "Contig683" "EC377935" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "109175510" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"589" "PfIL215D09" "EC377942" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"590" "Contig694" "EC377950" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "109175540" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"591" "Contig694" "EC377950" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "109175540" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"592" "Contig1018" "EC377960" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"593" "Contig911" "EC377963" "ferritin heavy subunit; ferritin H" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"594" "Contig480" "EC377964" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109175567" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"595" "Contig480" "EC377964" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109175567" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"596" "Contig1110" "EC377965" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"597" "Contig776" "EC377977" "heat shock protein 90 beta" "biological_process;" "Larsen_2007" "NTHSEA_HILOW" "109175591" "dDocent_Contig_190056" "dDocent_Contig_2583" 44.22 44.61 "lcal,tnig,dlab" 0.390000000000001 11
+"598" "Contig917" "EC377990" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109175618" "dDocent_Contig_14848" "dDocent_Contig_13393" 36.43 37.71 "dlab" 1.28 19
+"599" "Contig1013" "EC377999" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"600" "Contig683" "EC378016" "60S ribosomal protein L37a" "protein biosynthesis; ribosome biogenesis and assembly;" "Larsen_2007" "NTHSEA_HILOW" "109175670" "dDocent_Contig_12674" "dDocent_Contig_118320" 19.91 20.25 "dlab" 0.34 10
+"601" "Contig480" "EC378021" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109175680" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"602" "Contig480" "EC378021" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109175680" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"603" "PfIL219H03" "EC378027" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"604" "Contig776" "EC378058" "heat shock protein 90 beta" "biological_process;" "Larsen_2007" "NTHSEA_HILOW" "109175749" "dDocent_Contig_190056" "dDocent_Contig_2583" 44.22 44.61 "lcal,tnig,dlab" 0.390000000000001 11
+"605" "Contig1018" "EC378067" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "109175767" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"606" "PfIL222E04" "EC378077" "transcription factor E4TF1" "regulation of transcription, DNA-dependent; positive regulation of transcription; regulation of transcription from RNA polymerase II promoter;" "Larsen_2007" "NTHSEA_BALTIC" "109175786" "dDocent_Contig_137371" "dDocent_Contig_84818" 34.63 40.19 "tnig,dlab" 5.56 13
+"607" "PfIL223H07" "EC378094" "none" "" "Larsen_2007" "NTHSEA_HILOW" "109175815" "dDocent_Contig_698" "dDocent_Contig_4651" 8.41 10.88 "lcal" 2.47 5
+"608" "Contig563" "EC378101" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"609" "Contig480" "EC378124" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109175877" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"610" "Contig480" "EC378124" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109175877" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"611" "Contig19" "EC378139" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"612" "Contig19" "EC378139" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"613" "Contig905" "EC378146" "nucleolin" "" "Larsen_2007" "NTHSEA_BALTIC" "109175916" "dDocent_Contig_25389" "dDocent_Contig_23306" 38.05 37.97 "gacu,lcal,trub,tnig" 0.0799999999999983 12
+"614" "Contig939" "EC378148" "cDNA clone SL3-0203 sim to Transferrin receptor" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"615" "Contig647" "EC378157" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"616" "Contig647" "EC378157" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"617" "PfIL228D09" "EC378170" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"618" "Contig1018" "EC378195" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "109175997" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"619" "Contig480" "EC378213" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176027" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"620" "Contig480" "EC378213" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109176027" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"621" "Contig647" "EC378220" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"622" "Contig647" "EC378220" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"623" "PfIL231C04" "EC378223" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"624" "Contig894" "EC378224" "cDNA clone lk_hhL1_0002c23.pDNRF2" "" "Larsen_2007" "NTHSEA_BALTIC" "109176046" "dDocent_Contig_20987" "dDocent_Contig_376782" 28.32 28.17 "lcal,dlab" 0.149999999999999 20
+"625" "PfIL231G08" "EC378230" "basic transcription factor 3-like 4" "regulation of transcription, DNA-dependent; regulation of transcription from RNA polymerase II promoter;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"626" "Contig237" "EC378232" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"627" "Contig237" "EC378232" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"628" "Contig911" "EC378233" "ferritin heavy subunit; ferritin H" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"629" "Contig1085" "EC378237" "Cell death activator CIDE-B" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109176071" "dDocent_Contig_182167" "dDocent_Contig_16645" 46.54 46.94 "gacu,dlab" 0.399999999999999 17
+"630" "Contig1063" "EC378248" "ribosomal protein L19" "" "Larsen_2007" "NTHSEA_HILOW" "109176094" "dDocent_Contig_179549" "dDocent_Contig_2844" 17.95 11.48 "tnig" 6.47 19
+"631" "Contig1018" "EC378249" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "109176096" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"632" "Contig307" "EC378254" "transmembrane emp24 protein transport domain containing 7 (TMED7)" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"633" "PfIL234H10" "EC378278" "zinc finger protein 319" "" "Larsen_2007" "NTHSEA_HILOW" "109176151" "dDocent_Contig_103135" "dDocent_Contig_20111" 0 0 "gacu,trub,tnig" 0 24
+"634" "Contig480" "EC378303" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176202" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"635" "Contig480" "EC378303" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109176202" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"636" "Contig563" "EC378313" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"637" "PfIL238C11" "EC378317" "preimplantation protein 3" "transport;" "Larsen_2007" "NTHSEA_BALTIC" "109176231" "dDocent_Contig_201958" "dDocent_Contig_13343" 60.32 60.31 "lcal,tnig,dlab" 0.00999999999999801 13
+"638" "PfIL239D12" "EC378330" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"639" "Contig662" "EC378334" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "109176266" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub" 0 16
+"640" "Contig983" "EC378337" "eukaryotic translation elongation factor 1 gamma" "protein biosynthesis;" "Larsen_2007" "NTHSEA_BALTIC" "109176271" "dDocent_Contig_18636" "dDocent_Contig_72018" 26.62 27.28 "gacu,trub,onil,dlab" 0.66 5
+"641" "Contig1018" "EC378349" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "109176295" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"642" "Contig1018" "EC378367" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"643" "Contig480" "EC378370" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176334" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"644" "Contig480" "EC378370" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109176334" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"645" "Contig883" "EC378371" "L-3-hydroxyacyl-Coenzyme A dehydrogenase, short chain" "" "Larsen_2007" "NTHSEA_BALTIC" "109176336" "dDocent_Contig_289693" "dDocent_Contig_53126" 44.17 43.17 "lcal,onil,dlab" 1 4
+"646" "Contig1095" "EC378389" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109176373" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"647" "PfIL243B02" "EC378398" "immunoglobulin D heavy chain" "" "Larsen_2007" "NTHSEA_BALTIC" "109176390" "dDocent_Contig_61063" "dDocent_Contig_1328" 30.79 29.52 "trub" 1.27 19
+"648" "Contig694" "EC378403" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176400" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"649" "Contig694" "EC378403" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "109176400" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"650" "Contig964" "EC378405" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176404" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"651" "Contig964" "EC378405" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "109176404" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"652" "PfIL244A09" "EC378414" "cDNA clone CLJ325-D02" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109176421" "dDocent_Contig_21841" "dDocent_Contig_8979" 36.62 35.67 "gacu,lcal,onil,dlab" 0.949999999999996 14
+"653" "PfIL244A09" "EC378414" "cDNA clone CLJ325-D02" "" "Larsen_2007" "NTHSEA_HILOW" "109176421" "dDocent_Contig_21841" "dDocent_Contig_8979" 36.62 35.67 "gacu,lcal,onil,dlab" 0.949999999999996 14
+"654" "Contig396" "EC378440" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"655" "Contig775" "EC378444" "Proteasome (Prosome, macropain) 26S subunit, non-ATPase, 12" "" "Larsen_2007" "NTHSEA_BALTIC" "109176473" "dDocent_Contig_173" "dDocent_Contig_53339" 26.77 25.22 "lcal,dlab" 1.55 4
+"656" "Contig1071" "EC378445" "Mitochondrial ribosomal protein L47" "" "Larsen_2007" "NTHSEA_BALTIC" "109176475" "dDocent_Contig_257318" "dDocent_Contig_10414" 30.94 26.15 "gacu" 4.79 12
+"657" "PfIL247G04" "EC378475" "xylulokinase homolog" "generation of precursor metabolites and energy; xylulose metabolism;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"658" "Contig662" "EC378486" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"659" "PfIL251A09" "EC378520" "inorganic pyrophosphatase 2" "oxidative phosphorylation;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"660" "Contig694" "EC378524" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176626" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"661" "Contig694" "EC378524" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "109176626" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"662" "Contig880" "EC378538" "flavin adenine dinucleotide synthetase" "" "Larsen_2007" "BALTIC_HILOW" "109176654" "dDocent_Contig_189298" "dDocent_Contig_25548" 31.06 31.06 "trub,tnig,onil,dlab" 0 16
+"663" "Contig1110" "EC378542" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109176662" "dDocent_Contig_21841" "dDocent_Contig_8979" 36.62 35.67 "gacu,lcal,onil,dlab" 0.949999999999996 14
+"664" "Contig925" "EC378547" "unnamed protein product CAG03272" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109176671" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"665" "Contig925" "EC378547" "unnamed protein product CAG03272" "" "Larsen_2007" "NTHSEA_HILOW" "109176671" "dDocent_Contig_75370" "dDocent_Contig_1633" 36.55 31.1 "gacu" 5.45 4
+"666" "Contig647" "EC378549" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"667" "Contig647" "EC378549" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"668" "Contig396" "EC378550" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"669" "Contig889" "EC378554" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"670" "Contig480" "EC378580" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176730" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"671" "Contig480" "EC378580" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109176730" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"672" "PfIL256E06" "EC378606" "cDNA clone ssal_rgb2_631_267_fwd" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"673" "Contig762" "EC378627" "ubiquitin" "cellular protein metabolism;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"674" "Contig445" "EC378631" "cDNA clone JFConA705F" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"675" "Contig877" "EC378639" "biliverdin reductase B (flavin reductase (NADPH))" "chlorophyll metabolism;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"676" "Contig889" "EC378644" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"677" "Contig889" "EC378653" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"678" "Contig964" "EC378660" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" "109176881" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"679" "Contig964" "EC378660" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "109176881" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"680" "Contig1033" "EC378677" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"681" "Contig1039" "EC378679" "5'-nucleotidase, cytosolic III" "" "Larsen_2007" "NTHSEA_BALTIC" "109176920" "dDocent_Contig_2040" "dDocent_Contig_12143" 25.68 29.7 "gacu,dlab" 4.02 15
+"682" "Contig1095" "EC378680" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109176922" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"683" "Contig1095" "EC378680" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109176922" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"684" "Contig889" "EC378682" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"685" "Contig237" "EC378718" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"686" "Contig237" "EC378718" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"687" "Contig953" "EC378729" "Putative complement factor Bf/C2" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109177020" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal,tnig,onil,dlab" 2.16 9
+"688" "Contig953" "EC378729" "Putative complement factor Bf/C2" "" "Larsen_2007" "NTHSEA_HILOW" "109177020" "dDocent_Contig_333677" "dDocent_Contig_125297" 33.15 35.31 "lcal,tnig,onil,dlab" 2.16 9
+"689" "Contig889" "EC378730" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"690" "Contig145" "EC378743" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109177048" "dDocent_Contig_21407" "dDocent_Contig_111156" 5.88 6.81 "onil,dlab" 0.930000000000001 2
+"691" "Contig145" "EC378743" "3-hydroxyanthranilate 3,4-dioxygenase 3-HAO" "" "Larsen_2007" "NTHSEA_HILOW" "109177048" "dDocent_Contig_21407" "dDocent_Contig_111156" 5.88 6.81 "onil,dlab" 0.930000000000001 2
+"692" "Contig1006" "EC378761" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109177082" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"693" "Contig1008" "EC378779" "peptidylprolyl isomerase A" "protein folding;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"694" "Contig878" "EC378787" "gamma-filamin" "" "Larsen_2007" "NTHSEA_BALTIC" "109177135" "dDocent_Contig_40683" "dDocent_Contig_69223" 29.43 28.43 "tnig" 1 24
+"695" "Contig647" "EC378794" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"696" "Contig647" "EC378794" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"697" "Contig939" "EC378795" "cDNA clone SL3-0203 sim to Transferrin receptor" "" "Larsen_2007" "NTHSEA_BALTIC" "109177150" "dDocent_Contig_172285" "dDocent_Contig_48611" 23.27 20.59 "gacu,trub,dlab" 2.68 10
+"698" "Contig1018" "EC378796" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "109177152" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"699" "Contig19" "EC378812" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"700" "Contig19" "EC378812" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"701" "PfIL273D07" "EC378840" "cDNA clone Pf_IL_302B12 5' similar to Acyl-CoA-binding protein" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109177238" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"702" "PfIL273D07" "EC378840" "cDNA clone Pf_IL_302B12 5' similar to Acyl-CoA-binding protein" "" "Larsen_2007" "NTHSEA_HILOW" "109177238" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"703" "PfIL273D07" "EC378840" "cDNA clone Pf_IL_302B12 5' similar to Acyl-CoA-binding protein" "" "Larsen_2007" "BALTIC_HILOW" "109177238" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"704" "Contig1082" "EC378841" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"705" "Contig889" "EC378881" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"706" "Contig1110" "EC378891" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"707" "Contig1006" "EC378898" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109177352" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"708" "Contig964" "EC378899" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"709" "Contig964" "EC378899" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"710" "Contig41" "EC378913" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"711" "Contig1056" "EC378921" "Synaptotagmin-15" "" "Larsen_2007" "NTHSEA_BALTIC" "109177396" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"712" "Contig41" "EC378925" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"713" "Contig480" "EC378927" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177408" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"714" "Contig480" "EC378927" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109177408" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"715" "Contig41" "EC378945" "Lysozyme c" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"716" "PfIL278E11" "EC378946" "cDNA clone lk_hhsk_0004i15.pDNRF2" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"717" "Contig480" "EC378953" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177458" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"718" "Contig480" "EC378953" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109177458" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"719" "Contig480" "EC378956" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177463" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"720" "Contig480" "EC378956" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109177463" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"721" "Contig19" "EC378957" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"722" "Contig19" "EC378957" "Neurotoxin/C59/Ly-6-like protein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"723" "Contig1018" "EC378972" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"724" "Contig1013" "EC378980" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"725" "Contig364" "EC378983" "Translocon associated protein, gamma subunit" "cotranslational protein-membrane targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109177516" "dDocent_Contig_269074" "dDocent_Contig_4858" 34.19 31.1 "gacu,lcal,onil,dlab" 3.09 3
+"726" "Contig889" "EC378990" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"727" "PfIL280H02" "EC378992" "cDNA clone Hh_ystG_22C12" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"728" "Contig694" "EC379000" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177548" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"729" "Contig694" "EC379000" "prothrombin precursor" "blood coagulation; proteolysis and peptidolysis;" "Larsen_2007" "NTHSEA_HILOW" "109177548" "dDocent_Contig_114038" "dDocent_Contig_125660" 34.03 30.16 "gacu" 3.87 21
+"730" "Contig964" "EC379006" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177560" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"731" "Contig964" "EC379006" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "109177560" "dDocent_Contig_85216" "dDocent_Contig_3559" 25.19 30.06 "trub,onil" 4.87 10
+"732" "Contig964" "EC379008" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"733" "Contig964" "EC379008" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"734" "PfIL283A02" "EC379009" "similar to PYRIN-containing APAF1-like protein 7" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"735" "PfIL283C02" "EC379012" "similar to sarcoma antigen NY-SAR-48 isoform b" "" "Larsen_2007" "BALTIC_HILOW" "109177572" "dDocent_Contig_233200" "dDocent_Contig_34141" 21.06 22.33 "gacu,lcal,onil" 1.27 12
+"736" "PfIL283D03" "EC379015" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"737" "Contig1095" "EC379016" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109177579" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"738" "Contig1095" "EC379016" "transport protein Sec61 beta subunit" "protein targeting;" "Larsen_2007" "NTHSEA_BALTIC" "109177579" "dDocent_Contig_189298" "dDocent_Contig_37785" 31.06 31.28 "onil" 0.220000000000002 16
+"739" "Contig803" "EC379021" "Cystatin domain fetuin-like protein" "" "Larsen_2007" "HIGH_LOW_SALINITY" "109177592" "dDocent_Contig_67109" "dDocent_Contig_126711" 67.07 66.91 "lcal" 0.159999999999997 12
+"740" "Contig1098" "EC379026" "family-2 cystatin" "" "Larsen_2007" "BALTIC_HILOW" NA NA NA NA NA NA NA NA
+"741" "Contig1018" "EC379039" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"742" "Contig923" "EC379064" "cDNA clone HKC069" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"743" "PfIL286G06" "EC379071" "cDNA clone JFConA289F" "" "Larsen_2007" "NTHSEA_BALTIC" "109177690" "dDocent_Contig_75304" "dDocent_Contig_21226" 52.24 52.59 "gacu,lcal,onil,dlab" 0.350000000000001 2
+"744" "Contig563" "EC379079" "Zgc:103569" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"745" "Contig480" "EC379088" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177722" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"746" "Contig480" "EC379088" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109177722" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"747" "Contig662" "EC379112" "fertilization envelope outer layer protein" "" "Larsen_2007" "NTHSEA_HILOW" "109177768" "dDocent_Contig_9237" "dDocent_Contig_9265" 58.84 58.84 "gacu,lcal,trub,dlab" 0 16
+"748" "Contig1006" "EC379119" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109177782" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"749" "Contig1105" "EC379139" "mago-nashi homolog, proliferation-associated" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"750" "PfIL292B11" "EC379162" "cDNA clone CNS0GKLS" "" "Larsen_2007" "NTHSEA_HILOW" "109177864" "dDocent_Contig_15153" "dDocent_Contig_1291" 30.97 30.97 "trub,dlab" 0 1
+"751" "Contig647" "EC379177" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"752" "Contig647" "EC379177" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"753" "Contig480" "EC379194" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177926" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"754" "Contig480" "EC379194" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109177926" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"755" "Contig1013" "EC379196" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"756" "Contig480" "EC379202" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109177942" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"757" "Contig480" "EC379202" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109177942" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"758" "Contig1110" "EC379207" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"759" "PfIL295B01" "EC379211" "cDNA clone down057 similar to 3-pass transmembrane protein" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"760" "Contig951" "EC379221" "Src family associated phosphoprotein 2" "" "Larsen_2007" "NTHSEA_BALTIC" "109177979" "dDocent_Contig_52143" "dDocent_Contig_53396" 28.59 27.87 "gacu,lcal,trub,tnig,onil,dlab" 0.719999999999999 16
+"761" "Contig647" "EC379230" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"762" "Contig647" "EC379230" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"763" "Contig880" "EC379236" "flavin adenine dinucleotide synthetase" "" "Larsen_2007" "BALTIC_HILOW" "109178006" "dDocent_Contig_189298" "dDocent_Contig_25548" 31.06 31.06 "trub,tnig,onil,dlab" 0 16
+"764" "Contig1013" "EC379251" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"765" "PfIL298E02" "EC379258" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"766" "Contig1013" "EC379268" "Transferrin" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"767" "Contig1008" "EC379271" "peptidylprolyl isomerase A" "protein folding;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"768" "Contig1018" "EC379279" "Prostaglandin D synthase" "" "Larsen_2007" "NTHSEA_HILOW" "109178095" "dDocent_Contig_314714" "dDocent_Contig_305597" 29.75 29.42 "lcal,trub,dlab" 0.329999999999998 8
+"769" "Contig883" "EC379289" "L-3-hydroxyacyl-Coenzyme A dehydrogenase, short chain" "" "Larsen_2007" "NTHSEA_BALTIC" "109178115" "dDocent_Contig_289693" "dDocent_Contig_53126" 44.17 43.17 "lcal,onil,dlab" 1 4
+"770" "Contig647" "EC379311" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"771" "Contig647" "EC379311" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"772" "PfIL302B10" "EC379319" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"773" "Contig480" "EC379328" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109178193" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"774" "Contig480" "EC379328" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109178193" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"775" "Contig1033" "EC379333" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"776" "Contig480" "EC379334" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109178203" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"777" "Contig480" "EC379334" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109178203" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"778" "Contig964" "EC379364" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"779" "Contig964" "EC379364" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"780" "Contig647" "EC379366" "angiotensinogen precursor" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"781" "Contig647" "EC379366" "angiotensinogen precursor" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"782" "Contig396" "EC379377" "complement control protein factor I-B" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"783" "Contig945" "EC379383" "cDNA clone CNS0FA9Z" "" "Larsen_2007" "NTHSEA_BALTIC" "109178294" "dDocent_Contig_651" "dDocent_Contig_7795" 13.88 13.88 "lcal,trub,tnig,onil,dlab" 0 1
+"784" "Contig945" "EC379385" "cDNA clone CNS0FA9Z" "" "Larsen_2007" "NTHSEA_BALTIC" "109178297" "dDocent_Contig_651" "dDocent_Contig_7795" 13.88 13.88 "lcal,trub,tnig,onil,dlab" 0 1
+"785" "Contig889" "EC379396" "Cofilin 2" "actin cytoskeleton organization and biogenesis; Rho protein signal transduction; anti-apoptosis;" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"786" "Contig964" "EC379406" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "109178341" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"787" "Contig964" "EC379406" "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "NTHSEA_HILOW" "109178341" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
+"788" "Contig964" "EC379406 " "Alpha 2HS glycoprotein" "cellular process; organismal physiological process; regulation of physiological process;" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"789" "Contig1056" "EC379407" "Synaptotagmin-15" "" "Larsen_2007" "NTHSEA_BALTIC" "109178342" "dDocent_Contig_106618" "dDocent_Contig_104204" 8.34 9.27 "gacu,lcal,tnig" 0.93 15
+"790" "Contig894" "EC379411" "cDNA clone lk_hhL1_0002c23.pDNRF2" "" "Larsen_2007" "NTHSEA_BALTIC" "109178351" "dDocent_Contig_20987" "dDocent_Contig_376782" 28.32 28.17 "lcal,dlab" 0.149999999999999 20
+"791" "Contig480" "EC379417" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109178361" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"792" "Contig480" "EC379417" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109178361" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"793" "Contig749" "EC379427" "Translocon-associated protein beta" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"794" "Contig923" "EC379457" "cDNA clone HKC069" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"795" "Contig1092" "EC379468" "Cytochrome c oxidase polypeptide VIII-heart, mitochondrial precursor" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"796" "Contig836" "EC379477" "JFConA942Fsimilar to mouse Sulfated glycoprotein" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"797" "Contig1006" "EC379480" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109178475" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"798" "Contig1071" "EC379483" "Mitochondrial ribosomal protein L47" "" "Larsen_2007" "NTHSEA_BALTIC" "109178478" "dDocent_Contig_257318" "dDocent_Contig_10414" 30.94 26.15 "gacu" 4.79 12
+"799" "Contig997" "EC379524" "SWAN RNA binding motif protein 12" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"800" "Contig1105" "EC379534" "mago-nashi homolog, proliferation-associated" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"801" "Contig75" "EC379539" "hypothetical protein XP_679282" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"802" "Contig480" "EC379540" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "HIGH_LOW_SALINITY" "109178582" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"803" "Contig480" "EC379540" "Apolipoprotein AI" "lipoprotein metabolism; lipid transport;" "Larsen_2007" "NTHSEA_HILOW" "109178582" "dDocent_Contig_172365" "dDocent_Contig_68707" 43.48 40.8 "dlab" 2.68 3
+"804" "Contig237" "EC379559" "none" "" "Larsen_2007" "HIGH_LOW_SALINITY" NA NA NA NA NA NA NA NA
+"805" "Contig237" "EC379559" "none" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"806" "Contig385" "EC379572" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109178648" "dDocent_Contig_35702" "dDocent_Contig_16925" 60.77 60.77 "onil" 0 15
+"807" "PfIL316F04" "EC379578" "cDNA clone Hh_emG_21E08" "" "Larsen_2007" "NTHSEA_BALTIC" "109178659" "dDocent_Contig_70827" "dDocent_Contig_52004" 10.85 12.88 "lcal,dlab" 2.03 11
+"808" "Contig893" "EC379584" "Fatty acyl-CoA hydrolase precursor, medium chain" "" "Larsen_2007" "NTHSEA_BALTIC" "109178671" "dDocent_Contig_103135" "dDocent_Contig_20111" 0 0 "gacu,lcal,onil,dlab" 0 24
+"809" "Contig1006" "EC379589" "CD59 Glycoprotein precursor (MAC 1P)" "" "Larsen_2007" "NTHSEA_BALTIC" "109178681" "dDocent_Contig_21728" "dDocent_Contig_69113" 49.24 47.63 "onil" 1.61 22
+"810" "Contig1008" "EC379595" "peptidylprolyl isomerase A" "protein folding;" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"811" "Contig1063" "EC379602" "ribosomal protein L19" "" "Larsen_2007" "NTHSEA_HILOW" "109178707" "dDocent_Contig_179549" "dDocent_Contig_2844" 17.95 11.48 "tnig" 6.47 19
+"812" "PfIL319B02" "EC379619" "cDNA clone WC1-3" "" "Larsen_2007" "NTHSEA_HILOW" NA NA NA NA NA NA NA NA
+"813" "PfIL319B04" "EC379620" "similar to PH domain-containing protein" "" "Larsen_2007" "BALTIC_HILOW" "109178746" "dDocent_Contig_266483" "dDocent_Contig_11636" 10.92 18.37 "gacu" 7.45 20
+"814" "Contig601" "EC379636" "Proteasome (Prosome, macropain) subunit, beta type, 8" "" "Larsen_2007" "NTHSEA_BALTIC" "109178777" "dDocent_Contig_311699" "dDocent_Contig_56126" 56.43 59.13 "gacu" 2.7 22
+"815" "Contig783" "EC379637" "none" "" "Larsen_2007" "NTHSEA_BALTIC" "109178779" "dDocent_Contig_729" "dDocent_Contig_180392" 6.54 7.78 "lcal" 1.24 5
+"816" "PfIL320A10" "EC379642" "none" "" "Larsen_2007" "NTHSEA_BALTIC" NA NA NA NA NA NA NA NA
+"817" "PfIL320F08" "EC379649" "unnamed protein product CAG12708" "" "Larsen_2007" "NTHSEA_BALTIC" "109178803" "dDocent_Contig_19203" "dDocent_Contig_8704" 8.44 13.38 "onil" 4.94 17
