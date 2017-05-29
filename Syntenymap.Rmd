@@ -22,8 +22,6 @@ source("lib/ggplot.R")
 
 # Load data
 
-Output from synteny mapper `all.synteny.mapped.out`.
-
 ```{r}
 
 # load map data
@@ -67,7 +65,7 @@ kary <- ungroup(by_lg) %>%
     select(chr, dash, id, label, start, end, COLOR)
 
 # output karyotype data file
-write.table(kary, file = "data/SYNTENY/SFL_karyotype.txt", 
+write.table(kary, file = "data/SYNTENY/SFL.karyotype.txt", 
             sep = "\t", quote = FALSE, 
             row.names = FALSE, col.names = FALSE)
 
@@ -90,7 +88,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/dlab_karyotype.txt",
+write.table(kary, "data/SYNTENY/dlab.karyotype.txt",
               sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -112,7 +110,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/gacu_karyotype.txt",
+write.table(kary, "data/SYNTENY/gacu.karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
   
 ```
@@ -134,7 +132,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/lcal_karyotype.txt",
+write.table(kary, "data/SYNTENY/lcal.karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -156,7 +154,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/onil_karyotype.txt",
+write.table(kary, "data/SYNTENY/onil.karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -178,7 +176,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/tnig_karyotype.txt",
+write.table(kary, "data/SYNTENY/tnig.karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -200,7 +198,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/trub_karyotype.txt",
+write.table(kary, "data/SYNTENY/trub.karyotype.txt",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -240,12 +238,10 @@ for (i in 1:length(species)) {
                end = as.integer(MAP_STOP * 500000)) %>%
         select(chr, start, end)
     
-    write.table(tiles, file = paste("data/SYNTENY/", species[i], ".txt", sep = ''), 
+    write.table(tiles, file = paste("data/SYNTENY/", species[i], ".synblocks", sep = ''), 
                 sep = "\t", quote = FALSE, 
                 row.names = FALSE, col.names = FALSE)
 }
-
-
 
 ```
 
@@ -261,7 +257,7 @@ syn_loci <- syn_loci %>%
     select(chr, start, end)
 
 
-write.table(syn_loci, file = "data/SYNTENY/syn_loci.txt", 
+write.table(syn_loci, file = "data/SYNTENY/all.synloci", 
             sep = "\t", quote = FALSE, 
             row.names = FALSE, col.names = FALSE)
 ```
@@ -283,7 +279,112 @@ dlab_synblocks <- syn_blocks %>%
          chrend = COMP_END) %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/dlab_synteny.txt", 
+write.table(dlab_synblocks, file = "data/SYNTENY/dlab.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks gacu and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "gacu") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/gacu.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks lcal and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "lcal") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/lcal.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks onil and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "onil") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/onil.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks tnig and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "tnig") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/tnig.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks trub and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "trub") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/trub.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -299,13 +400,62 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_blocks.
 
 ```
 
+Plot comparison location of synteny blocks lcal vs SFL
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_lcal.conf -outputdir fig -outputfile synteny-comp.lcal')
+
+```
+
 Plot comparison location of synteny blocks dlab vs SFL
 
 ```{r}
 
-system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_comp.conf -outputdir fig -outputfile synteny-comp')
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_dlab.conf -outputdir fig -outputfile synteny-comp.dlab')
 
 ```
+
+Plot comparison location of synteny blocks lcal vs SFL
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_lcal.conf -outputdir fig -outputfile synteny-comp.dlab')
+
+```
+
+Plot comparison location of synteny blocks gacu vs SFL
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_gacu.conf -outputdir fig -outputfile synteny-comp.gacu')
+
+```
+
+Plot comparison location of synteny blocks onil vs SFL
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_onil.conf -outputdir fig -outputfile synteny-comp.onil')
+
+```
+
+Plot comparison location of synteny blocks tnig vs SFL
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_tnig.conf -outputdir fig -outputfile synteny-comp.tnig')
+
+```
+
+Plot comparison location of synteny blocks trub vs SFL
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_trub.conf -outputdir fig -outputfile synteny-comp.trub')
+
+```
+
 
 Plot synteny mapped loci (linkage maps):
 
