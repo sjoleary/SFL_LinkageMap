@@ -1,21 +1,21 @@
-"CONTIG_ID" "ACCESSION" "GENE_ID" "GO_PROCESS" "STUDY" "CONTEXT" "LOCUS" "LEFT_LOCUS" "RIGHT_LOCUS" "LEFT_POS" "RIGHT_POS" "SUPPORT" "INTERVAL_SIZE" "LG"
-"1" "ALD-o1" "AJ298325" "Aldehyde dehydrogenase" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"2" "CB5-l21" "AJ508535" "Dihydropyrimidine dehydrogenase" NA "Williams_2003" "stress_response" "23645323" "dDocent_Contig_88256" "dDocent_Contig_13350" 6.46 11.28 "onil,dlab" 4.82 10
-"3" "COL-o5" "AJ300776" "EF2" NA "Williams_2003" "stress_response" "12329993" "dDocent_Contig_55010" "dDocent_Contig_34141" 16.08 22.33 "trub,tnig" 6.25 12
-"4" "COX-l4" "AJ300777" "Transferrin" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"5" "CYP-o049" "AJ132353" "CYP1A" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"6" "G78-g1" "AJ305218" "GRP-78" NA "Williams_2003" "stress_response" "12584623" "dDocent_Contig_9983" "dDocent_Contig_9310" 22.6 22.79 "gacu,lcal,dlab" 0.189999999999998 14
-"7" "H60-l4" "AJ306231" "a-2HS-glycoprotein" NA "Williams_2003" "stress_response" "12641724" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
-"8" "H60-l4" "AJ306231" "a-2HS-glycoprotein" NA "Williams_2003" "stress_response" "12641724" "dDocent_Contig_90559" "dDocent_Contig_172285" 29.07 23.27 "trub" 5.8 10
-"9" "HEM2-l24" "AJ508543" "Ferritin H/M chain" NA "Williams_2003" "stress_response" "23645339" "dDocent_Contig_85881" "dDocent_Contig_137743" 48.97 51.67 "trub,onil" 2.7 19
-"10" "ORN-l2" "AJ306293" "ODC" NA "Williams_2003" "stress_response" "12711387" "dDocent_Contig_4056" "dDocent_Contig_5023" 5 5.25 "gacu,lcal,trub,tnig,onil,dlab" 0.25 7
-"11" "PARA-o2" "AJ292086" "Paraoxonase" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"12" "PARA-o2" "AJ292086" "Paraoxonase" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"13" "SHA1E8" "AJ508728" "Int-6" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"14" "SHA2G4" "AJ508733" "Complement C3" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"15" "SOD-o1" "AJ291980" "Cu/Zn SOD" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"16" "SOD-o1" "AJ291980" "Cu/Zn SOD" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"17" "TGF-l1" "AJ291984" "EF1-delta" NA "Williams_2003" "stress_response" NA NA NA NA NA NA NA NA
-"18" "UGT-l3" "AJ291986" "UDPGT" NA "Williams_2003" "stress_response" "12733953" "dDocent_Contig_46846" "dDocent_Contig_79522" 20.09 19.47 "gacu,lcal,tnig,dlab" 0.620000000000001 13
-"19" "UGT-l3" "AJ291986" "UDPGT" NA "Williams_2003" "stress_response" "12733953" "dDocent_Contig_46846" "dDocent_Contig_79522" 20.09 19.47 "gacu,lcal,tnig,dlab" 0.620000000000001 13
-"20" "VTG-1" "AJ416327" "Vitellogenin" NA "Williams_2003" "stress_response" "16151378" "dDocent_Contig_257318" "dDocent_Contig_10414" 30.94 26.15 "gacu" 4.79 12
+CONTIG_ID ACCESSION GENE_ID GO_PROCESS STUDY CONTEXT LOCUS LEFT_LOCUS RIGHT_LOCUS LEFT_POS RIGHT_POS SUPPORT INTERVAL_SIZE LG
+ALD-o1 AJ298325 Aldehyde dehydrogenase NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+CB5-l21 AJ508535 Dihydropyrimidine dehydrogenase NA Williams_2003 stress_response 23645323 dDocent_Contig_88256 dDocent_Contig_13350 6.46 11.28 onil,dlab 4.82 10
+COL-o5 AJ300776 EF2 NA Williams_2003 stress_response 12329993 dDocent_Contig_55010 dDocent_Contig_34141 16.08 22.33 trub,tnig 6.25 12
+COX-l4 AJ300777 Transferrin NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+CYP-o049 AJ132353 CYP1A NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+G78-g1 AJ305218 GRP-78 NA Williams_2003 stress_response 12584623 dDocent_Contig_9983 dDocent_Contig_9310 22.6 22.79 gacu,lcal,dlab 0.189999999999998 14
+H60-l4 AJ306231 a-2HS-glycoprotein NA Williams_2003 stress_response 12641724 dDocent_Contig_90559 dDocent_Contig_172285 29.07 23.27 trub 5.8 10
+H60-l4 AJ306231 a-2HS-glycoprotein NA Williams_2003 stress_response 12641724 dDocent_Contig_90559 dDocent_Contig_172285 29.07 23.27 trub 5.8 10
+HEM2-l24 AJ508543 Ferritin H/M chain NA Williams_2003 stress_response 23645339 dDocent_Contig_85881 dDocent_Contig_137743 48.97 51.67 trub,onil 2.7 19
+ORN-l2 AJ306293 ODC NA Williams_2003 stress_response 12711387 dDocent_Contig_4056 dDocent_Contig_5023 5 5.25 gacu,lcal,trub,tnig,onil,dlab 0.25 7
+PARA-o2 AJ292086 Paraoxonase NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+PARA-o2 AJ292086 Paraoxonase NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+SHA1E8 AJ508728 Int-6 NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+SHA2G4 AJ508733 Complement C3 NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+SOD-o1 AJ291980 Cu/Zn SOD NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+SOD-o1 AJ291980 Cu/Zn SOD NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+TGF-l1 AJ291984 EF1-delta NA Williams_2003 stress_response NA NA NA NA NA NA NA NA
+UGT-l3 AJ291986 UDPGT NA Williams_2003 stress_response 12733953 dDocent_Contig_46846 dDocent_Contig_79522 20.09 19.47 gacu,lcal,tnig,dlab 0.620000000000001 13
+UGT-l3 AJ291986 UDPGT NA Williams_2003 stress_response 12733953 dDocent_Contig_46846 dDocent_Contig_79522 20.09 19.47 gacu,lcal,tnig,dlab 0.620000000000001 13
+VTG-1 AJ416327 Vitellogenin NA Williams_2003 stress_response 16151378 dDocent_Contig_257318 dDocent_Contig_10414 30.94 26.15 gacu 4.79 12

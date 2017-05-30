@@ -22,11 +22,13 @@ source("lib/ggplot.R")
 
 # Load data
 
+Load consensus linkage map data, chromosome lengths per species, data set of synteny blocks identified per species and loci that have been synteny mapped.
+
 ```{r}
 
 # load map data
 map <- read.table("data/SYNTENY/map.tab", 
-                  header=TRUE, stringsAsFactors = FALSE)
+                  header=TRUE, stringsAsFactors = FALSE, quote = "")
 
 # chrom lengths fish genomes
 chrom <- read.table("data/SYNTENY/chr_lengths.txt", 
@@ -39,6 +41,12 @@ syn_blocks <- read.table("data/SYNTENY/all.blocks.tab",
 # load synteny mapped loci
 syn_loci <- read.table("data/SYNTENY/all.synteny.mapped.out",
                        header=TRUE, stringsAsFactors = FALSE)
+
+# create dataframe with LOCUS and ACCESSION No. from FASTA file
+flounderloci_IDs <- read.delim("data/SYNTENY/syn-map.loci", sep = "|", header = FALSE) %>%
+  rename(LOCUS = V2, ACCESSION = V4) %>%
+  separate(ACCESSION, c("ACCESSION", "temp"), sep = -3) %>%
+  select(LOCUS, ACCESSION)
 
 ```
 
@@ -209,7 +217,9 @@ write.table(kary, "data/SYNTENY/trub.karyotype.txt",
 
 ## Tile track files
 
-### Create markers file with positions of mapped loci on each linkage group (chromosome).
+### SNP loci southern flounder
+
+Create markers file with positions of mapped SNP loci on each linkage group (chromosome) in consensus linkage map for southern flounder.
 
 ```{r}
 
@@ -219,13 +229,15 @@ markers <- map %>%
            end = as.integer(POS*500000)) %>%
     select(chr, start, end)
 
-write.table(markers, file = "data/SYNTENY/markers.txt", 
+write.table(markers, file = "data/SYNTENY/SNPmarkers.loci", 
             sep = "\t", quote = FALSE, 
             row.names = FALSE, col.names = FALSE)
 
 ```
 
 ### Write tile track files for synteny blocks:
+
+Create a file with synteny blocks identified for each species of comparison.
 
 ```{r}
 
@@ -247,8 +259,6 @@ for (i in 1:length(species)) {
                 row.names = FALSE, col.names = FALSE)
 }
 
-<<<<<<< Updated upstream
-=======
 ```
 
 ### Write tile track files for synteny mapped loci
@@ -267,12 +277,6 @@ temp <- filter(syn_loci, grepl("gi*", LOCUS)) %>%
 syn_loci <- filter(syn_loci, !grepl("gi*", LOCUS))
 syn_loci <- bind_rows(syn_loci, temp)
 
-# # create dataframe with LOCUS and ACCESSION No. from FASTA file
-# flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", header = FALSE) %>%
-#   rename(LOCUS = V2, ACCESSION = V4) %>%
-#   separate(ACCESSION, c("ACCESSION", "temp"), sep = -3) %>%
-#   select(LOCUS, ACCESSION)
-
 flounderloci_IDs$LOCUS <- as.character(flounderloci_IDs$LOCUS)
 
 # add accession numbers
@@ -285,14 +289,15 @@ syn_loci <- left_join(syn_loci, flounderloci_IDs)
 ```{r}
 
 # Williams et al 2003 stress resonse
-# stress_response <- read.delim("data/SYNTENY/Stress_response_W03.txt",
-#                              header = TRUE, stringsAsFactors = FALSE)
+stress_response <- read.delim("data/SYNTENY/Stress_response_W03.loci",
+                             header = TRUE, stringsAsFactors = FALSE)
 
 # add map data locus info
 stress_response <- left_join(stress_response, syn_loci)
 
 # write results
-write.table(stress_response, "results/stress_response.loci")
+write.table(stress_response, "results/stress_response.loci",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Write a tile file for the synteny mapped loci
 stress_response <- stress_response %>%
@@ -312,14 +317,15 @@ write.table(stress_response, file = "data/SYNTENY/stress_response.syn",
 ```{r}
 
 # Williams et al. 2007 gene expression exposed to estradiol
-# estradiol_response <- read.delim("data/SYNTENY/Estradiol_response_W07.txt",
-#                                  header = TRUE, stringsAsFactors = FALSE)
+estradiol_response <- read.delim("data/SYNTENY/Estradiol_response_W07.loci",
+                                 header = TRUE, stringsAsFactors = FALSE)
 
 # add map data locus info
 estradiol_response <- left_join(estradiol_response, syn_loci)
 
 # write results
-write.table(estradiol_response, "results/estradiol_response.loci")
+write.table(estradiol_response, "results/estradiol_response.loci",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Write a tile file for the synteny mapped loci
 estradiol_response <- estradiol_response %>%
@@ -340,14 +346,15 @@ write.table(estradiol_response, file = "data/SYNTENY/estradiol_response.syn",
 ```{r}
 
 # Larsen et al. 2007 gene expression salinity differences
-# salinity_response <- read.delim("data/SYNTENY/Salinity_response_L07.txt",
-#                                 header = TRUE, stringsAsFactors = FALSE)
+salinity_response <- read.delim("data/SYNTENY/Salinity_response_L07.loci",
+                                header = TRUE, stringsAsFactors = FALSE)
 
 # add map data locus info
 salinity_response <- left_join(salinity_response, syn_loci)
 
 # write results
-write.table(salinity_response, "results/salinity_response.loci")
+write.table(salinity_response, "results/salinity_response.loci",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Write a tile file for the synteny mapped loci
 salinity_response <- salinity_response %>%
@@ -361,22 +368,22 @@ write.table(salinity_response, file = "data/SYNTENY/salinity_response.syn",
             sep = "\t", quote = FALSE, 
             row.names = FALSE, col.names = FALSE)
 
->>>>>>> Stashed changes
 ```
 
 **Falciani et al. 2008 Pollutants response**
 
 ```{r}
 
-# # Faciani et al. 2008 gene expression exposed to pollutants (lab and wild populations)
-# pollutants_response <- read.delim("data/SYNTENY/Pollutants_response_F08.txt",
-#                                   header = TRUE, stringsAsFactors = FALSE)
+# Faciani et al. 2008 gene expression exposed to pollutants (lab and wild populations)
+pollutants_response <- read.delim("data/SYNTENY/Pollutants_response_F08.loci",
+                                  header = TRUE, stringsAsFactors = FALSE)
 
 # add map data locus info
 pollutants_response <- left_join(pollutants_response, syn_loci)
 
 # write results
-write.table(pollutants_response, "results/pollutants_response.loci")
+write.table(pollutants_response, "results/pollutants_response.loci",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Write a tile file for the synteny mapped loci
 pollutants_response <- pollutants_response %>%
@@ -397,14 +404,15 @@ write.table(pollutants_response, file = "data/SYNTENY/pollutants_response.syn",
 ```{r}
 
 # microsatellite in linkage map (Japanese flounder)
-# Japfl_linkmapI <- read.delim("data/SYNTENY/LinkMapI.txt",
-#                             header = TRUE, stringsAsFactors = FALSE)
+Japfl_linkmapI <- read.delim("data/SYNTENY/LinkMapI.loci",
+                            header = TRUE, stringsAsFactors = FALSE)
 
 # add map data locus info
 Japfl_linkmapI <- left_join(Japfl_linkmapI, syn_loci)
 
 # write results
-write.table(Japfl_linkmapI, "results/Japfl_linkmapI.loci")
+write.table(Japfl_linkmapI, "results/Japfl_linkmapI.loci",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Write a tile file for the synteny mapped loci
 Japfl_linkmapI <- Japfl_linkmapI %>%
@@ -424,14 +432,16 @@ write.table(Japfl_linkmapI, file = "data/SYNTENY/Japfl_linkmapI.syn",
 
 ```{r}
 
-# Japfl_linkmapII <- read.delim("data/SYNTENY/LinkMapII.txt",
-#                                header = TRUE, stringsAsFactors = FALSE)
+# linkage map Japanese flounder
+Japfl_linkmapII <- read.delim("data/SYNTENY/LinkMapII.loci",
+                               header = TRUE, stringsAsFactors = FALSE)
 
 # add map data locus info
 Japfl_linkmapII <- left_join(Japfl_linkmapII, syn_loci)
 
 # write results
-write.table(Japfl_linkmapII, "results/Japfl_linkmapII.loci")
+write.table(Japfl_linkmapII, "results/Japfl_linkmapII.loci",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # Write a tile file for the synteny mapped loci
 Japfl_linkmapII <- Japfl_linkmapII %>%
@@ -441,13 +451,16 @@ Japfl_linkmapII <- Japfl_linkmapII %>%
            end = as.integer(RIGHT_POS * 500000)) %>%
     select(chr, start, end)
 
-<<<<<<< Updated upstream
-write.table(syn_loci, file = "data/SYNTENY/all.synloci", 
-=======
 write.table(Japfl_linkmapII, file = "data/SYNTENY/Japfl_linkmapII.syn", 
->>>>>>> Stashed changes
             sep = "\t", quote = FALSE, 
             row.names = FALSE, col.names = FALSE)
+
+```
+
+### Write tile track files for QTL loci
+
+```{r}
+
 
 ```
 
@@ -578,10 +591,9 @@ write.table(dlab_synblocks, file = "data/SYNTENY/trub.syn",
 
 ```
 
-
 # Run circos:
 
-Plot synteny blocks (inside) and SNP loci (outside):
+## Plot synteny blocks (inside) and SNP loci (outside):
 
 ```{r}
 
@@ -589,7 +601,9 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_blocks.
 
 ```
 
-Plot comparison location of synteny blocks lcal vs SFL
+## Plot comparison location of synteny blocks 
+
+**lcal vs SFL**
 
 ```{r}
 
@@ -597,7 +611,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_lcal.co
 
 ```
 
-Plot comparison location of synteny blocks dlab vs SFL
+**dlab vs SFL**
 
 ```{r}
 
@@ -605,15 +619,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_dlab.co
 
 ```
 
-Plot comparison location of synteny blocks lcal vs SFL
-
-```{r}
-
-system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_lcal.conf -outputdir fig -outputfile synteny-comp.dlab')
-
-```
-
-Plot comparison location of synteny blocks gacu vs SFL
+**gacu vs SFL**
 
 ```{r}
 
@@ -621,7 +627,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_gacu.co
 
 ```
 
-Plot comparison location of synteny blocks onil vs SFL
+**onil vs SFL**
 
 ```{r}
 
@@ -629,7 +635,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_onil.co
 
 ```
 
-Plot comparison location of synteny blocks tnig vs SFL
+**tnig vs SFL**
 
 ```{r}
 
@@ -637,7 +643,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_tnig.co
 
 ```
 
-Plot comparison location of synteny blocks trub vs SFL
+**trub vs SFL**
 
 ```{r}
 
@@ -645,20 +651,20 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_trub.co
 
 ```
 
+## Plot synteny mapped loci
 
-Plot synteny mapped loci (exposure studies):
+All loci: exposure studies (European flounder) and linkage maps (Japanese flounder)
 
 ```{r}
 
-system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci_est.conf -outputdir fig -outputfile synt_loci_est')
-
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci.conf -outputdir fig -outputfile synt_loci')
 
 ```
 
-Plot synteny mapped loci (linkage maps):
+linkage maps (Japanese flounder)
 
 ```{r}
 
-system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-2.conf -outputdir fig -outputfile synteny-comp')
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-japfl.conf -outputdir fig -outputfile synt_loci-japfl')
 
 ```

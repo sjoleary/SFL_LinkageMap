@@ -390,7 +390,7 @@ ggplot(temp, aes(x = LENGTH)) +
 
 ## Determine homologous chromosomes
 
-```{r}
+```{r, fig.height=8, fig.width=10}
 
 # read in synteny block overview
 read.all.blocks <- function(dir) { 
@@ -402,6 +402,11 @@ read.all.blocks <- function(dir) {
 }   
 
 synt_blocks <- read.all.blocks("data/SYNTENY")
+
+ggplot(synt_blocks, aes(x = COMP_SIZE, y = MAP_SIZE)) +
+    geom_point() +
+    geom_smooth(method = lm) +
+    facet_wrap(~COMP_SPECIES)
 
 # write data frame with homologous linkage groups (all species)
 LG.Homologs <- function(synteny_blocks){
