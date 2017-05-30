@@ -637,7 +637,6 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_tnig.co
 
 ```
 
-<<<<<<< Updated upstream
 Plot comparison location of synteny blocks trub vs SFL
 
 ```{r}
@@ -647,14 +646,11 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_trub.co
 ```
 
 
-Plot synteny mapped loci (linkage maps):
-=======
 Plot synteny mapped loci (exposure studies):
->>>>>>> Stashed changes
 
 ```{r}
 
-system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-1.conf -outputdir fig -outputfile synteny-lociexp')
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci_est.conf -outputdir fig -outputfile synt_loci_est')
 
 
 ```
