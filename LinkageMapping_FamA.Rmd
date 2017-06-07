@@ -1759,6 +1759,12 @@ m.shared <- as.numeric(nrow(marker.shared))
 F.unique <- (F.total - m.shared)
 M.unique <- (M.total - m.shared)
 
+FamA_F.map <- read.table("results/FamA_F.map", 
+                         header = TRUE, stringsAsFactors = FALSE)
+
+FamA_M.map <- read.table("results/FamA_M.map", 
+                         header = TRUE, stringsAsFactors = FALSE)
+
 # Combine Female & Male maps (Marker, F_LG, F_LGPos, M_LG, M_LGPos)
 marker.all <- full_join(FamA_F.map, FamA_M.map, by = "LOCUS", copy = FALSE) %>%
     ungroup()
@@ -1772,7 +1778,8 @@ N_MARKERS <- c(F.total, M.total, m.shared, F.unique, M.unique, m.total)
 overview  <- data.frame(CAT, N_MARKERS)
 
 # print output
-write.table(marker.all, file = "results/FamA_allmarkers.txt")
+write.table(marker.all, file = "results/FamA.allmarkers",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # dataframe with all mapped markers
 mapped_markers <- select(marker.all, LOCUS) %>%

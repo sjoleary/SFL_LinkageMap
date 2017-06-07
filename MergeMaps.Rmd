@@ -4994,7 +4994,7 @@ temp <- FamB_M.map %>%
 
 ```
 
-## Plot linkage maps
+## Plot linear linkage maps
 
 Plot linkage map:
 
@@ -5127,3 +5127,254 @@ ggplot(FamB.map, aes(x = LG, y = POSITION)) +
 
 ```
 
+## Plot circular linkage maps:
+
+### Sex-specific maps
+
+FamA female
+
+```{r}
+
+# determine length of each LG
+by_lg <- group_by(FamA_F.map, LG_FamA_F) %>%
+  top_n(1, POS)
+
+# format karyotype file
+kary <- ungroup(by_lg) %>%
+    select(LG_FamA_F, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG_FamA_F, sep=''), 
+           label = paste("LG", LG_FamA_F, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "black") %>%
+    select(chr, dash, id, label, start, end, COLOR)
+
+# output karyotype data file
+write.table(kary, file = "data/LINKMAP/FamA-F.karyotype", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+markers <- FamA_F.map %>%
+    mutate(chr = paste("lg", LG_FamA_F, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
+    select(chr, start, end)
+
+write.table(markers, file = "data/LINKMAP/FamA-F.loci", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/LINKMAP/circos-A-f.conf -outputdir fig -outputfile FamA-f')
+
+```
+
+FamA male
+
+```{r}
+
+# determine length of each LG
+by_lg <- group_by(FamA_M.map, LG_FamA_M) %>%
+  top_n(1, POS)
+
+# format karyotype file
+kary <- ungroup(by_lg) %>%
+    select(LG_FamA_M, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG_FamA_M, sep=''), 
+           label = paste("LG", LG_FamA_M, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "black") %>%
+    select(chr, dash, id, label, start, end, COLOR)
+
+# output karyotype data file
+write.table(kary, file = "data/LINKMAP/FamA-M.karyotype", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+markers <- FamA_M.map %>%
+    mutate(chr = paste("lg", LG_FamA_M, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
+    select(chr, start, end)
+
+write.table(markers, file = "data/LINKMAP/FamA-M.loci", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/LINKMAP/circos-A-m.conf -outputdir fig -outputfile FamA-m')
+
+```
+
+FamB female
+
+```{r}
+
+# determine length of each LG
+by_lg <- group_by(FamB_F.map, LG_FamB_F) %>%
+  top_n(1, POS)
+
+# format karyotype file
+kary <- ungroup(by_lg) %>%
+    select(LG_FamB_F, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG_FamB_F, sep=''), 
+           label = paste("LG", LG_FamB_F, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "black") %>%
+    select(chr, dash, id, label, start, end, COLOR)
+
+# output karyotype data file
+write.table(kary, file = "data/LINKMAP/FamB-F.karyotype", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+markers <- FamB_F.map %>%
+    mutate(chr = paste("lg", LG_FamB_F, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
+    select(chr, start, end)
+
+write.table(markers, file = "data/LINKMAP/FamB-F.loci", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/LINKMAP/circos-B-f.conf -outputdir fig -outputfile FamB-f')
+
+```
+
+FamB male
+
+```{r}
+
+# determine length of each LG
+by_lg <- group_by(FamB_M.map, LG_FamB_M) %>%
+  top_n(1, POS)
+
+# format karyotype file
+kary <- ungroup(by_lg) %>%
+    select(LG_FamB_M, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG_FamB_M, sep=''), 
+           label = paste("LG", LG_FamB_M, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "black") %>%
+    select(chr, dash, id, label, start, end, COLOR)
+
+# output karyotype data file
+write.table(kary, file = "data/LINKMAP/FamB-M.karyotype", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+markers <- FamB_M.map %>%
+    mutate(chr = paste("lg", LG_FamB_M, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
+    select(chr, start, end)
+
+write.table(markers, file = "data/LINKMAP/FamB-M.loci", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/LINKMAP/circos-B-m.conf -outputdir fig -outputfile FamB-m')
+
+```
+
+### Family Maps
+
+FamA
+
+```{r}
+
+# determine length of each LG
+by_lg <- group_by(FamA.map, LG_FamA) %>%
+  top_n(1, POS)
+
+# format karyotype file
+kary <- ungroup(by_lg) %>%
+    select(LG_FamA, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG_FamA, sep=''), 
+           label = paste("LG", LG_FamA, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "black") %>%
+    select(chr, dash, id, label, start, end, COLOR)
+
+# output karyotype data file
+write.table(kary, file = "data/LINKMAP/FamA.karyotype", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+markers <- FamA.map %>%
+    mutate(chr = paste("lg", LG_FamA, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
+    select(chr, start, end)
+
+write.table(markers, file = "data/LINKMAP/FamA.loci", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/LINKMAP/circos-A.conf -outputdir fig -outputfile FamA')
+
+```
+
+FamB
+
+```{r}
+
+# determine length of each LG
+by_lg <- group_by(FamB.map, LG_FamB) %>%
+  top_n(1, POS)
+
+# format karyotype file
+kary <- ungroup(by_lg) %>%
+    select(LG_FamB, POS) %>%
+    unique() %>% # not sure why some LGs are duplicates?
+    mutate(COLOR = "black") %>%
+    mutate(id = paste("lg", LG_FamB, sep=''), 
+           label = paste("LG", LG_FamB, sep=''),
+           chr = "chr", 
+           dash = "-", 
+           start = "0", 
+           end = as.integer(POS*500000), 
+           color = "black") %>%
+    select(chr, dash, id, label, start, end, COLOR)
+
+# output karyotype data file
+write.table(kary, file = "data/LINKMAP/FamB.karyotype", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+markers <- FamB.map %>%
+    mutate(chr = paste("lg", LG_FamB, sep=''),
+           start = as.integer(POS*500000), 
+           end = as.integer(POS*500000)) %>%
+    select(chr, start, end)
+
+write.table(markers, file = "data/LINKMAP/FamB.loci", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/LINKMAP/circos-B.conf -outputdir fig -outputfile FamB')
+
+```

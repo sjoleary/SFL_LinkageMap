@@ -1825,7 +1825,8 @@ N_MARKERS <- c(F.total, M.total, m.shared, F.unique, M.unique, m.total)
 overview  <- data.frame(CAT, N_MARKERS)
 
 # print output
-write.table(marker.all, file = "results/FamB_allmarkers.txt")
+write.table(marker.all, file = "results/FamB_allmarkers.txt",
+            col.names = TRUE, row.names = FALSE, quote = FALSE)
 
 # dataframe with all mapped markers
 mapped_markers <- select(marker.all, LOCUS) %>%
