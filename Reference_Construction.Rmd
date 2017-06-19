@@ -15,8 +15,6 @@ output:
 
 source("lib/libraries.R")
 source("lib/ggplot.R")
-source("lib/HaplotypR.R")
-source("lib/Synteny_mapR.R")
 
 ```
 
