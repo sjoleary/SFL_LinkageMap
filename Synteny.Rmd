@@ -174,7 +174,7 @@ flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", heade
 
 ```
 
-## Create configuration file (`config.txt`)
+### Create configuration file (`config.txt`)
 
 The specification for the pipeline are listed in a configuration file.
 
@@ -270,15 +270,15 @@ Create function to import `*.synteny.stats` output file.
 ```{r}
 
 # function to read in *synteny.stats files 
-read.synteny.stats <- function(dir, species) { 
-  temp <- lapply(species, function(sp){ 
-    filename <- paste(sp, ".synteny.stats", sep = "") 
-    path <- file.path(dir, filename) 
-    synteny.stats <- read.table(path, header = FALSE, sep = ":", 
-                                col.names = c("STAT", "species")) 
-    synteny.stats <- setNames(data.frame(t(synteny.stats[, -1])), synteny.stats[,1]) %>% 
-      mutate(SPECIES = sp) %>% 
-      select(SPECIES, 1:13) 
+read.synteny.stats <- function(dir, species) {  
+  temp <- lapply(species, function(sp){  
+    filename <- paste(sp, ".synteny.stats", sep = "")  
+    path <- file.path(dir, filename)  
+    synteny.stats <- read.table(path, header = FALSE, sep = ":", stringsAsFactors = FALSE,
+                                col.names = c("STAT", "species"))  
+    synteny.stats <- setNames(data.frame(t(synteny.stats[, -1])), synteny.stats[, 1]) %>%  
+      mutate(SPECIES = sp) %>%  
+      select(SPECIES, 1:13)  
   }) 
   ldply(temp, rbind) %>% 
     dplyr::rename(N_LOCI = `Total Loci in Blocks`, 
@@ -368,6 +368,54 @@ plot.synteny.mean <- function(synteny_stats) {
 } 
 
 plot.synteny.mean(synteny_stats)
+
+```
+
+Plot overview for publication:
+
+```{r}
+
+# Format data set
+tidy <- synteny_stats %>% 
+    gather("STAT", "RESULT", 2:14) %>%
+    filter(STAT %in% c("N_LOCI", "N_BLOCKS", 
+                       "TOTAL_BP", "TOTAL_cM", 
+                       "MEAN_BP", "MEAN_cM",
+                       "MEAN_LOCI"))
+
+SPECIES <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
+STAT <- c("%-genome", "%-genome", "%-genome", "%-genome", "%-genome", "%-genome")
+RESULT <- c(49.9, 34.0, 48.3, 40.6, 37.7, 38.5)
+
+coverage_genome <- data.frame(SPECIES, STAT, RESULT)
+
+temp <- bind_rows(tidy, coverage_genome)
+
+SPCIES <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
+STAT <- c("%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap")
+RESULT <- c(38.6, 21.9, 47.7, 7.6, 3.5, 4.9)
+
+coverage_linkmap <- data.frame(SPECIES, STAT, RESULT)
+
+temp <- bind_rows(temp, coverage_linkmap)
+
+# plot
+
+# library(Cairo)
+
+Cairo(width = 1000, height = 500, 
+      file="fig/synt_stats.png", type = "png", pointsize  = 12,
+      bg = "transparent", canvas = "white", 
+      units = "px", dpi = "auto")
+
+ggplot(temp, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+    geom_bar(stat = "identity",
+             color = "black", size = 0.7, fill = "grey75" ) +
+    labs(x = "\nComparison Species Genome", y = "mean number loci | length (cM/bp) | %-coverage\n") +
+    facet_wrap(~ STAT, scales = "free") +
+    theme_facet
+
+dev.off()
 
 ```
 

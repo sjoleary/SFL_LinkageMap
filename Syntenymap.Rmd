@@ -282,6 +282,14 @@ flounderloci_IDs$LOCUS <- as.character(flounderloci_IDs$LOCUS)
 # add accession numbers
 syn_loci <- left_join(syn_loci, flounderloci_IDs)
 
+nrow(syn_loci)
+nrow(flounderloci_IDs)
+
+# write file
+write.table(syn_loci, "results/syn-mapped.loci", 
+            col.names = TRUE, row.names = FALSE,
+            sep = "\t", quote = FALSE)
+
 ```
 
 **Williams et al 2003: Stress response in European flounder**
@@ -295,9 +303,11 @@ stress_response <- read.delim("data/SYNTENY/Stress_response_W03.loci",
 # add map data locus info
 stress_response <- left_join(stress_response, syn_loci)
 
+count(stress_response, is.na(LOCUS))
+
 # write results
 write.table(stress_response, "results/stress_response.loci",
-            col.names = TRUE, row.names = FALSE, quote = FALSE)
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
 
 # Write a tile file for the synteny mapped loci
 stress_response <- stress_response %>%
@@ -322,6 +332,8 @@ estradiol_response <- read.delim("data/SYNTENY/Estradiol_response_W07.loci",
 
 # add map data locus info
 estradiol_response <- left_join(estradiol_response, syn_loci)
+
+count(estradiol_response, is.na(LOCUS))
 
 # write results
 write.table(estradiol_response, "results/estradiol_response.loci",
@@ -352,6 +364,8 @@ salinity_response <- read.delim("data/SYNTENY/Salinity_response_L07.loci",
 # add map data locus info
 salinity_response <- left_join(salinity_response, syn_loci)
 
+count(salinity_response, is.na(LOCUS))
+
 # write results
 write.table(salinity_response, "results/salinity_response.loci",
             col.names = TRUE, row.names = FALSE, quote = FALSE)
@@ -380,6 +394,8 @@ pollutants_response <- read.delim("data/SYNTENY/Pollutants_response_F08.loci",
 
 # add map data locus info
 pollutants_response <- left_join(pollutants_response, syn_loci)
+
+count(pollutants_response, is.na(LOCUS))
 
 # write results
 write.table(pollutants_response, "results/pollutants_response.loci",
@@ -410,6 +426,8 @@ Japfl_linkmapI <- read.delim("data/SYNTENY/LinkMapI.loci",
 # add map data locus info
 Japfl_linkmapI <- left_join(Japfl_linkmapI, syn_loci)
 
+count(Japfl_linkmapI, is.na(LOCUS))
+
 # write results
 write.table(Japfl_linkmapI, "results/Japfl_linkmapI.loci",
             col.names = TRUE, row.names = FALSE, quote = FALSE)
@@ -439,6 +457,8 @@ Japfl_linkmapII <- read.delim("data/SYNTENY/LinkMapII.loci",
 # add map data locus info
 Japfl_linkmapII <- left_join(Japfl_linkmapII, syn_loci)
 
+count(Japfl_linkmapII, is.na(LOCUS))
+
 # write results
 write.table(Japfl_linkmapII, "results/Japfl_linkmapII.loci",
             col.names = TRUE, row.names = FALSE, quote = FALSE)
@@ -461,6 +481,96 @@ write.table(Japfl_linkmapII, file = "data/SYNTENY/Japfl_linkmapII.syn",
 
 ```{r}
 
+# data frame with synteny mapped loci
+View(syn_loci)
+
+# QTL 1 ----
+
+# Fiuji et al 2006. Identification of a single major genetic locus controlling the resistance to lymphocystis disease in Japanese flounder (Paralichthys olivaceus)
+
+# QTL for resistance to lymphocystis disease
+# associated markers: Poli9-8TUF (AB037989), 
+
+# linkage map Japanese flounder
+qtl_lymph <- read.delim("data/SYNTENY/LinkMapII.loci",
+                               header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info & filter for qtl-associated locus
+qtl_lymph <- left_join(qtl_lymph, syn_loci) %>%
+    filter(ACCESSION == "AB037989")
+
+# Write a tile file
+qtl_lymph <- qtl_lymph %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(qtl_lymph, file = "data/SYNTENY/qtl_lymph.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+# QTL 2 ----
+
+# Song et al 2012. Construction of High-Density Genetic Linkage Maps and Mapping of Growth-Related Quantitative Trail Loci in the Japanese Flounder (Paralichthys olivaceus)
+
+# QTL growth
+# associated markers: 
+# qWe-f14 scaffold388_40956 (JN901322)
+# qWi-f14-1 scaffold687_4181 (JN901305)
+# qWi-f14-2 scaffold485_47120 (JN901297)
+# qWi-m14 scaffold558_51720 (JN901325)
+
+# linkage map Japanese flounder
+qtl_growth <- read.delim("data/SYNTENY/LinkMapI.loci",
+                               header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info & filter for qtl-associated locus
+qtl_growth <- left_join(qtl_growth, syn_loci) %>%
+    filter(ACCESSION %in% c("JN901322", "JN901305", "JN901297", "JN901325"))
+
+# Write a tile file
+qtl_growth <- qtl_growth %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(qtl_growth, file = "data/SYNTENY/qtl_growth.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
+
+# QTL 3 ----
+
+# Wang et al 2016. Quantitative trait loci detection of Edwardsiella tarda resistance in Japanese flounder Paralichthys olivaceus using bulked segregant analysis
+
+# QTL E. tarda resistance
+# associated markers: 
+# scaffold404_21589	JN900913
+# scaffold404_21594	JN900903
+# scaffold270_13812	JN900916
+
+# linkage map Japanese flounder
+qtl_Etarda<- read.delim("data/SYNTENY/LinkMapI.loci",
+                               header = TRUE, stringsAsFactors = FALSE)
+
+# add map data locus info & filter for qtl-associated locus
+qtl_Etarda <- left_join(qtl_Etarda, syn_loci) %>%
+    filter(ACCESSION %in% c("JN900913", "JN900903", "JN900916"))
+
+# Write a tile file
+qtl_Etarda <- qtl_Etarda %>%
+    filter(!is.na(LOCUS)) %>%
+    mutate(chr = paste("lg", LG, sep=''), 
+           start = as.integer(LEFT_POS * 500000), 
+           end = as.integer(RIGHT_POS * 500000)) %>%
+    select(chr, start, end)
+
+write.table(qtl_Etarda, file = "data/SYNTENY/qtl_Etarda.syn", 
+            sep = "\t", quote = FALSE, 
+            row.names = FALSE, col.names = FALSE)
 
 ```
 
@@ -661,7 +771,47 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci.co
 
 ```
 
-linkage maps (Japanese flounder)
+Exposure studies: **Williams et al 2003: Stress response in European flounder**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_stress.conf -outputdir fig -outputfile synt_stress')
+
+```
+
+Exposure studies: **Williams et al. 2007 Estradiol exposure resonse**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_estradiol.conf -outputdir fig -outputfile synt_estradiol')
+
+```
+
+Exposure studies: **Larsen et al. 2007 Salinity differences**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_salinity.conf -outputdir fig -outputfile synt_salinity')
+
+```
+
+Exposure studies: **Falciani et al. 2008 Pollutants response**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_pollutants.conf -outputdir fig -outputfile synt_pollutants')
+
+```
+
+Exposure studies: **Pollutants and Salinity response**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_salinity_pollutants.conf -outputdir fig -outputfile synt_salinity_pollutants')
+
+```
+
+Linkage maps (Japanese flounder) w/qtl loci
 
 ```{r}
 

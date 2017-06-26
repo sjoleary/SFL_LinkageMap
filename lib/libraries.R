@@ -7,10 +7,11 @@ library(stringr)
 library(readr)
 library(tibble)
 
-# libraries for data visunarkalization
+# libraries for data visualization
 library(ggplot2)
 library(xtable)
 library(ggthemes)
+library(Cairo)
 
 # libraries for linkage mapping
 library(qtl)

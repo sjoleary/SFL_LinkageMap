@@ -380,9 +380,10 @@ for (i in names){
   }
 
 # Create list of one dataframe per idxstats file and group by locus
+# make sure to delete old list if rerunning the code
 dflist_idx <- lapply(ls(pattern = "*.idx"), get)
-dflist_idx <- dflist_idx[-1]
-dflist_idx <- dflist_idx[-17]
+dflist_idx <- dflist_idx[-1] # removes REF11
+
 
 for (df in 1:length(dflist_idx)){
   x <- dflist_idx[[df]]
