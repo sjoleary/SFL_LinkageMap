@@ -1836,6 +1836,100 @@ mapped_markers <- select(marker.all, LOCUS) %>%
 
 For mapping Family B, the female and male maps contain `r F.total` and `r M.total` loci, respectively. Of those the `r m.shared` are shared, while the female and male maps contain `r F.unique` and `r M.unique` unique loci, respectively.
 
+## Plot maps
+
+Plot linear map of male and female-specific maps with marker clusters re-inserted.
+
+### female map
+
+```{r plot female map, fig.height=6, fig.width=10, message=FALSE, warning=FALSE}
+
+# read map data
+FamB_F.map <- read.table("results/FamB_F.map", 
+                         header = TRUE, stringsAsFactors = FALSE)
+
+# plot with ggplot
+ggplot(FamB_F.map, aes(x = LG_F, y = POS_F)) +
+  geom_path(aes(group = LG_F), size = 9, lineend = "round", col = "black") +
+  geom_path(aes(group = LG_F), size = 7.5, lineend = "round", col = "grey95") +
+  geom_rect(aes(xmin = LG_F-0.35, xmax = LG_F+0.35, 
+                ymin = POS_F-0.025, ymax = POS_F+0.025),
+            color = "black", fill = "black") +
+  scale_x_continuous(breaks = c(1:24)) +
+  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
+  # scale_fill_manual(name="Marker Type",
+  #                   breaks=c("est", "msat", "snp"),
+  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
+  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
+  labs(x = "\nLinkage Group Fam B female", y = "Position (cM)\n") +
+  theme_classic() +
+  theme(axis.title = element_text(size = 16),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_blank(),
+        axis.line.y = element_line(color = "black", size = 1),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        
+        legend.position = "bottom",
+        
+        panel.background = element_rect(fill = "white", color = NA), 
+        panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        strip.background = element_rect(fill = "grey95", color = "black"), 
+        strip.text.x = element_text(size = 16),
+        strip.text.y = element_text(size = 16))
+
+```
+
+### male map
+
+```{r plot male map, fig.height=6, fig.width=10, message=FALSE, warning=FALSE}
+
+# read map data
+FamB_M.map <- read.table("results/FamB_M.map", 
+                         header = TRUE, stringsAsFactors = FALSE)
+
+# plot with ggplot
+ggplot(FamB_M.map, aes(x = LG_M, y = POS_M)) +
+  geom_path(aes(group = LG_M), size = 9, lineend = "round", col = "black") +
+  geom_path(aes(group = LG_M), size = 7.5, lineend = "round", col = "grey95") +
+  geom_rect(aes(xmin = LG_M-0.35, xmax = LG_M+0.35, 
+                ymin = POS_M-0.025, ymax = POS_M+0.025),
+            color = "black", fill = "black") +
+  scale_x_continuous(breaks = c(1:24)) +
+  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
+  # scale_Mill_manual(name="Marker Type",
+  #                   breaks=c("est", "msat", "snp"),
+  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
+  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
+  labs(x = "\nLinkage Group Fam B male", y = "Position (cM)\n") +
+  theme_classic() +
+  theme(axis.title = element_text(size = 16),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_blank(),
+        axis.line.y = element_line(color = "black", size = 1),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        
+        legend.position = "bottom",
+        
+        panel.background = element_rect(fill = "white", color = NA), 
+        panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        strip.background = element_rect(fill = "grey95", color = "black"), 
+        strip.text.x = element_text(size = 16),
+        strip.text.y = element_text(size = 16))
+
+```
+
 # FamB family map (onemap)
 
 Map all loci segregating in male and/or female using full-cross.
@@ -2039,5 +2133,50 @@ FamB.fullmap <- bind_rows(FamB.fullmap, temp) %>%
 
 # write output to file
 write.table(FamB.fullmap, "results/FamB.fullmap", row.names = FALSE)
+
+```
+
+## Plot family map
+
+```{r plot male map, fig.height=6, fig.width=10, message=FALSE, warning=FALSE}
+
+# read map data
+FamB.map <- read.table("results/FamB_family.map", 
+                         header = TRUE, stringsAsFactors = FALSE)
+
+# plot with ggplot
+ggplot(FamB.map, aes(x = LG, y = POSITION)) +
+  geom_path(aes(group = LG), size = 9, lineend = "round", col = "black") +
+  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
+  geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
+                ymin = POSITION-0.025, ymax = POSITION+0.025),
+            color = "black", fill = "black") +
+  scale_x_continuous(breaks = c(1:24)) +
+  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
+  # scale_Mill_manual(name="Marker Type",
+  #                   breaks=c("est", "msat", "snp"),
+  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
+  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
+  labs(x = "\nLinkage Group Fam B", y = "Position (cM)\n") +
+  theme_classic() +
+  theme(axis.title = element_text(size = 16),
+        axis.title.y = element_text(vjust = 1.5),
+        axis.line.x = element_blank(),
+        axis.line.y = element_line(color = "black", size = 1),
+        axis.ticks.x = element_blank(),
+        axis.ticks.y = element_line(color = "black", size = 1),
+        axis.ticks.length = unit(0.2, "cm"),
+        axis.text.x = element_text(size = 14),
+        axis.text.y = element_text(size = 12),
+        
+        legend.position = "bottom",
+        
+        panel.background = element_rect(fill = "white", color = NA), 
+        panel.border = element_blank(), 
+        panel.grid.major = element_blank(), 
+        panel.grid.minor = element_blank(), 
+        strip.background = element_rect(fill = "grey95", color = "black"), 
+        strip.text.x = element_text(size = 16),
+        strip.text.y = element_text(size = 16))
 
 ```

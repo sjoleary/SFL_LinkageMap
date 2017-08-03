@@ -21,11 +21,11 @@ Determine if there are ambivalent marker placings in each family map (e.g. large
 ```{r}
 
 # load family map (with duplicate markers added back in)
-FamA <- read.table("results/FamA.fullmap",
+FamA <- read.table("results/FamA_family.map",
                    stringsAsFactors = FALSE, sep = "", skip = 1,
                    col.names = c("LOCUS", "LG_FamA","POS_FamA"))
 
-FamB <- read.table("results/FamB.fullmap",
+FamB <- read.table("results/FamB_family.map",
                    stringsAsFactors = FALSE, sep = "", skip = 1,
                    col.names = c("LOCUS", "LG_FamB","POS_FamB"))
 
@@ -4859,6 +4859,8 @@ write.table(map, "results/SFL.map",
 
 # Compare stats for sex-specific, family and consensus linkage maps
 
+## Load data
+
 Load sex-specific maps:
 
 ```{r}
@@ -4998,7 +5000,7 @@ temp <- FamB_M.map %>%
 
 Plot linkage map:
 
-```{r}
+```{r, fig.height=6, fig.width=10}
 
 # plot with ggplot
 ggplot(SFL.map, aes(x = LG, y = POS)) +
@@ -5006,96 +5008,6 @@ ggplot(SFL.map, aes(x = LG, y = POS)) +
   geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
   geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
                 ymin = POS-0.025, ymax = POS+0.025),
-            color = "black", fill = "black") +
-  scale_x_continuous(breaks = c(1:24)) +
-  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
-  # scale_fill_manual(name="Marker Type",
-  #                   breaks=c("est", "msat", "snp"),
-  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
-  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
-  labs(x = "\nLinkage Group", y = "Position (cM)\n") +
-  theme_classic() +
-  theme(axis.title = element_text(size = 16),
-        axis.title.y = element_text(vjust = 1.5),
-        axis.line.x = element_blank(),
-        axis.line.y = element_line(color = "black", size = 1),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_line(color = "black", size = 1),
-        axis.ticks.length = unit(0.2, "cm"),
-        axis.text.x = element_text(size = 14),
-        axis.text.y = element_text(size = 12),
-        
-        legend.position = "bottom",
-        
-        panel.background = element_rect(fill = "white", color = NA), 
-        panel.border = element_blank(), 
-        panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        strip.background = element_rect(fill = "grey95", color = "black"), 
-        strip.text.x = element_text(size = 16),
-        strip.text.y = element_text(size = 16))
-
-```
-
-Linkage map Family A:
-
-```{r}
-
-FamA.map <- read.delim("data/LINKMAP/FamA.fullmap", 
-                   stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
-
-# plot with ggplot
-ggplot(FamA.map, aes(x = LG, y = POSITION)) +
-  geom_path(aes(group = LG), size = 9, lineend = "round", col = "black") +
-  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
-  geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
-                ymin = POSITION-0.025, ymax = POSITION+0.025),
-            color = "black", fill = "black") +
-  scale_x_continuous(breaks = c(1:24)) +
-  scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +
-  # scale_fill_manual(name="Marker Type",
-  #                   breaks=c("est", "msat", "snp"),
-  #                   labels=c("EST-SSR", "Microsatellite", "RAD Locus"),
-  #                   values=c('#9e0142', '#a1d99b', '#2b8cbe') +
-  labs(x = "\nLinkage Group", y = "Position (cM)\n") +
-  theme_classic() +
-  theme(axis.title = element_text(size = 16),
-        axis.title.y = element_text(vjust = 1.5),
-        axis.line.x = element_blank(),
-        axis.line.y = element_line(color = "black", size = 1),
-        axis.ticks.x = element_blank(),
-        axis.ticks.y = element_line(color = "black", size = 1),
-        axis.ticks.length = unit(0.2, "cm"),
-        axis.text.x = element_text(size = 14),
-        axis.text.y = element_text(size = 12),
-        
-        legend.position = "bottom",
-        
-        panel.background = element_rect(fill = "white", color = NA), 
-        panel.border = element_blank(), 
-        panel.grid.major = element_blank(), 
-        panel.grid.minor = element_blank(), 
-        strip.background = element_rect(fill = "grey95", color = "black"), 
-        strip.text.x = element_text(size = 16),
-        strip.text.y = element_text(size = 16))
-
-```
-
-Linkage Map Family B:
-
-```{r}
-
-
-FamB.map <- read.delim("data/LINKMAP/FamB.fullmap", 
-                   header = TRUE, stringsAsFactors = FALSE, sep = "", 
-                   col.names = c("LG", "LOCUS", "POSITION"))
-
-ggplot(FamB.map, aes(x = LG, y = POSITION)) +
-  geom_path(aes(group = LG), size = 9, lineend = "round", col = "black") +
-  geom_path(aes(group = LG), size = 7.5, lineend = "round", col = "grey95") +
-  geom_rect(aes(xmin = LG-0.35, xmax = LG+0.35, 
-                ymin = POSITION-0.025, ymax = POSITION+0.025),
             color = "black", fill = "black") +
   scale_x_continuous(breaks = c(1:24)) +
   scale_y_continuous(breaks = c(0, 10, 20, 30, 40, 50, 60, 70, 80)) +

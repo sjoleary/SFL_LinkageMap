@@ -305,7 +305,11 @@ Read in `*.synteny.stats` file and plot overview.
 # Synteny results overview 
 species <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
 
-synteny_stats <- read.synteny.stats("data/SYNTENY", species) 
+synteny_stats <- read.synteny.stats("data/SYNTENY", species)
+
+temp <- synteny_stats %>%
+    select(-MIN_LOCI, -MAX_LOCI, -MIN_BP, -MAX_BP, -MIN_cM, -MAX_cM) %>%
+    mutate(`%MAP` = TOTAL_cM/1605.43)
 
 # plot synteny mapping results 
 plot.synteny.stats <- function(synteny_stats) { 
@@ -371,7 +375,7 @@ plot.synteny.mean(synteny_stats)
 
 ```
 
-Plot overview for publication:
+Plot overview:
 
 ```{r}
 
@@ -385,7 +389,7 @@ tidy <- synteny_stats %>%
 
 SPECIES <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
 STAT <- c("%-genome", "%-genome", "%-genome", "%-genome", "%-genome", "%-genome")
-RESULT <- c(49.9, 34.0, 48.3, 40.6, 37.7, 38.5)
+RESULT <- c(46.9, 34.0, 48.3, 40.6, 37.7, 38.5)
 
 coverage_genome <- data.frame(SPECIES, STAT, RESULT)
 
@@ -393,7 +397,7 @@ temp <- bind_rows(tidy, coverage_genome)
 
 SPCIES <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
 STAT <- c("%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap")
-RESULT <- c(38.6, 21.9, 47.7, 7.6, 3.5, 4.9)
+RESULT <- c(43.6, 34.7, 44.9, 38.1, 32.2, 31.9)
 
 coverage_linkmap <- data.frame(SPECIES, STAT, RESULT)
 
@@ -421,7 +425,18 @@ dev.off()
 
 Distribution of synteny block length in genome (bp) and linkage map (cM)
 
-```{r, fig.height=8, fig.width=5}
+```{r, fig.height=8, fig.width=6}
+
+# read in synteny block overview
+read.all.blocks <- function(dir) { 
+  path <- file.path(dir, "all.blocks.tab") 
+  synt_blocks <- read.table(path, header = TRUE,
+                            colClasses = c("factor", "factor", "factor", "numeric", 
+                                           "factor", "integer", "integer", "integer",
+                                           "factor", "numeric", "numeric", "numeric"))
+}   
+
+synt_blocks <- read.all.blocks("data/SYNTENY")
 
 temp <- synt_blocks %>%
     select(COMP_SPECIES, COMP_SIZE, MAP_SIZE) %>%
@@ -433,6 +448,57 @@ ggplot(temp, aes(x = LENGTH)) +
     facet_grid(COMP_SPECIES ~ COMP, scales = "free_x") +
     labs(x = "length (in kb/cM)", y = "number of synteny blocks") +
     theme_facet
+
+```
+
+## Determine total % of linkage map/genome covered
+
+```{r}
+
+# all syn blocks by linkage groups
+blocks <- read.table("data/SYNTENY/all.blocks.tab", 
+                         header=TRUE, stringsAsFactors = FALSE) %>%
+    select(MAP_LG, MAP_START, MAP_STOP) %>%
+    unique() 
+
+# identify blocks where start/end are switched
+temp <- filter(blocks, MAP_START > MAP_STOP) %>%
+    rename(MAP_STOP = MAP_START,
+           MAP_START = MAP_STOP) %>%
+    select(MAP_START, MAP_STOP)
+
+# retain only blocks where start < stop
+blocks <- filter(blocks, MAP_START <= MAP_STOP)
+
+# add swapped blocks back in
+blocks <- bind_rows(blocks, temp) %>%
+    arrange(MAP_LG, MAP_START, MAP_STOP)
+
+# create empty list
+total_blocks <- list()
+
+# for each linkage group collapse overlapping ranges
+for(i in 1:24){
+    LG <- filter(blocks, MAP_LG == i) %>%
+    arrange(MAP_START, MAP_STOP) %>% 
+    group_by(g = cumsum(cummax(lag(MAP_STOP, default = first(MAP_STOP))) < MAP_START)) %>%
+    summarise(MAP_START = first(MAP_START), MAP_STOP = max(MAP_STOP)) %>%
+    select(-g) %>%
+    mutate(LG = i,
+           SIZE = MAP_STOP - MAP_START)
+    
+    total_blocks[[i]] <- LG
+}
+
+# merge blocks for all LG
+total_blocks <- ldply(total_blocks, data.frame) %>%
+    select(LG, MAP_START, MAP_STOP, SIZE)
+
+# total cM of link map covered by synt blocks
+total <- sum(total_blocks$SIZE)
+
+# % of link map covered by synt blocks
+percent <- total/1605.43
 
 ```
 
@@ -545,4 +611,3 @@ plot.oxford <- function(synt_blocks, species) {
 plot.oxford(synt_blocks, c("dlab", "lcal", "gacu", "onil", "tnig", "trub"))
 
 ```
-

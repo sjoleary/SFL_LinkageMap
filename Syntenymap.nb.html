@@ -439,18 +439,6 @@ kary &lt;-<span class="st"> </span>chrom %&gt;%
 <p>Create markers file with positions of mapped SNP loci on each linkage group (chromosome) in consensus linkage map for southern flounder.</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG5tYXJrZXJzIDwtIG1hcCAlPiVcbiAgICBtdXRhdGUoY2hyID0gcGFzdGUoXCJsZ1wiLCBMRywgc2VwPScnKSxcbiAgICAgICAgICAgc3RhcnQgPSBhcy5pbnRlZ2VyKFBPUyo1MDAwMDApLCBcbiAgICAgICAgICAgZW5kID0gYXMuaW50ZWdlcihQT1MqNTAwMDAwKSkgJT4lXG4gICAgc2VsZWN0KGNociwgc3RhcnQsIGVuZClcblxud3JpdGUudGFibGUobWFya2VycywgZmlsZSA9IFwiZGF0YS9TWU5URU5ZL1NOUG1hcmtlcnMubG9jaVwiLCBcbiAgICAgICAgICAgIHNlcCA9IFwiXFx0XCIsIHF1b3RlID0gRkFMU0UsIFxuICAgICAgICAgICAgcm93Lm5hbWVzID0gRkFMU0UsIGNvbC5uYW1lcyA9IEZBTFNFKVxuXG5gYGAifQ== -->
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-markers &lt;-<span class="st"> </span>map %&gt;%
-<span class="st">    </span><span class="kw">mutate</span>(<span class="dt">chr =</span> <span class="kw">paste</span>(<span class="st">&quot;lg&quot;</span>, LG, <span class="dt">sep=</span><span class="st">''</span>),
-           <span class="dt">start =</span> <span class="kw">as.integer</span>(POS*<span class="dv">500000</span>), 
-           <span class="dt">end =</span> <span class="kw">as.integer</span>(POS*<span class="dv">500000</span>)) %&gt;%
-<span class="st">    </span><span class="kw">select</span>(chr, start, end)
-
-<span class="kw">write.table</span>(markers, <span class="dt">file =</span> <span class="st">&quot;data/SYNTENY/SNPmarkers.loci&quot;</span>, 
-            <span class="dt">sep =</span> <span class="st">&quot;</span><span class="ch">\t</span><span class="st">&quot;</span>, <span class="dt">quote =</span> <span class="ot">FALSE</span>, 
-            <span class="dt">row.names =</span> <span class="ot">FALSE</span>, <span class="dt">col.names =</span> <span class="ot">FALSE</span>)</code></pre></div>
-<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 </div>
