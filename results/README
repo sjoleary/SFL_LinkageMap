@@ -1,1 +1,13 @@
-key results
+# Results
+
+`*.allmarkers`: contains all loci mapped in family maps for crosses A and B.
+
+`*.consensus`: positions of loci in family maps for crosses A and B and consensus map.
+
+`LGs`: Table identifying corresponding linkage groups across all linkage maps (sex-specific, family, consensus).
+
+`*.loci`: Synteny mapped loci (per study).
+
+`*.map`: Linkage groups/position information for loci mapped in sex-specific, family and consensus maps.
+
+`*.mapped`: Comparison of genes, GO terms, number of synteny mapped loci per linkage groups and number of loci mapped to same location on linkage map.

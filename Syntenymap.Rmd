@@ -298,7 +298,7 @@ write.table(syn_loci, "results/syn-mapped.loci",
 
 # Williams et al 2003 stress resonse
 stress_response <- read.delim("data/SYNTENY/Stress_response_W03.loci",
-                             header = TRUE, stringsAsFactors = FALSE)
+                             header = TRUE, stringsAsFactors = FALSE, sep = "\t")
 
 # add map data locus info
 stress_response <- left_join(stress_response, syn_loci)
@@ -359,7 +359,7 @@ write.table(estradiol_response, file = "data/SYNTENY/estradiol_response.syn",
 
 # Larsen et al. 2007 gene expression salinity differences
 salinity_response <- read.delim("data/SYNTENY/Salinity_response_L07.loci",
-                                header = TRUE, stringsAsFactors = FALSE)
+                                header = TRUE, stringsAsFactors = FALSE, sep = "\t")
 
 # add map data locus info
 salinity_response <- left_join(salinity_response, syn_loci)
@@ -368,7 +368,7 @@ count(salinity_response, is.na(LOCUS))
 
 # write results
 write.table(salinity_response, "results/salinity_response.loci",
-            col.names = TRUE, row.names = FALSE, quote = FALSE)
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
 
 # Write a tile file for the synteny mapped loci
 salinity_response <- salinity_response %>%
@@ -399,7 +399,7 @@ count(pollutants_response, is.na(LOCUS))
 
 # write results
 write.table(pollutants_response, "results/pollutants_response.loci",
-            col.names = TRUE, row.names = FALSE, quote = FALSE)
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
 
 # Write a tile file for the synteny mapped loci
 pollutants_response <- pollutants_response %>%
@@ -803,7 +803,7 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_polluta
 
 ```
 
-Exposure studies: **Pollutants and Salinity response**
+Exposure studies: **Pollutants and Salinity response European flounder** & **QTL Japanese flounder**
 
 ```{r}
 
@@ -816,5 +816,86 @@ Linkage maps (Japanese flounder) w/qtl loci
 ```{r}
 
 system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-japfl.conf -outputdir fig -outputfile synt_loci-japfl')
+
+```
+
+
+# Analyze distribution of synteny mapped loci
+
+## Genes identified in response to exposure to pollutants
+
+```{r}
+
+# pollutants_response <- read.table("results/pollutants_response.loci",
+#                          header = TRUE, stringsAsFactors = FALSE)
+
+poll_mapped <- pollutants_response %>%
+    filter(!is.na(LEFT_LOCUS)) %>%
+    arrange(LG, LEFT_POS) %>%
+    unite(POS, LG, LEFT_POS, sep = "_",remove = FALSE)
+
+poll_LG <- count(poll_mapped, LG)
+
+write.table(poll_LG, "results/per_LG_pollution.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+poll_stacks <- count(poll_mapped, POS)
+
+write.table(poll_stacks, "results/per_loc_pollution.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+temp <- filter(poll_stacks, n >= 10)
+
+poll_loci <- poll_mapped %>%
+    filter(POS %in% temp$POS)
+
+poll_gene <- count(poll_loci, GENE_ID)
+
+write.table(poll_gene, "results/genes_pollution.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+poll_GO <- count(poll_loci, GO_PROCESS)
+
+write.table(poll_GO, "results/GO_poll.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+```
+
+## Genes identified in response to salinity differences in habitat, reciprocal translocations
+
+```{r}
+
+# salinity_response <- read.table("results/salinity_response.loci",
+#                          header = TRUE, stringsAsFactors = FALSE)
+
+salin_mapped <- salinity_response %>%
+    filter(!is.na(LEFT_LOCUS)) %>%
+    arrange(LG, LEFT_POS) %>%
+    unite(POS, LG, LEFT_POS, sep = "_",remove = FALSE)
+
+salin_LG <- count(salin_mapped, LG)
+
+write.table(salin_LG, "results/per_LG_salinution.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+salin_stacks <- count(salin_mapped, POS)
+
+write.table(salin_stacks, "results/per_loc_salinution.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+temp <- filter(salin_stacks, n >= 10)
+
+salin_loci <- salin_mapped %>%
+    filter(POS %in% temp$POS)
+
+salin_gene <- count(salin_loci, GENE_ID)
+
+write.table(salin_gene, "results/genes_salinution.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
+
+salin_GO <- count(salin_loci, GO_PROCESS)
+
+write.table(salin_GO, "results/GO_salin.mapped", 
+            col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
 
 ```
