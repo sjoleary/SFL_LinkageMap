@@ -16,8 +16,8 @@ library(Cairo)
 # libraries for linkage mapping
 library(qtl)
 library(onemap)
-library(LPmerge)
-library(ASMap)
+# library(LPmerge)
+# library(ASMap)
 
 # libraries for downloading sequences
 library(ape)

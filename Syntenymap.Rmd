@@ -215,6 +215,51 @@ write.table(kary, "data/SYNTENY/trub.karyotype.txt",
 
 ```
 
+Create karyotype file for Japanese flounder (poli):
+
+```{r}
+
+# create data frame with chromosome lengths
+kary <- chrom %>%
+  filter(species == "poli") %>%
+  mutate(chr = "chr",
+         dash = "-",
+         id = chrom,
+         label = chrom,
+         start = "0", 
+         end = length,
+         color = "black") %>%
+  select(chr, dash, id, label, start, end, color)
+
+# write karyotype track file
+write.table(kary, "data/SYNTENY/poli.karyotype.txt",
+            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Create karyotype file for tongue sol (csem):
+
+```{r}
+
+# create data frame with chromosome lengths
+kary <- chrom %>%
+  filter(species == "csem") %>%
+  mutate(chr = "chr",
+         dash = "-",
+         id = chrom,
+         label = chrom,
+         start = "0", 
+         end = length,
+         color = "black") %>%
+  select(chr, dash, id, label, start, end, color)
+
+# write karyotype track file
+write.table(kary, "data/SYNTENY/csem.karyotype.txt",
+            sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+
 ## Tile track files
 
 ### SNP loci southern flounder
@@ -697,6 +742,48 @@ dlab_synblocks <- syn_blocks %>%
     group_by(lg)
 
 write.table(dlab_synblocks, file = "data/SYNTENY/trub.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks poli and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "poli") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/poli.syn", 
+                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+
+```
+
+Link file for synteny blocks csem and SFL.
+
+```{r}
+
+# Format file
+dlab_synblocks <- syn_blocks %>%
+  filter(COMP_SPECIES == "csem") %>%
+  mutate(lg = paste("lg", MAP_LG, sep=''), 
+         lgstart = as.integer(MAP_START * 500000),
+         lgend = as.integer(MAP_STOP * 500000),
+         chr = COMP_CHR,
+         chrstart = COMP_START,
+         chrend = COMP_END) %>%
+  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+    group_by(lg)
+
+write.table(dlab_synblocks, file = "data/SYNTENY/csem.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```

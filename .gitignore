@@ -2,6 +2,10 @@
 .Rhistory
 .RData
 .RDataTmp
-data/VCF/FamA.vcf
-data/VCF/FamB.vcf
+data/VCF/temp
 data/REF/
+data/SEQ/
+data/SNP_Calling/
+data/BASEMAPS/
+data/Haplotyping/temp
+

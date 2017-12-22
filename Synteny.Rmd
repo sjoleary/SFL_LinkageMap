@@ -178,7 +178,7 @@ flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", heade
 
 The specification for the pipeline are listed in a configuration file.
 
-First, the genomes the linkage map should be compared to are specified. Currently there are 7 genomes in the local database on earth:
+First, the genomes the linkage map should be compared to are specified. Currently there are 9 genomes in the local database on earth:
 
 * Zebrafish, _Danio rerio_ (drer)
 * Stickleback, _Gasterosteus aculatus_ (gacu)
@@ -187,11 +187,13 @@ First, the genomes the linkage map should be compared to are specified. Currentl
 * Asian seabass, _Late calcarifer_  (lcal)
 * European seabass, _Dicentrarchus labrax_ (dlab)
 * Spotten green puffer, _Tetraodon nigroviridis_ (tnig)
+* Japanese flounder, _Paralichthys olivaceus_ (poli)
+* Tongue sole, _Cynoglossus semilaevis_ (csem)
 
 ```{r format config file I}
 
-Species_comp <- data.frame(Species = c("drer", "gacu", "tnig", "trub", "onil", "lcal", "dlab"),
-                          Compare = c("FALSE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE"))
+Species_comp <- data.frame(Species = c("gacu", "tnig", "trub", "onil", "lcal", "dlab", "poli", "csem"),
+                          Compare = c("TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE"))
 
 ```
 
@@ -223,9 +225,13 @@ close(con)
 
 Currently, the local blast database is hosted on deepthought. Create a project folder containing all the necessary input and configuration files, as well as the fasta-filtering script.
 
-After all the necessary files have been assembled `synteny_mapper.pl` can be executed using: 
+After all the necessary files have been assembled `synteny_mapper.pl` can be executed using:
 
-    synteny_mapper.pl config.txt
+```{bash}
+
+synteny_mapper.pl config.txt
+
+```
 
 The pipeline will blast the sequences of the mapped loci to each species-genome using the discontiguous-megablast algorithm. Matches are considered similar if more than 50bp overlap and have an e-value <10e-10 (or as specified in `config.txt`). Only sequences with a single hit are considered a match, if loci match multiple locations on a given genome they are discarded.
 
@@ -303,7 +309,7 @@ Read in `*.synteny.stats` file and plot overview.
 ```{r, fig.height=10, fig.width=12}
 
 # Synteny results overview 
-species <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
+species <- c("csem", "dlab", "gacu", "lcal", "onil", "poli", "tnig", "trub") 
 
 synteny_stats <- read.synteny.stats("data/SYNTENY", species)
 
@@ -340,13 +346,42 @@ plot.synteny.total <- function(synteny_stats) {
   # plot
   ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
     geom_bar(stat = "identity",
-             color = "black", size = 1, fill = "grey75" ) +
+             color = "black", fill = "darkorange" ) +
     labs(x = "\ncomparison species genome", y = "total number/length\n") +
     facet_wrap(~ STAT, scales = "free") +
     theme_facet
 } 
 
 plot.synteny.total(synteny_stats)
+
+```
+
+Compare genome sizes of comparison species
+
+```{r}
+
+SPECIES <- c("csem", "dlab", "gacu", "lcal", "onil", "poli", "tnig", "trub") 
+GENOME <- c(470, 578, 463, 586, 657, 643, 240, 281)
+
+genome <- data.frame(SPECIES, GENOME) %>%
+    arrange(SPECIES)
+
+synteny_stats <- left_join(synteny_stats, genome) %>%
+    mutate(GENOME = GENOME*1000000,
+           GENOME_COV = TOTAL_BP/GENOME*100,
+           LINKMAP = 1605.43,
+           LINKMAP_COV = TOTAL_cM/LINKMAP*100)
+
+# plot genome size vs coverage
+synteny_stats %>%
+    select(GENOME, GENOME_COV, LINKMAP_COV) %>%
+    gather(key = COVERAGE, value = PERCENT, 2:3) %>%
+    ggplot(aes(x = GENOME, y = PERCENT, color = COVERAGE)) +
+    geom_point(shape = 1, size = 2) +
+    geom_smooth(method = lm, se = FALSE) +
+    labs(x = "genome size [bp]", y = "% covered") +
+    theme_standard
+    
 
 ```
 
@@ -359,13 +394,13 @@ plot.synteny.mean <- function(synteny_stats) {
   
   # Format data set
   tidy <- synteny_stats %>% 
-    gather("STAT", "RESULT", 2:14) %>%
+    gather("STAT", "RESULT", 2:18) %>%
     filter(STAT %in% c("N_BLOCKS", "MEAN_LOCI", "MEAN_BP", "MEAN_cM"))
   
   # plot
-  ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+  ggplot(tidy, aes(x = SPECIES, y = RESULT)) + 
     geom_bar(stat = "identity",
-             color = "black", size = 1, fill = "grey75" ) +
+             color = "black", fill = "darkorange" ) +
     labs(x = "\nComparison Species Genome", y = "mean Number/Length\n") +
     facet_wrap(~ STAT, scales = "free") +
     theme_facet
@@ -377,49 +412,63 @@ plot.synteny.mean(synteny_stats)
 
 Plot overview:
 
-```{r}
+```{r fig.height=3, fig.width=12}
 
 # Format data set
 tidy <- synteny_stats %>% 
-    gather("STAT", "RESULT", 2:14) %>%
-    filter(STAT %in% c("N_LOCI", "N_BLOCKS", 
-                       "TOTAL_BP", "TOTAL_cM", 
-                       "MEAN_BP", "MEAN_cM",
-                       "MEAN_LOCI"))
-
-SPECIES <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
-STAT <- c("%-genome", "%-genome", "%-genome", "%-genome", "%-genome", "%-genome")
-RESULT <- c(46.9, 34.0, 48.3, 40.6, 37.7, 38.5)
-
-coverage_genome <- data.frame(SPECIES, STAT, RESULT)
-
-temp <- bind_rows(tidy, coverage_genome)
-
-SPCIES <- c("dlab", "gacu", "lcal", "onil", "tnig", "trub") 
-STAT <- c("%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap", "%-linkmap")
-RESULT <- c(43.6, 34.7, 44.9, 38.1, 32.2, 31.9)
-
-coverage_linkmap <- data.frame(SPECIES, STAT, RESULT)
-
-temp <- bind_rows(temp, coverage_linkmap)
+    gather("STAT", "RESULT", 2:18) %>%
+    filter(STAT %in% c("MEAN_LOCI", "GENOME_COV", "LINKMAP_COV"))
 
 # plot
 
 # library(Cairo)
 
-Cairo(width = 1000, height = 500, 
-      file="fig/synt_stats.png", type = "png", pointsize  = 12,
-      bg = "transparent", canvas = "white", 
-      units = "px", dpi = "auto")
+# Cairo(width = 1000, height = 500, 
+#       file="fig/synt_stats.png", type = "png", pointsize  = 12,
+#       bg = "transparent", canvas = "white", 
+#       units = "px", dpi = "auto")
 
-ggplot(temp, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
     geom_bar(stat = "identity",
              color = "black", size = 0.7, fill = "grey75" ) +
-    labs(x = "\nComparison Species Genome", y = "mean number loci | length (cM/bp) | %-coverage\n") +
+    labs(x = "\nComparison Species Genome", y = " ") +
     facet_wrap(~ STAT, scales = "free") +
     theme_facet
 
-dev.off()
+# dev.off()
+
+```
+
+Comparison genome size
+
+```{r fig.height=10, fig.width=12}
+
+temp <- synteny_stats %>%
+    select(SPECIES, GENOME, N_LOCI, N_BLOCKS, MEAN_LOCI, TOTAL_BP, TOTAL_cM, GENOME_COV, LINKMAP_COV) %>%
+    gather("STAT", "RESULT", 3:9)
+
+ggplot(temp, aes(x = GENOME, y = RESULT)) +
+    geom_point(shape = 1, size = 3, color = "darkblue") +
+    geom_smooth(method = lm, se = TRUE, color = "darkblue", size = 0.75) + 
+    facet_wrap(~ STAT, scales = "free") +
+    labs(x = "genome size [bp]", y = " ") +
+    theme_standard
+
+```
+
+Comparison relations ships number of blocks
+
+```{r fig.height=8, fig.width=12}
+
+synteny_stats %>%
+    select(SPECIES, N_BLOCKS, N_LOCI, MEAN_LOCI, TOTAL_BP, TOTAL_cM, GENOME_COV, LINKMAP_COV) %>%
+    gather("STAT", "RESULT", 3:8) %>%
+    ggplot(aes(x = N_BLOCKS, y = RESULT)) +
+        geom_point(shape = 1, size = 2) +
+        geom_smooth(method = lm, se = TRUE, color = "darkorange", size = 0.5, fill = "grey90") + 
+        facet_wrap(~ STAT, scales = "free") +
+        labs(x = "number of blocks", y = " ") +
+        theme_standard
 
 ```
 
@@ -520,7 +569,8 @@ synt_blocks <- read.all.blocks("data/SYNTENY")
 ggplot(synt_blocks, aes(x = COMP_SIZE, y = MAP_SIZE)) +
     geom_point() +
     geom_smooth(method = lm) +
-    facet_wrap(~COMP_SPECIES)
+    facet_wrap(~COMP_SPECIES, scales = "free") +
+    theme_facet
 
 # write data frame with homologous linkage groups (all species)
 LG.Homologs <- function(synteny_blocks){
@@ -538,7 +588,7 @@ Homologs <- LG.Homologs(synt_blocks)
 
 ## Create oxford bubble plots:
 
-```{r, fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
+```{r fig.height=10, fig.width=10, message=FALSE, warning=FALSE}
 
 # plot oxford bubble plot
 # arguments 
@@ -608,6 +658,6 @@ plot.oxford <- function(synt_blocks, species) {
   })
 }
 
-plot.oxford(synt_blocks, c("dlab", "lcal", "gacu", "onil", "tnig", "trub"))
+plot.oxford(synt_blocks, c("csem", "dlab", "lcal", "gacu", "onil", "poli", "tnig", "trub"))
 
 ```

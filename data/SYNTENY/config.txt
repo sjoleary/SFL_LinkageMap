@@ -1,11 +1,12 @@
 # List of comparison species
-drer FALSE
 gacu TRUE
 tnig TRUE
 trub TRUE
 onil TRUE
 lcal TRUE
 dlab TRUE
+poli TRUE
+csem TRUE
 # Settings
 db_dir /home/blast/db
 fasta_file mapped.fasta

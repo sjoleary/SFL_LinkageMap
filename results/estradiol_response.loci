@@ -1,174 +1,174 @@
 CONTIG_ID ACCESSION GENE_ID GO_PROCESS STUDY CONTEXT LOCUS LEFT_LOCUS RIGHT_LOCUS LEFT_POS RIGHT_POS SUPPORT INTERVAL_SIZE LG
-Contig365 AJ291834 NADP-menadione oxidoreductase NA Williams_2007 downregulated_estradiol 23304936 dDocent_Contig_137371 dDocent_Contig_15309 34.63 33.62 gacu,lcal,trub,tnig,dlab 1.01000000000001 13
-PfFMO2-ll0 AJ310420 ITI H chain/SHAP NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig1032 AJ310422 Polymerase (RNA) III (DNA directed) polypeptide K NA Williams_2007 upregulated_estradiol 12580927 dDocent_Contig_151317 dDocent_Contig_179549 18.85 17.95 gacu,lcal,trub,tnig,onil,dlab 0.900000000000002 19
+Contig365 AJ291834 NADP-menadione oxidoreductase NA Williams_2007 downregulated_estradiol 23304936 dDocent_Contig_15309 dDocent_Contig_137371 33.62 34.63 dlab,poli,gacu,lcal,trub,tnig 1.01000000000001 13
+PfFMO2-ll0 AJ310420 ITI H chain/SHAP NA Williams_2007 downregulated_estradiol 21322623 dDocent_Contig_27583 dDocent_Contig_26071 71.22 69.89 poli 1.33 18
+Contig1032 AJ310422 Polymerase (RNA) III (DNA directed) polypeptide K NA Williams_2007 upregulated_estradiol 12580927 dDocent_Contig_151317 dDocent_Contig_179549 18.85 17.95 dlab,poli,gacu,lcal,trub,tnig,csem,onil 0.900000000000002 19
 Contig485 AJ508728 Eukaryotic translation initiation factor 3, subunit 6 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfSHA2G1 AJ508732 Keratin (K18 Type I) NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfBR2E8 AJ578047 Organic anion transporting polypeptide 1b4 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 Contig334 AJ586237 FLAP—5-lipoxygenase activating protein NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfCF1D9 AJ605285 Spermidine/spermine N1-acetyltransferase NA Williams_2007 upregulated_estradiol 38196350 dDocent_Contig_275603 dDocent_Contig_2373 32.34 33.34 lcal 1 9
-Contig641 AM041911 Splicing factor, arginine/serine-rich 2 (SC-35) NA Williams_2007 upregulated_estradiol 75976384 dDocent_Contig_106618 dDocent_Contig_104204 8.34 9.27 tnig 0.93 15
-Contig697 DV565376 Protein transport protein Sec61 alpha subunit NA Williams_2007 upregulated_estradiol 78225417 dDocent_Contig_154408 dDocent_Contig_164687 13.88 13.88 lcal,onil,dlab 0 1
+PfCF1D9 AJ605285 Spermidine/spermine N1-acetyltransferase NA Williams_2007 upregulated_estradiol 38196350 dDocent_Contig_2373 dDocent_Contig_275603 33.34 32.34 poli,lcal 1 9
+Contig641 AM041911 Splicing factor, arginine/serine-rich 2 (SC-35) NA Williams_2007 upregulated_estradiol 75976384 dDocent_Contig_106618 dDocent_Contig_104204 8.34 9.27 tnig,csem 0.93 15
+Contig697 DV565376 Protein transport protein Sec61 alpha subunit NA Williams_2007 upregulated_estradiol 78225417 dDocent_Contig_154408 dDocent_Contig_164687 13.88 13.88 dlab,poli,lcal,onil 0 1
 PfIL007A06 DV565430 Carboxypeptidase B NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-Contig873 DV565433 Mitochondrial 28S ribosomal protein S6 (S6 mt) (MRP-S6) NA Williams_2007 upregulated_estradiol 78225474 dDocent_Contig_28647 dDocent_Contig_26733 18.96 20.2 gacu,lcal,trub,tnig,onil,dlab 1.24 2
-Contig761 DV565464 ATP synthase subunit B NA Williams_2007 upregulated_estradiol 78225323 dDocent_Contig_62766 dDocent_Contig_27344 35.77 35.77 gacu,tnig 0 23
+Contig873 DV565433 Mitochondrial 28S ribosomal protein S6 (S6 mt) (MRP-S6) NA Williams_2007 upregulated_estradiol 78225474 dDocent_Contig_9859 dDocent_Contig_43242 18.65 18.34 dlab,poli,gacu,lcal,trub,tnig,csem,onil 0.309999999999999 2
+Contig761 DV565464 ATP synthase subunit B NA Williams_2007 upregulated_estradiol 78225323 dDocent_Contig_62766 dDocent_Contig_27344 35.77 35.77 gacu,tnig,csem 0 23
 PfIL001H03 DV565467 Bromodomain-containing 3 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 Contig627 DV565484 Dynein light chain 2, cytoplasmic NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL009F04 DV565544 Cyclin G1 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL009F04 DV565544 Cyclin G1 NA Williams_2007 upregulated_estradiol 78225572 dDocent_Contig_61809 dDocent_Contig_38113 18.35 14.78 csem 3.57 5
 Contig226 DV565551 VHSV-induced protein-5 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL009H04 DV565558 Chaperonin subunit 7 NA Williams_2007 upregulated_estradiol 78225586 dDocent_Contig_263392 dDocent_Contig_333677 35.71 33.15 gacu,tnig 2.56 9
 PfIL012A11 DV565603 Additional sex combs like 1 (Asxl1) NA Williams_2007 downregulated_estradiol 78225631 dDocent_Contig_17168 dDocent_Contig_14875 50.33 50.33 onil 0 7
-PfIL012C12 DV565613 S100-like calcium binding protein NA Williams_2007 downregulated_estradiol 78225641 dDocent_Contig_21728 dDocent_Contig_69113 49.24 47.63 onil 1.61 22
+PfIL012C12 DV565613 S100-like calcium binding protein NA Williams_2007 downregulated_estradiol 78225641 dDocent_Contig_21728 dDocent_Contig_69113 49.24 47.63 poli,onil 1.61 22
 PfIL012E02 DV565618 DnaJ (Hsp40) homolog, subfamily B, member 1 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL012E07 DV565623 Similar to lysophosphatidic acid acyltransferase (69.9 kD) NA Williams_2007 downregulated_estradiol 78225651 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab 0.439999999999998 6
+PfIL012E07 DV565623 Similar to lysophosphatidic acid acyltransferase (69.9 kD) NA Williams_2007 downregulated_estradiol 78225651 dDocent_Contig_99410 dDocent_Contig_57634 44.5 44.19 dlab,poli,csem 0.310000000000002 6
 PfIL013A02 DV565633 Oligosaccharyl transferase 48 kDa subunit NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL013B10 DV565641 Zinc finger and BTB domain containing 5 NA Williams_2007 downregulated_estradiol 78225669 dDocent_Contig_336119 dDocent_Contig_15823 35.77 37.32 gacu,tnig 1.55 4
-PfIL013B12 DV565643 Dynein 2 light intermediate chain NA Williams_2007 downregulated_estradiol 78225671 dDocent_Contig_75304 dDocent_Contig_21226 52.24 52.59 gacu,lcal,onil,dlab 0.350000000000001 2
+PfIL013B12 DV565643 Dynein 2 light intermediate chain NA Williams_2007 downregulated_estradiol 78225671 dDocent_Contig_21226 dDocent_Contig_75304 52.59 52.24 dlab,poli,gacu,lcal,onil 0.350000000000001 2
 Contig246 DV565725 18S rRNA NA Williams_2007 downregulated_estradiol 78225753 dDocent_Contig_3889 dDocent_Contig_66767 55.65 66.27 gacu 10.62 6
 PfIL050H09 DV565732 Rtp12.5 NA Williams_2007 downregulated_estradiol 78225760 dDocent_Contig_122871 dDocent_Contig_66601 10.5 10 gacu 0.5 7
-PfIL140C05 DV565742 Novel protein similar to human KIAA1281 and KIAA0295 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig27 DV565768 Chemokine (C-X-C motif) ligand 12a NA Williams_2007 downregulated_estradiol 78225796 dDocent_Contig_22783 dDocent_Contig_193333 22.79 25.18 gacu,onil,dlab 2.39 2
+PfIL140C05 DV565742 Novel protein similar to human KIAA1281 and KIAA0295 NA Williams_2007 downregulated_estradiol 78225770 dDocent_Contig_19606 dDocent_Contig_167115 0 0 csem 0 24
+Contig27 DV565768 Chemokine (C-X-C motif) ligand 12a NA Williams_2007 downregulated_estradiol 78225796 dDocent_Contig_201942 dDocent_Contig_193333 22.79 25.18 dlab,gacu,onil 2.39 2
 Contig549 DV565792 Mitochondrial glycine cleavage system H protein NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-Contig58 DV565797 Selenoprotein P, plasma, 1b NA Williams_2007 upregulated_estradiol 78225825 dDocent_Contig_264891 dDocent_Contig_85212 15.1 17.16 gacu,dlab 2.06 10
+Contig58 DV565797 Selenoprotein P, plasma, 1b NA Williams_2007 upregulated_estradiol 78225825 dDocent_Contig_64895 dDocent_Contig_21053 17.16 16.47 dlab,poli,gacu 0.690000000000001 10
 PfIL201H09 DV565815 B-cell receptor CD22 NA Williams_2007 downregulated_estradiol 78225843 dDocent_Contig_155556 dDocent_Contig_204278 11.33 13.27 dlab 1.94 16
-Contig429 DV565868 Hepcidin precursor NA Williams_2007 downregulated_estradiol 78225550 dDocent_Contig_57682 dDocent_Contig_83882 7.96 7.96 gacu,lcal,dlab 0 16
-Contig6 DV565884 SPC18 protein, signal peptidase complex NA Williams_2007 upregulated_estradiol 78225566 dDocent_Contig_25863 dDocent_Contig_137192 25.37 25.21 gacu,lcal,onil,dlab 0.16 20
-Contig1012 DV565910 Cholesteryl ester transfer protein NA Williams_2007 upregulated_estradiol 78225905 dDocent_Contig_103135 dDocent_Contig_20111 0 0 gacu,lcal,onil 0 24
-Contig398 DV565941 Choriogenin L NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL205E02 DV565989 Geminin NA Williams_2007 downregulated_estradiol 78225984 dDocent_Contig_107634 dDocent_Contig_12988 38.58 39.69 lcal,onil,dlab 1.11 22
-PfIL206B09 DV566017 Ubiquitin fusion degradation protein 1 NA Williams_2007 downregulated_estradiol 78226012 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab 0.439999999999998 6
-Contig68 DV566038 Macrophage mannose receptor precursor (MMR) (CD206 antigen) NA Williams_2007 downregulated_estradiol 78226033 dDocent_Contig_249952 dDocent_Contig_214291 44.25 45.42 gacu,trub,tnig 1.17 8
-PfIL206G11 DV566041 Haloacid dehalogenase-like hydrolase domain containing 1A NA Williams_2007 downregulated_estradiol 78226036 dDocent_Contig_17190 dDocent_Contig_47979 1.68 0 dlab 1.68 21
-PfIL207C10 DV566060 Annexin max3 NA Williams_2007 downregulated_estradiol 78226055 dDocent_Contig_276086 dDocent_Contig_384998 21.11 21.22 gacu,lcal,dlab 0.109999999999999 6
-Contig564 DV566068 Similar to interleukin 25 NA Williams_2007 upregulated_estradiol 78226063 dDocent_Contig_221942 dDocent_Contig_119334 26.72 26.72 lcal,trub,tnig,onil,dlab 0 12
-Contig842 DV566094 60S ribosomal protein L31 NA Williams_2007 upregulated_estradiol 78226089 dDocent_Contig_10808 dDocent_Contig_1408 26.62 28.16 tnig 1.54 21
+Contig429 DV565868 Hepcidin precursor NA Williams_2007 downregulated_estradiol 78225550 dDocent_Contig_57682 dDocent_Contig_83882 7.96 7.96 dlab,gacu,lcal 0 16
+Contig6 DV565884 SPC18 protein, signal peptidase complex NA Williams_2007 upregulated_estradiol 78225566 dDocent_Contig_137192 dDocent_Contig_25863 25.21 25.37 dlab,poli,gacu,lcal,csem,onil 0.16 20
+Contig1012 DV565910 Cholesteryl ester transfer protein NA Williams_2007 upregulated_estradiol 78225905 dDocent_Contig_14449 dDocent_Contig_31210 0 0 poli,gacu,lcal,onil 0 24
+Contig398 DV565941 Choriogenin L NA Williams_2007 upregulated_estradiol 78225936 dDocent_Contig_3207 dDocent_Contig_38804 12.91 14.49 poli 1.58 24
+PfIL205E02 DV565989 Geminin NA Williams_2007 downregulated_estradiol 78225984 dDocent_Contig_107634 dDocent_Contig_12988 38.58 39.69 dlab,lcal,onil 1.11 22
+PfIL206B09 DV566017 Ubiquitin fusion degradation protein 1 NA Williams_2007 downregulated_estradiol 78226012 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab,poli,csem 0.439999999999998 6
+Contig68 DV566038 Macrophage mannose receptor precursor (MMR) (CD206 antigen) NA Williams_2007 downregulated_estradiol 78226033 dDocent_Contig_249952 dDocent_Contig_214291 44.25 45.42 poli,gacu,trub,tnig 1.17 8
+PfIL206G11 DV566041 Haloacid dehalogenase-like hydrolase domain containing 1A NA Williams_2007 downregulated_estradiol 78226036 dDocent_Contig_17190 dDocent_Contig_47979 1.68 0 dlab,poli,csem 1.68 21
+PfIL207C10 DV566060 Annexin max3 NA Williams_2007 downregulated_estradiol 78226055 dDocent_Contig_384998 dDocent_Contig_276086 21.22 21.11 dlab,poli,gacu,lcal 0.109999999999999 6
+Contig564 DV566068 Similar to interleukin 25 NA Williams_2007 upregulated_estradiol 78226063 dDocent_Contig_119334 dDocent_Contig_221942 26.72 26.72 dlab,poli,lcal,trub,tnig,csem,onil 0 12
+Contig842 DV566094 60S ribosomal protein L31 NA Williams_2007 upregulated_estradiol 78226089 dDocent_Contig_1408 dDocent_Contig_2638 28.16 26.92 poli,tnig 1.24 21
 Contig399 DV566148 Hepcidin-like precursor NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL209G11 DV566155 MECL1 proteasome NA Williams_2007 downregulated_estradiol 78226150 dDocent_Contig_311699 dDocent_Contig_28835 56.43 56.43 onil 0 22
-PfIL209H11 DV566160 Survivin 1 NA Williams_2007 downregulated_estradiol 78226155 dDocent_Contig_57353 dDocent_Contig_36101 47.63 47.85 tnig,onil,dlab 0.219999999999999 19
-PfIL210B04 DV566168 Baculoviral IAP repeat-containing 5A; survivin 1 NA Williams_2007 downregulated_estradiol 78226163 dDocent_Contig_307589 dDocent_Contig_18848 0 1.54 onil,dlab 1.54 1
+PfIL209H11 DV566160 Survivin 1 NA Williams_2007 downregulated_estradiol 78226155 dDocent_Contig_57353 dDocent_Contig_36101 47.63 47.85 dlab,poli,tnig,onil 0.219999999999999 19
+PfIL210B04 DV566168 Baculoviral IAP repeat-containing 5A; survivin 1 NA Williams_2007 downregulated_estradiol 78226163 dDocent_Contig_307589 dDocent_Contig_18848 0 1.54 dlab,poli,onil 1.54 1
 PfIL210C09 DV566175 Fumarylacetoacetate hydrolase NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 Contig817 DV566198 Chloride intracellular channel protein NA Williams_2007 upregulated_estradiol 78226193 dDocent_Contig_100682 dDocent_Contig_349127 6.9 6.59 trub,tnig 0.31 7
-PfIL211H04 DV566215 Similar to S-phase kinase-associated protein 1A isofrom b NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL211H04 DV566215 Similar to S-phase kinase-associated protein 1A isofrom b NA Williams_2007 upregulated_estradiol 78226210 dDocent_Contig_1176 dDocent_Contig_2785 40.41 41.08 poli 0.670000000000002 9
 Contig699 DV566291 Trafficking protein particle complex subunit 1 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL216H09 DV566358 Clathrin, heavy polypeptide (Hc) NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 Contig123 DV566428 Calmodulin 1 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL220C05 DV566444 Cytochrome c oxidase subunit Vb NA Williams_2007 upregulated_estradiol 78226439 dDocent_Contig_17099 dDocent_Contig_9469 13 13.65 gacu,onil 0.65 2
-PfIL223A02 DV566533 Choriogenin H minor NA Williams_2007 downregulated_estradiol 78226528 dDocent_Contig_3207 dDocent_Contig_38804 12.91 14.49 lcal,trub,onil,dlab 1.58 24
-PfIL223A09 DV566536 P53-related protein kinase TP53RK (Nori-2) NA Williams_2007 downregulated_estradiol 78226531 dDocent_Contig_307589 dDocent_Contig_101087 0 1.54 lcal,dlab 1.54 1
+PfIL220C05 DV566444 Cytochrome c oxidase subunit Vb NA Williams_2007 upregulated_estradiol 78226439 dDocent_Contig_17099 dDocent_Contig_9469 13 13.65 gacu,csem,onil 0.65 2
+PfIL223A02 DV566533 Choriogenin H minor NA Williams_2007 downregulated_estradiol 78226528 dDocent_Contig_38804 dDocent_Contig_3207 14.49 12.91 dlab,poli,lcal,trub,csem,onil 1.58 24
+PfIL223A09 DV566536 P53-related protein kinase TP53RK (Nori-2) NA Williams_2007 downregulated_estradiol 78226531 dDocent_Contig_307589 dDocent_Contig_18848 0 1.54 dlab,lcal 1.54 1
 PfIL223B05 DV566542 Similar to UNR protein (N-ras upstream gene protein) NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 Contig124 DV566544 Topoisomerase (DNA) III beta NA Williams_2007 downregulated_estradiol 78226539 dDocent_Contig_49717 dDocent_Contig_2987 4.22 3.8 lcal,onil 0.42 6
-PfIL223G02 DV566567 NADH-ubiquinone oxidoreductase B14 subunit NA Williams_2007 downregulated_estradiol 78226562 dDocent_Contig_9976 dDocent_Contig_374147 40.71 41.33 gacu,onil 0.619999999999997 19
+PfIL223G02 DV566567 NADH-ubiquinone oxidoreductase B14 subunit NA Williams_2007 downregulated_estradiol 78226562 dDocent_Contig_57353 dDocent_Contig_97663 47.63 47.85 poli,gacu,csem,onil 0.219999999999999 19
 PfIL223G08 DV566569 Similar to transthyretin (4L369) NA Williams_2007 downregulated_estradiol 78226564 dDocent_Contig_42747 dDocent_Contig_103135 0 0 tnig,onil 0 24
 PfIL224F02 DV566602 ZPAX NA Williams_2007 downregulated_estradiol 78226597 dDocent_Contig_100040 dDocent_Contig_272119 42.78 44.61 trub,onil 1.83 11
 Contig590 DV566635 Peptidyl-prolyl cis-trans isomerase B precursor NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL225F02 DV566636 Hyaluronic acid binding protein 2 NA Williams_2007 downregulated_estradiol 78226631 dDocent_Contig_300492 dDocent_Contig_242472 13 13.8 gacu,lcal,trub,tnig,onil,dlab 0.800000000000001 2
-Contig146 DV566640 Phospholipase A2 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL225F02 DV566636 Hyaluronic acid binding protein 2 NA Williams_2007 downregulated_estradiol 78226631 dDocent_Contig_9859 dDocent_Contig_43242 18.65 18.34 dlab,poli,gacu,lcal,trub,tnig,csem,onil 0.309999999999999 2
+Contig146 DV566640 Phospholipase A2 NA Williams_2007 downregulated_estradiol 78226635 dDocent_Contig_167913 dDocent_Contig_59834 42.72 46.14 poli 3.42 14
 PfIL226A05 DV566648 IK cytokine, down-regulator of HLA II NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL226F06 DV566678 N-type ATP pyrophosphatase-like NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL226G02 DV566682 Carboxypeptidase N, polypeptide 1, 50 kD precursor NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL227D12 DV566707 Allograft inflammatory factor-1 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL228G03 DV566755 SAC1 (supressor of actin mutations 1) NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig689 DV566758 Small nuclear ribonucleoprotein G NA Williams_2007 upregulated_estradiol 78226753 dDocent_Contig_123378 dDocent_Contig_90815 59.58 56.8 gacu,lcal,onil,dlab 2.78 23
-PfIL230G02 DV566828 Alpha-2-macroglobulin NA Williams_2007 downregulated_estradiol 78226823 dDocent_Contig_23556 dDocent_Contig_283055 48.6 56.57 lcal 7.97 3
+Contig689 DV566758 Small nuclear ribonucleoprotein G NA Williams_2007 upregulated_estradiol 78226753 dDocent_Contig_14417 dDocent_Contig_123378 58.74 59.58 dlab,poli,gacu,lcal,csem,onil 0.839999999999996 23
+PfIL230G02 DV566828 Alpha-2-macroglobulin NA Williams_2007 downregulated_estradiol 78226823 dDocent_Contig_17120 dDocent_Contig_14056 50.66 48.93 poli,lcal 1.73 3
 Contig439 DV566834 Hepcidin precursor NA Williams_2007 downregulated_estradiol 78226829 dDocent_Contig_57682 dDocent_Contig_83882 7.96 7.96 gacu 0 16
-PfIL231A02 DV566839 Adducin 3 (gamma) NA Williams_2007 downregulated_estradiol 78226834 dDocent_Contig_20760 dDocent_Contig_296700 22.43 22.43 gacu,lcal,trub,dlab 0 4
+PfIL231A02 DV566839 Adducin 3 (gamma) NA Williams_2007 downregulated_estradiol 78226834 dDocent_Contig_296700 dDocent_Contig_1288 22.43 22.43 dlab,poli,gacu,lcal,trub,csem 0 4
 Contig250 DV566865 Proteasome subunit N3 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL232B04 DV566883 Mitogen-activated protein kinase 2-associated protein 1r NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL233D05 DV566937 Protein BAT5 (HLA-B-associated transcript 5) NA Williams_2007 downregulated_estradiol 78226932 dDocent_Contig_58288 dDocent_Contig_16160 33.8 36.98 tnig,onil 3.18 16
-PfIL233F03 DV566949 Yellowtail growth hormone like protein-1 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL233D05 DV566937 Protein BAT5 (HLA-B-associated transcript 5) NA Williams_2007 downregulated_estradiol 78226932 dDocent_Contig_58288 dDocent_Contig_282858 33.8 35.8 poli,tnig,onil 2 16
+PfIL233F03 DV566949 Yellowtail growth hormone like protein-1 NA Williams_2007 downregulated_estradiol 78226944 dDocent_Contig_24473 dDocent_Contig_34 43.45 43.14 csem 0.310000000000002 10
 Contig256 DV567021 Mibp beta 1 integrin binding protein 2 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL235F11 DV567044 Septin 5 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL237G08 DV567130 Endosome-associated protein NA Williams_2007 downregulated_estradiol 78227125 dDocent_Contig_48858 dDocent_Contig_2507 15.24 14.77 gacu,lcal,trub,tnig,dlab 0.470000000000001 24
+PfIL237G08 DV567130 Endosome-associated protein NA Williams_2007 downregulated_estradiol 78227125 dDocent_Contig_48858 dDocent_Contig_2507 15.24 14.77 dlab,poli,gacu,lcal,trub,tnig 0.470000000000001 24
 Contig341 DV567140 Proteasome delta NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-Contig859 DV567227 39S ribosomal protein L32, mitochondrial precursor NA Williams_2007 upregulated_estradiol 78227222 dDocent_Contig_52143 dDocent_Contig_53396 28.59 27.87 gacu,trub,tnig,dlab 0.719999999999999 16
+Contig859 DV567227 39S ribosomal protein L32, mitochondrial precursor NA Williams_2007 upregulated_estradiol 78227222 dDocent_Contig_52143 dDocent_Contig_53396 28.59 27.87 dlab,gacu,trub,tnig 0.719999999999999 16
 Contig736 DV567324 Manganese superoxide dismutase NA Williams_2007 upregulated_estradiol 78227319 dDocent_Contig_2441 dDocent_Contig_14551 19.57 19.57 lcal,trub,tnig 0 21
 PfIL242G10 DV567352 MLN64 N-terminal domain homolog NA Williams_2007 upregulated_estradiol 78227347 dDocent_Contig_127992 dDocent_Contig_3187 53.56 58.07 trub,tnig 4.51 10
 PfIL243A10 DV567359 Proteasome (Prosome, macropain) subunit, beta type, 5 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL243B10 DV567365 SET domain and mariner transposase fusion gene NA Williams_2007 downregulated_estradiol 78227360 dDocent_Contig_2393 dDocent_Contig_7027 8.98 8.98 lcal,onil,dlab 0 1
-PfIL243C02 DV567366 EF hand containing family 1A (Smhs2) NA Williams_2007 upregulated_estradiol 78227361 dDocent_Contig_66352 dDocent_Contig_145912 10.33 10.33 gacu,dlab 0 9
-PfIL244C08 DV567410 Fatty acid-binding protein NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL244H11 DV567440 Similar to Poly ADP-ribose polymerase PARP9 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL243B10 DV567365 SET domain and mariner transposase fusion gene NA Williams_2007 downregulated_estradiol 78227360 dDocent_Contig_7027 dDocent_Contig_2393 8.98 8.98 dlab,poli,lcal,onil 0 1
+PfIL243C02 DV567366 EF hand containing family 1A (Smhs2) NA Williams_2007 upregulated_estradiol 78227361 dDocent_Contig_66352 dDocent_Contig_145912 10.33 10.33 dlab,gacu,csem 0 9
+PfIL244C08 DV567410 Fatty acid-binding protein NA Williams_2007 downregulated_estradiol 78227405 dDocent_Contig_12831 dDocent_Contig_333242 24.62 24.62 poli 0 16
+PfIL244H11 DV567440 Similar to Poly ADP-ribose polymerase PARP9 NA Williams_2007 downregulated_estradiol 78227435 dDocent_Contig_7326 dDocent_Contig_19101 3.56 8.61 csem 5.05 13
 PfIL246B11 DV567485 Hydroxymethylglutaryl-CoA synthase, cytoplasmic NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL246F02 DV567498 Nitrilase homolog 1 NA Williams_2007 upregulated_estradiol 78227493 dDocent_Contig_49203 dDocent_Contig_21587 9.75 10.41 gacu,trub,dlab 0.66 12
-Contig166 DV567558 Pre-mRNA splicing factor ATP-dependent RNA helicase PRP16 NA Williams_2007 upregulated_estradiol 78227553 dDocent_Contig_15918 dDocent_Contig_220825 31.26 34.97 tnig 3.71 20
+PfIL246F02 DV567498 Nitrilase homolog 1 NA Williams_2007 upregulated_estradiol 78227493 dDocent_Contig_20038 dDocent_Contig_49203 10.08 9.75 dlab,poli,gacu,trub 0.33 12
+Contig166 DV567558 Pre-mRNA splicing factor ATP-dependent RNA helicase PRP16 NA Williams_2007 upregulated_estradiol 78227553 dDocent_Contig_144356 dDocent_Contig_97513 31.94 33.01 poli,tnig 1.07 20
 PfIL249C03 DV567613 Small inducible cytokine NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig297 DV567619 Similar to transient receptor potential cation channel NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig458 DV567625 Vitellogenin A NA Williams_2007 upregulated_estradiol 78227620 dDocent_Contig_257318 dDocent_Contig_10414 30.94 26.15 gacu 4.79 12
-PfIL249H12 DV567651 Sorting nexin-12 NA Williams_2007 downregulated_estradiol 78227646 dDocent_Contig_258643 dDocent_Contig_42416 40.85 41.08 lcal,trub,tnig,dlab 0.229999999999997 9
-PfIL250A02 DV567653 Triadin NA Williams_2007 downregulated_estradiol 78227648 dDocent_Contig_19168 dDocent_Contig_32774 25.25 25.25 gacu,trub,tnig,onil,dlab 0 11
-PfIL250D12 DV567673 Complement component C7 NA Williams_2007 downregulated_estradiol 78227668 dDocent_Contig_61920 dDocent_Contig_406 37.12 37.12 gacu,lcal,dlab 0 14
+Contig297 DV567619 Similar to transient receptor potential cation channel NA Williams_2007 downregulated_estradiol 78227614 dDocent_Contig_13478 dDocent_Contig_137371 32.31 34.63 csem 2.32 13
+Contig458 DV567625 Vitellogenin A NA Williams_2007 upregulated_estradiol 78227620 dDocent_Contig_257318 dDocent_Contig_92557 30.94 28.75 poli,gacu,csem 2.19 12
+PfIL249H12 DV567651 Sorting nexin-12 NA Williams_2007 downregulated_estradiol 78227646 dDocent_Contig_42416 dDocent_Contig_10383 41.08 40.85 dlab,poli,lcal,trub,tnig 0.229999999999997 9
+PfIL250A02 DV567653 Triadin NA Williams_2007 downregulated_estradiol 78227648 dDocent_Contig_19168 dDocent_Contig_8679 25.25 25.25 dlab,poli,gacu,trub,tnig,onil 0 11
+PfIL250D12 DV567673 Complement component C7 NA Williams_2007 downregulated_estradiol 78227668 dDocent_Contig_406 dDocent_Contig_61920 37.12 37.12 dlab,poli,gacu,lcal 0 14
 PfIL253B10 DV567808 Copper/zinc superoxide dismutase NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL253F02 DV567822 Cytochrome c oxidase NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL254D11 DV567862 Zinc finger protein NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig833 DV567868 S100 calcium-binding protein A14 (S114) NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL254F08 DV567872 Nf-kappa B activator (TANK) NA Williams_2007 downregulated_estradiol 78227867 dDocent_Contig_157446 dDocent_Contig_165136 29.56 28.89 gacu,trub,tnig,dlab 0.669999999999998 13
+PfIL254D11 DV567862 Zinc finger protein NA Williams_2007 downregulated_estradiol 78227857 dDocent_Contig_42589 dDocent_Contig_18514 12.9 14.64 csem 1.74 3
+Contig833 DV567868 S100 calcium-binding protein A14 (S114) NA Williams_2007 upregulated_estradiol 78227863 dDocent_Contig_3663 dDocent_Contig_11361 44.95 41.52 poli 3.43 22
+PfIL254F08 DV567872 Nf-kappa B activator (TANK) NA Williams_2007 downregulated_estradiol 78227867 dDocent_Contig_165136 dDocent_Contig_157446 28.89 29.56 dlab,gacu,trub,tnig,csem 0.669999999999998 13
 PfIL254G11 DV567880 Alcohol dehydrogenase class III NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 Contig299 DV567908 Protein phosphatase I alpha subunit (PPPIA) NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL255G11 DV567931 Acid phosphatase 5, tartrate resistant NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL255H02 DV567933 Reticulon 1 NA Williams_2007 upregulated_estradiol 78227928 dDocent_Contig_30404 dDocent_Contig_8174 13.9 13.9 lcal,trub 0 7
 PfIL256D11 DV567956 Selenide water dikinase 2 NA Williams_2007 upregulated_estradiol 78227951 dDocent_Contig_3207 dDocent_Contig_38804 12.91 14.49 trub 1.58 24
 PfIL257B11 DV567987 Mannosidase, alpha, class 1C, member 1 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL257D11 DV567998 Vitellogenin A NA Williams_2007 upregulated_estradiol 78227993 dDocent_Contig_257318 dDocent_Contig_10414 30.94 26.15 gacu 4.79 12
+PfIL257D11 DV567998 Vitellogenin A NA Williams_2007 upregulated_estradiol 78227993 dDocent_Contig_257318 dDocent_Contig_92557 30.94 28.75 poli,gacu,csem 2.19 12
 PfIL258B03 DV568031 Protein-lysine 6-oxidase NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL259D05 DV568096 Class I helical cytokine receptor number 26 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig158 DV568134 Similar to vertebrate RAS-like, estrogen-regulated, growth-inhibitor NA Williams_2007 downregulated_estradiol 78228129 dDocent_Contig_5061 dDocent_Contig_297018 19.3 20.49 lcal,dlab 1.19 24
-PfIL260C01 DV568145 Nuclear transport factor 2 NA Williams_2007 downregulated_estradiol 78228140 dDocent_Contig_3663 dDocent_Contig_15338 44.95 45.62 gacu 0.669999999999995 22
+Contig158 DV568134 Similar to vertebrate RAS-like, estrogen-regulated, growth-inhibitor NA Williams_2007 downregulated_estradiol 78228129 dDocent_Contig_297018 dDocent_Contig_5061 20.49 19.3 dlab,lcal 1.19 24
+PfIL260C01 DV568145 Nuclear transport factor 2 NA Williams_2007 downregulated_estradiol 78228140 dDocent_Contig_15338 dDocent_Contig_3663 45.62 44.95 poli,gacu 0.669999999999995 22
 PfIL260G06 DV568169 LBP (LPS binding protein)/BPI NA Williams_2007 downregulated_estradiol 78228164 dDocent_Contig_307589 dDocent_Contig_235337 0 1.86 gacu 1.86 1
 Contig214 DV568350 Cytochrome P450 2F2 CYP2F2 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL271D03 DV568602 Splicing factor 3 subunit 1 NA Williams_2007 upregulated_estradiol 78228597 dDocent_Contig_558 dDocent_Contig_41885 20.6 20.3 lcal,dlab 0.300000000000001 6
+PfIL271D03 DV568602 Splicing factor 3 subunit 1 NA Williams_2007 upregulated_estradiol 78228597 dDocent_Contig_41885 dDocent_Contig_558 20.3 20.6 dlab,poli,lcal 0.300000000000001 6
 PfIL272G01 DV568641 GTP cyclohydrolase 1 NA Williams_2007 upregulated_estradiol 78228648 dDocent_Contig_5563 dDocent_Contig_2201 56.37 52.65 trub 3.72 20
 PfIL273D04 DV568672 Proteasome beta-subunit C5 NA Williams_2007 upregulated_estradiol 78228679 dDocent_Contig_20987 dDocent_Contig_376782 28.32 28.17 dlab 0.149999999999999 20
-Contig450 DV568698 Vitellogenin A NA Williams_2007 upregulated_estradiol 78228705 dDocent_Contig_257318 dDocent_Contig_10414 30.94 26.15 gacu 4.79 12
-Contig728 DV568704 SEC63-like NA Williams_2007 upregulated_estradiol 78228711 dDocent_Contig_31290 dDocent_Contig_255823 28.86 25.25 trub,tnig,onil,dlab 3.61 11
-PfIL276D01 DV568784 60S ribosomal protein L13a NA Williams_2007 upregulated_estradiol 78228791 dDocent_Contig_2193 dDocent_Contig_3891 22.2 23.98 gacu,lcal,tnig,onil,dlab 1.78 7
+Contig450 DV568698 Vitellogenin A NA Williams_2007 upregulated_estradiol 78228705 dDocent_Contig_257318 dDocent_Contig_92557 30.94 28.75 poli,gacu,csem 2.19 12
+Contig728 DV568704 SEC63-like NA Williams_2007 upregulated_estradiol 78228711 dDocent_Contig_32774 dDocent_Contig_31290 25.25 28.86 dlab,trub,tnig,onil 3.61 11
+PfIL276D01 DV568784 60S ribosomal protein L13a NA Williams_2007 upregulated_estradiol 78228791 dDocent_Contig_2193 dDocent_Contig_3891 22.2 23.98 dlab,poli,gacu,lcal,tnig,csem,onil 1.78 7
 PfIL277F10 DV568841 G1 to S phase transition 1 NA Williams_2007 upregulated_estradiol 78228848 dDocent_Contig_57353 dDocent_Contig_36101 47.63 47.85 tnig,onil 0.219999999999999 19
-PfIL278C09 DV568872 Programmed cell death 4 NA Williams_2007 upregulated_estradiol 78228879 dDocent_Contig_53126 dDocent_Contig_48972 43.17 41.96 lcal,onil,dlab 1.21 4
+PfIL278C09 DV568872 Programmed cell death 4 NA Williams_2007 upregulated_estradiol 78228879 dDocent_Contig_53126 dDocent_Contig_48972 43.17 41.96 dlab,lcal,onil 1.21 4
 Contig847 DV568929 Coiled-coil-helix-coiled-coil-helix domain containing 3 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL283B04 DV569019 Dipeptidylpeptidase 3 NA Williams_2007 downregulated_estradiol 78229026 dDocent_Contig_258643 dDocent_Contig_42416 40.85 41.08 lcal,trub,tnig,dlab 0.229999999999997 9
+PfIL283B04 DV569019 Dipeptidylpeptidase 3 NA Williams_2007 downregulated_estradiol 78229026 dDocent_Contig_42416 dDocent_Contig_10383 41.08 40.85 dlab,poli,lcal,trub,tnig 0.229999999999997 9
 PfIL286E01 DV569138 Transcription factor BTF3 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL289G08 DV569275 Myeloid/lymphoid or mixed-lineage leukemia protein 4 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL284B05 DV569348 Beta-2 microglobulin NA Williams_2007 downregulated_estradiol 78229065 dDocent_Contig_102544 dDocent_Contig_187802 13.06 10.72 lcal 2.34 18
 PfIL291D10 DV569361 26S protease regulatory subunit S10B NA Williams_2007 downregulated_estradiol 78229356 dDocent_Contig_5207 dDocent_Contig_187281 6.76 6.76 lcal 0 11
-Contig201 DV569417 Protein disulfide isomerase related protein NA Williams_2007 upregulated_estradiol 78229412 dDocent_Contig_84428 dDocent_Contig_252480 31.31 31.31 gacu,lcal,trub,tnig,onil 0 8
-PfIL294G11 DV569485 Leukotriene B4 12-hydroxydehydrogenase NA Williams_2007 downregulated_estradiol 78229480 dDocent_Contig_75562 dDocent_Contig_16645 49.5 46.94 lcal 2.56 17
+Contig201 DV569417 Protein disulfide isomerase related protein NA Williams_2007 upregulated_estradiol 78229412 dDocent_Contig_84428 dDocent_Contig_252480 31.31 31.31 poli,gacu,lcal,trub,tnig,onil 0 8
+PfIL294G11 DV569485 Leukotriene B4 12-hydroxydehydrogenase NA Williams_2007 downregulated_estradiol 78229480 dDocent_Contig_16645 dDocent_Contig_115658 46.94 49.01 poli,lcal 2.07 17
 PfIL295F02 DV569516 GTP cyclohydrolase I feedback regulatory protein NA Williams_2007 downregulated_estradiol 78229511 dDocent_Contig_122871 dDocent_Contig_66601 10.5 10 gacu,trub,tnig,onil 0.5 7
 PfIL295H10 DV569529 Liver glycogen phosphorylase NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 Contig1059 DV569534 RACK—Guanine nucleotide-binding protein beta subunit 2-like 1 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL298B04 DV569594 Alanine-glyoxylate aminotransferase NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL300E07 DV569684 Biotinidase precursor NA Williams_2007 upregulated_estradiol 78229679 dDocent_Contig_98386 dDocent_Contig_25536 35.11 38 lcal 2.89 22
+PfIL300E07 DV569684 Biotinidase precursor NA Williams_2007 upregulated_estradiol 78229679 dDocent_Contig_303916 dDocent_Contig_91748 37.22 35.97 poli,lcal 1.25 22
 Contig377 DV569697 40S ribosomal protein S15A NA Williams_2007 upregulated_estradiol 78229692 dDocent_Contig_14563 dDocent_Contig_125630 16.17 18.8 gacu,onil 2.63 24
-PfIL301E07 DV569726 Mitochondrial import inner membrane translocase subunit TIM8 A NA Williams_2007 upregulated_estradiol 78229721 dDocent_Contig_61696 dDocent_Contig_325604 33.66 37.02 gacu,trub,tnig 3.36000000000001 5
-PfIL308C10 DV569999 Replication factor C (activator 1) 5 NA Williams_2007 downregulated_estradiol 78229994 dDocent_Contig_142757 dDocent_Contig_317880 58.43 55.96 gacu,lcal,trub,tnig,onil,dlab 2.47 6
-PfIL308H12 DV570017 Class I helical cytokine receptor number 25 NA Williams_2007 downregulated_estradiol 78230012 dDocent_Contig_40269 dDocent_Contig_16668 15.16 14.82 lcal 0.34 12
+PfIL301E07 DV569726 Mitochondrial import inner membrane translocase subunit TIM8 A NA Williams_2007 upregulated_estradiol 78229721 dDocent_Contig_61696 dDocent_Contig_325604 33.66 37.02 gacu,trub,tnig,csem 3.36000000000001 5
+PfIL308C10 DV569999 Replication factor C (activator 1) 5 NA Williams_2007 downregulated_estradiol 78229994 dDocent_Contig_356505 dDocent_Contig_317880 57.51 55.96 dlab,poli,gacu,lcal,trub,tnig,csem,onil 1.55 6
+PfIL308H12 DV570017 Class I helical cytokine receptor number 25 NA Williams_2007 downregulated_estradiol 78230012 dDocent_Contig_16668 dDocent_Contig_40269 14.82 15.16 poli,lcal 0.34 12
 PfIL309H12 DV570048 MHC class II alpha NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
 Contig778 DV570076 Ubiquitin-like protein SMT3B precursor NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL313B03 DV570144 Peptidyl-prolyl cis-trans isomerase NA Williams_2007 downregulated_estradiol 78230166 dDocent_Contig_85444 dDocent_Contig_86520 38.68 41.16 gacu,onil 2.48 8
-PfIL311G11 DV570209 Fumarylacetoacetate hydrolase domain containing 2A NA Williams_2007 downregulated_estradiol 78230114 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab 0.439999999999998 6
-PfIL316A02 DV570269 5 -nucleotidase, cytosolic II NA Williams_2007 downregulated_estradiol 78230264 dDocent_Contig_8427 dDocent_Contig_156793 31.96 31.35 lcal,onil 0.609999999999999 14
-PfIL316A06 DV570271 Syndecan 2 NA Williams_2007 upregulated_estradiol 78230266 dDocent_Contig_28742 dDocent_Contig_49245 56.1 56.41 lcal 0.309999999999995 22
+PfIL313B03 DV570144 Peptidyl-prolyl cis-trans isomerase NA Williams_2007 downregulated_estradiol 78230166 dDocent_Contig_85444 dDocent_Contig_86520 38.68 41.16 gacu,csem,onil 2.48 8
+PfIL311G11 DV570209 Fumarylacetoacetate hydrolase domain containing 2A NA Williams_2007 downregulated_estradiol 78230114 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab,poli,csem 0.439999999999998 6
+PfIL316A02 DV570269 5 -nucleotidase, cytosolic II NA Williams_2007 downregulated_estradiol 78230264 dDocent_Contig_156793 dDocent_Contig_8427 31.35 31.96 poli,lcal,onil 0.609999999999999 14
+PfIL316A06 DV570271 Syndecan 2 NA Williams_2007 upregulated_estradiol 78230266 dDocent_Contig_49245 dDocent_Contig_28742 56.41 56.1 poli,lcal 0.309999999999995 22
 PfIL317C11 DV570321 Similar to F-box only protein 21 NA Williams_2007 upregulated_estradiol 78230316 dDocent_Contig_10459 dDocent_Contig_53 16.59 22.67 dlab 6.08 11
 PfIL319A08 DV570397 ATP-binding cassette, sub-family E (OABP), member 1 NA Williams_2007 upregulated_estradiol 78230392 dDocent_Contig_265782 dDocent_Contig_212830 33.44 31.82 gacu,tnig 1.62 18
 PfIL320B11 DV570435 Sucose transporter protein 10, 11 NA Williams_2007 downregulated_estradiol 78230430 dDocent_Contig_136639 dDocent_Contig_2335 58.76 58.76 gacu 0 15
-PfIL320F05 DV570455 Similar to acyl-Coenzyme A dehydrogenase family, member 8 NA Williams_2007 downregulated_estradiol 78230450 dDocent_Contig_12895 dDocent_Contig_25574 16.82 16.67 gacu,lcal,trub,tnig,onil,dlab 0.149999999999999 3
+PfIL320F05 DV570455 Similar to acyl-Coenzyme A dehydrogenase family, member 8 NA Williams_2007 downregulated_estradiol 78230450 dDocent_Contig_6967 dDocent_Contig_25574 16.67 16.67 dlab,poli,gacu,lcal,trub,tnig,onil 0 3
 PfIL003B11 EC377560 Fibrinogen, B beta polypeptide NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL009F05 EC377625 Pescadillo NA Williams_2007 upregulated_estradiol 109174897 dDocent_Contig_318878 dDocent_Contig_3387 33.38 32.38 lcal,tnig,onil 1 6
-PfIL140H08 EC377713 Similar to coagulation factor 10 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL206B05 EC377789 Similar to sushi domain containing 1 NA Williams_2007 downregulated_estradiol 109175226 dDocent_Contig_24007 dDocent_Contig_41980 4.22 6.58 trub,tnig 2.36 6
+PfIL009F05 EC377625 Pescadillo NA Williams_2007 upregulated_estradiol 109174897 dDocent_Contig_318878 dDocent_Contig_3387 33.38 32.38 poli,lcal,tnig,onil 1 6
+PfIL140H08 EC377713 Similar to coagulation factor 10 NA Williams_2007 downregulated_estradiol 109175088 dDocent_Contig_8598 dDocent_Contig_93641 8.91 8.91 csem 0 3
+PfIL206B05 EC377789 Similar to sushi domain containing 1 NA Williams_2007 downregulated_estradiol 109175226 dDocent_Contig_24007 dDocent_Contig_41980 4.22 6.58 trub,tnig,csem 2.36 6
 Contig929 EC377954 Small GTPase RhoA NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
 PfIL223D12 EC378088 Similar to Kynureninase (l-kynurenine hydrolase) NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-Contig1064 EC378136 Ubiquinol-cytochrome c reductase (6.4 kD) subunit NA Williams_2007 downregulated_estradiol 109175903 dDocent_Contig_22346 dDocent_Contig_74477 32.54 32.81 gacu,lcal,trub,dlab 0.270000000000003 10
-PfIL227F02 EC378154 Complement component 1 q subcomponent NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL228A07 EC378166 Complement component c3 NA Williams_2007 downregulated_estradiol 109175956 dDocent_Contig_20760 dDocent_Contig_296700 22.43 22.43 gacu,dlab 0 4
+Contig1064 EC378136 Ubiquinol-cytochrome c reductase (6.4 kD) subunit NA Williams_2007 downregulated_estradiol 109175903 dDocent_Contig_74477 dDocent_Contig_22346 32.81 32.54 dlab,gacu,lcal,trub 0.270000000000003 10
+PfIL227F02 EC378154 Complement component 1 q subcomponent NA Williams_2007 downregulated_estradiol 109175931 dDocent_Contig_34792 dDocent_Contig_16360 54.43 57.08 poli 2.65 1
+PfIL228A07 EC378166 Complement component c3 NA Williams_2007 downregulated_estradiol 109175956 dDocent_Contig_20760 dDocent_Contig_296700 22.43 22.43 dlab,gacu,csem 0 4
 PfIL231D09 EC378226 Similar to CDC28 protein kinase regulatory subunit 2 isoform 2 NA Williams_2007 downregulated_estradiol 109176049 dDocent_Contig_233200 dDocent_Contig_34141 21.06 22.33 lcal,onil 1.27 12
-PfIL231F08 EC378228 Similar to Translation initiation factor eIF-2B gamma subunit NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL231F08 EC378228 Similar to Translation initiation factor eIF-2B gamma subunit NA Williams_2007 downregulated_estradiol 109176053 dDocent_Contig_51425 dDocent_Contig_15699 35.39 35.28 poli,csem 0.109999999999999 10
 PfIL244D09 EC378419 Programmed cell death 10 NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL247G01 EC378473 Aspartyl-tRNA synthetase NA Williams_2007 upregulated_estradiol 109176527 dDocent_Contig_159109 dDocent_Contig_46846 25.88 20.09 gacu,lcal,trub,tnig,dlab 5.79 13
-PfIL262C12 EC378685 Similar to abnormal spindle NA Williams_2007 upregulated_estradiol NA NA NA NA NA NA NA NA
+PfIL247G01 EC378473 Aspartyl-tRNA synthetase NA Williams_2007 upregulated_estradiol 109176527 dDocent_Contig_46846 dDocent_Contig_159109 20.09 25.88 dlab,gacu,lcal,trub,tnig 5.79 13
+PfIL262C12 EC378685 Similar to abnormal spindle NA Williams_2007 upregulated_estradiol 109176932 dDocent_Contig_43640 dDocent_Contig_330040 67.41 67.24 csem 0.170000000000002 12
 PfIL280H11 EC378995 Similar to 3-mercaptopyruvate sulfurtransferase NA Williams_2007 upregulated_estradiol 109177538 dDocent_Contig_137743 dDocent_Contig_13393 51.67 37.71 trub 13.96 19
-PfIL285C08 EC379053 Phosphoethanolamine N-methyltransferase NA Williams_2007 upregulated_estradiol 109177656 dDocent_Contig_38050 dDocent_Contig_35078 24.95 25.28 tnig,onil,dlab 0.330000000000002 5
+PfIL285C08 EC379053 Phosphoethanolamine N-methyltransferase NA Williams_2007 upregulated_estradiol 109177656 dDocent_Contig_38050 dDocent_Contig_35078 24.95 25.28 dlab,poli,tnig,onil 0.330000000000002 5
 PfIL289H10 EC379120 JAK3 tyrosine kinase NA Williams_2007 downregulated_estradiol 109177784 dDocent_Contig_25389 dDocent_Contig_9044 38.05 39.27 tnig 1.22000000000001 12
-PfIL299H03 EC379283 Cell division cycle 45-like NA Williams_2007 upregulated_estradiol 109178103 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab 0.439999999999998 6
+PfIL299H03 EC379283 Cell division cycle 45-like NA Williams_2007 upregulated_estradiol 109178103 dDocent_Contig_169742 dDocent_Contig_13506 47.17 47.61 dlab,poli,csem 0.439999999999998 6
 PfIL302C11 EC379322 MAP3K12 binding inhibitory protein 1 NA Williams_2007 downregulated_estradiol 109178181 dDocent_Contig_17168 dDocent_Contig_14875 50.33 50.33 gacu,onil 0 7
 PfIL309A02 EC379430 Kinesin light chain 2 NA Williams_2007 downregulated_estradiol NA NA NA NA NA NA NA NA
-PfIL315B06 EC379555 Guanylin precursor NA Williams_2007 downregulated_estradiol 109178612 dDocent_Contig_28819 dDocent_Contig_11681 47.61 47.61 lcal,dlab 0 1
+PfIL315B06 EC379555 Guanylin precursor NA Williams_2007 downregulated_estradiol 109178612 dDocent_Contig_11681 dDocent_Contig_28819 47.61 47.61 dlab,poli,lcal 0 1
 PfIL319B04 EC379620 Similar to PH domain-containing protein NA Williams_2007 downregulated_estradiol 109178746 dDocent_Contig_266483 dDocent_Contig_11636 10.92 18.37 gacu 7.45 20
