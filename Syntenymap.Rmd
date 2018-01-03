@@ -232,7 +232,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/poli.karyotype.txt",
+write.table(kary, "data/SYNTENY/poli.karyotype",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -254,7 +254,7 @@ kary <- chrom %>%
   select(chr, dash, id, label, start, end, color)
 
 # write karyotype track file
-write.table(kary, "data/SYNTENY/csem.karyotype.txt",
+write.table(kary, "data/SYNTENY/csem.karyotype",
             sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -526,8 +526,8 @@ write.table(Japfl_linkmapII, file = "data/SYNTENY/Japfl_linkmapII.syn",
 
 ```{r}
 
-# data frame with synteny mapped loci
-View(syn_loci)
+# # data frame with synteny mapped loci
+# View(syn_loci)
 
 # QTL 1 ----
 
@@ -646,7 +646,7 @@ Link file for synteny blocks gacu and SFL.
 ```{r}
 
 # Format file
-dlab_synblocks <- syn_blocks %>%
+gacu_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "gacu") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -657,7 +657,7 @@ dlab_synblocks <- syn_blocks %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
     group_by(lg)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/gacu.syn", 
+write.table(gacu_synblocks, file = "data/SYNTENY/gacu.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -667,7 +667,7 @@ Link file for synteny blocks lcal and SFL.
 ```{r}
 
 # Format file
-dlab_synblocks <- syn_blocks %>%
+lcal_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "lcal") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -678,7 +678,7 @@ dlab_synblocks <- syn_blocks %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
     group_by(lg)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/lcal.syn", 
+write.table(lcal_synblocks, file = "data/SYNTENY/lcal.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -688,7 +688,7 @@ Link file for synteny blocks onil and SFL.
 ```{r}
 
 # Format file
-dlab_synblocks <- syn_blocks %>%
+onil_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "onil") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -699,7 +699,7 @@ dlab_synblocks <- syn_blocks %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
     group_by(lg)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/onil.syn", 
+write.table(onil_synblocks, file = "data/SYNTENY/onil.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -709,7 +709,7 @@ Link file for synteny blocks tnig and SFL.
 ```{r}
 
 # Format file
-dlab_synblocks <- syn_blocks %>%
+tnig_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "tnig") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -720,7 +720,7 @@ dlab_synblocks <- syn_blocks %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
     group_by(lg)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/tnig.syn", 
+write.table(tnig_synblocks, file = "data/SYNTENY/tnig.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -730,7 +730,7 @@ Link file for synteny blocks trub and SFL.
 ```{r}
 
 # Format file
-dlab_synblocks <- syn_blocks %>%
+trub_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "trub") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -741,7 +741,7 @@ dlab_synblocks <- syn_blocks %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
     group_by(lg)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/trub.syn", 
+write.table(trub_synblocks, file = "data/SYNTENY/trub.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -751,7 +751,7 @@ Link file for synteny blocks poli and SFL.
 ```{r}
 
 # Format file
-dlab_synblocks <- syn_blocks %>%
+poli_synblocks <- syn_blocks %>%
   filter(COMP_SPECIES == "poli") %>%
   mutate(lg = paste("lg", MAP_LG, sep=''), 
          lgstart = as.integer(MAP_START * 500000),
@@ -762,7 +762,7 @@ dlab_synblocks <- syn_blocks %>%
   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
     group_by(lg)
 
-write.table(dlab_synblocks, file = "data/SYNTENY/poli.syn", 
+write.table(poli_synblocks, file = "data/SYNTENY/poli.syn", 
                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
@@ -771,20 +771,20 @@ Link file for synteny blocks csem and SFL.
 
 ```{r}
 
-# Format file
-dlab_synblocks <- syn_blocks %>%
-  filter(COMP_SPECIES == "csem") %>%
-  mutate(lg = paste("lg", MAP_LG, sep=''), 
-         lgstart = as.integer(MAP_START * 500000),
-         lgend = as.integer(MAP_STOP * 500000),
-         chr = COMP_CHR,
-         chrstart = COMP_START,
-         chrend = COMP_END) %>%
-  select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
-    group_by(lg)
-
-write.table(dlab_synblocks, file = "data/SYNTENY/csem.syn", 
-                         sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
+# # Format file
+# csem_synblocks <- syn_blocks %>%
+#   filter(COMP_SPECIES == "csem") %>%
+#   mutate(lg = paste("lg", MAP_LG, sep=''), 
+#          lgstart = as.integer(MAP_START * 500000),
+#          lgend = as.integer(MAP_STOP * 500000),
+#          chr = COMP_CHR,
+#          chrstart = COMP_START,
+#          chrend = COMP_END) %>%
+#   select(lg, lgstart, lgend, chr, chrstart, chrend) %>%
+#     group_by(lg)
+# 
+# write.table(csem_synblocks, file = "data/SYNTENY/csem.syn", 
+#                          sep = "\t", quote = FALSE, row.names = FALSE, col.names = FALSE)
 
 ```
 
@@ -848,6 +848,22 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_trub.co
 
 ```
 
+**poli vs SFL**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_poli.conf -outputdir fig -outputfile synteny-comp.poli')
+
+```
+
+**csem vs SFL**
+
+```{r}
+
+system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_csem.conf -outputdir fig -outputfile synteny-comp.csem')
+
+```
+
 ## Plot synteny mapped loci
 
 All loci: exposure studies (European flounder) and linkage maps (Japanese flounder)
@@ -906,15 +922,14 @@ system('perl "scr/circos-0.66/bin/circos" -conf data/SYNTENY/circos-synt_loci-ja
 
 ```
 
-
 # Analyze distribution of synteny mapped loci
 
 ## Genes identified in response to exposure to pollutants
 
 ```{r}
 
-# pollutants_response <- read.table("results/pollutants_response.loci",
-#                          header = TRUE, stringsAsFactors = FALSE)
+pollutants_response <- read.table("results/pollutants_response.loci",
+                         header = TRUE, stringsAsFactors = FALSE, sep = "\t")
 
 poll_mapped <- pollutants_response %>%
     filter(!is.na(LEFT_LOCUS)) %>%
@@ -952,8 +967,8 @@ write.table(poll_GO, "results/GO_poll.mapped",
 
 ```{r}
 
-# salinity_response <- read.table("results/salinity_response.loci",
-#                          header = TRUE, stringsAsFactors = FALSE)
+salinity_response <- read.table("results/salinity_response.loci",
+                         header = TRUE, stringsAsFactors = FALSE, sep = "\t")
 
 salin_mapped <- salinity_response %>%
     filter(!is.na(LEFT_LOCUS)) %>%
@@ -970,7 +985,7 @@ salin_stacks <- count(salin_mapped, POS)
 write.table(salin_stacks, "results/per_loc_salinution.mapped", 
             col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t")
 
-temp <- filter(salin_stacks, n >= 10)
+temp <- filter(salin_stacks, n >= 5)
 
 salin_loci <- salin_mapped %>%
     filter(POS %in% temp$POS)

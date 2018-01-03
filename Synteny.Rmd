@@ -24,11 +24,11 @@ source("lib/ggplot.R")
 
 Comparative genomics can be used to determine patterns of homology and synteny between the consensus linkage map and fully sequenced fish genomes. Chris Hollenbeck has created an efficient pipeline (`synteny_mapper.pl`) that will blast the mapped loci to fully sequenced fish genomes on a local database hosted on deepthought and determine their relative positions on the corresponding chromosome in order to identify synteny blocks.
 
-## Create Inputfiles
+# Create Inputfiles
 
 Several input and configuration files are required by the pipeline to specify the loci being blasted, the genomes the linkage map should be compared to and the arguments/settings for BLAST.
 
-### Linkage map (`map_file`)
+## Linkage map (`map_file`)
 
 The linkage map input file (`map_file`) consists of a text file with linkage map information in a tidy format with specifying the locus name, linkage group and position.
 
@@ -56,7 +56,7 @@ write.table(map, "data/SYNTENY/map.tab",
 
 ```
 
-### Blast configurations (`blast_args`)
+## Blast configurations (`blast_args`)
 
 The BLAST+ arguments and their associated settings are specified in the `blast_args` configuration file. The pipeline will perform an `blastn`, i.e. a standard nucleotide blast aligning nucleotides to nucleotides. The recommended algorithm is discontiguous megablast, though this can be changed in the configuration file.
 
@@ -74,7 +74,7 @@ write.table(Blast_args, "data/SYNTENY/blast_args.txt",
 
 The code for the pipeline can be further edited to change `blastn` [parameters](http://www.ncbi.nlm.nih.gov/books/NBK279675/).
 
-### Fasta file with mapped loci (`fasta_file`)
+## Fasta file with mapped loci (`fasta_file`)
 
 In order to blast the mapped loci their sequences must be specified in `fasta`-format.
 
@@ -89,7 +89,7 @@ This the script will write a `fasta`-file named `filtered.fasta`. Rename file to
 
     mv filter.fasta mapped.fasta
     
-### Fasta file of additional unmapped loci (`synteny_map_loci`)
+## Fasta file of additional unmapped loci (`synteny_map_loci`)
 
 An additional `fasta`-file containing known but unmapped loci from that are not part of the linkage map can be specified. For example, a set of genes identified in a gene expression/transcriptomics study on the same species or markers that could not be mapped in a conventional way because they did not segregate in any of the parents.
 
@@ -174,7 +174,7 @@ flounderloci_IDs <- read.delim("data/SYNTENY/flounderloci.txt", sep = "|", heade
 
 ```
 
-### Create configuration file (`config.txt`)
+## Create configuration file (`config.txt`)
 
 The specification for the pipeline are listed in a configuration file.
 
@@ -192,7 +192,7 @@ First, the genomes the linkage map should be compared to are specified. Currentl
 
 ```{r format config file I}
 
-Species_comp <- data.frame(Species = c("gacu", "tnig", "trub", "onil", "lcal", "dlab", "poli", "csem"),
+Species_comp <- data.frame(Species = c("gacu", "tnig", "trub", "onil", "lcal", "dlab", "poli"),
                           Compare = c("TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", "TRUE"))
 
 ```
@@ -269,6 +269,104 @@ Synteny mapper will create a set of output files located in a subdirectory (`res
 
 # Analyze synteny output
 
+## Compare genome quality
+
+Load genome assembly stats. Three-spined stickleback (gacu) is a chromosome-level high quality genome assembly but the updated stats are not on genbank. Was not able to pull stats from any of the updated papers.
+
+Perform PCA to identify genomes grouping by quality.
+
+```{r}
+
+# load data
+assembly_stats <- read.table("data/SYNTENY/genome_assembly_stats.txt",
+                             header = TRUE, row.names = 1,
+                             stringsAsFactors = FALSE, sep = "\t") %>%
+    select(SEQ_LENGTH_TOTAL, PERC_GAP, N_SCAFFOLD, N50_SCAFF, L50_SCAFF)
+
+pca <- dudi.pca(assembly_stats, scale = TRUE, center = TRUE, scannf = FALSE, nf = 10)
+
+read.table("data/SYNTENY/genome_assembly_stats.txt",
+                             header = TRUE, row.names = 1,
+                             stringsAsFactors = FALSE, sep = "\t")
+
+```
+
+Extract eigenvalues and plot.
+
+```{r, fig.height=3, fig.width=4}
+
+# eigenvalues
+eig <- as.data.frame(pca$eig) %>%
+    rownames_to_column() %>%
+    rename(EIGENVALUE = `pca$eig`,
+           PC = rowname) %>%
+    mutate(PERCENT = (EIGENVALUE/(sum(EIGENVALUE))*100))
+
+# plot %variance summarize by each PC
+ggplot(eig, aes(x = PC, y = PERCENT)) +
+    geom_bar(stat = "identity", color = "black", fill = "darkorange") +
+    scale_y_continuous(limits = c(0, 100)) +
+    labs(x = "PC", y = "% Variance") +
+    theme_standard
+
+```
+
+Plot genomes qualities.
+
+```{r, fig.height=4, fig.width=5}
+
+# individuals coordinated normed to squ root of eigenvalue (l1 is normed to 1)
+pc <- pca$li
+
+# plot results
+ggplot(pc, aes(x = Axis1, y = Axis2, label = rownames(pc))) +
+    geom_text(colour = "black", size = 4) +
+    geom_hline(yintercept = 0, colour = "darkblue", linetype = "dashed", size = 0.5) +
+    geom_vline(xintercept = 0, colour = "darkblue", linetype = "dashed", size = 0.5) +
+    labs(x = "PC1", y = "PC2") +
+    theme_standard
+
+```
+
+Plot loadings of stats.
+
+```{r, fig.height=4, fig.width=5}
+
+# loadings of variables (normed to 1, i.e. squared values sum to one)
+loadings <- pca$c1
+
+# co gives the variables’ coordinates, normed to the square root of the eigenvalues
+
+ggplot(loadings, aes(x = CS1, y = CS2, label = rownames(loadings))) +
+    geom_text(colour = "black", size = 4) +
+    geom_segment(aes(x = 0, y = 0, xend = CS1, yend = CS2), 
+                 arrow = arrow(length = unit(0.1,"cm")), size = 1, color = "darkorange") +
+    geom_hline(yintercept = 0, colour = "darkblue", linetype = "dashed", size = 0.5) +
+    geom_vline(xintercept = 0, colour = "darkblue", linetype = "dashed", size = 0.5) +
+    scale_x_continuous(limits = c(-0.75, 0.75)) +
+    scale_y_continuous(limits = c(-0.75, 0.75)) +
+    labs(x = "Loadings 1", y = "Loadings 2") +
+    theme_standard
+
+```
+
+```{r, fig.height=4, fig.width=5}
+
+ggplot() +
+    geom_text(data = pc, aes(x = Axis1, y = Axis2, label = rownames(pc)),
+                             colour = "darkblue", size = 4) +
+    geom_text(data = pca$co, aes(x = Comp1, y = Comp2, label = rownames(loadings)),
+                             colour = "darkorange", size = 2, vjust = 1) +
+    geom_segment(data = pca$co, 
+                 aes(x = 0, y = 0, xend = Comp1, yend = Comp2), 
+                 arrow = arrow(length = unit(0.1,"cm")), size = 1, color = "darkorange") +
+    geom_hline(yintercept = 0, colour = "darkblue", linetype = "dashed", size = 0.5) +
+    geom_vline(xintercept = 0, colour = "darkblue", linetype = "dashed", size = 0.5) +
+    labs(x = "PC1", y = "PC2") +
+    theme_standard
+
+```
+
 ## Exploratory analysis
 
 Create function to import `*.synteny.stats` output file.
@@ -309,7 +407,7 @@ Read in `*.synteny.stats` file and plot overview.
 ```{r, fig.height=10, fig.width=12}
 
 # Synteny results overview 
-species <- c("csem", "dlab", "gacu", "lcal", "onil", "poli", "tnig", "trub") 
+species <- c("dlab", "gacu", "lcal", "onil", "poli", "tnig", "trub") 
 
 synteny_stats <- read.synteny.stats("data/SYNTENY", species)
 
@@ -317,17 +415,17 @@ temp <- synteny_stats %>%
     select(-MIN_LOCI, -MAX_LOCI, -MIN_BP, -MAX_BP, -MIN_cM, -MAX_cM) %>%
     mutate(`%MAP` = TOTAL_cM/1605.43)
 
-# plot synteny mapping results 
-plot.synteny.stats <- function(synteny_stats) { 
-  tidy <- synteny_stats %>% 
-    gather("STAT", "RESULT", 2:14) 
-  ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
-    geom_bar(color = "black", stat = "identity") + 
-    facet_wrap( ~ STAT, scales = "free") +
-      theme_facet
-} 
-
-plot.synteny.stats(synteny_stats) 
+# # plot synteny mapping results 
+# plot.synteny.stats <- function(synteny_stats) { 
+#   tidy <- synteny_stats %>% 
+#     gather("STAT", "RESULT", 2:14) 
+#   ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
+#     geom_bar(color = "black", stat = "identity") + 
+#     facet_wrap( ~ STAT, scales = "free") +
+#       theme_facet
+# } 
+# 
+# plot.synteny.stats(synteny_stats) 
 
 ```
 
@@ -356,32 +454,76 @@ plot.synteny.total(synteny_stats)
 
 ```
 
-Compare genome sizes of comparison species
+Compare genome sizes of comparison species.
 
 ```{r}
 
-SPECIES <- c("csem", "dlab", "gacu", "lcal", "onil", "poli", "tnig", "trub") 
-GENOME <- c(470, 578, 463, 586, 657, 643, 240, 281)
+SPECIES <- c("dlab", "gacu", "lcal", "onil", "poli", "tnig", "trub") 
+GENOME <- c(578000000, 463000000, 586000000, 657000000, 643000000, 240000000, 281000000)
 
 genome <- data.frame(SPECIES, GENOME) %>%
     arrange(SPECIES)
 
 synteny_stats <- left_join(synteny_stats, genome) %>%
-    mutate(GENOME = GENOME*1000000,
-           GENOME_COV = TOTAL_BP/GENOME*100,
+    mutate(GENOME_COV = (TOTAL_BP/GENOME)*100,
            LINKMAP = 1605.43,
-           LINKMAP_COV = TOTAL_cM/LINKMAP*100)
+           LINKMAP_COV = (TOTAL_cM/LINKMAP)*100,
+           LOCI = 2848,
+           LOCI_COV = (N_LOCI/LOCI)*100)
+# 
+# # plot genome size vs coverage
+# synteny_stats %>%
+#     select(GENOME, GENOME_COV, LINKMAP_COV, LOCI_COV) %>%
+#     gather(key = COVERAGE, value = PERCENT, 2:4) %>%
+#     ggplot(aes(x = GENOME, y = PERCENT, color = COVERAGE)) +
+#     geom_point(shape = 1, size = 2) +
+#     geom_smooth(method = lm, se = FALSE, size = 1) +
+#     labs(x = "genome size [bp]", y = "% covered") +
+#     theme_standard
 
-# plot genome size vs coverage
-synteny_stats %>%
-    select(GENOME, GENOME_COV, LINKMAP_COV) %>%
-    gather(key = COVERAGE, value = PERCENT, 2:3) %>%
-    ggplot(aes(x = GENOME, y = PERCENT, color = COVERAGE)) +
-    geom_point(shape = 1, size = 2) +
-    geom_smooth(method = lm, se = FALSE) +
-    labs(x = "genome size [bp]", y = "% covered") +
+temp <- synteny_stats %>%
+    select(SPECIES, N_BLOCKS, N_LOCI, MEAN_LOCI, TOTAL_BP, MEAN_BP, TOTAL_cM, MEAN_cM, GENOME, GENOME_COV, LINKMAP_COV, LOCI_COV)
+
+write.table(temp, "results/synt.stats", col.names = TRUE, row.names = FALSE, quote = FALSE)
+
+```
+
+Plot proportion of genome and linkage map, respectively covered by sytneny blocks.
+
+```{r}
+
+ggplot(synteny_stats, aes(x = GENOME_COV, y = LINKMAP_COV)) +
+    geom_point(shape = 1, size = 3, color = "darkblue") +
+    geom_smooth(method = lm, se = TRUE, size = .5, color = "blue") +
+    labs(x = "% comparison species genome covered by synt blocks",
+         y = "% linkmap covered by synt blocks") +
     theme_standard
-    
+
+```
+
+Plot genome size vs the proportion of loci in linkage blocks
+
+```{r}
+
+ggplot(synteny_stats, aes(x = GENOME, y = LOCI_COV)) +
+    geom_point(shape = 1, size = 2, color = "darkblue") +
+    geom_smooth(method = lm, se = TRUE, size = .75, color = "blue") +
+    labs(x = "genome size",
+         y = "% loci in synteny blocks") +
+    theme_standard
+
+```
+
+Plot linkage map coverage compared to proportion of loci in synteny blocks
+
+```{r}
+
+ggplot(synteny_stats, aes(x = LINKMAP_COV, y = LOCI_COV)) +
+    geom_point(shape = 1, size = 2, color = "darkblue") +
+    geom_smooth(method = lm, se = TRUE, size = .75, color = "blue") +
+    labs(x = "% linkmap covered by synt blocks",
+         y = "% loci in synteny blocks") +
+    theme_standard
 
 ```
 
@@ -416,8 +558,8 @@ Plot overview:
 
 # Format data set
 tidy <- synteny_stats %>% 
-    gather("STAT", "RESULT", 2:18) %>%
-    filter(STAT %in% c("MEAN_LOCI", "GENOME_COV", "LINKMAP_COV"))
+    gather("STAT", "RESULT", 2:20) %>%
+    filter(STAT %in% c("LOCI_COV", "GENOME_COV", "LINKMAP_COV"))
 
 # plot
 
@@ -430,7 +572,7 @@ tidy <- synteny_stats %>%
 
 ggplot(tidy, aes(x = SPECIES, y = RESULT, fill = SPECIES)) + 
     geom_bar(stat = "identity",
-             color = "black", size = 0.7, fill = "grey75" ) +
+             color = "black", size = 0.7, fill = "orange" ) +
     labs(x = "\nComparison Species Genome", y = " ") +
     facet_wrap(~ STAT, scales = "free") +
     theme_facet
@@ -444,8 +586,8 @@ Comparison genome size
 ```{r fig.height=10, fig.width=12}
 
 temp <- synteny_stats %>%
-    select(SPECIES, GENOME, N_LOCI, N_BLOCKS, MEAN_LOCI, TOTAL_BP, TOTAL_cM, GENOME_COV, LINKMAP_COV) %>%
-    gather("STAT", "RESULT", 3:9)
+    select(SPECIES, GENOME, N_LOCI, N_BLOCKS, MEAN_LOCI, TOTAL_BP, TOTAL_cM, GENOME_COV, LINKMAP_COV, LOCI_COV) %>%
+    gather("STAT", "RESULT", 3:10)
 
 ggplot(temp, aes(x = GENOME, y = RESULT)) +
     geom_point(shape = 1, size = 3, color = "darkblue") +
@@ -456,7 +598,7 @@ ggplot(temp, aes(x = GENOME, y = RESULT)) +
 
 ```
 
-Comparison relations ships number of blocks
+Comparison relationships number of blocks:
 
 ```{r fig.height=8, fig.width=12}
 
@@ -472,7 +614,7 @@ synteny_stats %>%
 
 ```
 
-Distribution of synteny block length in genome (bp) and linkage map (cM)
+Distribution of synteny block length in genome (bp), linkage map (cM), and number of loci (n).
 
 ```{r, fig.height=8, fig.width=6}
 
@@ -488,15 +630,17 @@ read.all.blocks <- function(dir) {
 synt_blocks <- read.all.blocks("data/SYNTENY")
 
 temp <- synt_blocks %>%
-    select(COMP_SPECIES, COMP_SIZE, MAP_SIZE) %>%
+    select(COMP_SPECIES, COMP_SIZE, MAP_SIZE, NUM_LOCI) %>%
     mutate(COMP_SIZE = COMP_SIZE/1000) %>%
-    gather(key = COMP, value = LENGTH, 2:3)
+    gather(key = COMP, value = LENGTH, 2:4)
 
 ggplot(temp, aes(x = LENGTH)) +
-    geom_histogram(color = "black", fill = "grey65") +
+    geom_histogram(color = "black", fill = "darkorange") +
     facet_grid(COMP_SPECIES ~ COMP, scales = "free_x") +
     labs(x = "length (in kb/cM)", y = "number of synteny blocks") +
     theme_facet
+
+View(synt_blocks)
 
 ```
 
@@ -547,9 +691,11 @@ total_blocks <- ldply(total_blocks, data.frame) %>%
 total <- sum(total_blocks$SIZE)
 
 # % of link map covered by synt blocks
-percent <- total/1605.43
+percent <- (total/1605.43)*100
 
 ```
+
+In total (i.e. across all species), `r percent`% of the linkage map is covered by synteny blocks.
 
 ## Determine homologous chromosomes
 
@@ -658,6 +804,60 @@ plot.oxford <- function(synt_blocks, species) {
   })
 }
 
-plot.oxford(synt_blocks, c("csem", "dlab", "lcal", "gacu", "onil", "poli", "tnig", "trub"))
+plot.oxford(synt_blocks, c("dlab", "lcal", "gacu", "onil", "poli", "tnig", "trub"))
+
+```
+
+# Compare efficiency of synteny mapping loci
+
+```{r, fig.height=3, fig.width=4}
+
+syn_loci <- read.table("data/SYNTENY/all.synteny.mapped.out",
+                       header=TRUE, stringsAsFactors = FALSE) %>%
+    select(LOCUS, SUPPORT) %>%
+    separate(SUPPORT, sep = ",",
+             into = c("genome1", "genome2", "genome3", 
+                      "genome4", "genome5", "genome6", 
+                      "genome7")) %>%
+    gather(key = temp, value = SPECIES, 2:8) %>%
+    select(-temp) %>%
+    filter(!is.na(SPECIES))
+
+# count number of loci supported by each species
+per_species <- syn_loci %>%
+    group_by(SPECIES) %>%
+    summarise(N_LOCI = n())
+
+# count number of loci supported by only one species
+per_locus <- syn_loci %>%
+    group_by(LOCUS) %>%
+    summarise(N_GENOMES = n())
+
+# distribution of number of supporting genomes per locus
+ggplot(per_locus, aes(x = N_GENOMES)) +
+    geom_histogram(binwidth = 1, color = "black", fill = "orange") +
+    theme_standard
+
+unique_loci <- per_locus %>%
+    filter(N_GENOMES == 1)
+
+proportion_unique <- (nrow(unique_loci)/3053)*100
+
+# count unique loci per species
+unique_loci <- syn_loci %>%
+    filter(LOCUS %in% unique_loci$LOCUS)
+
+uniq_per_species <- unique_loci %>%
+    group_by(SPECIES) %>%
+    summarize(UNIQUE_LOCI = n()) %>%
+    mutate(PERCENT_TOTAL = (UNIQUE_LOCI/3053)*100,
+           PERCENT_TOTAL_UNIQUE = (UNIQUE_LOCI/1215)*100)
+
+per_species <- left_join(uniq_per_species, per_species) %>%
+    mutate(PERCENT_UNIQUE = (UNIQUE_LOCI/N_LOCI)*100,
+           PERCENT_LOCI = (N_LOCI/3053)*100) %>%
+    select(SPECIES, N_LOCI, PERCENT_LOCI, UNIQUE_LOCI, PERCENT_UNIQUE, PERCENT_TOTAL, PERCENT_TOTAL_UNIQUE)
+
+# synteny blocks w/less than 3 loci
 
 ```
